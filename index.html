@@ -43,18 +43,20 @@
     .app-wrapper {
       width: 100%;
       max-width: 440px;
-      min-height: 92vh;
+      min-height: 94vh;
       background: #ffffff;
       border-radius: 28px;
       box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 16px;
+      padding: 14px;
       border: 3px solid #e2e8f0;
       position: relative;
+      overflow: hidden;
     }
 
+    /* Top Navigation Header */
     header {
       width: 100%;
       display: flex;
@@ -69,14 +71,14 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
-    .brand-icon { font-size: 26px; }
+    .brand-icon { font-size: 24px; }
 
     .brand-title {
       font-family: 'Ramabhadra', sans-serif;
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       color: var(--primary);
     }
 
@@ -87,36 +89,76 @@
     }
 
     .stat-badge {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 700;
       color: var(--text);
       background: #ffffff;
-      padding: 4px 8px;
-      border-radius: 12px;
+      padding: 3px 6px;
+      border-radius: 10px;
       border: 1.5px solid #cbd5e1;
-    }
-
-    .companion-banner {
-      width: 100%;
-      margin-top: 10px;
-      background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
-      border: 2px solid #81c784;
-      border-radius: 18px;
-      padding: 10px 12px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 2px;
+    }
+
+    .pause-btn {
+      background: #f1f5f9;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 4px 8px;
+      font-size: 0.85rem;
+      font-weight: bold;
       cursor: pointer;
     }
 
-    .companion-avatar {
-      font-size: 32px;
+    /* 3 Main Categories Bar */
+    .category-bar {
+      display: flex;
+      gap: 4px;
+      margin-top: 8px;
+      width: 100%;
     }
+
+    .cat-chip {
+      flex: 1;
+      text-align: center;
+      padding: 6px 2px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border-radius: 10px;
+      background: #f1f5f9;
+      border: 1.5px solid #cbd5e1;
+      color: #475569;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .cat-chip.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    /* Akshara Mitra Companion */
+    .companion-banner {
+      width: 100%;
+      margin-top: 8px;
+      background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+      border: 2px solid #81c784;
+      border-radius: 16px;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .companion-avatar { font-size: 28px; }
 
     .companion-speech {
       flex: 1;
-      font-size: 0.92rem;
-      line-height: 1.35;
+      font-size: 0.88rem;
+      line-height: 1.3;
       color: #1b5e20;
       font-weight: 700;
     }
@@ -124,25 +166,26 @@
     .voice-chip {
       background: #1b5e20;
       color: #ffffff;
-      padding: 5px 10px;
-      border-radius: 10px;
-      font-size: 0.8rem;
+      padding: 4px 8px;
+      border-radius: 8px;
+      font-size: 0.75rem;
       font-weight: 700;
       border: none;
       cursor: pointer;
     }
 
+    /* Clue Switcher Tabs */
     .clue-nav-bar {
       display: flex;
       gap: 6px;
-      margin-top: 10px;
+      margin-top: 8px;
       width: 100%;
     }
 
     .clue-tab {
       flex: 1;
       padding: 6px 8px;
-      background: #f1f5f9;
+      background: #f8fafc;
       border: 1.5px solid #cbd5e1;
       border-radius: 10px;
       font-size: 0.85rem;
@@ -153,18 +196,19 @@
     }
 
     .clue-tab.active {
-      background: #1b5e20;
+      background: #334155;
       color: #ffffff;
-      border-color: #1b5e20;
+      border-color: #334155;
     }
 
+    /* Grid Stage */
     .game-area {
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin: 12px 0;
+      margin: 10px 0;
       flex: 1;
     }
 
@@ -173,26 +217,26 @@
       gap: 6px;
       background: #e2e8f0;
       padding: 10px;
-      border-radius: 20px;
+      border-radius: 18px;
       border: 2px solid #cbd5e1;
     }
 
     .grid-cell {
-      width: 60px;
-      height: 60px;
+      width: 58px;
+      height: 58px;
       background: #ffffff;
       border: 2.5px solid var(--cell-border);
       border-bottom-width: 4px;
-      border-radius: 14px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.55rem;
+      font-size: 1.5rem;
       font-family: 'Ramabhadra', sans-serif;
       color: #0f172a;
       cursor: pointer;
       position: relative;
-      transition: all 0.12s ease;
+      transition: all 0.1s ease;
     }
 
     .grid-cell.active-word {
@@ -224,8 +268,8 @@
 
     .cell-badge {
       position: absolute;
-      top: 3px;
-      left: 5px;
+      top: 2px;
+      left: 4px;
       font-size: 0.72rem;
       font-family: 'Ramabhadra', sans-serif;
       color: #1b5e20;
@@ -235,20 +279,21 @@
 
     .cell-letter { pointer-events: none; }
 
+    /* Clue Bar */
     .clue-panel {
       width: 100%;
       background: #f8fafc;
-      border: 2px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 10px 14px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 8px 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .clue-dir-tag {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 700;
       color: #1b5e20;
       background: #e8f5e9;
@@ -259,7 +304,7 @@
     }
 
     .clue-text {
-      font-size: 1.02rem;
+      font-size: 0.98rem;
       font-weight: 700;
       color: #0f172a;
     }
@@ -268,31 +313,35 @@
       background: #fffbeb;
       color: #b45309;
       border: 2px solid #fde68a;
-      padding: 6px 10px;
-      border-radius: 12px;
+      padding: 5px 10px;
+      border-radius: 10px;
       font-family: 'Mandali', sans-serif;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 700;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 3px;
     }
 
+    /* Syllable Keyboard */
     .palette-box {
       width: 100%;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
+      gap: 6px;
     }
 
     .palette-key {
       background: #ffffff;
       border: 2px solid #cbd5e1;
       border-bottom: 4px solid #94a3b8;
-      border-radius: 14px;
-      height: 52px;
+      border-radius: 12px;
+      height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       font-family: 'Ramabhadra', sans-serif;
       color: #0f172a;
       cursor: pointer;
@@ -303,65 +352,105 @@
       border-bottom-width: 2px;
     }
 
+    /* Controls Tray */
     .controls-tray {
       width: 100%;
       display: flex;
-      gap: 8px;
-      margin-top: 10px;
+      gap: 6px;
+      margin-top: 8px;
     }
 
     .action-btn {
       flex: 1;
-      padding: 10px;
+      padding: 8px;
       background: #f8fafc;
       border: 1.5px solid #cbd5e1;
-      border-radius: 12px;
+      border-radius: 10px;
       font-family: 'Mandali', sans-serif;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 700;
       color: #334155;
       cursor: pointer;
       text-align: center;
     }
 
+    /* General Modals Backdrop */
     .modal-backdrop {
       display: none;
       position: absolute;
       inset: 0;
-      background: rgba(15, 23, 42, 0.7);
+      background: rgba(15, 23, 42, 0.72);
       backdrop-filter: blur(4px);
       z-index: 100;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 16px;
       border-radius: 28px;
     }
 
     .modal-card {
       background: #ffffff;
       width: 100%;
-      border-radius: 24px;
-      padding: 24px;
+      border-radius: 20px;
+      padding: 20px;
       text-align: center;
+      animation: popIn 0.2s ease-out;
     }
 
-    .next-lvl-btn {
+    @keyframes popIn {
+      0% { transform: scale(0.9); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-btn {
       width: 100%;
-      padding: 12px;
+      padding: 10px;
       background: var(--primary);
       color: #ffffff;
       border: none;
-      border-radius: 14px;
+      border-radius: 12px;
       font-family: 'Ramabhadra', sans-serif;
-      font-size: 1.1rem;
+      font-size: 1rem;
       cursor: pointer;
-      margin-top: 14px;
+      margin-top: 10px;
+    }
+
+    /* Mahakavi Card Specific Styles */
+    .kavi-card {
+      background: linear-gradient(135deg, #fffbeb, #fef3c7);
+      border: 2px solid #f59e0b;
+      padding: 14px;
+      border-radius: 16px;
+      margin: 12px 0;
+      text-align: left;
+    }
+
+    .kavi-title {
+      font-family: 'Ramabhadra', sans-serif;
+      color: #92400e;
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+    }
+
+    .kavi-verse {
+      font-style: italic;
+      color: #78350f;
+      font-size: 0.92rem;
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+
+    .kavi-meaning {
+      font-size: 0.85rem;
+      color: #451a03;
+      line-height: 1.35;
     }
   </style>
 </head>
 <body>
 
   <div class="app-wrapper">
+    <!-- Top Header -->
     <header>
       <div class="brand">
         <span class="brand-icon">🦜</span>
@@ -369,11 +458,20 @@
       </div>
       <div class="stats-bar">
         <div class="stat-badge">🔥 <span id="streak-num">1</span></div>
-        <div class="stat-badge">⭐ <span id="score-num">0</span></div>
+        <div class="stat-badge">⭐ <span id="score-num">50</span></div>
         <div class="stat-badge" style="background:#e8f5e9; color:#1b5e20;">స్థాయి <span id="lvl-num">1</span></div>
+        <button class="pause-btn" onclick="pauseGame()">⏸</button>
       </div>
     </header>
 
+    <!-- 3 Categories Selector Bar -->
+    <div class="category-bar">
+      <button class="cat-chip active" id="cat-general" onclick="switchCategory('general')">సాధారణ పదాలు</button>
+      <button class="cat-chip" id="cat-poems" onclick="switchCategory('poems')">పద్య రత్నాలు</button>
+      <button class="cat-chip" id="cat-proverbs" onclick="switchCategory('proverbs')">సామెతలు</button>
+    </div>
+
+    <!-- Akshara Mitra Companion Box -->
     <div class="companion-banner" onclick="speakCurrentClue()">
       <div class="companion-avatar">🦜</div>
       <div class="companion-speech" id="companion-text">
@@ -382,39 +480,89 @@
       <button class="voice-chip" type="button" onclick="speakCurrentClue(); event.stopPropagation();">🔊 విను</button>
     </div>
 
+    <!-- Active Clue Selector Bar -->
     <div class="clue-nav-bar" id="clue-nav-bar"></div>
 
+    <!-- Main Playing Board -->
     <main class="game-area">
       <div class="grid-board" id="puzzle-grid"></div>
     </main>
 
+    <!-- Clue Banner -->
     <div class="clue-panel">
       <div>
         <div class="clue-dir-tag" id="clue-direction">అడ్డం (1)</div>
         <div class="clue-text" id="clue-content">సూచన లోడ్ అవుతోంది...</div>
       </div>
-      <button class="hint-btn" onclick="useHint()">💡 సహాయం</button>
+      <button class="hint-btn" onclick="useHint()">
+        💡 <span id="hint-label">సహాయం (3)</span>
+      </button>
     </div>
 
+    <!-- Letter Keyboard -->
     <div class="palette-box" id="letters-keyboard"></div>
 
+    <!-- Controls -->
     <div class="controls-tray">
       <button class="action-btn" onclick="eraseCurrentCell()">⌫ తొలగించు</button>
       <button class="action-btn" onclick="toggleVoice()">🔊 <span id="voice-label">వాయిస్ ఆన్</span></button>
     </div>
 
+    <!-- Pause / Settings Modal -->
+    <div class="modal-backdrop" id="pause-modal">
+      <div class="modal-card">
+        <h2 style="font-family:'Ramabhadra',sans-serif; color:var(--primary); margin-bottom:8px;">ఆట నిలిపివేయబడింది</h2>
+        <p style="color:#64748b; font-size:0.92rem; margin-bottom:12px;">మీ పురోగతి సురక్షితంగా సేవ్ చేయబడింది.</p>
+        <button class="modal-btn" onclick="resumeGame()">ఆట కొనసాగించు ▶</button>
+        <button class="modal-btn" style="background:#475569;" onclick="restartLevel()">ఈ స్థాయిని మళ్ళీ ప్రారంభించు 🔄</button>
+      </div>
+    </div>
+
+    <!-- Daily Streak & Bonus Modal -->
+    <div class="modal-backdrop" id="bonus-modal">
+      <div class="modal-card">
+        <div style="font-size:46px;">🎁</div>
+        <h2 style="font-family:'Ramabhadra',sans-serif; color:var(--primary);">రోజువారీ బోనస్!</h2>
+        <p style="color:#64748b; font-size:0.92rem; margin:6px 0;">వరుసగా వచ్చినందుకు మీకు బహుమతి లభించింది!</p>
+        <div style="background:#ecfdf5; border:1.5px solid #a7f3d0; padding:10px; border-radius:12px; margin:10px 0; font-size:1.1rem; color:#065f46; font-weight:bold;">
+          +25 బోనస్ నక్షత్రాలు ⭐
+        </div>
+        <button class="modal-btn" onclick="closeBonus()">తీసుకోండి</button>
+      </div>
+    </div>
+
+    <!-- Victory Modal -->
     <div class="modal-backdrop" id="victory-modal">
       <div class="modal-card">
-        <div style="font-size: 52px;">🏆</div>
-        <h2 style="font-family:'Ramabhadra',sans-serif; color: #1b5e20; margin-top: 6px;">అద్భుతం!</h2>
-        <p style="color: #64748b; font-size: 0.95rem;">స్థాయి పూర్తయింది!</p>
-        <div style="font-size: 32px; margin: 10px 0; color: #fbbf24;">⭐⭐⭐</div>
-        <button class="next-lvl-btn" onclick="nextLevel()">తదుపరి స్థాయి ➔</button>
+        <div style="font-size: 46px;">🏆</div>
+        <h2 style="font-family:'Ramabhadra',sans-serif; color: #1b5e20; margin-top: 4px;">అద్భుతం!</h2>
+        <p style="color: #64748b; font-size: 0.9rem;">స్థాయి విజయవంతంగా పూర్తయింది!</p>
+        <div style="font-size: 28px; margin: 8px 0; color: #fbbf24;">⭐⭐⭐</div>
+        <p style="font-size:0.95rem; font-weight:700; color:#1e293b;">+100 పాయింట్లు లభించాయి!</p>
+        <button class="modal-btn" onclick="nextLevel()">తదుపరి స్థాయి ➔</button>
+      </div>
+    </div>
+
+    <!-- Mahakavi Kavitha Ratnam Tribute Modal (Level 10 Milestones) -->
+    <div class="modal-backdrop" id="tribute-modal">
+      <div class="modal-card">
+        <div style="font-size: 44px;">📜</div>
+        <h2 style="font-family:'Ramabhadra',sans-serif; color: #b45309;">కవితా రత్నం గౌరవం!</h2>
+        <p style="color: #64748b; font-size: 0.88rem;">10 స్థాయిలను విజయవంతంగా పూర్తి చేసినందుకు ప్రత్యేక బహుమతి!</p>
+        
+        <div class="kavi-card" id="kavi-content">
+          <div class="kavi-title" id="kavi-poet">వేమన శతకం</div>
+          <div class="kavi-verse" id="kavi-verse">"ఉప్పు కప్పురంబు నొక్క పోలిక నుండు..."</div>
+          <div class="kavi-meaning" id="kavi-meaning">బాహ్య రూపం ఒకేలా ఉన్నా గుణాన్ని బట్టి మనుషుల విలువ తెలుస్తుంది.</div>
+        </div>
+
+        <button class="modal-btn" style="background:#b45309;" onclick="closeTributeAndAdvance()">కవితా జ్ఞానం పొందాను ➔</button>
       </div>
     </div>
   </div>
 
   <script>
+    // Audio Synthesizer
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playChime(type) {
       if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -446,40 +594,91 @@
       }
     }
 
-    // Grid Layouts with unique, non-overlapping start tiles
-    const LEVELS_DB = [
+    // Curated Databases across all 3 Categories
+    const CATEGORIES_DATA = {
+      general: [
+        {
+          level: 1, gridSize: 3,
+          words: [
+            { num: 1, word: ['క', 'మ', 'ల'], dir: 'H', r: 1, c: 0, clue: 'ఒక అందమైన చెరువు పువ్వు (తామర)', hint: 'దీనిని పద్మం అని కూడా పిలుస్తారు' },
+            { num: 2, word: ['స', 'మ', 'యం'], dir: 'V', r: 0, c: 1, clue: 'గడియారం చూపే కాలం', hint: 'గంటలు నిమిషాలతో కొలుస్తారు' }
+          ]
+        },
+        {
+          level: 2, gridSize: 4,
+          words: [
+            { num: 1, word: ['గో', 'దా', 'వ', 'రి'], dir: 'H', r: 1, c: 0, clue: 'తెలుగు నేలపై ప్రవహించే పవిత్ర నది', hint: 'దక్షిణ గంగ అని పేరు' },
+            { num: 2, word: ['భా', 'ను', 'డు'], dir: 'V', r: 0, c: 2, clue: 'పగలు వెలుగునిచ్చే సూర్యుడు', hint: 'రవి భాస్కరుడు అని కూడా అంటారు' }
+          ]
+        },
+        {
+          level: 3, gridSize: 4,
+          words: [
+            { num: 1, word: ['పు', 'స్త', 'కం'], dir: 'H', r: 1, c: 0, clue: 'జ్ఞానాన్ని అందించే గ్రంథం', hint: 'చదువుకోవడానికి ఉపయోగపడుతుంది' },
+            { num: 2, word: ['క', 'లం'], dir: 'V', r: 1, c: 2, clue: 'రాయడానికి వాడే సాధనం', hint: 'సిరాతో రాసే పరికరం' }
+          ]
+        },
+        {
+          level: 10, gridSize: 4,
+          words: [
+            { num: 1, word: ['వి', 'జ', 'యం'], dir: 'H', r: 1, c: 0, clue: 'కృషితో లభించే గెలుపు', hint: 'ఓటమికి వ్యతిరేక పదం' },
+            { num: 2, word: ['గ', 'జ', 'ము'], dir: 'V', r: 0, c: 1, clue: 'అడవిలో తిరిగే పెద్ద జంతువు (ఏనుగు)', hint: 'హస్తి లేదా కరి అని అంటారు' }
+          ]
+        }
+      ],
+      poems: [
+        {
+          level: 1, gridSize: 3,
+          words: [
+            { num: 1, word: ['వే', 'మ', 'న'], dir: 'H', r: 1, c: 0, clue: 'విశ్వదాభిరామ మకుటంతో శతకం రాసిన యోగి', hint: 'సుప్రసిద్ధ తెలుగు పద్య కవి' },
+            { num: 2, word: ['క', 'మ', 'ల'], dir: 'V', r: 0, c: 1, clue: 'పద్యాలలో తామరను పిలిచే పదం', hint: 'నీటిలో వికసించే పద్మం' }
+          ]
+        },
+        {
+          level: 2, gridSize: 4,
+          words: [
+            { num: 1, word: ['సు', 'మ', 'తి'], dir: 'H', r: 1, c: 0, clue: 'మంచి బుద్ధి గలవాడు అని అర్థం వచ్చే శతకం', hint: 'బద్దెన రచించిన నీతి పద్యాలు' },
+            { num: 2, word: ['మ', 'తి'], dir: 'V', r: 1, c: 1, clue: 'మేధస్సు లేదా ఆలోచనా శక్తి', hint: 'జ్ఞానానికి సమానార్థకం' }
+          ]
+        }
+      ],
+      proverbs: [
+        {
+          level: 1, gridSize: 3,
+          words: [
+            { num: 1, word: ['తో', 'క'], dir: 'H', r: 1, c: 0, clue: 'కుక్క ______ వంకర (సామెత పూరించండి)', hint: 'జంతువు వెనుక ఉండే భాగం' },
+            { num: 2, word: ['క', 'థ'], dir: 'V', r: 1, c: 1, clue: 'మొదటికే మోసం వచ్చినప్పుడు చెప్పేది (అడ్డకథ)', hint: 'గాథ లేదా పిట్టకథ' }
+          ]
+        },
+        {
+          level: 2, gridSize: 4,
+          words: [
+            { num: 1, word: ['దీ', 'పం'], dir: 'H', r: 1, c: 0, clue: '______ ఉండగానే ఇల్లు చక్కబెట్టుకోవాలి', hint: 'వెలుగునిచ్చే జ్యోతి' },
+            { num: 2, word: ['సం', 'ప', 'ద'], dir: 'V', r: 0, c: 1, clue: 'ఐశ్వర్యం లేదా ధనం', hint: 'సిరి సంపదలు' }
+          ]
+        }
+      ]
+    };
+
+    // Tribute Bank
+    const TRIBUTES = [
       {
-        level: 1,
-        gridSize: 3,
-        words: [
-          // Word 1 (Across): Row 1 -> (1,0)=క, (1,1)=మ, (1,2)=ల
-          { num: 1, word: ['క', 'మ', 'ల'], dir: 'H', r: 1, c: 0, clue: 'ఒక అందమైన చెరువు పువ్వు (తామర)', hint: 'దీనిని పద్మం అని కూడా పిలుస్తారు' },
-          // Word 2 (Down): Col 1 -> (0,1)=స, (1,1)=మ, (2,1)=యం. Words cross at 'మ' (1,1).
-          // Start of Word 2 is at (0,1), which is unique from start of Word 1 at (1,0)!
-          { num: 2, word: ['స', 'మ', 'యం'], dir: 'V', r: 0, c: 1, clue: 'గడియారం చూపే కాలం', hint: 'గంటలు నిమిషాలతో కొలుస్తారు' }
-        ]
+        poet: 'మహాకవి వేమన శతకం',
+        verse: 'ఉప్పు కప్పురంబు నొక్క పోలిక నుండు\nచూడ చూడ రుచుల జాడ వేరు\nపురుషులందు పుణ్య పురుషులు వేరయా\nవిశ్వదాభిరామ వినుర వేమ!',
+        meaning: 'బాహ్య రూపం ఒకేలా ఉన్నా పరిశీలించినప్పుడు గుణాన్ని బట్టి మానవుల ఉత్తమత్వం బయటపడుతుంది.'
       },
       {
-        level: 2,
-        gridSize: 4,
-        words: [
-          { num: 1, word: ['గో', 'దా', 'వ', 'రి'], dir: 'H', r: 1, c: 0, clue: 'తెలుగు నేలపై ప్రవహించే పవిత్ర నది', hint: 'దక్షిణ గంగ అని పేరు' },
-          { num: 2, word: ['భా', 'ను', 'డు'], dir: 'V', r: 0, c: 2, clue: 'పగలు వెలుగునిచ్చే సూర్యుడు', hint: 'రవి భాస్కరుడు అని కూడా అంటారు' }
-        ]
-      },
-      {
-        level: 3,
-        gridSize: 4,
-        words: [
-          { num: 1, word: ['పు', 'స్త', 'కం'], dir: 'H', r: 1, c: 0, clue: 'జ్ఞానాన్ని అందించే గ్రంథం', hint: 'చదువుకోవడానికి ఉపయోగపడుతుంది' },
-          { num: 2, word: ['క', 'లం'], dir: 'V', r: 1, c: 2, clue: 'రాయడానికి వాడే సాధనం', hint: 'సిరాతో రాసే పరికరం' }
-        ]
+        poet: 'బద్దెన - సుమతీ శతకం',
+        verse: 'ఆకొన్న కూడే యమృతము\nతాకొంచక నిచ్చువాడె దాత దరిత్రిన్\nసోకోర్చువాడె మనుజుడు\nతేకువగలవాడె మనుజుడెన్నగ సుమతీ!',
+        meaning: 'ఆకలితో ఉన్నప్పుడు దొరికే ఆహారమే అమృతం; సంకోచం లేకుండా ఇచ్చేవాడే నిజమైన దాత.'
       }
     ];
 
+    let currentCategory = 'general';
     let currentLvlIdx = 0;
-    let score = 0;
+    let score = 50;
     let streak = 1;
+    let freeHints = 3;
     let selectedCell = null;
     let activeWord = null;
     let gridState = {};
@@ -496,13 +695,25 @@
       window.speechSynthesis.onvoiceschanged = primeVoices;
     }
 
+    function switchCategory(catKey) {
+      currentCategory = catKey;
+      currentLvlIdx = 0;
+      document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+      const activeBtn = document.getElementById(`cat-${catKey}`);
+      if (activeBtn) activeBtn.classList.add('active');
+      initLevel();
+    }
+
     function initLevel() {
-      const lvl = LEVELS_DB[currentLvlIdx % LEVELS_DB.length];
+      const catList = CATEGORIES_DATA[currentCategory] || CATEGORIES_DATA['general'];
+      const lvl = catList[currentLvlIdx % catList.length];
+      
       document.getElementById('lvl-num').textContent = lvl.level;
       document.getElementById('score-num').textContent = score;
       document.getElementById('streak-num').textContent = streak;
+      updateHintUI();
 
-      // Clue Tabs
+      // Render Clue Selector Tabs
       const navBar = document.getElementById('clue-nav-bar');
       navBar.innerHTML = '';
       lvl.words.forEach((w) => {
@@ -513,18 +724,18 @@
         tab.onclick = () => {
           activeWord = w;
           const startKey = `${w.r}_${w.c}`;
-          highlightBoard(startKey, true); // True = announce aloud
+          highlightBoard(startKey, true);
         };
         navBar.appendChild(tab);
       });
 
       const container = document.getElementById('puzzle-grid');
       container.innerHTML = '';
-      container.style.gridTemplateColumns = `repeat(${lvl.gridSize}, 60px)`;
+      container.style.gridTemplateColumns = `repeat(${lvl.gridSize}, 58px)`;
       gridState = {};
 
       const cellWordMap = {};
-      const headCellMap = {}; // Maps key -> Word object if it is the HEAD/START of that word
+      const headCellMap = {};
 
       lvl.words.forEach((w) => {
         const headKey = `${w.r}_${w.c}`;
@@ -548,7 +759,6 @@
           cellEl.dataset.key = key;
 
           if (gridState[key]) {
-            // Check if this is the start tile (Tile 1, 2)
             if (headCellMap[key]) {
               const badge = document.createElement('span');
               badge.className = 'cell-badge';
@@ -569,21 +779,18 @@
 
       setupKeyboard(lvl);
 
-      // Default select Word 1 quietly without voice blast on launch
       activeWord = lvl.words[0];
       highlightBoard(`${lvl.words[0].r}_${lvl.words[0].c}`, false);
-      document.getElementById('companion-text').textContent = `స్థాయి ${lvl.level}: సంఖ్య (1) లేదా (2) ఉన్న గడిని నొక్కి సూచన వినండి.`;
+      document.getElementById('companion-text').textContent = `స్థాయి ${lvl.level}: సంఖ్య (1) లేదా (2) నొక్కి సూచన వినండి.`;
     }
 
     function onCellClicked(key, wordsInCell, startingWordOfThisCell) {
       if (!wordsInCell || wordsInCell.length === 0) return;
 
       if (startingWordOfThisCell) {
-        // Tapped a numbered head cell (1 or 2) -> Switch to this word and SPEAK clue!
         activeWord = startingWordOfThisCell;
         highlightBoard(key, true);
       } else {
-        // Tapped an intermediate letter -> Keep active word, DO NOT speak clue!
         if (!wordsInCell.some(w => w.num === activeWord.num)) {
           activeWord = wordsInCell[0];
         }
@@ -594,16 +801,13 @@
     function highlightBoard(targetKey, shouldSpeak) {
       selectedCell = targetKey;
 
-      // Update Clue Text Bar
       document.getElementById('clue-direction').textContent = `${activeWord.dir === 'H' ? 'అడ్డం' : 'నిలువు'} (${activeWord.num})`;
       document.getElementById('clue-content').textContent = activeWord.clue;
 
-      // Update Nav Tabs
       document.querySelectorAll('.clue-tab').forEach(t => t.classList.remove('active'));
       const activeTab = document.getElementById(`tab-${activeWord.num}`);
       if (activeTab) activeTab.classList.add('active');
 
-      // Compute active word keys
       const activeWordKeys = new Set();
       if (activeWord) {
         for (let i = 0; i < activeWord.word.length; i++) {
@@ -613,7 +817,6 @@
         }
       }
 
-      // Highlight DOM
       document.querySelectorAll('.grid-cell').forEach(domCell => {
         const cellKey = domCell.dataset.key;
         domCell.classList.remove('selected', 'active-word');
@@ -685,7 +888,7 @@
       const nextC = activeWord.dir === 'H' ? c + 1 : c;
       const nextKey = `${nextR}_${nextC}`;
       if (gridState[nextKey]) {
-        highlightBoard(nextKey, false); // advance focus silently
+        highlightBoard(nextKey, false);
       }
     }
 
@@ -710,8 +913,17 @@
       }
       score += 100;
       document.getElementById('score-num').textContent = score;
-      document.getElementById('victory-modal').style.display = 'flex';
-      setCompanionText('అద్భుతం! స్థాయి పూర్తయింది.');
+
+      const catList = CATEGORIES_DATA[currentCategory] || CATEGORIES_DATA['general'];
+      const currentLevel = catList[currentLvlIdx % catList.length].level;
+
+      // Check for Level 10 Mahakavi Heritage Tribute Milestone!
+      if (currentLevel % 10 === 0) {
+        showTributeModal();
+      } else {
+        document.getElementById('victory-modal').style.display = 'flex';
+        setCompanionText('అద్భుతం! స్థాయి పూర్తయింది.');
+      }
     }
 
     function nextLevel() {
@@ -720,11 +932,85 @@
       initLevel();
     }
 
+    // Hint Logic with Free Limit and Star Cost
     function useHint() {
       if (!activeWord) return;
+
+      if (freeHints > 0) {
+        freeHints--;
+        updateHintUI();
+        revealSyllableHint();
+      } else if (score >= 20) {
+        score -= 20;
+        document.getElementById('score-num').textContent = score;
+        updateHintUI();
+        revealSyllableHint();
+      } else {
+        setCompanionText('💡 ఉచిత సహాయాలు ముగిశాయి! సహాయం కోసం 20 నక్షత్రాలు అవసరం.');
+      }
+    }
+
+    function updateHintUI() {
+      const label = document.getElementById('hint-label');
+      if (freeHints > 0) {
+        label.textContent = `సహాయం (${freeHints} ఉచితం)`;
+      } else {
+        label.textContent = `సహాయం (20 ⭐)`;
+      }
+    }
+
+    function revealSyllableHint() {
       setCompanionText(`💡 సహాయం: ${activeWord.hint}`);
     }
 
+    // Pause / Resume Logic
+    function pauseGame() {
+      document.getElementById('pause-modal').style.display = 'flex';
+    }
+
+    function resumeGame() {
+      document.getElementById('pause-modal').style.display = 'none';
+    }
+
+    function restartLevel() {
+      document.getElementById('pause-modal').style.display = 'none';
+      initLevel();
+    }
+
+    // Tribute Milestone Handlers
+    function showTributeModal() {
+      const tribute = TRIBUTES[Math.floor(Math.random() * TRIBUTES.length)];
+      document.getElementById('kavi-poet').textContent = tribute.poet;
+      document.getElementById('kavi-verse').textContent = `"${tribute.verse}"`;
+      document.getElementById('kavi-meaning').textContent = tribute.meaning;
+      document.getElementById('tribute-modal').style.display = 'flex';
+      setCompanionText(`కవితా రత్నం గౌరవం! ${tribute.poet}`);
+    }
+
+    function closeTributeAndAdvance() {
+      document.getElementById('tribute-modal').style.display = 'none';
+      score += 50; // Bonus for milestone
+      currentLvlIdx++;
+      initLevel();
+    }
+
+    // Bonus Logic
+    function checkDailyBonus() {
+      const lastVisit = localStorage.getItem('telugu_padam_last_bonus');
+      const today = new Date().toDateString();
+      if (lastVisit !== today) {
+        document.getElementById('bonus-modal').style.display = 'flex';
+      }
+    }
+
+    function closeBonus() {
+      score += 25;
+      document.getElementById('score-num').textContent = score;
+      localStorage.setItem('telugu_padam_last_bonus', new Date().toDateString());
+      document.getElementById('bonus-modal').style.display = 'none';
+    }
+
+    // Voice Engine
     function setCompanionText(txt) {
       document.getElementById('companion-text').textContent = txt;
       if (!voiceEnabled || !('speechSynthesis' in window)) return;
@@ -786,7 +1072,9 @@
       });
     }
 
+    // Start App
     initLevel();
+    setTimeout(checkDailyBonus, 1000);
   </script>
 </body>
 </html>
