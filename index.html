@@ -15,13 +15,9 @@
     :root {
       --primary: #1b5e20;
       --primary-light: #2e7d32;
-      --primary-soft: #e8f5e9;
       --accent: #f59e0b;
-      --accent-active: #fbbf24;
       --bg: #eceff1;
-      --card-bg: #ffffff;
       --text: #0f172a;
-      --text-muted: #475569;
       --cell-border: #94a3b8;
     }
 
@@ -50,14 +46,13 @@
       min-height: 92vh;
       background: #ffffff;
       border-radius: 28px;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       padding: 16px;
       border: 3px solid #e2e8f0;
       position: relative;
-      overflow: hidden;
     }
 
     header {
@@ -77,15 +72,12 @@
       gap: 8px;
     }
 
-    .brand-icon {
-      font-size: 26px;
-    }
+    .brand-icon { font-size: 26px; }
 
     .brand-title {
       font-family: 'Ramabhadra', sans-serif;
       font-size: 1.15rem;
       color: var(--primary);
-      line-height: 1.2;
     }
 
     .stats-bar {
@@ -95,9 +87,6 @@
     }
 
     .stat-badge {
-      display: flex;
-      align-items: center;
-      gap: 4px;
       font-size: 0.9rem;
       font-weight: 700;
       color: var(--text);
@@ -117,18 +106,11 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      box-shadow: 0 4px 10px rgba(46, 125, 50, 0.08);
       cursor: pointer;
     }
 
     .companion-avatar {
       font-size: 32px;
-      animation: gentleBounce 2.5s infinite ease-in-out;
-    }
-
-    @keyframes gentleBounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-4px); }
     }
 
     .companion-speech {
@@ -146,15 +128,8 @@
       border-radius: 10px;
       font-size: 0.8rem;
       font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 4px;
       border: none;
       cursor: pointer;
-    }
-
-    .voice-chip:active {
-      transform: scale(0.96);
     }
 
     .clue-nav-bar {
@@ -175,7 +150,6 @@
       color: #475569;
       cursor: pointer;
       text-align: center;
-      transition: all 0.15s ease;
     }
 
     .clue-tab.active {
@@ -200,7 +174,6 @@
       background: #e2e8f0;
       padding: 10px;
       border-radius: 20px;
-      box-shadow: inset 0 2px 6px rgba(0,0,0,0.08), 0 6px 16px rgba(0,0,0,0.06);
       border: 2px solid #cbd5e1;
     }
 
@@ -220,7 +193,6 @@
       cursor: pointer;
       position: relative;
       transition: all 0.12s ease;
-      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
     }
 
     .grid-cell.active-word {
@@ -231,7 +203,7 @@
     .grid-cell.selected {
       background: #ffffff !important;
       border-color: #1b5e20 !important;
-      box-shadow: 0 0 0 4px rgba(27, 94, 32, 0.35), 0 4px 10px rgba(0,0,0,0.18) !important;
+      box-shadow: 0 0 0 4px rgba(27, 94, 32, 0.35) !important;
       transform: translateY(-2px) scale(1.05);
       z-index: 5;
     }
@@ -247,7 +219,6 @@
       background: transparent !important;
       border: none !important;
       box-shadow: none !important;
-      cursor: default !important;
       pointer-events: none;
     }
 
@@ -255,16 +226,14 @@
       position: absolute;
       top: 3px;
       left: 5px;
-      font-size: 0.65rem;
+      font-size: 0.72rem;
       font-family: 'Ramabhadra', sans-serif;
-      color: #64748b;
-      line-height: 1;
+      color: #1b5e20;
+      font-weight: 800;
       pointer-events: none;
     }
 
-    .cell-letter {
-      pointer-events: none;
-    }
+    .cell-letter { pointer-events: none; }
 
     .clue-panel {
       width: 100%;
@@ -281,8 +250,6 @@
     .clue-dir-tag {
       font-size: 0.75rem;
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
       color: #1b5e20;
       background: #e8f5e9;
       padding: 2px 6px;
@@ -295,7 +262,6 @@
       font-size: 1.02rem;
       font-weight: 700;
       color: #0f172a;
-      line-height: 1.3;
     }
 
     .hint-btn {
@@ -307,15 +273,7 @@
       font-family: 'Mandali', sans-serif;
       font-size: 0.9rem;
       font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 4px;
       cursor: pointer;
-      flex-shrink: 0;
-    }
-
-    .hint-btn:active {
-      transform: scale(0.96);
     }
 
     .palette-box {
@@ -338,9 +296,6 @@
       font-family: 'Ramabhadra', sans-serif;
       color: #0f172a;
       cursor: pointer;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.06);
-      transition: all 0.08s ease;
-      touch-action: manipulation;
     }
 
     .palette-key:active {
@@ -365,15 +320,8 @@
       font-size: 0.95rem;
       font-weight: 700;
       color: #334155;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
       cursor: pointer;
-    }
-
-    .action-btn:active {
-      background: #e2e8f0;
+      text-align: center;
     }
 
     .modal-backdrop {
@@ -395,20 +343,6 @@
       border-radius: 24px;
       padding: 24px;
       text-align: center;
-      box-shadow: 0 16px 36px rgba(0,0,0,0.25);
-      animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    @keyframes popIn {
-      0% { transform: scale(0.85); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    .stars-row {
-      font-size: 32px;
-      margin: 10px 0;
-      color: #fbbf24;
-      text-shadow: 0 2px 4px rgba(251, 191, 36, 0.3);
     }
 
     .next-lvl-btn {
@@ -422,19 +356,12 @@
       font-size: 1.1rem;
       cursor: pointer;
       margin-top: 14px;
-      box-shadow: 0 4px 12px rgba(27, 94, 32, 0.3);
-    }
-
-    .next-lvl-btn:active {
-      background: var(--primary-light);
     }
   </style>
 </head>
 <body>
 
   <div class="app-wrapper">
-
-    <!-- Header -->
     <header>
       <div class="brand">
         <span class="brand-icon">🦜</span>
@@ -447,61 +374,47 @@
       </div>
     </header>
 
-    <!-- Companion Speech Box -->
     <div class="companion-banner" onclick="speakCurrentClue()">
       <div class="companion-avatar">🦜</div>
       <div class="companion-speech" id="companion-text">
-        నమస్కారం! సంఖ్య ఉన్న గడిపై నొక్కి సూచన వినండి.
+        నమస్కారం! సంఖ్య 1 లేదా 2 ఉన్న గడిని నొక్కి సూచన వినండి.
       </div>
       <button class="voice-chip" type="button" onclick="speakCurrentClue(); event.stopPropagation();">🔊 విను</button>
     </div>
 
-    <!-- Clue Selection Tabs -->
     <div class="clue-nav-bar" id="clue-nav-bar"></div>
 
-    <!-- Crossword Playing Grid -->
     <main class="game-area">
       <div class="grid-board" id="puzzle-grid"></div>
     </main>
 
-    <!-- Active Clue Card -->
     <div class="clue-panel">
       <div>
         <div class="clue-dir-tag" id="clue-direction">అడ్డం (1)</div>
         <div class="clue-text" id="clue-content">సూచన లోడ్ అవుతోంది...</div>
       </div>
-      <button class="hint-btn" onclick="useHint()">
-        💡 సహాయం
-      </button>
+      <button class="hint-btn" onclick="useHint()">💡 సహాయం</button>
     </div>
 
-    <!-- Syllable Keyboard -->
     <div class="palette-box" id="letters-keyboard"></div>
 
-    <!-- Control Tray -->
     <div class="controls-tray">
       <button class="action-btn" onclick="eraseCurrentCell()">⌫ తొలగించు</button>
       <button class="action-btn" onclick="toggleVoice()">🔊 <span id="voice-label">వాయిస్ ఆన్</span></button>
     </div>
 
-    <!-- Victory Modal -->
     <div class="modal-backdrop" id="victory-modal">
       <div class="modal-card">
         <div style="font-size: 52px;">🏆</div>
         <h2 style="font-family:'Ramabhadra',sans-serif; color: #1b5e20; margin-top: 6px;">అద్భుతం!</h2>
-        <p style="color: #64748b; font-size: 0.95rem;">ఈ స్థాయిని విజయవంతంగా పూర్తి చేశారు!</p>
-        <div class="stars-row">⭐⭐⭐</div>
-        <div style="background: #f8fafc; border-radius: 12px; padding: 10px; margin: 8px 0; font-size: 0.95rem; color: #334155;">
-          +100 పాయింట్లు లభించాయి!
-        </div>
+        <p style="color: #64748b; font-size: 0.95rem;">స్థాయి పూర్తయింది!</p>
+        <div style="font-size: 32px; margin: 10px 0; color: #fbbf24;">⭐⭐⭐</div>
         <button class="next-lvl-btn" onclick="nextLevel()">తదుపరి స్థాయి ➔</button>
       </div>
     </div>
-
   </div>
 
   <script>
-    // Audio Synthesizer
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playChime(type) {
       if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -519,8 +432,7 @@
         osc.start(now);
         osc.stop(now + 0.07);
       } else if (type === 'win') {
-        const notes = [523.25, 659.25, 783.99, 1046.50];
-        notes.forEach((freq, idx) => {
+        [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
           const o = audioCtx.createOscillator();
           const g = audioCtx.createGain();
           o.connect(g);
@@ -534,14 +446,17 @@
       }
     }
 
-    // Bite-Sized Level Packs
+    // Grid Layouts with unique, non-overlapping start tiles
     const LEVELS_DB = [
       {
         level: 1,
         gridSize: 3,
         words: [
+          // Word 1 (Across): Row 1 -> (1,0)=క, (1,1)=మ, (1,2)=ల
           { num: 1, word: ['క', 'మ', 'ల'], dir: 'H', r: 1, c: 0, clue: 'ఒక అందమైన చెరువు పువ్వు (తామర)', hint: 'దీనిని పద్మం అని కూడా పిలుస్తారు' },
-          { num: 2, word: ['మ', 'న', 'సు'], dir: 'V', r: 1, c: 1, clue: 'భావాలు పుట్టే ప్రదేశం లేదా హృదయం', hint: 'కోరికలు ఆలోచనలు ఇక్కడే కలుగుతాయి' }
+          // Word 2 (Down): Col 1 -> (0,1)=స, (1,1)=మ, (2,1)=యం. Words cross at 'మ' (1,1).
+          // Start of Word 2 is at (0,1), which is unique from start of Word 1 at (1,0)!
+          { num: 2, word: ['స', 'మ', 'యం'], dir: 'V', r: 0, c: 1, clue: 'గడియారం చూపే కాలం', hint: 'గంటలు నిమిషాలతో కొలుస్తారు' }
         ]
       },
       {
@@ -559,22 +474,6 @@
           { num: 1, word: ['పు', 'స్త', 'కం'], dir: 'H', r: 1, c: 0, clue: 'జ్ఞానాన్ని అందించే గ్రంథం', hint: 'చదువుకోవడానికి ఉపయోగపడుతుంది' },
           { num: 2, word: ['క', 'లం'], dir: 'V', r: 1, c: 2, clue: 'రాయడానికి వాడే సాధనం', hint: 'సిరాతో రాసే పరికరం' }
         ]
-      },
-      {
-        level: 4,
-        gridSize: 4,
-        words: [
-          { num: 1, word: ['జా', 'బి', 'లి'], dir: 'H', r: 1, c: 0, clue: 'రాత్రి వేళ ఆకాశంలో మెరిసే చందమామ', hint: 'చల్లని వెన్నెల కురిపిస్తాడు' },
-          { num: 2, word: ['బి', 'య్యం'], dir: 'V', r: 1, c: 1, clue: 'అన్నం వండటానికి ఉపయోగించే ధాన్యం', hint: 'వరి నుంచి వస్తుంది' }
-        ]
-      },
-      {
-        level: 5,
-        gridSize: 4,
-        words: [
-          { num: 1, word: ['తె', 'లు', 'గు'], dir: 'H', r: 1, c: 0, clue: 'తేనె వంటి మన మాతృభాష', hint: 'ఇటాలియన్ ఆఫ్ ది ఈస్ట్ అని పిలుస్తారు' },
-          { num: 2, word: ['గు', 'డి'], dir: 'V', r: 1, c: 2, clue: 'దేవుడిని దర్శించుకునే పవిత్ర స్థలం', hint: 'కోవెల అని కూడా అంటారు' }
-        ]
       }
     ];
 
@@ -587,7 +486,6 @@
     let voiceEnabled = true;
     let availableVoices = [];
 
-    // Robust Desktop & Mobile Voice Detection
     function primeVoices() {
       if ('speechSynthesis' in window) {
         availableVoices = window.speechSynthesis.getVoices();
@@ -604,7 +502,7 @@
       document.getElementById('score-num').textContent = score;
       document.getElementById('streak-num').textContent = streak;
 
-      // Render Clue Selector Tabs
+      // Clue Tabs
       const navBar = document.getElementById('clue-nav-bar');
       navBar.innerHTML = '';
       lvl.words.forEach((w) => {
@@ -615,7 +513,7 @@
         tab.onclick = () => {
           activeWord = w;
           const startKey = `${w.r}_${w.c}`;
-          highlightBoard(startKey, true); // true = announce clue
+          highlightBoard(startKey, true); // True = announce aloud
         };
         navBar.appendChild(tab);
       });
@@ -626,19 +524,19 @@
       gridState = {};
 
       const cellWordMap = {};
-      const cellStartNum = {};
+      const headCellMap = {}; // Maps key -> Word object if it is the HEAD/START of that word
 
       lvl.words.forEach((w) => {
-        const startKey = `${w.r}_${w.c}`;
-        cellStartNum[startKey] = w.num;
+        const headKey = `${w.r}_${w.c}`;
+        headCellMap[headKey] = w;
 
         for (let i = 0; i < w.word.length; i++) {
-          const rowPos = w.dir === 'H' ? w.r : w.r + i;
-          const colPos = w.dir === 'H' ? w.c + i : w.c;
-          const key = `${rowPos}_${colPos}`;
+          const rPos = w.dir === 'H' ? w.r : w.r + i;
+          const cPos = w.dir === 'H' ? w.c + i : w.c;
+          const key = `${rPos}_${cPos}`;
           if (!cellWordMap[key]) cellWordMap[key] = [];
           cellWordMap[key].push(w);
-          gridState[key] = { expected: w.word[i], current: '', solved: false, isStartOf: (i === 0 ? w : null) };
+          gridState[key] = { expected: w.word[i], current: '', solved: false };
         }
       });
 
@@ -650,17 +548,18 @@
           cellEl.dataset.key = key;
 
           if (gridState[key]) {
-            if (cellStartNum[key]) {
+            // Check if this is the start tile (Tile 1, 2)
+            if (headCellMap[key]) {
               const badge = document.createElement('span');
               badge.className = 'cell-badge';
-              badge.textContent = cellStartNum[key];
+              badge.textContent = headCellMap[key].num;
               cellEl.appendChild(badge);
             }
             const textSpan = document.createElement('span');
             textSpan.className = 'cell-letter';
             cellEl.appendChild(textSpan);
 
-            cellEl.onclick = () => onCellClicked(key, cellWordMap[key]);
+            cellEl.onclick = () => onCellClicked(key, cellWordMap[key], headCellMap[key]);
           } else {
             cellEl.classList.add('blocked');
           }
@@ -670,41 +569,32 @@
 
       setupKeyboard(lvl);
 
-      // Select Word 1 quietly on initial render
+      // Default select Word 1 quietly without voice blast on launch
       activeWord = lvl.words[0];
-      const startKey = `${lvl.words[0].r}_${lvl.words[0].c}`;
-      highlightBoard(startKey, false); // false = don't auto-speak on launch
-      document.getElementById('companion-text').textContent = `స్థాయి ${lvl.level}: సంఖ్య (1) లేదా (2) నొక్కి సూచన వినండి.`;
+      highlightBoard(`${lvl.words[0].r}_${lvl.words[0].c}`, false);
+      document.getElementById('companion-text').textContent = `స్థాయి ${lvl.level}: సంఖ్య (1) లేదా (2) ఉన్న గడిని నొక్కి సూచన వినండి.`;
     }
 
-    function onCellClicked(key, wordsInCell) {
+    function onCellClicked(key, wordsInCell, startingWordOfThisCell) {
       if (!wordsInCell || wordsInCell.length === 0) return;
 
-      // Check if this cell is the start of any word (e.g. Word 1 or Word 2)
-      const startingWord = wordsInCell.find(w => `${w.r}_${w.c}` === key);
-
-      let shouldAnnounce = false;
-
-      if (startingWord) {
-        // If clicking a starting cell (like 1 or 2), switch to that word and announce its hint!
-        activeWord = startingWord;
-        shouldAnnounce = true;
+      if (startingWordOfThisCell) {
+        // Tapped a numbered head cell (1 or 2) -> Switch to this word and SPEAK clue!
+        activeWord = startingWordOfThisCell;
+        highlightBoard(key, true);
       } else {
-        // It's an internal letter inside a word (e.g. letter 2 or 3)
-        // Keep current active word if this cell belongs to it
+        // Tapped an intermediate letter -> Keep active word, DO NOT speak clue!
         if (!wordsInCell.some(w => w.num === activeWord.num)) {
           activeWord = wordsInCell[0];
         }
-        shouldAnnounce = false; // Do NOT repeat clue on intermediate letters
+        highlightBoard(key, false);
       }
-
-      highlightBoard(key, shouldAnnounce);
     }
 
-    function highlightBoard(targetKey, shouldAnnounce) {
+    function highlightBoard(targetKey, shouldSpeak) {
       selectedCell = targetKey;
 
-      // Update Clue Bar
+      // Update Clue Text Bar
       document.getElementById('clue-direction').textContent = `${activeWord.dir === 'H' ? 'అడ్డం' : 'నిలువు'} (${activeWord.num})`;
       document.getElementById('clue-content').textContent = activeWord.clue;
 
@@ -713,7 +603,7 @@
       const activeTab = document.getElementById(`tab-${activeWord.num}`);
       if (activeTab) activeTab.classList.add('active');
 
-      // Compute cell coordinates for active word
+      // Compute active word keys
       const activeWordKeys = new Set();
       if (activeWord) {
         for (let i = 0; i < activeWord.word.length; i++) {
@@ -723,7 +613,7 @@
         }
       }
 
-      // Highlight DOM cells
+      // Highlight DOM
       document.querySelectorAll('.grid-cell').forEach(domCell => {
         const cellKey = domCell.dataset.key;
         domCell.classList.remove('selected', 'active-word');
@@ -737,8 +627,7 @@
 
       playChime('tap');
 
-      // Only speak and change companion text when explicitly requested
-      if (shouldAnnounce) {
+      if (shouldSpeak) {
         setCompanionText(`${activeWord.num}. ${activeWord.clue}`);
       }
     }
@@ -796,13 +685,12 @@
       const nextC = activeWord.dir === 'H' ? c + 1 : c;
       const nextKey = `${nextR}_${nextC}`;
       if (gridState[nextKey]) {
-        highlightBoard(nextKey, false); // advance focus quietly
+        highlightBoard(nextKey, false); // advance focus silently
       }
     }
 
     function checkWordCompletion() {
       let allCorrect = true;
-
       for (const [key, val] of Object.entries(gridState)) {
         if (val.current === val.expected) {
           const el = document.querySelector(`.grid-cell[data-key="${key}"]`);
@@ -812,9 +700,7 @@
         }
       }
 
-      if (allCorrect) {
-        triggerVictory();
-      }
+      if (allCorrect) triggerVictory();
     }
 
     function triggerVictory() {
@@ -825,7 +711,7 @@
       score += 100;
       document.getElementById('score-num').textContent = score;
       document.getElementById('victory-modal').style.display = 'flex';
-      setCompanionText('అద్భుతం! స్థాయి పూర్తయింది. మీరు విజయం సాధించారు!');
+      setCompanionText('అద్భుతం! స్థాయి పూర్తయింది.');
     }
 
     function nextLevel() {
@@ -839,7 +725,6 @@
       setCompanionText(`💡 సహాయం: ${activeWord.hint}`);
     }
 
-    // High-Compatibility Desktop + Mobile Speech Engine
     function setCompanionText(txt) {
       document.getElementById('companion-text').textContent = txt;
       if (!voiceEnabled || !('speechSynthesis' in window)) return;
@@ -852,7 +737,6 @@
         utter.rate = 0.88;
         utter.pitch = 1.0;
 
-        // Smart voice match: Telugu -> Hindi / Indian English -> Default
         const teluguVoice = availableVoices.find(v => v.lang.startsWith('te'));
         const hindiVoice = availableVoices.find(v => v.lang.startsWith('hi'));
         const indianVoice = availableVoices.find(v => v.lang.includes('IN'));
@@ -887,14 +771,10 @@
     function toggleVoice() {
       voiceEnabled = !voiceEnabled;
       document.getElementById('voice-label').textContent = voiceEnabled ? 'వాయిస్ ఆన్' : 'వాయిస్ ఆఫ్';
-      if (voiceEnabled) {
-        speakCurrentClue();
-      } else {
-        window.speechSynthesis.cancel();
-      }
+      if (voiceEnabled) speakCurrentClue();
+      else window.speechSynthesis.cancel();
     }
 
-    // Unlock browser audio context on first user click anywhere
     window.addEventListener('click', () => {
       if (audioCtx.state === 'suspended') audioCtx.resume();
       primeVoices();
