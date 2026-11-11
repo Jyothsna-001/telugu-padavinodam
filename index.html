@@ -60,7 +60,6 @@
       overflow: hidden;
     }
 
-    /* Top Navigation */
     header {
       width: 100%;
       display: flex;
@@ -108,7 +107,6 @@
       border: 1.5px solid #cbd5e1;
     }
 
-    /* Akshara Mitra Companion */
     .companion-banner {
       width: 100%;
       margin-top: 10px;
@@ -144,18 +142,21 @@
     .voice-chip {
       background: #1b5e20;
       color: #ffffff;
-      padding: 4px 8px;
-      border-radius: 8px;
+      padding: 5px 10px;
+      border-radius: 10px;
       font-size: 0.8rem;
       font-weight: 700;
       display: flex;
       align-items: center;
-      gap: 3px;
+      gap: 4px;
       border: none;
       cursor: pointer;
     }
 
-    /* Clue Selector Tabs */
+    .voice-chip:active {
+      transform: scale(0.96);
+    }
+
     .clue-nav-bar {
       display: flex;
       gap: 6px;
@@ -183,7 +184,6 @@
       border-color: #1b5e20;
     }
 
-    /* Crossword Stage */
     .game-area {
       width: 100%;
       display: flex;
@@ -266,7 +266,6 @@
       pointer-events: none;
     }
 
-    /* Active Clue Bar */
     .clue-panel {
       width: 100%;
       background: #f8fafc;
@@ -319,7 +318,6 @@
       transform: scale(0.96);
     }
 
-    /* Keyboard Palette */
     .palette-box {
       width: 100%;
       display: grid;
@@ -350,7 +348,6 @@
       border-bottom-width: 2px;
     }
 
-    /* Control Tray */
     .controls-tray {
       width: 100%;
       display: flex;
@@ -379,7 +376,6 @@
       background: #e2e8f0;
     }
 
-    /* Victory Modal */
     .modal-backdrop {
       display: none;
       position: absolute;
@@ -451,13 +447,13 @@
       </div>
     </header>
 
-    <!-- Akshara Mitra Companion Box -->
-    <div class="companion-banner" onclick="speakCompanion()">
+    <!-- Companion Speech Box -->
+    <div class="companion-banner" onclick="speakCurrentClue()">
       <div class="companion-avatar">🦜</div>
       <div class="companion-speech" id="companion-text">
-        నమస్కారం! అడ్డం లేదా నిలువు సూచనను ఎంచుకోండి.
+        నమస్కారం! సంఖ్య ఉన్న గడిపై నొక్కి సూచన వినండి.
       </div>
-      <button class="voice-chip" type="button">🔊 విను</button>
+      <button class="voice-chip" type="button" onclick="speakCurrentClue(); event.stopPropagation();">🔊 విను</button>
     </div>
 
     <!-- Clue Selection Tabs -->
@@ -479,10 +475,10 @@
       </button>
     </div>
 
-    <!-- Letter Keyboard Palette -->
+    <!-- Syllable Keyboard -->
     <div class="palette-box" id="letters-keyboard"></div>
 
-    <!-- Bottom Controls -->
+    <!-- Control Tray -->
     <div class="controls-tray">
       <button class="action-btn" onclick="eraseCurrentCell()">⌫ తొలగించు</button>
       <button class="action-btn" onclick="toggleVoice()">🔊 <span id="voice-label">వాయిస్ ఆన్</span></button>
@@ -545,7 +541,7 @@
         gridSize: 3,
         words: [
           { num: 1, word: ['క', 'మ', 'ల'], dir: 'H', r: 1, c: 0, clue: 'ఒక అందమైన చెరువు పువ్వు (తామర)', hint: 'దీనిని పద్మం అని కూడా పిలుస్తారు' },
-          { num: 2, word: ['మ', 'న', 'సు'], dir: 'V', r: 1, c: 1, clue: 'భావాలు పుట్టే ప్రదేశం / హృదయం', hint: 'కోరికలు, ఆలోచనలు ఇక్కడే కలుగుతాయి' }
+          { num: 2, word: ['మ', 'న', 'సు'], dir: 'V', r: 1, c: 1, clue: 'భావాలు పుట్టే ప్రదేశం లేదా హృదయం', hint: 'కోరికలు ఆలోచనలు ఇక్కడే కలుగుతాయి' }
         ]
       },
       {
@@ -553,7 +549,7 @@
         gridSize: 4,
         words: [
           { num: 1, word: ['గో', 'దా', 'వ', 'రి'], dir: 'H', r: 1, c: 0, clue: 'తెలుగు నేలపై ప్రవహించే పవిత్ర నది', hint: 'దక్షిణ గంగ అని పేరు' },
-          { num: 2, word: ['భా', 'ను', 'డు'], dir: 'V', r: 0, c: 2, clue: 'పగలు వెలుగునిచ్చే సూర్యుడు', hint: 'రవి, భాస్కరుడు అని కూడా అంటారు' }
+          { num: 2, word: ['భా', 'ను', 'డు'], dir: 'V', r: 0, c: 2, clue: 'పగలు వెలుగునిచ్చే సూర్యుడు', hint: 'రవి భాస్కరుడు అని కూడా అంటారు' }
         ]
       },
       {
@@ -591,14 +587,15 @@
     let voiceEnabled = true;
     let availableVoices = [];
 
-    function loadVoices() {
+    // Robust Desktop & Mobile Voice Detection
+    function primeVoices() {
       if ('speechSynthesis' in window) {
         availableVoices = window.speechSynthesis.getVoices();
       }
     }
     if ('speechSynthesis' in window) {
-      loadVoices();
-      window.speechSynthesis.onvoiceschanged = loadVoices;
+      primeVoices();
+      window.speechSynthesis.onvoiceschanged = primeVoices;
     }
 
     function initLevel() {
@@ -615,7 +612,11 @@
         tab.className = 'clue-tab';
         tab.id = `tab-${w.num}`;
         tab.textContent = `${w.num}. ${w.dir === 'H' ? 'అడ్డం' : 'నిలువు'}`;
-        tab.onclick = () => selectWordDirectly(w);
+        tab.onclick = () => {
+          activeWord = w;
+          const startKey = `${w.r}_${w.c}`;
+          highlightBoard(startKey, true); // true = announce clue
+        };
         navBar.appendChild(tab);
       });
 
@@ -637,7 +638,7 @@
           const key = `${rowPos}_${colPos}`;
           if (!cellWordMap[key]) cellWordMap[key] = [];
           cellWordMap[key].push(w);
-          gridState[key] = { expected: w.word[i], current: '', solved: false };
+          gridState[key] = { expected: w.word[i], current: '', solved: false, isStartOf: (i === 0 ? w : null) };
         }
       });
 
@@ -668,37 +669,46 @@
       }
 
       setupKeyboard(lvl);
-      selectWordDirectly(lvl.words[0]);
-    }
 
-    function selectWordDirectly(word) {
-      activeWord = word;
-      const startKey = `${word.r}_${word.c}`;
-      highlightBoard(startKey);
+      // Select Word 1 quietly on initial render
+      activeWord = lvl.words[0];
+      const startKey = `${lvl.words[0].r}_${lvl.words[0].c}`;
+      highlightBoard(startKey, false); // false = don't auto-speak on launch
+      document.getElementById('companion-text').textContent = `స్థాయి ${lvl.level}: సంఖ్య (1) లేదా (2) నొక్కి సూచన వినండి.`;
     }
 
     function onCellClicked(key, wordsInCell) {
-      if (wordsInCell && wordsInCell.length > 1 && activeWord) {
-        const otherWord = wordsInCell.find(w => w.num !== activeWord.num);
-        if (selectedCell === key && otherWord) {
-          activeWord = otherWord;
-        } else if (!wordsInCell.some(w => w.num === activeWord.num)) {
+      if (!wordsInCell || wordsInCell.length === 0) return;
+
+      // Check if this cell is the start of any word (e.g. Word 1 or Word 2)
+      const startingWord = wordsInCell.find(w => `${w.r}_${w.c}` === key);
+
+      let shouldAnnounce = false;
+
+      if (startingWord) {
+        // If clicking a starting cell (like 1 or 2), switch to that word and announce its hint!
+        activeWord = startingWord;
+        shouldAnnounce = true;
+      } else {
+        // It's an internal letter inside a word (e.g. letter 2 or 3)
+        // Keep current active word if this cell belongs to it
+        if (!wordsInCell.some(w => w.num === activeWord.num)) {
           activeWord = wordsInCell[0];
         }
-      } else if (wordsInCell && wordsInCell.length === 1) {
-        activeWord = wordsInCell[0];
+        shouldAnnounce = false; // Do NOT repeat clue on intermediate letters
       }
-      highlightBoard(key);
+
+      highlightBoard(key, shouldAnnounce);
     }
 
-    function highlightBoard(targetKey) {
+    function highlightBoard(targetKey, shouldAnnounce) {
       selectedCell = targetKey;
 
       // Update Clue Bar
       document.getElementById('clue-direction').textContent = `${activeWord.dir === 'H' ? 'అడ్డం' : 'నిలువు'} (${activeWord.num})`;
       document.getElementById('clue-content').textContent = activeWord.clue;
 
-      // Update Tabs
+      // Update Nav Tabs
       document.querySelectorAll('.clue-tab').forEach(t => t.classList.remove('active'));
       const activeTab = document.getElementById(`tab-${activeWord.num}`);
       if (activeTab) activeTab.classList.add('active');
@@ -713,7 +723,7 @@
         }
       }
 
-      // Highlight DOM cells cleanly
+      // Highlight DOM cells
       document.querySelectorAll('.grid-cell').forEach(domCell => {
         const cellKey = domCell.dataset.key;
         domCell.classList.remove('selected', 'active-word');
@@ -726,7 +736,11 @@
       });
 
       playChime('tap');
-      setCompanionText(`${activeWord.num}. ${activeWord.clue}`);
+
+      // Only speak and change companion text when explicitly requested
+      if (shouldAnnounce) {
+        setCompanionText(`${activeWord.num}. ${activeWord.clue}`);
+      }
     }
 
     function setupKeyboard(lvl) {
@@ -782,7 +796,7 @@
       const nextC = activeWord.dir === 'H' ? c + 1 : c;
       const nextKey = `${nextR}_${nextC}`;
       if (gridState[nextKey]) {
-        highlightBoard(nextKey);
+        highlightBoard(nextKey, false); // advance focus quietly
       }
     }
 
@@ -825,26 +839,30 @@
       setCompanionText(`💡 సహాయం: ${activeWord.hint}`);
     }
 
+    // High-Compatibility Desktop + Mobile Speech Engine
     function setCompanionText(txt) {
       document.getElementById('companion-text').textContent = txt;
       if (!voiceEnabled || !('speechSynthesis' in window)) return;
 
       try {
         window.speechSynthesis.cancel();
+        primeVoices();
+
         const utter = new SpeechSynthesisUtterance(txt);
-        utter.rate = 0.9;
+        utter.rate = 0.88;
         utter.pitch = 1.0;
 
-        if (availableVoices.length === 0) {
-          availableVoices = window.speechSynthesis.getVoices();
-        }
-
-        const teluguVoice = availableVoices.find(v => v.lang.includes('te') || v.lang.includes('TE'));
-        const indianVoice = availableVoices.find(v => v.lang.includes('hi') || v.lang.includes('IN'));
+        // Smart voice match: Telugu -> Hindi / Indian English -> Default
+        const teluguVoice = availableVoices.find(v => v.lang.startsWith('te'));
+        const hindiVoice = availableVoices.find(v => v.lang.startsWith('hi'));
+        const indianVoice = availableVoices.find(v => v.lang.includes('IN'));
 
         if (teluguVoice) {
           utter.voice = teluguVoice;
           utter.lang = teluguVoice.lang;
+        } else if (hindiVoice) {
+          utter.voice = hindiVoice;
+          utter.lang = hindiVoice.lang;
         } else if (indianVoice) {
           utter.voice = indianVoice;
           utter.lang = indianVoice.lang;
@@ -854,26 +872,33 @@
 
         window.speechSynthesis.speak(utter);
       } catch (e) {
-        console.warn('SpeechSynthesis error:', e);
+        console.warn('Speech error:', e);
       }
     }
 
-    function speakCompanion() {
+    function speakCurrentClue() {
       if (audioCtx.state === 'suspended') audioCtx.resume();
-      loadVoices();
-      const txt = document.getElementById('companion-text').textContent;
-      setCompanionText(txt);
+      primeVoices();
+      if (activeWord) {
+        setCompanionText(`${activeWord.num}. ${activeWord.clue}`);
+      }
     }
 
     function toggleVoice() {
       voiceEnabled = !voiceEnabled;
       document.getElementById('voice-label').textContent = voiceEnabled ? 'వాయిస్ ఆన్' : 'వాయిస్ ఆఫ్';
       if (voiceEnabled) {
-        speakCompanion();
+        speakCurrentClue();
       } else {
         window.speechSynthesis.cancel();
       }
     }
+
+    // Unlock browser audio context on first user click anywhere
+    window.addEventListener('click', () => {
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      primeVoices();
+    }, { once: true });
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
