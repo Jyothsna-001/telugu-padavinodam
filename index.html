@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>తెలుగు పదవినోదం | Telugu Crossword</title>
   <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#2E7D32" />
+  <meta name="theme-color" content="#1b5e20" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Mandali&family=Ramabhadra&display=swap" rel="stylesheet" />
@@ -14,17 +14,15 @@
   <style>
     :root {
       --primary: #1b5e20;
-      --primary-light: #4c8c4a;
+      --primary-light: #2e7d32;
+      --primary-soft: #e8f5e9;
       --accent: #f59e0b;
-      --accent-hover: #d97706;
-      --bg: #fdfbf7;
+      --accent-active: #fbbf24;
+      --bg: #eceff1;
       --card-bg: #ffffff;
-      --cell-empty: #f1f5f9;
-      --cell-active: #fef3c7;
-      --cell-filled: #e8f5e9;
-      --cell-border: #cbd5e1;
-      --text: #1e293b;
-      --text-muted: #64748b;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --cell-border: #94a3b8;
     }
 
     * {
@@ -41,24 +39,38 @@
       color: var(--text);
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      justify-content: space-between;
       padding: 12px;
-      overflow-x: hidden;
     }
 
+    /* Desktop Phone Simulator Frame */
+    .app-wrapper {
+      width: 100%;
+      max-width: 440px;
+      min-height: 92vh;
+      background: #ffffff;
+      border-radius: 28px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16px;
+      border: 3px solid #e2e8f0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Top Navigation */
     header {
       width: 100%;
-      max-width: 480px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 8px 12px;
-      background: var(--card-bg);
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      border: 1px solid #f1f5f9;
+      padding: 10px 14px;
+      background: #f8fafc;
+      border-radius: 18px;
+      border: 1.5px solid #e2e8f0;
     }
 
     .brand {
@@ -81,7 +93,7 @@
     .stats-bar {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
     }
 
     .stat-badge {
@@ -91,26 +103,24 @@
       font-size: 0.95rem;
       font-weight: 700;
       color: var(--text);
-      background: #f8fafc;
+      background: #ffffff;
       padding: 4px 8px;
       border-radius: 12px;
-      border: 1px solid #e2e8f0;
+      border: 1.5px solid #cbd5e1;
     }
 
-    /* Companion Box */
+    /* Akshara Mitra Companion */
     .companion-banner {
       width: 100%;
-      max-width: 480px;
       margin-top: 10px;
       background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
-      border: 1.5px solid #a5d6a7;
-      border-radius: 16px;
+      border: 2px solid #81c784;
+      border-radius: 18px;
       padding: 10px 14px;
       display: flex;
       align-items: center;
       gap: 12px;
       box-shadow: 0 4px 10px rgba(46, 125, 50, 0.08);
-      position: relative;
     }
 
     .companion-avatar {
@@ -129,124 +139,131 @@
       font-size: 0.95rem;
       line-height: 1.35;
       color: #1b5e20;
+      font-weight: 600;
     }
 
-    .companion-speech strong {
-      font-family: 'Ramabhadra', sans-serif;
-      color: #0f3d13;
-    }
-
-    /* Grid Stage */
+    /* Crossword Stage */
     .game-area {
       width: 100%;
-      max-width: 480px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin: 12px 0;
-      flex: 1;
       justify-content: center;
+      margin: 16px 0;
+      flex: 1;
     }
 
-    .grid-container {
+    .grid-board {
       display: inline-grid;
-      gap: 4px;
-      background: #ffffff;
-      padding: 8px;
-      border-radius: 18px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-      border: 2px solid #e2e8f0;
-      touch-action: manipulation;
+      gap: 6px;
+      background: #e2e8f0;
+      padding: 10px;
+      border-radius: 20px;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.08), 0 6px 16px rgba(0,0,0,0.06);
+      border: 2px solid #cbd5e1;
     }
 
+    /* Distinctive, High-Visibility Grid Cells */
     .grid-cell {
-      width: 52px;
-      height: 52px;
-      background: var(--cell-empty);
-      border-radius: 10px;
+      width: 60px;
+      height: 60px;
+      background: #ffffff;
+      border: 2.5px solid var(--cell-border);
+      border-bottom-width: 4px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.35rem;
+      font-size: 1.55rem;
       font-family: 'Ramabhadra', sans-serif;
-      color: var(--text);
+      color: #0f172a;
       cursor: pointer;
-      border: 2px solid transparent;
-      transition: all 0.15s ease;
       position: relative;
+      transition: all 0.12s ease;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .grid-cell:hover {
+      border-color: #64748b;
     }
 
     .grid-cell.active-word {
-      background: var(--cell-active);
+      background: #fffbeb;
       border-color: #fbbf24;
     }
 
     .grid-cell.selected {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.25);
-      background: #ffffff;
-      transform: scale(1.04);
-      z-index: 2;
+      background: #ffffff !important;
+      border-color: #1b5e20 !important;
+      box-shadow: 0 0 0 4px rgba(27, 94, 32, 0.3), 0 4px 8px rgba(0,0,0,0.15);
+      transform: translateY(-2px) scale(1.05);
+      z-index: 5;
     }
 
     .grid-cell.solved {
-      background: var(--cell-filled);
-      color: var(--primary);
-      border-color: #81c784;
+      background: #e8f5e9 !important;
+      color: #1b5e20 !important;
+      border-color: #4caf50 !important;
+      border-bottom-width: 2.5px;
     }
 
     .grid-cell.blocked {
-      background: transparent;
-      border: none;
-      cursor: default;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      cursor: default !important;
     }
 
-    .cell-number {
+    .cell-badge {
       position: absolute;
-      top: 2px;
-      left: 4px;
+      top: 3px;
+      left: 5px;
       font-size: 0.65rem;
-      font-family: 'Mandali', sans-serif;
-      color: var(--text-muted);
+      font-family: 'Ramabhadra', sans-serif;
+      color: #64748b;
+      line-height: 1;
       pointer-events: none;
     }
 
-    /* Active Clue Drawer */
-    .clue-card {
+    /* Clue Bar */
+    .clue-panel {
       width: 100%;
-      max-width: 480px;
-      background: #ffffff;
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
       padding: 10px 14px;
-      border-radius: 14px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-      border: 1px solid #e2e8f0;
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
     }
 
-    .clue-label {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
+    .clue-dir-tag {
+      font-size: 0.75rem;
       font-weight: 700;
+      text-transform: uppercase;
       letter-spacing: 0.5px;
+      color: #1b5e20;
+      background: #e8f5e9;
+      padding: 2px 6px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 2px;
     }
 
     .clue-text {
       font-size: 1.05rem;
       font-weight: 700;
       color: #0f172a;
-      margin-top: 2px;
     }
 
     .hint-btn {
       background: #fffbeb;
       color: #b45309;
-      border: 1.5px solid #fde68a;
+      border: 2px solid #fde68a;
       padding: 6px 12px;
-      border-radius: 10px;
+      border-radius: 12px;
       font-family: 'Mandali', sans-serif;
       font-size: 0.95rem;
       font-weight: 700;
@@ -254,42 +271,45 @@
       align-items: center;
       gap: 4px;
       cursor: pointer;
-      transition: background 0.15s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
     }
 
     .hint-btn:active {
-      background: #fef3c7;
       transform: scale(0.96);
     }
 
     /* Syllable Keyboard */
-    .palette {
+    .palette-box {
       width: 100%;
-      max-width: 480px;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 8px;
     }
 
-    .key-tile {
+    .palette-key {
       background: #ffffff;
       border: 2px solid #cbd5e1;
       border-bottom: 4px solid #94a3b8;
-      border-radius: 12px;
+      border-radius: 14px;
       height: 52px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.3rem;
+      font-size: 1.35rem;
       font-family: 'Ramabhadra', sans-serif;
-      color: #1e293b;
+      color: #0f172a;
       cursor: pointer;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.06);
       transition: all 0.08s ease;
       touch-action: manipulation;
     }
 
-    .key-tile:active {
+    .palette-key:hover {
+      background: #f8fafc;
+      border-color: #64748b;
+    }
+
+    .palette-key:active {
       transform: translateY(2px);
       border-bottom-width: 2px;
     }
@@ -297,22 +317,21 @@
     /* Action Tray */
     .controls-tray {
       width: 100%;
-      max-width: 480px;
       display: flex;
       gap: 8px;
       margin-top: 10px;
     }
 
-    .tray-btn {
+    .action-btn {
       flex: 1;
       padding: 10px;
-      background: #ffffff;
+      background: #f8fafc;
       border: 1.5px solid #cbd5e1;
       border-radius: 12px;
       font-family: 'Mandali', sans-serif;
       font-size: 0.95rem;
       font-weight: 700;
-      color: var(--text);
+      color: #334155;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -320,31 +339,31 @@
       cursor: pointer;
     }
 
-    .tray-btn:active {
-      background: #f1f5f9;
+    .action-btn:active {
+      background: #e2e8f0;
     }
 
-    /* Victory Modal */
+    /* Victory Celebration Modal */
     .modal-backdrop {
       display: none;
-      position: fixed;
+      position: absolute;
       inset: 0;
-      background: rgba(15, 23, 42, 0.65);
+      background: rgba(15, 23, 42, 0.7);
       backdrop-filter: blur(4px);
       z-index: 100;
       align-items: center;
       justify-content: center;
-      padding: 16px;
+      padding: 20px;
+      border-radius: 28px;
     }
 
     .modal-card {
       background: #ffffff;
       width: 100%;
-      max-width: 360px;
       border-radius: 24px;
       padding: 24px;
       text-align: center;
-      box-shadow: 0 16px 36px rgba(0,0,0,0.2);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.25);
       animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
@@ -370,9 +389,8 @@
       font-family: 'Ramabhadra', sans-serif;
       font-size: 1.1rem;
       cursor: pointer;
-      margin-top: 16px;
+      margin-top: 14px;
       box-shadow: 0 4px 12px rgba(27, 94, 32, 0.3);
-      transition: background 0.15s ease;
     }
 
     .next-lvl-btn:active {
@@ -382,70 +400,72 @@
 </head>
 <body>
 
-  <!-- Top Header -->
-  <header>
-    <div class="brand">
-      <span class="brand-icon">🦜</span>
-      <div>
+  <div class="app-wrapper">
+
+    <!-- Header Section -->
+    <header>
+      <div class="brand">
+        <span class="brand-icon">🦜</span>
         <div class="brand-title">తెలుగు పదవినోదం</div>
       </div>
-    </div>
-    <div class="stats-bar">
-      <div class="stat-badge">🔥 <span id="streak-num">1</span></div>
-      <div class="stat-badge">⭐ <span id="score-num">0</span></div>
-      <div class="stat-badge" style="background:#e8f5e9; color:#1b5e20;">స్థాయి <span id="lvl-num">1</span></div>
-    </div>
-  </header>
-
-  <!-- Akshara Mitra Companion Box -->
-  <div class="companion-banner">
-    <div class="companion-avatar" onclick="speakCompanion()">🦜</div>
-    <div class="companion-speech" id="companion-text">
-      నమస్కారం! మొదటి గడిపై నొక్కి క్రింద ఉన్న అక్షరాన్ని ఎంచుకోండి.
-    </div>
-  </div>
-
-  <!-- Interactive Puzzle Grid -->
-  <main class="game-area">
-    <div class="grid-container" id="puzzle-grid"></div>
-  </main>
-
-  <!-- Dynamic Clue Bar -->
-  <div class="clue-card">
-    <div>
-      <div class="clue-label" id="clue-direction">సూచన (అడ్డం)</div>
-      <div class="clue-text" id="clue-content">రెండు పదాల కలయిక...</div>
-    </div>
-    <button class="hint-btn" onclick="useHint()">
-      💡 సహాయం
-    </button>
-  </div>
-
-  <!-- Syllable Keyboard -->
-  <div class="palette" id="letters-keyboard"></div>
-
-  <!-- Control Buttons -->
-  <div class="controls-tray">
-    <button class="tray-btn" onclick="eraseCurrentCell()">⌫ తొలగించు</button>
-    <button class="tray-btn" onclick="toggleVoice()">🔊 <span id="voice-label">వాయిస్ ఆన్</span></button>
-  </div>
-
-  <!-- Victory Celebrations Modal -->
-  <div class="modal-backdrop" id="victory-modal">
-    <div class="modal-card">
-      <div style="font-size: 48px;">🏆</div>
-      <h2 style="font-family:'Ramabhadra',sans-serif; color: #1b5e20; margin-top: 6px;">అద్భుతం!</h2>
-      <p style="color: #64748b; font-size: 0.95rem;">మీరు ఈ స్థాయిని పూర్తి చేశారు!</p>
-      <div class="stars-row">⭐⭐⭐</div>
-      <div style="background: #f8fafc; border-radius: 12px; padding: 10px; margin: 10px 0; font-size: 0.95rem; color: #334155;" id="victory-info">
-        అక్షర జ్ఞానం మరింత పెరిగింది!
+      <div class="stats-bar">
+        <div class="stat-badge">🔥 <span id="streak-num">1</span></div>
+        <div class="stat-badge">⭐ <span id="score-num">0</span></div>
+        <div class="stat-badge" style="background:#e8f5e9; color:#1b5e20;">స్థాయి <span id="lvl-num">1</span></div>
       </div>
-      <button class="next-lvl-btn" onclick="nextLevel()">తదుపరి స్థాయి ➔</button>
+    </header>
+
+    <!-- Companion Speech Box -->
+    <div class="companion-banner">
+      <div class="companion-avatar" onclick="speakCompanion()">🦜</div>
+      <div class="companion-speech" id="companion-text">
+        నమస్కారం! పసుపు రంగు గడిని నొక్కి క్రింద ఉన్న అక్షరాన్ని తాకండి.
+      </div>
     </div>
+
+    <!-- Crossword Playing Grid -->
+    <main class="game-area">
+      <div class="grid-board" id="puzzle-grid"></div>
+    </main>
+
+    <!-- Interactive Clue Card -->
+    <div class="clue-panel">
+      <div>
+        <div class="clue-dir-tag" id="clue-direction">అడ్డం (1)</div>
+        <div class="clue-text" id="clue-content">రెండు పదాల కలయిక...</div>
+      </div>
+      <button class="hint-btn" onclick="useHint()">
+        💡 సహాయం
+      </button>
+    </div>
+
+    <!-- Letter Keyboard Palette -->
+    <div class="palette-box" id="letters-keyboard"></div>
+
+    <!-- Bottom Controls -->
+    <div class="controls-tray">
+      <button class="action-btn" onclick="eraseCurrentCell()">⌫ తొలగించు</button>
+      <button class="action-btn" onclick="toggleVoice()">🔊 <span id="voice-label">వాయిస్ ఆన్</span></button>
+    </div>
+
+    <!-- Victory Modal -->
+    <div class="modal-backdrop" id="victory-modal">
+      <div class="modal-card">
+        <div style="font-size: 52px;">🏆</div>
+        <h2 style="font-family:'Ramabhadra',sans-serif; color: #1b5e20; margin-top: 6px;">అద్భుతం!</h2>
+        <p style="color: #64748b; font-size: 0.95rem;">ఈ స్థాయిని విజయవంతంగా పూర్తి చేశారు!</p>
+        <div class="stars-row">⭐⭐⭐</div>
+        <div style="background: #f8fafc; border-radius: 12px; padding: 10px; margin: 8px 0; font-size: 0.95rem; color: #334155;">
+          +100 పాయింట్లు లభించాయి!
+        </div>
+        <button class="next-lvl-btn" onclick="nextLevel()">తదుపరి స్థాయి ➔</button>
+      </div>
+    </div>
+
   </div>
 
   <script>
-    // Audio Synthesizer (Zero External Audio Dependency)
+    // Audio Synthesizer
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playChime(type) {
       if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -456,12 +476,12 @@
       const now = audioCtx.currentTime;
 
       if (type === 'tap') {
-        osc.frequency.setValueAtTime(440, now);
-        osc.frequency.exponentialRampToValueAtTime(880, now + 0.08);
-        gain.gain.setValueAtTime(0.12, now);
-        gain.gain.linearRampToValueAtTime(0.01, now + 0.08);
+        osc.frequency.setValueAtTime(480, now);
+        osc.frequency.exponentialRampToValueAtTime(960, now + 0.07);
+        gain.gain.setValueAtTime(0.14, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.07);
         osc.start(now);
-        osc.stop(now + 0.08);
+        osc.stop(now + 0.07);
       } else if (type === 'win') {
         const notes = [523.25, 659.25, 783.99, 1046.50];
         notes.forEach((freq, idx) => {
@@ -470,7 +490,7 @@
           o.connect(g);
           g.connect(audioCtx.destination);
           o.frequency.setValueAtTime(freq, now + idx * 0.1);
-          g.gain.setValueAtTime(0.15, now + idx * 0.1);
+          g.gain.setValueAtTime(0.18, now + idx * 0.1);
           g.gain.linearRampToValueAtTime(0.01, now + idx * 0.1 + 0.25);
           o.start(now + idx * 0.1);
           o.stop(now + idx * 0.1 + 0.25);
@@ -478,46 +498,46 @@
       }
     }
 
-    // Curated Bite-Sized Level Packs (Expandable)
+    // Bite-Sized Level Packs
     const LEVELS_DB = [
       {
         level: 1,
         gridSize: 3,
         words: [
-          { id: 'W1', word: ['క', 'మ', 'ల'], dir: 'H', r: 1, c: 0, clue: 'ఒక అందమైన చెరువు పువ్వు (తామర)', hint: 'దీనిని పద్మం అని కూడా పిలుస్తారు' },
-          { id: 'W2', word: ['మ', 'న', 'సు'], dir: 'V', r: 1, c: 1, clue: 'భావాలు పుట్టే ప్రదేశం / హృదయం', hint: 'కోరికలు, ఆలోచనలు ఇక్కడే కలుగుతాయి' }
+          { num: 1, word: ['క', 'మ', 'ల'], dir: 'H', r: 1, c: 0, clue: 'ఒక అందమైన చెరువు పువ్వు (తామర)', hint: 'దీనిని పద్మం అని కూడా పిలుస్తారు' },
+          { num: 2, word: ['మ', 'న', 'సు'], dir: 'V', r: 1, c: 1, clue: 'భావాలు పుట్టే ప్రదేశం / హృదయం', hint: 'కోరికలు, ఆలోచనలు ఇక్కడే కలుగుతాయి' }
         ]
       },
       {
         level: 2,
-        gridSize: 3,
+        gridSize: 4,
         words: [
-          { id: 'W1', word: ['గో', 'దా', 'వ', 'రి'], dir: 'H', r: 1, c: 0, clue: 'తెలుగు నేలపై ప్రవహించే పవిత్ర నది', hint: 'దక్షిణ గంగ అని పేరు' },
-          { id: 'W2', word: ['భా', 'ను', 'డు'], dir: 'V', r: 0, c: 2, clue: 'పగలు వెలుగునిచ్చే సూర్యుడు', hint: 'రవి, భాస్కరుడు అని కూడా అంటారు' }
+          { num: 1, word: ['గో', 'దా', 'వ', 'రి'], dir: 'H', r: 1, c: 0, clue: 'తెలుగు నేలపై ప్రవహించే పవిత్ర నది', hint: 'దక్షిణ గంగ అని పేరు' },
+          { num: 2, word: ['భా', 'ను', 'డు'], dir: 'V', r: 0, c: 2, clue: 'పగలు వెలుగునిచ్చే సూర్యుడు', hint: 'రవి, భాస్కరుడు అని కూడా అంటారు' }
         ]
       },
       {
         level: 3,
         gridSize: 4,
         words: [
-          { id: 'W1', word: ['పు', 'స్త', 'కం'], dir: 'H', r: 1, c: 0, clue: 'జ్ఞానాన్ని అందించే గ్రంథం', hint: 'చదువుకోవడానికి ఉపయోగపడుతుంది' },
-          { id: 'W2', word: ['క', 'లం'], dir: 'V', r: 1, c: 2, clue: 'రాయడానికి వాడే పరికరం', hint: 'సిరాతో రాసే సాధనం' }
+          { num: 1, word: ['పు', 'స్త', 'కం'], dir: 'H', r: 1, c: 0, clue: 'జ్ఞానాన్ని అందించే గ్రంథం', hint: 'చదువుకోవడానికి ఉపయోగపడుతుంది' },
+          { num: 2, word: ['క', 'లం'], dir: 'V', r: 1, c: 2, clue: 'రాయడానికి వాడే సాధనం', hint: 'సిరాతో రాసే పరికరం' }
         ]
       },
       {
         level: 4,
         gridSize: 4,
         words: [
-          { id: 'W1', word: ['జా', 'బి', 'లి'], dir: 'H', r: 1, c: 0, clue: 'రాత్రి వేళ ఆకాశంలో మెరిసే చందమామ', hint: 'చల్లని వెన్నెల కురిపిస్తాడు' },
-          { id: 'W2', word: ['బి', 'య్యం'], dir: 'V', r: 1, c: 1, clue: 'అన్నం వండటానికి ఉపయోగించే ధాన్యం', hint: 'వరి నుంచి వస్తుంది' }
+          { num: 1, word: ['జా', 'బి', 'లి'], dir: 'H', r: 1, c: 0, clue: 'రాత్రి వేళ ఆకాశంలో మెరిసే చందమామ', hint: 'చల్లని వెన్నెల కురిపిస్తాడు' },
+          { num: 2, word: ['బి', 'య్యం'], dir: 'V', r: 1, c: 1, clue: 'అన్నం వండటానికి ఉపయోగించే ధాన్యం', hint: 'వరి నుంచి వస్తుంది' }
         ]
       },
       {
         level: 5,
         gridSize: 4,
         words: [
-          { id: 'W1', word: ['తె', 'లు', 'గు'], dir: 'H', r: 1, c: 0, clue: 'తేనె వంటి మన మాతృభాష', hint: 'ఇటాలియన్ ఆఫ్ ది ఈస్ట్ అని పిలుస్తారు' },
-          { id: 'W2', word: ['గు', 'డి'], dir: 'V', r: 1, c: 2, clue: 'దేవుడిని దర్శించుకునే పవిత్ర ప్రదేశం', hint: 'కోవెల అని కూడా అంటారు' }
+          { num: 1, word: ['తె', 'లు', 'గు'], dir: 'H', r: 1, c: 0, clue: 'తేనె వంటి మన మాతృభాష', hint: 'ఇటాలియన్ ఆఫ్ ది ఈస్ట్ అని పిలుస్తారు' },
+          { num: 2, word: ['గు', 'డి'], dir: 'V', r: 1, c: 2, clue: 'దేవుడిని దర్శించుకునే పవిత్ర స్థలం', hint: 'కోవెల అని కూడా అంటారు' }
         ]
       }
     ];
@@ -538,11 +558,16 @@
 
       const container = document.getElementById('puzzle-grid');
       container.innerHTML = '';
-      container.style.gridTemplateColumns = `repeat(${lvl.gridSize}, 52px)`;
+      container.style.gridTemplateColumns = `repeat(${lvl.gridSize}, 60px)`;
       gridState = {};
 
       const cellWordMap = {};
+      const cellStartNum = {};
+
       lvl.words.forEach((w) => {
+        const startKey = `${w.r}_${w.c}`;
+        cellStartNum[startKey] = w.num;
+
         for (let i = 0; i < w.word.length; i++) {
           const r = w.dir === 'H' ? w.r : w.r + i;
           const c = w.dir === 'H' ? w.c + i : w.c;
@@ -561,6 +586,12 @@
           cell.dataset.key = key;
 
           if (gridState[key]) {
+            if (cellStartNum[key]) {
+              const badge = document.createElement('span');
+              badge.className = 'cell-badge';
+              badge.textContent = cellStartNum[key];
+              cell.appendChild(badge);
+            }
             cell.onclick = () => selectCell(key, cellWordMap[key]);
           } else {
             cell.classList.add('blocked');
@@ -571,7 +602,7 @@
 
       setupKeyboard(lvl);
       selectFirstCell(lvl, cellWordMap);
-      setCompanionText(`స్థాయి ${lvl.level} ప్రారంభమైంది! మొదటి గడిని నింపండి.`);
+      setCompanionText(`స్థాయి ${lvl.level} ప్రారంభమైంది! పసుపు రంగు గడిని నింపండి.`);
     }
 
     function selectFirstCell(lvl, map) {
@@ -584,7 +615,7 @@
       selectedCell = key;
       if (words && words.length > 0) {
         activeWord = words[0];
-        document.getElementById('clue-direction').textContent = `సూచన (${activeWord.dir === 'H' ? 'అడ్డం' : 'నిలువు'})`;
+        document.getElementById('clue-direction').textContent = `${activeWord.dir === 'H' ? 'అడ్డం' : 'నిలువు'} (${activeWord.num})`;
         document.getElementById('clue-content').textContent = activeWord.clue;
       }
 
@@ -612,7 +643,7 @@
       const letters = [];
       lvl.words.forEach(w => letters.push(...w.word));
       
-      const distractors = ['రా', 'సి', 'కం', 'తా', 'మ', 'న'];
+      const distractors = ['రా', 'సి', 'కం', 'తా', 'మ', 'న', 'లి', 'డి'];
       while (letters.length < 8) {
         letters.push(distractors[letters.length % distractors.length]);
       }
@@ -620,7 +651,7 @@
 
       letters.forEach(letter => {
         const key = document.createElement('button');
-        key.className = 'key-tile';
+        key.className = 'palette-key';
         key.textContent = letter;
         key.onclick = () => inputLetter(letter);
         palette.appendChild(key);
@@ -631,9 +662,12 @@
       if (!selectedCell || !gridState[selectedCell]) return;
       gridState[selectedCell].current = char;
       const cellEl = document.querySelector(`.grid-cell[data-key="${selectedCell}"]`);
+      
+      let badge = cellEl.querySelector('.cell-badge');
       cellEl.textContent = char;
-      playChime('tap');
+      if (badge) cellEl.appendChild(badge);
 
+      playChime('tap');
       checkWordCompletion();
       advanceFocus();
     }
@@ -642,7 +676,9 @@
       if (!selectedCell || !gridState[selectedCell]) return;
       gridState[selectedCell].current = '';
       const cellEl = document.querySelector(`.grid-cell[data-key="${selectedCell}"]`);
+      let badge = cellEl.querySelector('.cell-badge');
       cellEl.textContent = '';
+      if (badge) cellEl.appendChild(badge);
       playChime('tap');
     }
 
@@ -658,7 +694,6 @@
     }
 
     function checkWordCompletion() {
-      const lvl = LEVELS_DB[currentLvlIdx % LEVELS_DB.length];
       let allCorrect = true;
 
       for (const [key, val] of Object.entries(gridState)) {
@@ -678,12 +713,12 @@
     function triggerVictory() {
       playChime('win');
       if (window.confetti) {
-        window.confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
+        window.confetti({ particleCount: 90, spread: 75, origin: { y: 0.6 } });
       }
       score += 100;
       document.getElementById('score-num').textContent = score;
       document.getElementById('victory-modal').style.display = 'flex';
-      setCompanionText('అద్భుతం! స్థాయి పూర్తయింది. మీరు కొత్త అక్షర విజేత!');
+      setCompanionText('అద్భుతం! స్థాయి పూర్తయింది. మీరు సరిగ్గా పూర్తి చేశారు!');
     }
 
     function nextLevel() {
@@ -717,14 +752,12 @@
       document.getElementById('voice-label').textContent = voiceEnabled ? 'వాయిస్ ఆన్' : 'వాయిస్ ఆఫ్';
     }
 
-    // Register Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js');
       });
     }
 
-    // Launch Game
     initLevel();
   </script>
 </body>
