@@ -151,6 +151,8 @@
       display: flex;
       align-items: center;
       gap: 3px;
+      border: none;
+      cursor: pointer;
     }
 
     /* Clue Selector Tabs */
@@ -222,14 +224,14 @@
     }
 
     .grid-cell.active-word {
-      background: #fffbeb;
-      border-color: #fbbf24;
+      background: #fffbeb !important;
+      border-color: #fbbf24 !important;
     }
 
     .grid-cell.selected {
       background: #ffffff !important;
       border-color: #1b5e20 !important;
-      box-shadow: 0 0 0 4px rgba(27, 94, 32, 0.3), 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 0 0 4px rgba(27, 94, 32, 0.35), 0 4px 10px rgba(0,0,0,0.18) !important;
       transform: translateY(-2px) scale(1.05);
       z-index: 5;
     }
@@ -246,6 +248,7 @@
       border: none !important;
       box-shadow: none !important;
       cursor: default !important;
+      pointer-events: none;
     }
 
     .cell-badge {
@@ -256,6 +259,10 @@
       font-family: 'Ramabhadra', sans-serif;
       color: #64748b;
       line-height: 1;
+      pointer-events: none;
+    }
+
+    .cell-letter {
       pointer-events: none;
     }
 
@@ -584,7 +591,6 @@
     let voiceEnabled = true;
     let availableVoices = [];
 
-    // Ensure voices load properly across Chrome / Android / Safari
     function loadVoices() {
       if ('speechSynthesis' in window) {
         availableVoices = window.speechSynthesis.getVoices();
@@ -626,9 +632,9 @@
         cellStartNum[startKey] = w.num;
 
         for (let i = 0; i < w.word.length; i++) {
-          const r = w.dir === 'H' ? w.r : w.r + i;
-          const c = w.dir === 'H' ? w.c + i : w.c;
-          const key = `${r}_${c}`;
+          const rowPos = w.dir === 'H' ? w.r : w.r + i;
+          const colPos = w.dir === 'H' ? w.c + i : w.c;
+          const key = `${rowPos}_${colPos}`;
           if (!cellWordMap[key]) cellWordMap[key] = [];
           cellWordMap[key].push(w);
           gridState[key] = { expected: w.word[i], current: '', solved: false };
@@ -638,22 +644,26 @@
       for (let r = 0; r < lvl.gridSize; r++) {
         for (let c = 0; c < lvl.gridSize; c++) {
           const key = `${r}_${c}`;
-          const cell = document.createElement('div');
-          cell.className = 'grid-cell';
-          cell.dataset.key = key;
+          const cellEl = document.createElement('div');
+          cellEl.className = 'grid-cell';
+          cellEl.dataset.key = key;
 
           if (gridState[key]) {
             if (cellStartNum[key]) {
               const badge = document.createElement('span');
               badge.className = 'cell-badge';
               badge.textContent = cellStartNum[key];
-              cell.appendChild(badge);
+              cellEl.appendChild(badge);
             }
-            cell.onclick = () => onCellClicked(key, cellWordMap[key]);
+            const textSpan = document.createElement('span');
+            textSpan.className = 'cell-letter';
+            cellEl.appendChild(textSpan);
+
+            cellEl.onclick = () => onCellClicked(key, cellWordMap[key]);
           } else {
-            cell.classList.add('blocked');
+            cellEl.classList.add('blocked');
           }
-          container.appendChild(cell);
+          container.appendChild(cellEl);
         }
       }
 
@@ -668,51 +678,54 @@
     }
 
     function onCellClicked(key, wordsInCell) {
-      // If clicking an intersection cell that belongs to both words, toggle between them!
-      if (wordsInCell.length > 1 && activeWord) {
+      if (wordsInCell && wordsInCell.length > 1 && activeWord) {
         const otherWord = wordsInCell.find(w => w.num !== activeWord.num);
         if (selectedCell === key && otherWord) {
           activeWord = otherWord;
         } else if (!wordsInCell.some(w => w.num === activeWord.num)) {
           activeWord = wordsInCell[0];
         }
-      } else if (wordsInCell.length === 1) {
+      } else if (wordsInCell && wordsInCell.length === 1) {
         activeWord = wordsInCell[0];
       }
       highlightBoard(key);
     }
 
-    function highlightBoard(key) {
-      selectedCell = key;
+    function highlightBoard(targetKey) {
+      selectedCell = targetKey;
 
-      // Update Clue Box
+      // Update Clue Bar
       document.getElementById('clue-direction').textContent = `${activeWord.dir === 'H' ? 'అడ్డం' : 'నిలువు'} (${activeWord.num})`;
       document.getElementById('clue-content').textContent = activeWord.clue;
 
-      // Update Nav Tabs
-      document.querySelectorAll('.clue-tab').forEach(tab => tab.classList.remove('active'));
+      // Update Tabs
+      document.querySelectorAll('.clue-tab').forEach(t => t.classList.remove('active'));
       const activeTab = document.getElementById(`tab-${activeWord.num}`);
       if (activeTab) activeTab.classList.add('active');
 
-      // Highlight active word cells
-      document.querySelectorAll('.grid-cell').forEach(c => {
-        c.classList.remove('selected', 'active-word');
-        if (activeWord) {
-          for (let i = 0; i < activeWord.word.length; i++) {
-            const r = activeWord.dir === 'H' ? activeWord.r : activeWord.r + i;
-            const c = activeWord.dir === 'H' ? activeWord.c + i : activeWord.c;
-            if (c.dataset.key === `${r}_${c}`) {
-              c.classList.add('active-word');
-            }
-          }
+      // Compute cell coordinates for active word
+      const activeWordKeys = new Set();
+      if (activeWord) {
+        for (let i = 0; i < activeWord.word.length; i++) {
+          const rPos = activeWord.dir === 'H' ? activeWord.r : activeWord.r + i;
+          const cPos = activeWord.dir === 'H' ? activeWord.c + i : activeWord.c;
+          activeWordKeys.add(`${rPos}_${cPos}`);
+        }
+      }
+
+      // Highlight DOM cells cleanly
+      document.querySelectorAll('.grid-cell').forEach(domCell => {
+        const cellKey = domCell.dataset.key;
+        domCell.classList.remove('selected', 'active-word');
+        if (activeWordKeys.has(cellKey)) {
+          domCell.classList.add('active-word');
+        }
+        if (cellKey === targetKey) {
+          domCell.classList.add('selected');
         }
       });
 
-      const cellEl = document.querySelector(`.grid-cell[data-key="${key}"]`);
-      if (cellEl) cellEl.classList.add('selected');
       playChime('tap');
-
-      // Akshara Mitra announces the clue
       setCompanionText(`${activeWord.num}. ${activeWord.clue}`);
     }
 
@@ -741,10 +754,10 @@
       if (!selectedCell || !gridState[selectedCell]) return;
       gridState[selectedCell].current = char;
       const cellEl = document.querySelector(`.grid-cell[data-key="${selectedCell}"]`);
-      
-      let badge = cellEl.querySelector('.cell-badge');
-      cellEl.textContent = char;
-      if (badge) cellEl.appendChild(badge);
+      if (cellEl) {
+        const letterSpan = cellEl.querySelector('.cell-letter');
+        if (letterSpan) letterSpan.textContent = char;
+      }
 
       playChime('tap');
       checkWordCompletion();
@@ -755,9 +768,10 @@
       if (!selectedCell || !gridState[selectedCell]) return;
       gridState[selectedCell].current = '';
       const cellEl = document.querySelector(`.grid-cell[data-key="${selectedCell}"]`);
-      let badge = cellEl.querySelector('.cell-badge');
-      cellEl.textContent = '';
-      if (badge) cellEl.appendChild(badge);
+      if (cellEl) {
+        const letterSpan = cellEl.querySelector('.cell-letter');
+        if (letterSpan) letterSpan.textContent = '';
+      }
       playChime('tap');
     }
 
@@ -811,7 +825,6 @@
       setCompanionText(`💡 సహాయం: ${activeWord.hint}`);
     }
 
-    // High-Reliability Voice Engine with Multi-Voice Fallback
     function setCompanionText(txt) {
       document.getElementById('companion-text').textContent = txt;
       if (!voiceEnabled || !('speechSynthesis' in window)) return;
@@ -826,7 +839,6 @@
           availableVoices = window.speechSynthesis.getVoices();
         }
 
-        // Match Telugu voice first, then Indian Hindi/English voice fallback
         const teluguVoice = availableVoices.find(v => v.lang.includes('te') || v.lang.includes('TE'));
         const indianVoice = availableVoices.find(v => v.lang.includes('hi') || v.lang.includes('IN'));
 
@@ -847,7 +859,6 @@
     }
 
     function speakCompanion() {
-      // First user tap unlocks browser audio policy
       if (audioCtx.state === 'suspended') audioCtx.resume();
       loadVoices();
       const txt = document.getElementById('companion-text').textContent;
