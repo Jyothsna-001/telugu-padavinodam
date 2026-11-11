@@ -19,6 +19,8 @@
       --bg: #eceff1;
       --text: #0f172a;
       --cell-border: #94a3b8;
+      --error-color: #ef4444;
+      --success-color: #22c55e;
     }
 
     * {
@@ -37,7 +39,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 10px;
+      padding: 8px;
     }
 
     .app-wrapper {
@@ -50,7 +52,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 16px;
+      padding: 14px;
       border: 3px solid #e2e8f0;
       position: relative;
       overflow: hidden;
@@ -65,14 +67,14 @@
       flex: 1;
     }
 
-    /* HOME LOBBY SCREEN */
+    /* LOBBY SCREEN */
     .lobby-header {
       text-align: center;
       margin-top: 4px;
     }
 
     .lobby-parrot {
-      font-size: 46px;
+      font-size: 44px;
       animation: gentleBounce 2.5s infinite ease-in-out;
     }
 
@@ -83,13 +85,13 @@
 
     .lobby-title {
       font-family: 'Ramabhadra', sans-serif;
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       color: var(--primary);
       margin-top: 2px;
     }
 
     .lobby-subtitle {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: #64748b;
     }
 
@@ -97,7 +99,7 @@
       background: linear-gradient(135deg, #fef3c7, #fffbeb);
       border: 2px dashed #f59e0b;
       border-radius: 14px;
-      padding: 10px 12px;
+      padding: 8px 12px;
       margin-top: 8px;
       display: flex;
       align-items: center;
@@ -105,28 +107,27 @@
     }
 
     .bonus-tag {
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 700;
       color: #92400e;
-      line-height: 1.3;
+      line-height: 1.25;
     }
 
     .bonus-amount {
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       font-weight: 800;
       color: #b45309;
       font-family: 'Ramabhadra', sans-serif;
       white-space: nowrap;
-      margin-left: 8px;
     }
 
     .save-feature-box {
       background: #f0fdf4;
       border: 1.5px solid #86efac;
       border-radius: 14px;
-      padding: 10px 12px;
+      padding: 8px 12px;
       margin-top: 8px;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       line-height: 1.35;
       color: #14532d;
     }
@@ -134,25 +135,25 @@
     .save-feature-box strong {
       display: block;
       color: #166534;
-      font-size: 0.86rem;
+      font-size: 0.84rem;
       margin-bottom: 2px;
     }
 
     .save-feature-box .en-sub {
       color: #15803d;
-      font-size: 0.78rem;
-      margin-top: 4px;
+      font-size: 0.74rem;
+      margin-top: 3px;
       display: block;
     }
 
     .category-selection-headline {
       text-align: center;
       margin-top: 8px;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 700;
       color: #334155;
       background: #f1f5f9;
-      padding: 6px 10px;
+      padding: 5px 10px;
       border-radius: 10px;
       border: 1px solid #cbd5e1;
     }
@@ -160,20 +161,20 @@
     .category-cards-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      margin: 10px 0;
+      gap: 8px;
+      margin: 8px 0;
     }
 
     .cat-select-card {
       background: #f8fafc;
       border: 2px solid #cbd5e1;
-      border-radius: 16px;
-      padding: 12px 14px;
+      border-radius: 14px;
+      padding: 10px 12px;
       display: flex;
       align-items: center;
       gap: 12px;
       cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.03);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.03);
       transition: all 0.15s ease;
     }
 
@@ -184,10 +185,10 @@
     }
 
     .cat-icon-badge {
-      font-size: 28px;
+      font-size: 26px;
       background: #ffffff;
-      width: 48px;
-      height: 48px;
+      width: 44px;
+      height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -195,19 +196,15 @@
       border: 1.5px solid #e2e8f0;
     }
 
-    .cat-details {
-      flex: 1;
-    }
-
+    .cat-details { flex: 1; }
     .cat-details h3 {
       font-family: 'Ramabhadra', sans-serif;
-      font-size: 1.05rem;
+      font-size: 1rem;
       color: #1e293b;
       line-height: 1.2;
     }
-
     .cat-details p {
-      font-size: 0.8rem;
+      font-size: 0.76rem;
       color: #64748b;
       margin-top: 2px;
     }
@@ -267,22 +264,22 @@
     /* COMPANION */
     .companion-banner {
       width: 100%;
-      margin-top: 8px;
+      margin-top: 6px;
       background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
       border: 2px solid #81c784;
-      border-radius: 16px;
-      padding: 8px 10px;
+      border-radius: 14px;
+      padding: 6px 10px;
       display: flex;
       align-items: center;
       gap: 8px;
       cursor: pointer;
     }
 
-    .companion-avatar { font-size: 26px; }
+    .companion-avatar { font-size: 24px; }
 
     .companion-speech {
       flex: 1;
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       line-height: 1.3;
       color: #1b5e20;
       font-weight: 700;
@@ -291,9 +288,9 @@
     .voice-chip {
       background: #1b5e20;
       color: #ffffff;
-      padding: 4px 8px;
+      padding: 3px 7px;
       border-radius: 8px;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
       border: none;
       cursor: pointer;
@@ -304,17 +301,17 @@
     .clue-nav-bar {
       display: flex;
       gap: 6px;
-      margin-top: 8px;
+      margin-top: 6px;
       width: 100%;
     }
 
     .clue-tab {
       flex: 1;
-      padding: 6px 8px;
+      padding: 5px 8px;
       background: #f8fafc;
       border: 1.5px solid #cbd5e1;
       border-radius: 10px;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 700;
       color: #475569;
       cursor: pointer;
@@ -362,7 +359,7 @@
       color: #0f172a;
       cursor: pointer;
       position: relative;
-      transition: all 0.1s ease;
+      transition: all 0.15s ease;
     }
 
     .grid-cell.active-word {
@@ -378,6 +375,21 @@
       z-index: 5;
     }
 
+    /* Error Validation: Red */
+    .grid-cell.error-cell {
+      background: #fee2e2 !important;
+      color: #b91c1c !important;
+      border-color: #ef4444 !important;
+      animation: shake 0.3s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      75% { transform: translateX(4px); }
+    }
+
+    /* Correct Cell: Green */
     .grid-cell.solved {
       background: #e8f5e9 !important;
       color: #1b5e20 !important;
@@ -405,57 +417,51 @@
 
     .cell-letter { pointer-events: none; }
 
-    /* CLEAN CLUE BAR (PURE TELUGU) */
+    /* CLUE PANEL */
     .clue-panel {
       width: 100%;
       background: #f8fafc;
       border: 1.5px solid #e2e8f0;
       border-radius: 14px;
-      padding: 8px 10px;
+      padding: 6px 10px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 8px;
+      gap: 6px;
+      margin-bottom: 6px;
     }
 
     .clue-dir-tag {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 700;
       color: #1b5e20;
       background: #e8f5e9;
-      padding: 2px 6px;
+      padding: 2px 5px;
       border-radius: 6px;
       display: inline-block;
       margin-bottom: 2px;
     }
 
     .clue-text {
-      font-size: 0.96rem;
+      font-size: 0.94rem;
       font-weight: 700;
       color: #0f172a;
-      line-height: 1.3;
+      line-height: 1.25;
     }
 
-    /* DIRECT 20 STAR HINT BUTTON */
     .hint-btn {
       background: #fffbeb;
       color: #b45309;
       border: 2px solid #fde68a;
-      padding: 6px 10px;
+      padding: 5px 8px;
       border-radius: 10px;
       font-family: 'Mandali', sans-serif;
-      font-size: 0.8rem;
+      font-size: 0.76rem;
       font-weight: 700;
       cursor: pointer;
       text-align: center;
-      line-height: 1.25;
+      line-height: 1.2;
       flex-shrink: 0;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
-
-    .hint-btn:active {
-      transform: scale(0.96);
     }
 
     /* KEYBOARD */
@@ -471,11 +477,11 @@
       border: 2px solid #cbd5e1;
       border-bottom: 4px solid #94a3b8;
       border-radius: 12px;
-      height: 46px;
+      height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.25rem;
+      font-size: 1.22rem;
       font-family: 'Ramabhadra', sans-serif;
       color: #0f172a;
       cursor: pointer;
@@ -486,25 +492,58 @@
       border-bottom-width: 2px;
     }
 
+    /* CONTROLS TRAY */
     .controls-tray {
       width: 100%;
       display: flex;
       gap: 6px;
-      margin-top: 8px;
+      margin-top: 6px;
     }
 
     .action-btn {
       flex: 1;
-      padding: 7px;
+      padding: 7px 4px;
       background: #f8fafc;
       border: 1.5px solid #cbd5e1;
       border-radius: 10px;
       font-family: 'Mandali', sans-serif;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 700;
       color: #334155;
       cursor: pointer;
       text-align: center;
+    }
+
+    /* Verification Button: Primary Green */
+    .action-btn.verify-btn {
+      background: #1b5e20;
+      color: #ffffff;
+      border-color: #166534;
+      flex: 1.2;
+    }
+
+    /* Skip Button: Disabled / Enabled */
+    .action-btn.skip-btn {
+      background: #f1f5f9;
+      color: #94a3b8;
+      border-color: #e2e8f0;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .action-btn.skip-btn.unlocked {
+      background: #fff7ed;
+      color: #c2410c;
+      border-color: #fdba74;
+      cursor: pointer;
+      opacity: 1;
+      font-weight: 800;
+      animation: pulseAttention 1.8s infinite;
+    }
+
+    @keyframes pulseAttention {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.4); }
+      50% { box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.4); }
     }
 
     /* MODALS */
@@ -548,7 +587,6 @@
       margin-top: 10px;
     }
 
-    /* KAVI PARICHAYAM CARD (AFTER EVERY 10 LEVELS) */
     .kavi-card {
       background: linear-gradient(135deg, #fffbeb, #fef3c7);
       border: 2px solid #f59e0b;
@@ -672,7 +710,7 @@
         <div class="grid-board" id="puzzle-grid"></div>
       </main>
 
-      <!-- Clue Banner (Pure Telugu Only) + Direct 20 Star Hint Button -->
+      <!-- Clue Banner + 20 Star Hint Button -->
       <div class="clue-panel">
         <div style="flex:1;">
           <div class="clue-dir-tag" id="clue-direction">అడ్డం (1)</div>
@@ -686,10 +724,12 @@
       <!-- Letter Keyboard -->
       <div class="palette-box" id="letters-keyboard"></div>
 
-      <!-- Controls -->
+      <!-- Controls Tray with Verify, Delete, Voice, and Skip -->
       <div class="controls-tray">
-        <button class="action-btn" onclick="eraseCurrentCell()">⌫ తొలగించు / Delete</button>
-        <button class="action-btn" onclick="toggleVoice()">🔊 <span id="voice-label">వాయిస్ ఆన్ / Voice On</span></button>
+        <button class="action-btn verify-btn" onclick="verifyCurrentPuzzle()">✓ సరిచూడు / Verify</button>
+        <button class="action-btn" onclick="eraseCurrentCell()">⌫ తొలగించు</button>
+        <button class="action-btn" onclick="toggleVoice()">🔊 <span id="voice-label">వాయిస్</span></button>
+        <button class="action-btn skip-btn" id="skip-btn" onclick="skipCurrentLevel()">⏩ దాటవేయి</button>
       </div>
     </div>
 
@@ -729,7 +769,7 @@
       </div>
     </div>
 
-    <!-- KAVI PARICHAYAM HERITAGE TRIBUTE MODAL (EVERY 10 LEVELS) -->
+    <!-- KAVI PARICHAYAM HERITAGE TRIBUTE MODAL -->
     <div class="modal-backdrop" id="tribute-modal">
       <div class="modal-card">
         <div style="font-size: 44px;">📜</div>
@@ -765,6 +805,14 @@
         gain.gain.linearRampToValueAtTime(0.01, now + 0.07);
         osc.start(now);
         osc.stop(now + 0.07);
+      } else if (type === 'error') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(220, now);
+        osc.frequency.linearRampToValueAtTime(110, now + 0.18);
+        gain.gain.setValueAtTime(0.18, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.18);
+        osc.start(now);
+        osc.stop(now + 0.18);
       } else if (type === 'win') {
         [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
           const o = audioCtx.createOscillator();
@@ -780,7 +828,7 @@
       }
     }
 
-    // Databases: Clues are Pure Telugu, Hints NEVER contain the answer word!
+    // Curated Levels: Words and accurate syllable arrays
     const CATEGORIES_DATA = {
       general: [
         {
@@ -846,7 +894,6 @@
       ]
     };
 
-    // Authentic Telugu Heritage Tribute Bank (Kavi Parichayam)
     const TRIBUTES = [
       {
         poet: 'మహాకవి వేమన - కవి పరిచయం',
@@ -876,6 +923,8 @@
     let gridState = {};
     let voiceEnabled = true;
     let availableVoices = [];
+    let wrongAttemptsCount = 0;
+    let skipUnlocked = false;
 
     function saveProgress() {
       localStorage.setItem('telugu_padam_cat_progress', JSON.stringify(categoryProgress));
@@ -916,6 +965,10 @@
       const currentLvlIdx = categoryProgress[currentCategory] || 0;
       const lvl = catList[currentLvlIdx % catList.length];
       
+      wrongAttemptsCount = 0;
+      skipUnlocked = false;
+      updateSkipButtonState();
+
       document.getElementById('lvl-num').textContent = lvl.level;
       document.getElementById('score-num').textContent = score;
       document.getElementById('lobby-stars').textContent = score;
@@ -988,7 +1041,7 @@
 
       activeWord = lvl.words[0];
       highlightBoard(`${lvl.words[0].r}_${lvl.words[0].c}`, false);
-      document.getElementById('companion-text').textContent = `స్థాయి / Level ${lvl.level}: సంఖ్య 1 లేదా 2 నొక్కి సూచన వినండి.`;
+      document.getElementById('companion-text').textContent = `స్థాయి / Level ${lvl.level}: అక్షరాలను నింపి 'సరిచూడు' బటన్ నొక్కండి.`;
     }
 
     function onCellClicked(key, wordsInCell, startingWordOfThisCell) {
@@ -1042,19 +1095,34 @@
       }
     }
 
+    // Guaranteed Accurate Keyboard: Includes all needed puzzle letters without missing syllables
     function setupKeyboard(lvl) {
       const palette = document.getElementById('letters-keyboard');
       palette.innerHTML = '';
-      const letters = [];
-      lvl.words.forEach(w => letters.push(...w.word));
-      
-      const distractors = ['రా', 'సి', 'కం', 'తా', 'మ', 'న', 'లి', 'డి'];
-      while (letters.length < 8) {
-        letters.push(distractors[letters.length % distractors.length]);
-      }
-      letters.sort(() => Math.random() - 0.5);
 
-      letters.forEach(letter => {
+      // Collect all required puzzle letters exactly
+      const requiredLetters = [];
+      lvl.words.forEach(w => {
+        w.word.forEach(letter => requiredLetters.push(letter));
+      });
+
+      // Distinct distractors
+      const distractors = ['రా', 'సి', 'కం', 'తా', 'మ', 'న', 'లి', 'డి', 'ప', 'గ', 'తి'];
+      const finalPalette = [...requiredLetters];
+      let distractorIdx = 0;
+
+      while (finalPalette.length < 8) {
+        const candidate = distractors[distractorIdx % distractors.length];
+        if (!finalPalette.includes(candidate)) {
+          finalPalette.push(candidate);
+        }
+        distractorIdx++;
+      }
+
+      // Shuffle
+      finalPalette.sort(() => Math.random() - 0.5);
+
+      finalPalette.forEach(letter => {
         const key = document.createElement('button');
         key.className = 'palette-key';
         key.textContent = letter;
@@ -1070,10 +1138,10 @@
       if (cellEl) {
         const letterSpan = cellEl.querySelector('.cell-letter');
         if (letterSpan) letterSpan.textContent = char;
+        cellEl.classList.remove('error-cell'); // Clear red error on new edit
       }
 
       playChime('tap');
-      checkWordCompletion();
       advanceFocus();
     }
 
@@ -1084,6 +1152,7 @@
       if (cellEl) {
         const letterSpan = cellEl.querySelector('.cell-letter');
         if (letterSpan) letterSpan.textContent = '';
+        cellEl.classList.remove('error-cell');
       }
       playChime('tap');
     }
@@ -1099,18 +1168,77 @@
       }
     }
 
-    function checkWordCompletion() {
-      let allCorrect = true;
+    // EXPLICIT VERIFICATION HANDLER
+    function verifyCurrentPuzzle() {
+      let allFilled = true;
+      let hasError = false;
+
       for (const [key, val] of Object.entries(gridState)) {
+        const el = document.querySelector(`.grid-cell[data-key="${key}"]`);
+        if (!val.current) {
+          allFilled = false;
+        }
         if (val.current === val.expected) {
-          const el = document.querySelector(`.grid-cell[data-key="${key}"]`);
-          if (el) el.classList.add('solved');
+          if (el) {
+            el.classList.remove('error-cell');
+            el.classList.add('solved');
+          }
         } else {
-          allCorrect = false;
+          hasError = true;
+          if (el && val.current) {
+            el.classList.add('error-cell'); // Flash wrong cell RED
+          }
         }
       }
 
-      if (allCorrect) triggerVictory();
+      if (!allFilled) {
+        playChime('error');
+        setCompanionText('అన్ని గడులను అక్షరాలతో నింపి సరిచూడండి!');
+        return;
+      }
+
+      if (!hasError) {
+        triggerVictory();
+      } else {
+        playChime('error');
+        wrongAttemptsCount++;
+        setCompanionText(`తప్పులు ఉన్నాయి! ఎరుపు రంగు గడులను సరిచేయండి (${wrongAttemptsCount}/3).`);
+
+        // Unlock Skip Level button after 3 wrong attempts
+        if (wrongAttemptsCount >= 3) {
+          unlockSkipButton('3 సార్లు సరిపోలలేదు. మీరు ఈ స్థాయిని దాటవేయవచ్చు!');
+        }
+      }
+    }
+
+    function unlockSkipButton(reason) {
+      if (skipUnlocked) return;
+      skipUnlocked = true;
+      updateSkipButtonState();
+      setCompanionText(`⏩ దాటవేయి బటన్ యాక్టివేట్ అయింది! ${reason}`);
+    }
+
+    function updateSkipButtonState() {
+      const btn = document.getElementById('skip-btn');
+      if (skipUnlocked) {
+        btn.classList.add('unlocked');
+        btn.title = 'ఈ స్థాయిని దాటవేసి తదుపరి స్థాయికి వెళ్ళండి';
+      } else {
+        btn.classList.remove('unlocked');
+        btn.title = '3 తప్పులు లేదా నక్షత్రాలు లేనప్పుడు అన్‌లాక్ అవుతుంది';
+      }
+    }
+
+    function skipCurrentLevel() {
+      if (!skipUnlocked) {
+        setCompanionText('3 సార్లు తప్పుగా సరిచూసినా లేదా నక్షత్రాలు లేకపోయినా దాటవేయి అన్‌లాక్ అవుతుంది!');
+        return;
+      }
+      playChime('tap');
+      setCompanionText('స్థాయిని దాటవేస్తున్నారు...');
+      categoryProgress[currentCategory] = (categoryProgress[currentCategory] || 0) + 1;
+      saveProgress();
+      initLevel();
     }
 
     function triggerVictory() {
@@ -1127,12 +1255,11 @@
       const currentLvlIdx = categoryProgress[currentCategory] || 0;
       const currentLevel = catList[currentLvlIdx % catList.length].level;
 
-      // Unlocks Mahakavi Tribute Milestone every 10 levels
       if (currentLevel % 10 === 0) {
         showTributeModal();
       } else {
         document.getElementById('victory-modal').style.display = 'flex';
-        setCompanionText('అద్భుతం! స్థాయి పూర్తయింది. / Awesome! Level Completed.');
+        setCompanionText('అద్భుతం! అన్ని పదాలు సరైనవి. స్థాయి పూర్తయింది!');
       }
     }
 
@@ -1143,7 +1270,7 @@
       initLevel();
     }
 
-    // Direct 20-star deduction without revealing the target word
+    // Direct 20 Star Hint Deduction & Auto Skip Unlock if Star Deficit
     function useHint() {
       if (!activeWord) return;
 
@@ -1155,7 +1282,8 @@
         playChime('tap');
         setCompanionText(`💡 సహాయం / Hint: ${activeWord.hint}`);
       } else {
-        setCompanionText('💡 మీ వద్ద తగినన్ని నక్షత్రాలు లేవు! సహాయం కోసం 20 ⭐ అవసరం (Need 20 Stars for Hint).');
+        setCompanionText('💡 నక్షత్రాలు లేవు (20 ⭐ అవసరం). దాటవేయి బటన్ అందుబాటులోకి వచ్చింది!');
+        unlockSkipButton('నక్షత్రాలు అయిపోయాయి.');
       }
     }
 
@@ -1253,7 +1381,7 @@
 
     function toggleVoice() {
       voiceEnabled = !voiceEnabled;
-      document.getElementById('voice-label').textContent = voiceEnabled ? 'వాయిస్ ఆన్ / Voice On' : 'వాయిస్ ఆఫ్ / Voice Off';
+      document.getElementById('voice-label').textContent = voiceEnabled ? 'వాయిస్' : 'మ్యూట్';
       if (voiceEnabled) speakCurrentClue();
       else window.speechSynthesis.cancel();
     }
