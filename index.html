@@ -56,7 +56,7 @@
       overflow: hidden;
     }
 
-    /* Screen Views */
+    /* VIEW SCREENS */
     .view-screen {
       width: 100%;
       height: 100%;
@@ -66,7 +66,7 @@
       flex: 1;
     }
 
-    /* Home Lobby UI */
+    /* LOBBY / HOME SCREEN */
     .lobby-header {
       text-align: center;
       margin-top: 10px;
@@ -94,11 +94,23 @@
       color: #64748b;
     }
 
+    .category-selection-headline {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #334155;
+      background: #f1f5f9;
+      padding: 6px 12px;
+      border-radius: 12px;
+      border: 1px solid #cbd5e1;
+    }
+
     .category-cards-list {
       display: flex;
       flex-direction: column;
       gap: 12px;
-      margin: 20px 0;
+      margin: 16px 0;
     }
 
     .cat-select-card {
@@ -111,7 +123,7 @@
       gap: 14px;
       cursor: pointer;
       box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-      transition: all 0.12s ease;
+      transition: all 0.15s ease;
     }
 
     .cat-select-card:hover {
@@ -143,7 +155,7 @@
 
     .cat-details h3 {
       font-family: 'Ramabhadra', sans-serif;
-      font-size: 1.12rem;
+      font-size: 1.15rem;
       color: #1e293b;
     }
 
@@ -153,7 +165,7 @@
       margin-top: 2px;
     }
 
-    /* In-Game Header */
+    /* IN-GAME HEADER */
     header {
       width: 100%;
       display: flex;
@@ -163,12 +175,6 @@
       background: #f8fafc;
       border-radius: 16px;
       border: 1.5px solid #e2e8f0;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 6px;
     }
 
     .back-btn {
@@ -189,7 +195,7 @@
     }
 
     .stat-badge {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 700;
       color: var(--text);
       background: #ffffff;
@@ -211,7 +217,7 @@
       cursor: pointer;
     }
 
-    /* Akshara Mitra Companion */
+    /* COMPANION */
     .companion-banner {
       width: 100%;
       margin-top: 8px;
@@ -246,7 +252,7 @@
       cursor: pointer;
     }
 
-    /* Clue Switcher Tabs */
+    /* CLUE TABS */
     .clue-nav-bar {
       display: flex;
       gap: 6px;
@@ -273,7 +279,7 @@
       border-color: #334155;
     }
 
-    /* Grid Board */
+    /* PLAYING GRID */
     .game-area {
       width: 100%;
       display: flex;
@@ -331,12 +337,6 @@
       border-bottom-width: 2.5px;
     }
 
-    .grid-cell.drag-over {
-      background: #fef08a !important;
-      border-color: #eab308 !important;
-      transform: scale(1.08);
-    }
-
     .grid-cell.blocked {
       background: transparent !important;
       border: none !important;
@@ -357,7 +357,7 @@
 
     .cell-letter { pointer-events: none; }
 
-    /* Clue Banner */
+    /* CLUE BAR */
     .clue-panel {
       width: 100%;
       background: #f8fafc;
@@ -394,7 +394,7 @@
       padding: 5px 10px;
       border-radius: 10px;
       font-family: 'Mandali', sans-serif;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       font-weight: 700;
       cursor: pointer;
       display: flex;
@@ -402,7 +402,7 @@
       gap: 3px;
     }
 
-    /* Syllable Keyboard */
+    /* KEYBOARD */
     .palette-box {
       width: 100%;
       display: grid;
@@ -422,16 +422,14 @@
       font-size: 1.3rem;
       font-family: 'Ramabhadra', sans-serif;
       color: #0f172a;
-      cursor: grab;
+      cursor: pointer;
     }
 
     .palette-key:active {
       transform: translateY(2px);
       border-bottom-width: 2px;
-      cursor: grabbing;
     }
 
-    /* Action Tray */
     .controls-tray {
       width: 100%;
       display: flex;
@@ -446,14 +444,14 @@
       border: 1.5px solid #cbd5e1;
       border-radius: 10px;
       font-family: 'Mandali', sans-serif;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 700;
       color: #334155;
       cursor: pointer;
       text-align: center;
     }
 
-    /* Modals */
+    /* MODALS */
     .modal-backdrop {
       display: none;
       position: absolute;
@@ -489,12 +487,12 @@
       border: none;
       border-radius: 12px;
       font-family: 'Ramabhadra', sans-serif;
-      font-size: 1rem;
+      font-size: 0.95rem;
       cursor: pointer;
       margin-top: 10px;
     }
 
-    /* Mahakavi Card */
+    /* MAHAKAVI CARD */
     .kavi-card {
       background: linear-gradient(135deg, #fffbeb, #fef3c7);
       border: 2px solid #f59e0b;
@@ -530,63 +528,65 @@
 
   <div class="app-wrapper">
 
-    <!-- SCREEN 1: CATEGORY SELECTION LOBBY -->
+    <!-- SCREEN 1: CATEGORY SELECTION HOME SCREEN -->
     <div class="view-screen" id="lobby-screen">
       <div class="lobby-header">
         <div class="lobby-parrot">🦜</div>
         <h1 class="lobby-title">తెలుగు పదవినోదం</h1>
-        <p class="lobby-subtitle">ఆడుతూ నేర్చుకుందాం - పదాల సంపద</p>
+        <p class="lobby-subtitle">Telugu Crossword Game</p>
+      </div>
+
+      <div class="category-selection-headline">
+        👇 కావలసిన వర్గాన్ని ఎంచుకోండి / Select Category
       </div>
 
       <div class="category-cards-list">
-        <!-- Category 1 -->
+        <!-- Card 1 -->
         <div class="cat-select-card" onclick="startCategory('general')">
           <div class="cat-icon-badge">📖</div>
           <div class="cat-details">
             <h3>సాధారణ పదాలు</h3>
-            <p>నిత్యజీవిత పదాలు, ప్రకృతి & సులభ జ్ఞానం</p>
+            <p>General Words - నిత్యజీవిత పదాలు & ప్రకృతి</p>
           </div>
-          <div style="font-size:1.2rem; color:var(--primary);">➔</div>
+          <div style="font-size:1.3rem; color:var(--primary); font-weight:bold;">➔</div>
         </div>
 
-        <!-- Category 2 -->
+        <!-- Card 2 -->
         <div class="cat-select-card" onclick="startCategory('poems')">
           <div class="cat-icon-badge">📜</div>
           <div class="cat-details">
             <h3>పద్య రత్నాలు</h3>
-            <p>వేమన, సుమతీ శతకాల అమృత వాక్కులు</p>
+            <p>Poem Verses - వేమన, సుమతీ శతకాల అమృత వాక్కులు</p>
           </div>
-          <div style="font-size:1.2rem; color:var(--primary);">➔</div>
+          <div style="font-size:1.3rem; color:var(--primary); font-weight:bold;">➔</div>
         </div>
 
-        <!-- Category 3 -->
+        <!-- Card 3 -->
         <div class="cat-select-card" onclick="startCategory('proverbs')">
           <div class="cat-icon-badge">💡</div>
           <div class="cat-details">
             <h3>సామెతలు</h3>
-            <p>తెలుగుదనం ఉట్టిపడే చమత్కార సామెతలు</p>
+            <p>Telugu Proverbs - చమత్కార జాతీయాలు</p>
           </div>
-          <div style="font-size:1.2rem; color:var(--primary);">➔</div>
+          <div style="font-size:1.3rem; color:var(--primary); font-weight:bold;">➔</div>
         </div>
       </div>
 
       <div style="display:flex; justify-content:space-between; align-items:center; background:#f8fafc; padding:10px 14px; border-radius:14px; border:1.5px solid #e2e8f0;">
-        <span style="font-weight:700; color:#334155;">సంపాదించిన నక్షత్రాలు:</span>
-        <span style="font-weight:bold; color:#f59e0b; font-size:1.1rem;">⭐ <span id="lobby-stars">50</span></span>
+        <span style="font-weight:700; color:#334155;">నక్షత్రాలు / Stars:</span>
+        <span style="font-weight:bold; color:#f59e0b; font-size:1.1rem;">⭐ <span id="lobby-stars">0</span></span>
       </div>
     </div>
 
     <!-- SCREEN 2: GAMEPLAY SCREEN -->
     <div class="view-screen" id="gameplay-screen" style="display:none;">
-      <!-- In-Game Header -->
+      <!-- Top Bar -->
       <header>
-        <div class="brand">
-          <button class="back-btn" onclick="backToLobby()">← వర్గాలు</button>
-        </div>
+        <button class="back-btn" onclick="backToLobby()">← వర్గాలు / Categories</button>
         <div class="stats-bar">
           <div class="stat-badge">🔥 <span id="streak-num">1</span></div>
-          <div class="stat-badge">⭐ <span id="score-num">50</span></div>
-          <div class="stat-badge" style="background:#e8f5e9; color:#1b5e20;">స్థాయి <span id="lvl-num">1</span></div>
+          <div class="stat-badge">⭐ <span id="score-num">0</span></div>
+          <div class="stat-badge" style="background:#e8f5e9; color:#1b5e20;">స్థాయి / Level <span id="lvl-num">1</span></div>
           <button class="pause-btn" onclick="pauseGame()">⏸</button>
         </div>
       </header>
@@ -597,13 +597,13 @@
         <div class="companion-speech" id="companion-text">
           నమస్కారం! సంఖ్య 1 లేదా 2 ఉన్న గడిని నొక్కి సూచన వినండి.
         </div>
-        <button class="voice-chip" type="button" onclick="speakCurrentClue(); event.stopPropagation();">🔊 విను</button>
+        <button class="voice-chip" type="button" onclick="speakCurrentClue(); event.stopPropagation();">🔊 విను / Listen</button>
       </div>
 
       <!-- Active Clue Selector Bar -->
       <div class="clue-nav-bar" id="clue-nav-bar"></div>
 
-      <!-- Main Playing Board -->
+      <!-- Playing Board -->
       <main class="game-area">
         <div class="grid-board" id="puzzle-grid"></div>
       </main>
@@ -611,11 +611,11 @@
       <!-- Clue Banner -->
       <div class="clue-panel">
         <div>
-          <div class="clue-dir-tag" id="clue-direction">అడ్డం (1)</div>
+          <div class="clue-dir-tag" id="clue-direction">అడ్డం / Across (1)</div>
           <div class="clue-text" id="clue-content">సూచన లోడ్ అవుతోంది...</div>
         </div>
         <button class="hint-btn" onclick="useHint()">
-          💡 <span id="hint-label">సహాయం (3)</span>
+          <span id="hint-label">💡 సహాయం / Hint (3 Free)</span>
         </button>
       </div>
 
@@ -624,53 +624,53 @@
 
       <!-- Controls -->
       <div class="controls-tray">
-        <button class="action-btn" onclick="eraseCurrentCell()">⌫ తొలగించు</button>
-        <button class="action-btn" onclick="toggleVoice()">🔊 <span id="voice-label">వాయిస్ ఆన్</span></button>
+        <button class="action-btn" onclick="eraseCurrentCell()">⌫ తొలగించు / Delete</button>
+        <button class="action-btn" onclick="toggleVoice()">🔊 <span id="voice-label">వాయిస్ ఆన్ / Voice On</span></button>
       </div>
     </div>
 
-    <!-- Pause / Settings Modal -->
+    <!-- BILINGUAL PAUSE MODAL -->
     <div class="modal-backdrop" id="pause-modal">
       <div class="modal-card">
-        <h2 style="font-family:'Ramabhadra',sans-serif; color:var(--primary); margin-bottom:8px;">ఆట నిలిపివేయబడింది</h2>
-        <p style="color:#64748b; font-size:0.92rem; margin-bottom:12px;">మీ పురోగతి భద్రపరచబడింది.</p>
-        <button class="modal-btn" onclick="resumeGame()">ఆట కొనసాగించు ▶</button>
-        <button class="modal-btn" style="background:#475569;" onclick="restartLevel()">ఈ స్థాయిని మళ్ళీ ప్రారంభించు 🔄</button>
-        <button class="modal-btn" style="background:#dc2626;" onclick="backToLobbyFromPause()">వర్గాల మెనూకి వెళ్ళు 🏠</button>
+        <h2 style="font-family:'Ramabhadra',sans-serif; color:var(--primary); margin-bottom:4px;">ఆట నిలిపివేయబడింది</h2>
+        <p style="color:#64748b; font-size:0.9rem; margin-bottom:12px;">Game Paused</p>
+        <button class="modal-btn" onclick="resumeGame()">ఆట కొనసాగించు ▶ / Resume</button>
+        <button class="modal-btn" style="background:#475569;" onclick="restartLevel()">ఈ స్థాయిని మళ్ళీ ప్రారంభించు 🔄 / Restart Level</button>
+        <button class="modal-btn" style="background:#b91c1c;" onclick="backToLobbyFromPause()">వర్గాల మెనూకి వెళ్ళు 🏠 / Category Menu</button>
       </div>
     </div>
 
-    <!-- Daily Streak & Bonus Modal -->
+    <!-- DAILY BONUS MODAL -->
     <div class="modal-backdrop" id="bonus-modal">
       <div class="modal-card">
         <div style="font-size:46px;">🎁</div>
         <h2 style="font-family:'Ramabhadra',sans-serif; color:var(--primary);">రోజువారీ బోనస్!</h2>
-        <p style="color:#64748b; font-size:0.92rem; margin:6px 0;">రోజూ వస్తున్నందుకు మీకు బహుమతి లభించింది!</p>
+        <p style="color:#64748b; font-size:0.92rem; margin:4px 0;">Daily Check-in Bonus</p>
         <div style="background:#ecfdf5; border:1.5px solid #a7f3d0; padding:10px; border-radius:12px; margin:10px 0; font-size:1.1rem; color:#065f46; font-weight:bold;">
           +25 బోనస్ నక్షత్రాలు ⭐
         </div>
-        <button class="modal-btn" onclick="closeBonus()">తీసుకోండి</button>
+        <button class="modal-btn" onclick="closeBonus()">తీసుకోండి / Claim</button>
       </div>
     </div>
 
-    <!-- Victory Modal -->
+    <!-- VICTORY MODAL -->
     <div class="modal-backdrop" id="victory-modal">
       <div class="modal-card">
         <div style="font-size: 46px;">🏆</div>
-        <h2 style="font-family:'Ramabhadra',sans-serif; color: #1b5e20; margin-top: 4px;">అద్భుతం!</h2>
+        <h2 style="font-family:'Ramabhadra',sans-serif; color: #1b5e20; margin-top: 4px;">అద్భుతం! / Excellent!</h2>
         <p style="color: #64748b; font-size: 0.9rem;">స్థాయి విజయవంతంగా పూర్తయింది!</p>
         <div style="font-size: 28px; margin: 8px 0; color: #fbbf24;">⭐⭐⭐</div>
-        <p style="font-size:0.95rem; font-weight:700; color:#1e293b;">+100 పాయింట్లు లభించాయి!</p>
-        <button class="modal-btn" onclick="nextLevel()">తదుపరి స్థాయి ➔</button>
+        <p style="font-size:0.95rem; font-weight:700; color:#1e293b;">+100 నక్షత్రాలు లభించాయి!</p>
+        <button class="modal-btn" onclick="nextLevel()">తదుపరి స్థాయి ➔ / Next Level</button>
       </div>
     </div>
 
-    <!-- Mahakavi Kavitha Ratnam Tribute Modal -->
+    <!-- MAHAKAVI MILESTONE MODAL -->
     <div class="modal-backdrop" id="tribute-modal">
       <div class="modal-card">
         <div style="font-size: 44px;">📜</div>
         <h2 style="font-family:'Ramabhadra',sans-serif; color: #b45309;">కవితా రత్నం గౌరవం!</h2>
-        <p style="color: #64748b; font-size: 0.88rem;">10 స్థాయిలను విజయవంతంగా పూర్తి చేసినందుకు ప్రత్యేక బహుమతి!</p>
+        <p style="color: #64748b; font-size: 0.88rem;">10 స్థాయిలను పూర్తి చేసినందుకు ప్రత్యేక బహుమతి!</p>
         
         <div class="kavi-card" id="kavi-content">
           <div class="kavi-title" id="kavi-poet">వేమన శతకం</div>
@@ -678,7 +678,7 @@
           <div class="kavi-meaning" id="kavi-meaning">బాహ్య రూపం ఒకేలా ఉన్నా గుణాన్ని బట్టి మనుషుల విలువ తెలుస్తుంది.</div>
         </div>
 
-        <button class="modal-btn" style="background:#b45309;" onclick="closeTributeAndAdvance()">కవితా జ్ఞానం పొందాను ➔</button>
+        <button class="modal-btn" style="background:#b45309;" onclick="closeTributeAndAdvance()">కవితా జ్ఞానం పొందాను ➔ / Continue</button>
       </div>
     </div>
 
@@ -798,7 +798,7 @@
 
     let currentCategory = 'general';
     let currentLvlIdx = 0;
-    let score = 50;
+    let score = 0; // Starts cleanly at 0
     let streak = 1;
     let freeHints = 3;
     let selectedCell = null;
@@ -853,7 +853,7 @@
         const tab = document.createElement('div');
         tab.className = 'clue-tab';
         tab.id = `tab-${w.num}`;
-        tab.textContent = `${w.num}. ${w.dir === 'H' ? 'అడ్డం' : 'నిలువు'}`;
+        tab.textContent = `${w.num}. ${w.dir === 'H' ? 'అడ్డం / Across' : 'నిలువు / Down'}`;
         tab.onclick = () => {
           activeWord = w;
           const startKey = `${w.r}_${w.c}`;
@@ -902,24 +902,7 @@
             textSpan.className = 'cell-letter';
             cellEl.appendChild(textSpan);
 
-            // Click Handler
             cellEl.onclick = () => onCellClicked(key, cellWordMap[key], headCellMap[key]);
-
-            // Drag & Drop Handlers (Desktop Mouse Users)
-            cellEl.ondragover = (e) => {
-              e.preventDefault();
-              cellEl.classList.add('drag-over');
-            };
-            cellEl.ondragleave = () => cellEl.classList.remove('drag-over');
-            cellEl.ondrop = (e) => {
-              e.preventDefault();
-              cellEl.classList.remove('drag-over');
-              const draggedLetter = e.dataTransfer.getData('text/plain');
-              if (draggedLetter) {
-                selectedCell = key;
-                inputLetter(draggedLetter);
-              }
-            };
           } else {
             cellEl.classList.add('blocked');
           }
@@ -931,7 +914,7 @@
 
       activeWord = lvl.words[0];
       highlightBoard(`${lvl.words[0].r}_${lvl.words[0].c}`, false);
-      document.getElementById('companion-text').textContent = `స్థాయి ${lvl.level}: సంఖ్య 1 లేదా 2 ఉన్న గడిని నొక్కి సూచన వినండి.`;
+      document.getElementById('companion-text').textContent = `స్థాయి / Level ${lvl.level}: సంఖ్య 1 లేదా 2 ఉన్న గడిని నొక్కి సూచన వినండి.`;
     }
 
     function onCellClicked(key, wordsInCell, startingWordOfThisCell) {
@@ -951,7 +934,7 @@
     function highlightBoard(targetKey, shouldSpeak) {
       selectedCell = targetKey;
 
-      document.getElementById('clue-direction').textContent = `${activeWord.dir === 'H' ? 'అడ్డం' : 'నిలువు'} (${activeWord.num})`;
+      document.getElementById('clue-direction').textContent = `${activeWord.dir === 'H' ? 'అడ్డం / Across' : 'నిలువు / Down'} (${activeWord.num})`;
       document.getElementById('clue-content').textContent = activeWord.clue;
 
       document.querySelectorAll('.clue-tab').forEach(t => t.classList.remove('active'));
@@ -1001,16 +984,7 @@
         const key = document.createElement('button');
         key.className = 'palette-key';
         key.textContent = letter;
-        key.draggable = true;
-
-        // Click to place
         key.onclick = () => inputLetter(letter);
-
-        // Native Drag Support
-        key.ondragstart = (e) => {
-          e.dataTransfer.setData('text/plain', letter);
-        };
-
         palette.appendChild(key);
       });
     }
@@ -1090,7 +1064,6 @@
       initLevel();
     }
 
-    // Hint Logic
     function useHint() {
       if (!activeWord) return;
 
@@ -1111,9 +1084,9 @@
     function updateHintUI() {
       const label = document.getElementById('hint-label');
       if (freeHints > 0) {
-        label.textContent = `సహాయం (${freeHints} ఉచితం)`;
+        label.textContent = `💡 సహాయం / Hint (${freeHints} Free)`;
       } else {
-        label.textContent = `సహాయం (20 ⭐)`;
+        label.textContent = `💡 సహాయం / Hint (20 ⭐)`;
       }
     }
 
@@ -1214,7 +1187,7 @@
 
     function toggleVoice() {
       voiceEnabled = !voiceEnabled;
-      document.getElementById('voice-label').textContent = voiceEnabled ? 'వాయిస్ ఆన్' : 'వాయిస్ ఆఫ్';
+      document.getElementById('voice-label').textContent = voiceEnabled ? 'వాయిస్ ఆన్ / Voice On' : 'వాయిస్ ఆఫ్ / Voice Off';
       if (voiceEnabled) speakCurrentClue();
       else window.speechSynthesis.cancel();
     }
