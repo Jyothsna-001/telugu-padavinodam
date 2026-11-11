@@ -405,7 +405,7 @@
 
     .cell-letter { pointer-events: none; }
 
-    /* CLEAN CLUE BAR (NO SPOILERS) */
+    /* CLEAN CLUE BAR (PURE TELUGU) */
     .clue-panel {
       width: 100%;
       background: #f8fafc;
@@ -437,19 +437,25 @@
       line-height: 1.3;
     }
 
+    /* DIRECT 20 STAR HINT BUTTON */
     .hint-btn {
       background: #fffbeb;
       color: #b45309;
       border: 2px solid #fde68a;
-      padding: 6px 8px;
+      padding: 6px 10px;
       border-radius: 10px;
       font-family: 'Mandali', sans-serif;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       font-weight: 700;
       cursor: pointer;
       text-align: center;
-      line-height: 1.2;
+      line-height: 1.25;
       flex-shrink: 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .hint-btn:active {
+      transform: scale(0.96);
     }
 
     /* KEYBOARD */
@@ -585,11 +591,11 @@
         <p class="lobby-subtitle">Telugu Crossword Puzzles</p>
       </div>
 
-      <!-- 50 Points Free Initial Welcome Bonus Notice -->
+      <!-- 50 Points Initial Welcome Bonus Notice -->
       <div class="welcome-bonus-banner">
         <div class="bonus-tag">
           🎁 స్థాయి 1 కి ముందే ఉచిత స్వాగత బోనస్!<br />
-          <span>Initial Free Welcome Bonus before Level 1</span>
+          <span>Initial Free Welcome Bonus: 50 ⭐</span>
         </div>
         <div class="bonus-amount">⭐ <span id="lobby-stars">50</span></div>
       </div>
@@ -641,7 +647,7 @@
         <button class="back-btn" onclick="backToLobby()">← వర్గాలు / Categories</button>
         <div class="stats-bar">
           <div class="stat-badge">🔥 <span id="streak-num">1</span></div>
-          <div class="stat-badge" title="50 Free Welcome Bonus Included">⭐ <span id="score-num">50</span></div>
+          <div class="stat-badge" title="మీ నక్షత్రాలు">⭐ <span id="score-num">50</span></div>
           <div class="stat-badge" style="background:#e8f5e9; color:#1b5e20;">స్థాయి / Level <span id="lvl-num">1</span></div>
           <button class="pause-btn" onclick="pauseGame()">⏸</button>
         </div>
@@ -664,14 +670,14 @@
         <div class="grid-board" id="puzzle-grid"></div>
       </main>
 
-      <!-- Clean Clue Banner (Pure Telugu Only) + Bilingual Hint Button -->
+      <!-- Clue Banner (Pure Telugu Only) + Direct 20 Star Hint Button -->
       <div class="clue-panel">
         <div style="flex:1;">
           <div class="clue-dir-tag" id="clue-direction">అడ్డం (1)</div>
           <div class="clue-text" id="clue-content">సూచన లోడ్ అవుతోంది...</div>
         </div>
         <button class="hint-btn" onclick="useHint()">
-          <span id="hint-label">💡 సహాయం / Hint<br />(3 ఉచితం / Free)</span>
+          💡 సహాయం / Hint<br />(ఖర్చు: 20 ⭐)
         </button>
       </div>
 
@@ -700,8 +706,8 @@
     <div class="modal-backdrop" id="bonus-modal">
       <div class="modal-card">
         <div style="font-size:44px;">🎁</div>
-        <h2 style="font-family:'Ramabhadra',sans-serif; color:var(--primary);">స్వాగత & రోజువారీ బోనస్!</h2>
-        <p style="color:#64748b; font-size:0.85rem; margin:4px 0;">Initial Welcome Bonus (50 ⭐) + Daily Check-In Reward!</p>
+        <h2 style="font-family:'Ramabhadra',sans-serif; color:var(--primary);">రోజువారీ బోనస్!</h2>
+        <p style="color:#64748b; font-size:0.85rem; margin:4px 0;">Daily Check-In Reward!</p>
         <div style="background:#ecfdf5; border:1.5px solid #a7f3d0; padding:10px; border-radius:12px; margin:10px 0; font-size:1.05rem; color:#065f46; font-weight:bold;">
           +25 అదనపు బోనస్ నక్షత్రాలు / Extra Stars ⭐
         </div>
@@ -772,7 +778,7 @@
       }
     }
 
-    // Pure Telugu Clues (No English Spoilers on the board)
+    // Pure Telugu Clues (No English Spoilers on Board)
     const CATEGORIES_DATA = {
       general: [
         {
@@ -857,9 +863,12 @@
       poems: 0,
       proverbs: 0
     };
-    let score = parseInt(localStorage.getItem('telugu_padam_score')) || 50;
+    
+    // Starting with 50 Free Welcome Stars
+    let savedScore = localStorage.getItem('telugu_padam_score');
+    let score = (savedScore !== null) ? parseInt(savedScore) : 50;
+
     let streak = 1;
-    let freeHints = 3;
     let selectedCell = null;
     let activeWord = null;
     let gridState = {};
@@ -909,7 +918,6 @@
       document.getElementById('score-num').textContent = score;
       document.getElementById('lobby-stars').textContent = score;
       document.getElementById('streak-num').textContent = streak;
-      updateHintUI();
 
       const navBar = document.getElementById('clue-nav-bar');
       navBar.innerHTML = '';
@@ -1110,6 +1118,7 @@
       }
       score += 100;
       document.getElementById('score-num').textContent = score;
+      document.getElementById('lobby-stars').textContent = score;
       saveProgress();
 
       const catList = CATEGORIES_DATA[currentCategory] || CATEGORIES_DATA['general'];
@@ -1131,35 +1140,20 @@
       initLevel();
     }
 
+    // Direct 20 Points Deduction on Every Hint Click
     function useHint() {
       if (!activeWord) return;
 
-      if (freeHints > 0) {
-        freeHints--;
-        updateHintUI();
-        revealSyllableHint();
-      } else if (score >= 20) {
-        score -= 20;
+      if (score >= 20) {
+        score -= 20; // Deduct 20 points immediately
         document.getElementById('score-num').textContent = score;
+        document.getElementById('lobby-stars').textContent = score;
         saveProgress();
-        updateHintUI();
-        revealSyllableHint();
+        playChime('tap');
+        setCompanionText(`💡 సహాయం / Hint: ${activeWord.hint}`);
       } else {
-        setCompanionText('💡 ఉచిత సహాయాలు ముగిశాయి! 20 నక్షత్రాలు అవసరం / 20 Stars required for Hint.');
+        setCompanionText('💡 మీ వద్ద తగినన్ని నక్షత్రాలు లేవు! సహాయం కోసం 20 ⭐ అవసరం (Need 20 Stars for Hint).');
       }
-    }
-
-    function updateHintUI() {
-      const label = document.getElementById('hint-label');
-      if (freeHints > 0) {
-        label.innerHTML = `💡 సహాయం / Hint<br />(${freeHints} ఉచితం / Free)`;
-      } else {
-        label.innerHTML = `💡 సహాయం / Hint<br />(20 ⭐)`;
-      }
-    }
-
-    function revealSyllableHint() {
-      setCompanionText(`💡 సహాయం / Hint: ${activeWord.hint}`);
     }
 
     function pauseGame() {
