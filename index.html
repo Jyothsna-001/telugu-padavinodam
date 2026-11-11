@@ -405,7 +405,7 @@
 
     .cell-letter { pointer-events: none; }
 
-    /* BILINGUAL CLUE BAR */
+    /* CLEAN CLUE BAR (NO SPOILERS) */
     .clue-panel {
       width: 100%;
       background: #f8fafc;
@@ -431,18 +431,10 @@
     }
 
     .clue-text {
-      font-size: 0.92rem;
+      font-size: 0.96rem;
       font-weight: 700;
       color: #0f172a;
-      line-height: 1.25;
-    }
-
-    .clue-text-en {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: #475569;
-      margin-top: 2px;
-      line-height: 1.2;
+      line-height: 1.3;
     }
 
     .hint-btn {
@@ -614,7 +606,6 @@
       </div>
 
       <div class="category-cards-list">
-        <!-- Card 1 -->
         <div class="cat-select-card" onclick="startCategory('general')">
           <div class="cat-icon-badge">📖</div>
           <div class="cat-details">
@@ -624,7 +615,6 @@
           <div style="font-size:1.2rem; color:var(--primary); font-weight:bold;">➔</div>
         </div>
 
-        <!-- Card 2 -->
         <div class="cat-select-card" onclick="startCategory('poems')">
           <div class="cat-icon-badge">📜</div>
           <div class="cat-details">
@@ -634,7 +624,6 @@
           <div style="font-size:1.2rem; color:var(--primary); font-weight:bold;">➔</div>
         </div>
 
-        <!-- Card 3 -->
         <div class="cat-select-card" onclick="startCategory('proverbs')">
           <div class="cat-icon-badge">💡</div>
           <div class="cat-details">
@@ -675,12 +664,11 @@
         <div class="grid-board" id="puzzle-grid"></div>
       </main>
 
-      <!-- Bilingual Clue Banner + Bilingual Sahayam / Hint Button -->
+      <!-- Clean Clue Banner (Pure Telugu Only) + Bilingual Hint Button -->
       <div class="clue-panel">
         <div style="flex:1;">
-          <div class="clue-dir-tag" id="clue-direction">అడ్డం / Across (1)</div>
+          <div class="clue-dir-tag" id="clue-direction">అడ్డం (1)</div>
           <div class="clue-text" id="clue-content">సూచన లోడ్ అవుతోంది...</div>
-          <div class="clue-text-en" id="clue-content-en">Loading clue...</div>
         </div>
         <button class="hint-btn" onclick="useHint()">
           <span id="hint-label">💡 సహాయం / Hint<br />(3 ఉచితం / Free)</span>
@@ -784,35 +772,35 @@
       }
     }
 
-    // Bilingual Clues & Hints Database
+    // Pure Telugu Clues (No English Spoilers on the board)
     const CATEGORIES_DATA = {
       general: [
         {
           level: 1, gridSize: 3,
           words: [
-            { num: 1, word: ['క', 'మ', 'ల'], dir: 'H', r: 1, c: 0, clue: 'ఒక అందమైన చెరువు పువ్వు (తామర)', clueEn: 'A beautiful pond flower (Lotus)', hint: 'దీనిని పద్మం అని కూడా పిలుస్తారు / Also called Padmam' },
-            { num: 2, word: ['స', 'మ', 'యం'], dir: 'V', r: 0, c: 1, clue: 'గడియారం చూపే కాలం', clueEn: 'What a clock shows (Time)', hint: 'గంటలు నిమిషాలతో కొలుస్తారు / Measured in hours and minutes' }
+            { num: 1, word: ['క', 'మ', 'ల'], dir: 'H', r: 1, c: 0, clue: 'ఒక అందమైన చెరువు పువ్వు (తామర)', hint: 'దీనిని పద్మం అని కూడా పిలుస్తారు (Lotus)' },
+            { num: 2, word: ['స', 'మ', 'యం'], dir: 'V', r: 0, c: 1, clue: 'గడియారం చూపే కాలం', hint: 'గంటలు నిమిషాలతో కొలుస్తారు (Time)' }
           ]
         },
         {
           level: 2, gridSize: 4,
           words: [
-            { num: 1, word: ['గో', 'దా', 'వ', 'రి'], dir: 'H', r: 1, c: 0, clue: 'తెలుగు నేలపై ప్రవహించే పవిత్ర నది', clueEn: 'Sacred river flowing through Telugu land (Godavari)', hint: 'దక్షిణ గంగ అని పేరు / Known as Dakshina Ganga' },
-            { num: 2, word: ['భా', 'ను', 'డు'], dir: 'V', r: 0, c: 2, clue: 'పగలు వెలుగునిచ్చే సూర్యుడు', clueEn: 'The Sun that gives daylight', hint: 'రవి, భాస్కరుడు అని కూడా అంటారు / Also called Ravi or Surya' }
+            { num: 1, word: ['గో', 'దా', 'వ', 'రి'], dir: 'H', r: 1, c: 0, clue: 'తెలుగు నేలపై ప్రవహించే పవిత్ర నది', hint: 'దక్షిణ గంగ అని పేరు (Godavari River)' },
+            { num: 2, word: ['భా', 'ను', 'డు'], dir: 'V', r: 0, c: 2, clue: 'పగలు వెలుగునిచ్చే సూర్యుడు', hint: 'రవి, భాస్కరుడు అని కూడా అంటారు (Sun)' }
           ]
         },
         {
           level: 3, gridSize: 4,
           words: [
-            { num: 1, word: ['పు', 'స్త', 'కం'], dir: 'H', r: 1, c: 0, clue: 'జ్ఞానాన్ని అందించే గ్రంథం', clueEn: 'Object we read for knowledge (Book)', hint: 'చదువుకోవడానికి ఉపయోగపడుతుంది / Used for reading and studying' },
-            { num: 2, word: ['క', 'లం'], dir: 'V', r: 1, c: 2, clue: 'రాయడానికి వాడే సాధనం', clueEn: 'Tool used for writing (Pen)', hint: 'సిరాతో రాసే పరికరం / Writes with ink' }
+            { num: 1, word: ['పు', 'స్త', 'కం'], dir: 'H', r: 1, c: 0, clue: 'జ్ఞానాన్ని అందించే గ్రంథం', hint: 'చదువుకోవడానికి ఉపయోగపడుతుంది (Book)' },
+            { num: 2, word: ['క', 'లం'], dir: 'V', r: 1, c: 2, clue: 'రాయడానికి వాడే సాధనం', hint: 'సిరాతో రాసే పరికరం (Pen)' }
           ]
         },
         {
           level: 10, gridSize: 4,
           words: [
-            { num: 1, word: ['వి', 'జ', 'యం'], dir: 'H', r: 1, c: 0, clue: 'కృషితో లభించే గెలుపు', clueEn: 'Success or Victory achieved through effort', hint: 'ఓటమికి వ్యతిరేక పదం / Opposite of defeat' },
-            { num: 2, word: ['గ', 'జ', 'ము'], dir: 'V', r: 0, c: 1, clue: 'అడవిలో తిరిగే పెద్ద జంతువు (ఏనుగు)', clueEn: 'Large majestic forest animal (Elephant)', hint: 'హస్తి లేదా కరి అని అంటారు / Elephant in classic Telugu' }
+            { num: 1, word: ['వి', 'జ', 'యం'], dir: 'H', r: 1, c: 0, clue: 'కృషితో లభించే గెలుపు', hint: 'ఓటమికి వ్యతిరేక పదం (Victory / Success)' },
+            { num: 2, word: ['గ', 'జ', 'ము'], dir: 'V', r: 0, c: 1, clue: 'అడవిలో తిరిగే పెద్ద జంతువు (ఏనుగు)', hint: 'హస్తి లేదా కరి అని అంటారు (Elephant)' }
           ]
         }
       ],
@@ -820,15 +808,15 @@
         {
           level: 1, gridSize: 3,
           words: [
-            { num: 1, word: ['వే', 'మ', 'న'], dir: 'H', r: 1, c: 0, clue: 'విశ్వదాభిరామ మకుటంతో శతకం రాసిన యోగి', clueEn: 'Famous poet-saint of Viswadabhirama verses (Vemana)', hint: 'సుప్రసిద్ధ తెలుగు పద్య కవి / Renowned Telugu people’s poet' },
-            { num: 2, word: ['క', 'మ', 'ల'], dir: 'V', r: 0, c: 1, clue: 'పద్యాలలో తామరను పిలిచే పదం', clueEn: 'Poetic word for the Lotus flower', hint: 'నీటిలో వికసించే పద్మం / Blooms in water' }
+            { num: 1, word: ['వే', 'మ', 'న'], dir: 'H', r: 1, c: 0, clue: 'విశ్వదాభిరామ మకుటంతో శతకం రాసిన యోగి', hint: 'సుప్రసిద్ధ తెలుగు పద్య కవి (Poet Vemana)' },
+            { num: 2, word: ['క', 'మ', 'ల'], dir: 'V', r: 0, c: 1, clue: 'పద్యాలలో తామరను పిలిచే పదం', hint: 'నీటిలో వికసించే పద్మం (Poetic Lotus)' }
           ]
         },
         {
           level: 2, gridSize: 4,
           words: [
-            { num: 1, word: ['సు', 'మ', 'తి'], dir: 'H', r: 1, c: 0, clue: 'మంచి బుద్ధి గలవాడు అని అర్థం వచ్చే శతకం', clueEn: 'Classic century of moral verses meaning "Good Mind" (Sumathi)', hint: 'బద్దెన రచించిన నీతి పద్యాలు / Written by poet Baddena' },
-            { num: 2, word: ['మ', 'తి'], dir: 'V', r: 1, c: 1, clue: 'మేధస్సు లేదా ఆలోచనా శక్తి', clueEn: 'Intellect, mind, or wisdom', hint: 'జ్ఞానానికి సమానార్థకం / Synonym for intelligence' }
+            { num: 1, word: ['సు', 'మ', 'తి'], dir: 'H', r: 1, c: 0, clue: 'మంచి బుద్ధి గలవాడు అని అర్థం వచ్చే శతకం', hint: 'బద్దెన రచించిన నీతి పద్యాలు (Sumathi Satakam)' },
+            { num: 2, word: ['మ', 'తి'], dir: 'V', r: 1, c: 1, clue: 'మేధస్సు లేదా ఆలోచనా శక్తి', hint: 'జ్ఞానానికి సమానార్థకం (Intellect / Wisdom)' }
           ]
         }
       ],
@@ -836,15 +824,15 @@
         {
           level: 1, gridSize: 3,
           words: [
-            { num: 1, word: ['తో', 'క'], dir: 'H', r: 1, c: 0, clue: 'కుక్క ______ వంకర (సామెత పూరించండి)', clueEn: 'Complete the proverb: A dog’s ______ is always crooked (Tail)', hint: 'జంతువు వెనుక ఉండే భాగం / Back part of an animal (Tail)' },
-            { num: 2, word: ['క', 'థ'], dir: 'V', r: 1, c: 1, clue: 'కంచికి చేరేది (పిట్ట ____)', clueEn: 'A narrative or folk tale (Story)', hint: 'గాథ లేదా పిట్టకథ / A tale or story' }
+            { num: 1, word: ['తో', 'క'], dir: 'H', r: 1, c: 0, clue: 'కుక్క ______ వంకర (సామెత పూరించండి)', hint: 'జంతువు వెనుక ఉండే భాగం (Tail of an animal)' },
+            { num: 2, word: ['క', 'థ'], dir: 'V', r: 1, c: 1, clue: 'కంచికి చేరేది (పిట్ట ____)', hint: 'గాథ లేదా కథనం (Story / Tale)' }
           ]
         },
         {
           level: 2, gridSize: 4,
           words: [
-            { num: 1, word: ['దీ', 'పం'], dir: 'H', r: 1, c: 0, clue: '______ ఉండగానే ఇల్లు చక్కబెట్టుకోవాలి', clueEn: 'Put your house in order while the ______ is still lit (Lamp)', hint: 'వెలుగునిచ్చే జ్యోతి / Traditional light or lamp' },
-            { num: 2, word: ['సం', 'ప', 'ద'], dir: 'V', r: 0, c: 1, clue: 'ఐశ్వర్యం లేదా ధనం', clueEn: 'Wealth or prosperity', hint: 'సిరి సంపదలు / Riches and abundance' }
+            { num: 1, word: ['దీ', 'పం'], dir: 'H', r: 1, c: 0, clue: '______ ఉండగానే ఇల్లు చక్కబెట్టుకోవాలి', hint: 'వెలుగునిచ్చే జ్యోతి (Oil lamp)' },
+            { num: 2, word: ['సం', 'ప', 'ద'], dir: 'V', r: 0, c: 1, clue: 'ఐశ్వర్యం లేదా ధనం', hint: 'సిరి సంపదలు (Wealth / Prosperity)' }
           ]
         }
       ]
@@ -854,23 +842,22 @@
       {
         poet: 'మహాకవి వేమన శతకం / Poet Vemana',
         verse: 'ఉప్పు కప్పురంబు నొక్క పోలిక నుండు\nచూడ చూడ రుచుల జాడ వేరు\nపురుషులందు పుణ్య పురుషులు వేరయా\nవిశ్వదాభిరామ వినుర వేమ!',
-        meaning: 'బాహ్య రూపం ఒకేలా ఉన్నా గుణాన్ని బట్టి మనుషుల విలువ తెలుస్తుంది. / Salt and camphor look alike, yet their essence differs—virtuous people stand apart by their character.'
+        meaning: 'బాహ్య రూపం ఒకేలా ఉన్నా గుణాన్ని బట్టి మనుషుల విలువ తెలుస్తుంది.'
       },
       {
         poet: 'బద్దెన - సుమతీ శతకం / Sumathi Satakam',
         verse: 'ఆకొన్న కూడే యమృతము\nతాకొంచక నిచ్చువాడె దాత దరిత్రిన్\nసోకోర్చువాడె మనుజుడు\nతేకువగలవాడె మనుజుడెన్నగ సుమతీ!',
-        meaning: 'ఆకలితో ఉన్నప్పుడు దొరికే ఆహారమే అమృతం; సంకోచం లేకుండా ఇచ్చేవాడే నిజమైన దాత. / Food served when hungry is nectar; one who gives without hesitation is the true giver.'
+        meaning: 'ఆకలితో ఉన్నప్పుడు దొరికే ఆహారమే అమృతం; సంకోచం లేకుండా ఇచ్చేవాడే నిజమైన దాత.'
       }
     ];
 
     let currentCategory = 'general';
-    // Persistent Progress per category
     let categoryProgress = JSON.parse(localStorage.getItem('telugu_padam_cat_progress')) || {
       general: 0,
       poems: 0,
       proverbs: 0
     };
-    let score = parseInt(localStorage.getItem('telugu_padam_score')) || 50; // 50 initial free welcome bonus
+    let score = parseInt(localStorage.getItem('telugu_padam_score')) || 50;
     let streak = 1;
     let freeHints = 3;
     let selectedCell = null;
@@ -924,7 +911,6 @@
       document.getElementById('streak-num').textContent = streak;
       updateHintUI();
 
-      // Setup Clue Tabs
       const navBar = document.getElementById('clue-nav-bar');
       navBar.innerHTML = '';
       lvl.words.forEach((w) => {
@@ -992,7 +978,7 @@
 
       activeWord = lvl.words[0];
       highlightBoard(`${lvl.words[0].r}_${lvl.words[0].c}`, false);
-      document.getElementById('companion-text').textContent = `స్థాయి / Level ${lvl.level}: సంఖ్య 1 లేదా 2 నొక్కి సూచన వినండి (Tap 1 or 2 to hear clue).`;
+      document.getElementById('companion-text').textContent = `స్థాయి / Level ${lvl.level}: సంఖ్య 1 లేదా 2 నొక్కి సూచన వినండి.`;
     }
 
     function onCellClicked(key, wordsInCell, startingWordOfThisCell) {
@@ -1014,7 +1000,6 @@
 
       document.getElementById('clue-direction').textContent = `${activeWord.dir === 'H' ? 'అడ్డం / Across' : 'నిలువు / Down'} (${activeWord.num})`;
       document.getElementById('clue-content').textContent = activeWord.clue;
-      document.getElementById('clue-content-en').textContent = activeWord.clueEn || '';
 
       document.querySelectorAll('.clue-tab').forEach(t => t.classList.remove('active'));
       const activeTab = document.getElementById(`tab-${activeWord.num}`);
@@ -1043,7 +1028,7 @@
       playChime('tap');
 
       if (shouldSpeak) {
-        setCompanionText(`${activeWord.num}. ${activeWord.clue} (${activeWord.clueEn})`);
+        setCompanionText(`${activeWord.num}. ${activeWord.clue}`);
       }
     }
 
@@ -1233,7 +1218,6 @@
         window.speechSynthesis.cancel();
         primeVoices();
 
-        // Speak only the Telugu part cleanly
         const teluguPart = txt.split('/')[0];
         const utter = new SpeechSynthesisUtterance(teluguPart);
         utter.rate = 0.88;
@@ -1266,7 +1250,7 @@
       if (audioCtx.state === 'suspended') audioCtx.resume();
       primeVoices();
       if (activeWord) {
-        setCompanionText(`${activeWord.num}. ${activeWord.clue} / ${activeWord.clueEn}`);
+        setCompanionText(`${activeWord.num}. ${activeWord.clue}`);
       }
     }
 
@@ -1288,7 +1272,6 @@
       });
     }
 
-    // Initialize Lobby Stars display
     document.getElementById('lobby-stars').textContent = score;
     setTimeout(checkDailyBonus, 1000);
   </script>
