@@ -1,4 +1,4 @@
-const CACHE_NAME = 'telugu-padam-v17';
+const CACHE_NAME = 'telugu-padam-v18';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
