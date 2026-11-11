@@ -548,6 +548,7 @@
       margin-top: 10px;
     }
 
+    /* KAVI PARICHAYAM CARD (AFTER EVERY 10 LEVELS) */
     .kavi-card {
       background: linear-gradient(135deg, #fffbeb, #fef3c7);
       border: 2px solid #f59e0b;
@@ -570,6 +571,7 @@
       font-size: 0.9rem;
       line-height: 1.4;
       margin-bottom: 6px;
+      white-space: pre-line;
     }
 
     .kavi-meaning {
@@ -727,15 +729,15 @@
       </div>
     </div>
 
-    <!-- MAHAKAVI MILESTONE MODAL -->
+    <!-- KAVI PARICHAYAM HERITAGE TRIBUTE MODAL (EVERY 10 LEVELS) -->
     <div class="modal-backdrop" id="tribute-modal">
       <div class="modal-card">
         <div style="font-size: 44px;">📜</div>
-        <h2 style="font-family:'Ramabhadra',sans-serif; color: #b45309;">కవితా రత్నం గౌరవం! / Literary Tribute</h2>
-        <p style="color: #64748b; font-size: 0.85rem;">10 స్థాయిలను పూర్తి చేసినందుకు ప్రత్యేక బహుమతి!</p>
+        <h2 style="font-family:'Ramabhadra',sans-serif; color: #b45309;">కవితా రత్నం & కవి పరిచయం!</h2>
+        <p style="color: #64748b; font-size: 0.85rem;">10 స్థాయిలను పూర్తి చేసినందుకు ప్రత్యేక సాహిత్య గౌరవం!</p>
         
         <div class="kavi-card" id="kavi-content">
-          <div class="kavi-title" id="kavi-poet">వేమన శతకం</div>
+          <div class="kavi-title" id="kavi-poet">మహాకవి వేమన పరిచయం</div>
           <div class="kavi-verse" id="kavi-verse">"ఉప్పు కప్పురంబు నొక్క పోలిక నుండు..."</div>
           <div class="kavi-meaning" id="kavi-meaning">బాహ్య రూపం ఒకేలా ఉన్నా గుణాన్ని బట్టి మనుషుల విలువ తెలుస్తుంది.</div>
         </div>
@@ -778,35 +780,35 @@
       }
     }
 
-    // Pure Telugu Clues (No English Spoilers on Board)
+    // Databases: Clues are Pure Telugu, Hints NEVER contain the answer word!
     const CATEGORIES_DATA = {
       general: [
         {
           level: 1, gridSize: 3,
           words: [
-            { num: 1, word: ['క', 'మ', 'ల'], dir: 'H', r: 1, c: 0, clue: 'ఒక అందమైన చెరువు పువ్వు (తామర)', hint: 'దీనిని పద్మం అని కూడా పిలుస్తారు (Lotus)' },
-            { num: 2, word: ['స', 'మ', 'యం'], dir: 'V', r: 0, c: 1, clue: 'గడియారం చూపే కాలం', hint: 'గంటలు నిమిషాలతో కొలుస్తారు (Time)' }
+            { num: 1, word: ['క', 'మ', 'ల'], dir: 'H', r: 1, c: 0, clue: 'ఒక అందమైన చెరువు పువ్వు (తామర)', hint: 'సరస్సులలో నీటిపై తేలియాడే మన జాతీయ పుష్పం' },
+            { num: 2, word: ['స', 'మ', 'యం'], dir: 'V', r: 0, c: 1, clue: 'గడియారం చూపే కాలం', hint: 'గంటలు మరియు నిమిషాలతో కొలిచే అమూల్యమైనది' }
           ]
         },
         {
           level: 2, gridSize: 4,
           words: [
-            { num: 1, word: ['గో', 'దా', 'వ', 'రి'], dir: 'H', r: 1, c: 0, clue: 'తెలుగు నేలపై ప్రవహించే పవిత్ర నది', hint: 'దక్షిణ గంగ అని పేరు (Godavari River)' },
-            { num: 2, word: ['భా', 'ను', 'డు'], dir: 'V', r: 0, c: 2, clue: 'పగలు వెలుగునిచ్చే సూర్యుడు', hint: 'రవి, భాస్కరుడు అని కూడా అంటారు (Sun)' }
+            { num: 1, word: ['గో', 'దా', 'వ', 'రి'], dir: 'H', r: 1, c: 0, clue: 'తెలుగు నేలపై ప్రవహించే పవిత్ర నది', hint: 'నాసిక్ వద్ద పుట్టి రాజమండ్రి మీదుగా సాగరంలో కలిసే జీవనది' },
+            { num: 2, word: ['భా', 'ను', 'డు'], dir: 'V', r: 0, c: 2, clue: 'పగలు వెలుగునిచ్చే ఆకాశ తేజస్సు', hint: 'చీకటిని పోగొట్టి ఉదయాన్నే ప్రాణం పోసే వెలుగుల రేడు' }
           ]
         },
         {
           level: 3, gridSize: 4,
           words: [
-            { num: 1, word: ['పు', 'స్త', 'కం'], dir: 'H', r: 1, c: 0, clue: 'జ్ఞానాన్ని అందించే గ్రంథం', hint: 'చదువుకోవడానికి ఉపయోగపడుతుంది (Book)' },
-            { num: 2, word: ['క', 'లం'], dir: 'V', r: 1, c: 2, clue: 'రాయడానికి వాడే సాధనం', hint: 'సిరాతో రాసే పరికరం (Pen)' }
+            { num: 1, word: ['పు', 'స్త', 'కం'], dir: 'H', r: 1, c: 0, clue: 'జ్ఞానాన్ని అందించే గ్రంథం', hint: 'అక్షరాల పేజీలను తిప్పుతూ చదువుకునే సాధనం' },
+            { num: 2, word: ['క', 'లం'], dir: 'V', r: 1, c: 2, clue: 'రాయడానికి వాడే పరికరం', hint: 'సిరాతో కాగితంపై రాతలు ముద్రించే సాధనం' }
           ]
         },
         {
           level: 10, gridSize: 4,
           words: [
-            { num: 1, word: ['వి', 'జ', 'యం'], dir: 'H', r: 1, c: 0, clue: 'కృషితో లభించే గెలుపు', hint: 'ఓటమికి వ్యతిరేక పదం (Victory / Success)' },
-            { num: 2, word: ['గ', 'జ', 'ము'], dir: 'V', r: 0, c: 1, clue: 'అడవిలో తిరిగే పెద్ద జంతువు (ఏనుగు)', hint: 'హస్తి లేదా కరి అని అంటారు (Elephant)' }
+            { num: 1, word: ['వి', 'జ', 'యం'], dir: 'H', r: 1, c: 0, clue: 'కృషితో లభించే గెలుపు', hint: 'ఓటమికి వ్యతిరేకమైన తీపి అనుభవం' },
+            { num: 2, word: ['గ', 'జ', 'ము'], dir: 'V', r: 0, c: 1, clue: 'అడవిలో తిరిగే పెద్ద జంతువు (ఏనుగు)', hint: 'తొండం కలిగి ఠీవిగా నడిచే భారీ వన్యప్రాణి' }
           ]
         }
       ],
@@ -814,15 +816,15 @@
         {
           level: 1, gridSize: 3,
           words: [
-            { num: 1, word: ['వే', 'మ', 'న'], dir: 'H', r: 1, c: 0, clue: 'విశ్వదాభిరామ మకుటంతో శతకం రాసిన యోగి', hint: 'సుప్రసిద్ధ తెలుగు పద్య కవి (Poet Vemana)' },
-            { num: 2, word: ['క', 'మ', 'ల'], dir: 'V', r: 0, c: 1, clue: 'పద్యాలలో తామరను పిలిచే పదం', hint: 'నీటిలో వికసించే పద్మం (Poetic Lotus)' }
+            { num: 1, word: ['వే', 'మ', 'న'], dir: 'H', r: 1, c: 0, clue: 'విశ్వదాభిరామ మకుటంతో శతకం రాసిన యోగి', hint: 'సమాజ హితం కోసం ఆటవెలది ఛందస్సులో పద్యాలు చెప్పిన ప్రజాకవి' },
+            { num: 2, word: ['క', 'మ', 'ల'], dir: 'V', r: 0, c: 1, clue: 'పద్యాలలో తామరను పిలిచే పదం', hint: 'రవి కిరణాలు సోకగానే ముకుళిత రేకులు విచ్చుకునే జలపుష్పం' }
           ]
         },
         {
           level: 2, gridSize: 4,
           words: [
-            { num: 1, word: ['సు', 'మ', 'తి'], dir: 'H', r: 1, c: 0, clue: 'మంచి బుద్ధి గలవాడు అని అర్థం వచ్చే శతకం', hint: 'బద్దెన రచించిన నీతి పద్యాలు (Sumathi Satakam)' },
-            { num: 2, word: ['మ', 'తి'], dir: 'V', r: 1, c: 1, clue: 'మేధస్సు లేదా ఆలోచనా శక్తి', hint: 'జ్ఞానానికి సమానార్థకం (Intellect / Wisdom)' }
+            { num: 1, word: ['సు', 'మ', 'తి'], dir: 'H', r: 1, c: 0, clue: 'మంచి బుద్ధి గలవాడు అని అర్థం వచ్చే శతకం', hint: 'ధరణిలో నీతి మార్గాన్ని బోధించే ప్రసిద్ధ సంబోధన' },
+            { num: 2, word: ['మ', 'తి'], dir: 'V', r: 1, c: 1, clue: 'మేధస్సు లేదా ఆలోచనా శక్తి', hint: 'మనిషి ఆలోచనలను, తెలివిని సూచించే పదం' }
           ]
         }
       ],
@@ -830,30 +832,31 @@
         {
           level: 1, gridSize: 3,
           words: [
-            { num: 1, word: ['తో', 'క'], dir: 'H', r: 1, c: 0, clue: 'కుక్క ______ వంకర (సామెత పూరించండి)', hint: 'జంతువు వెనుక ఉండే భాగం (Tail of an animal)' },
-            { num: 2, word: ['క', 'థ'], dir: 'V', r: 1, c: 1, clue: 'కంచికి చేరేది (పిట్ట ____)', hint: 'గాథ లేదా కథనం (Story / Tale)' }
+            { num: 1, word: ['తో', 'క'], dir: 'H', r: 1, c: 0, clue: 'కుక్క ______ వంకర (సామెత పూరించండి)', hint: 'ఎన్ని రోజులు గొట్టంలో ఉంచినా తిన్నగా మారని జంతువు వెనుక భాగం' },
+            { num: 2, word: ['క', 'థ'], dir: 'V', r: 1, c: 1, clue: 'మొదటికే మోసం వచ్చినప్పుడు చెప్పేది (అడ్డ____)', hint: 'ముగింపు లేకుండా సాగే పిట్ట ప్రసంగం లేదా గాథ' }
           ]
         },
         {
           level: 2, gridSize: 4,
           words: [
-            { num: 1, word: ['దీ', 'పం'], dir: 'H', r: 1, c: 0, clue: '______ ఉండగానే ఇల్లు చక్కబెట్టుకోవాలి', hint: 'వెలుగునిచ్చే జ్యోతి (Oil lamp)' },
-            { num: 2, word: ['సం', 'ప', 'ద'], dir: 'V', r: 0, c: 1, clue: 'ఐశ్వర్యం లేదా ధనం', hint: 'సిరి సంపదలు (Wealth / Prosperity)' }
+            { num: 1, word: ['దీ', 'పం'], dir: 'H', r: 1, c: 0, clue: '______ ఉండగానే ఇల్లు చక్కబెట్టుకోవాలి', hint: 'చీకటి పడకముందే వెలిగించే నూనె జ్యోతి' },
+            { num: 2, word: ['సం', 'ప', 'ద'], dir: 'V', r: 0, c: 1, clue: 'ఐశ్వర్యం లేదా ధనం', hint: 'లక్ష్మీ కటాక్షంతో లభించే సిరి భాగ్యాలు' }
           ]
         }
       ]
     };
 
+    // Authentic Telugu Heritage Tribute Bank (Kavi Parichayam)
     const TRIBUTES = [
       {
-        poet: 'మహాకవి వేమన శతకం / Poet Vemana',
+        poet: 'మహాకవి వేమన - కవి పరిచయం',
         verse: 'ఉప్పు కప్పురంబు నొక్క పోలిక నుండు\nచూడ చూడ రుచుల జాడ వేరు\nపురుషులందు పుణ్య పురుషులు వేరయా\nవిశ్వదాభిరామ వినుర వేమ!',
-        meaning: 'బాహ్య రూపం ఒకేలా ఉన్నా గుణాన్ని బట్టి మనుషుల విలువ తెలుస్తుంది.'
+        meaning: 'బాహ్య రూపం ఒకేలా ఉన్నా లోతుగా పరిశీలించినప్పుడు గుణాన్ని బట్టి మానవుల ఉత్తమత్వం తెలుస్తుంది.'
       },
       {
-        poet: 'బద్దెన - సుమతీ శతకం / Sumathi Satakam',
+        poet: 'బద్దెన భూపాలుడు - సుమతీ శతక కర్త',
         verse: 'ఆకొన్న కూడే యమృతము\nతాకొంచక నిచ్చువాడె దాత దరిత్రిన్\nసోకోర్చువాడె మనుజుడు\nతేకువగలవాడె మనుజుడెన్నగ సుమతీ!',
-        meaning: 'ఆకలితో ఉన్నప్పుడు దొరికే ఆహారమే అమృతం; సంకోచం లేకుండా ఇచ్చేవాడే నిజమైన దాత.'
+        meaning: 'తీవ్రమైన ఆకలితో ఉన్నప్పుడు దొరికే ఆహారమే అమృతం; సంకోచం లేకుండా దానం చేసేవాడే నిజమైన దాత.'
       }
     ];
 
@@ -864,7 +867,6 @@
       proverbs: 0
     };
     
-    // Starting with 50 Free Welcome Stars
     let savedScore = localStorage.getItem('telugu_padam_score');
     let score = (savedScore !== null) ? parseInt(savedScore) : 50;
 
@@ -1125,6 +1127,7 @@
       const currentLvlIdx = categoryProgress[currentCategory] || 0;
       const currentLevel = catList[currentLvlIdx % catList.length].level;
 
+      // Unlocks Mahakavi Tribute Milestone every 10 levels
       if (currentLevel % 10 === 0) {
         showTributeModal();
       } else {
@@ -1140,12 +1143,12 @@
       initLevel();
     }
 
-    // Direct 20 Points Deduction on Every Hint Click
+    // Direct 20-star deduction without revealing the target word
     function useHint() {
       if (!activeWord) return;
 
       if (score >= 20) {
-        score -= 20; // Deduct 20 points immediately
+        score -= 20;
         document.getElementById('score-num').textContent = score;
         document.getElementById('lobby-stars').textContent = score;
         saveProgress();
@@ -1176,7 +1179,7 @@
       document.getElementById('kavi-verse').textContent = `"${tribute.verse}"`;
       document.getElementById('kavi-meaning').textContent = tribute.meaning;
       document.getElementById('tribute-modal').style.display = 'flex';
-      setCompanionText(`కవితా రత్నం గౌరవం! ${tribute.poet}`);
+      setCompanionText(`కవితా రత్నం & కవి పరిచయం! ${tribute.poet}`);
     }
 
     function closeTributeAndAdvance() {
