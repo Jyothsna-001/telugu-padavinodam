@@ -65,6 +65,53 @@
       flex: 1;
     }
 
+    /* ACHIEVEMENT TOAST BANNER */
+    .achievement-toast {
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+      border: 2.5px solid #f59e0b;
+      border-radius: 18px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 12px 28px rgba(245, 158, 11, 0.35);
+      z-index: 250;
+      transition: top 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .achievement-toast.show {
+      top: 16px;
+    }
+
+    .ach-icon {
+      font-size: 32px;
+      animation: spinPop 0.8s ease;
+    }
+
+    @keyframes spinPop {
+      0% { transform: scale(0) rotate(-45deg); }
+      70% { transform: scale(1.2) rotate(10deg); }
+      100% { transform: scale(1) rotate(0deg); }
+    }
+
+    .ach-text h4 {
+      font-family: 'Ramabhadra', sans-serif;
+      color: #92400e;
+      font-size: 0.98rem;
+      line-height: 1.2;
+    }
+
+    .ach-text p {
+      font-size: 0.8rem;
+      color: #78350f;
+      font-weight: 700;
+    }
+
     /* LOBBY / HOME SCREEN */
     .lobby-header {
       text-align: center;
@@ -457,10 +504,10 @@
       transition: all 0.15s ease;
     }
 
-    .hint-btn.answer-mode {
-      background: #fef2f2;
-      color: #b91c1c;
-      border-color: #fca5a5;
+    .hint-btn.choice-mode {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border-color: #93c5fd;
     }
 
     .palette-box {
@@ -493,18 +540,18 @@
     .controls-tray {
       width: 100%;
       display: flex;
-      gap: 6px;
+      gap: 5px;
       margin-top: 6px;
     }
 
     .action-btn {
       flex: 1;
-      padding: 7px 4px;
+      padding: 7px 3px;
       background: #f8fafc;
       border: 1.5px solid #cbd5e1;
       border-radius: 10px;
       font-family: 'Mandali', sans-serif;
-      font-size: 0.8rem;
+      font-size: 0.76rem;
       font-weight: 700;
       color: #334155;
       cursor: pointer;
@@ -515,30 +562,7 @@
       background: #1b5e20;
       color: #ffffff;
       border-color: #166534;
-      flex: 1.2;
-    }
-
-    .action-btn.skip-btn {
-      background: #f1f5f9;
-      color: #94a3b8;
-      border-color: #e2e8f0;
-      cursor: not-allowed;
-      opacity: 0.6;
-    }
-
-    .action-btn.skip-btn.unlocked {
-      background: #fff7ed;
-      color: #c2410c;
-      border-color: #fdba74;
-      cursor: pointer;
-      opacity: 1;
-      font-weight: 800;
-      animation: pulseAttention 1.8s infinite;
-    }
-
-    @keyframes pulseAttention {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.4); }
-      50% { box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.4); }
+      flex: 1.3;
     }
 
     /* MODALS */
@@ -561,13 +585,13 @@
       border-radius: 20px;
       padding: 18px;
       text-align: center;
-      animation: popIn 0.2s ease-out;
+      animation: popIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
       max-height: 90vh;
       overflow-y: auto;
     }
 
     @keyframes popIn {
-      0% { transform: scale(0.9); opacity: 0; }
+      0% { transform: scale(0.85); opacity: 0; }
       100% { transform: scale(1); opacity: 1; }
     }
 
@@ -579,9 +603,21 @@
       border: none;
       border-radius: 12px;
       font-family: 'Ramabhadra', sans-serif;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       cursor: pointer;
       margin-top: 10px;
+      line-height: 1.25;
+    }
+
+    .wisdom-box {
+      background: #f0fdf4;
+      border: 1.5px solid #bbf7d0;
+      border-radius: 12px;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 0.84rem;
+      color: #166534;
+      line-height: 1.35;
     }
 
     /* KAVI PARICHAYAM CARD */
@@ -644,6 +680,15 @@
 
   <div class="app-wrapper">
 
+    <!-- ANIMATED ACHIEVEMENT TOAST BANNER -->
+    <div class="achievement-toast" id="achievement-toast">
+      <div class="ach-icon" id="ach-icon">🏅</div>
+      <div class="ach-text">
+        <h4 id="ach-title">అద్భుత విజయం!</h4>
+        <p id="ach-desc">+50 బోనస్ నక్షత్రాలు లభించాయి!</p>
+      </div>
+    </div>
+
     <!-- LOBBY SCREEN -->
     <div class="view-screen" id="lobby-screen">
       <div class="lobby-header">
@@ -705,7 +750,7 @@
       <header>
         <button class="back-btn" onclick="backToLobby()">← వర్గాలు / Categories</button>
         <div class="stats-bar">
-          <div class="stat-badge">🔥 <span id="streak-num">1</span></div>
+          <div class="stat-badge" title="వరుస విజయాలు">🔥 <span id="streak-num">0</span></div>
           <div class="stat-badge" title="మీ నక్షత్రాలు">⭐ <span id="score-num">50</span></div>
           <div class="stat-badge" style="background:#e8f5e9; color:#1b5e20;">స్థాయి / Level <span id="lvl-num">1</span></div>
           <button class="pause-btn" onclick="pauseGame()">⏸</button>
@@ -717,7 +762,7 @@
         <div class="companion-speech" id="companion-text">
           నమస్కారం! సంఖ్య 1 లేదా 2 ఉన్న గడిని నొక్కి సూచన వినండి.
         </div>
-        <button class="voice-chip" type="button" onclick="speakCurrentClue(); event.stopPropagation();">🔊 విను / Listen</button>
+        <button class="voice-chip" type="button" onclick="speakCurrentClue(); event.stopPropagation();">🔊 విను</button>
       </div>
 
       <div class="clue-nav-bar" id="clue-nav-bar"></div>
@@ -731,8 +776,8 @@
           <div class="clue-dir-tag" id="clue-direction">అడ్డం (1)</div>
           <div class="clue-text" id="clue-content">సూచన లోడ్ అవుతోంది...</div>
         </div>
-        <button class="hint-btn" id="hint-btn" onclick="useHint()">
-          💡 సహాయం / Hint<br />(ఖర్చు: 10 ⭐)
+        <button class="hint-btn" id="hint-btn" onclick="handleHintClick()">
+          💡 సహాయం / Hint<br />(10 ⭐)
         </button>
       </div>
 
@@ -740,9 +785,30 @@
 
       <div class="controls-tray">
         <button class="action-btn verify-btn" onclick="verifyCurrentPuzzle()">✓ సరిచూడు / Verify</button>
+        <button class="action-btn" onclick="shuffleKeyboard()">🔀 కలుపు</button>
         <button class="action-btn" onclick="eraseCurrentCell()">⌫ తొలగించు</button>
         <button class="action-btn" onclick="toggleVoice()">🔊 <span id="voice-label">వాయిస్</span></button>
-        <button class="action-btn skip-btn" id="skip-btn" onclick="skipCurrentLevel()">⏩ దాటవేయి</button>
+      </div>
+    </div>
+
+    <!-- STUCK CHOICE MODAL (Reveal 1 Letter vs Skip Level) -->
+    <div class="modal-backdrop" id="stuck-choice-modal">
+      <div class="modal-card">
+        <div style="font-size: 40px;">🤔</div>
+        <h2 style="font-family:'Ramabhadra',sans-serif; color:#1e293b; margin-top:4px;">సందేహంగా ఉందా? / Need More Help?</h2>
+        <p style="color:#64748b; font-size:0.86rem; margin:6px 0 12px;">మీకు నచ్చిన మార్గాన్ని ఎంచుకోండి / Choose your preferred option:</p>
+        
+        <button class="modal-btn" style="background:#2563eb;" onclick="revealOneLetterOption()">
+          🔓 ఒక అక్షరం చూపించు (-20 ⭐)<br /><span style="font-size:0.78rem; font-family:'Mandali',sans-serif;">Reveal 1 Letter (Costs 20 Stars)</span>
+        </button>
+
+        <button class="modal-btn" style="background:#ea580c;" onclick="skipLevelFromChoice()">
+          ⏩ ఈ స్థాయిని దాటవేయి (ఉచితం)<br /><span style="font-size:0.78rem; font-family:'Mandali',sans-serif;">Skip to Next Level (Free)</span>
+        </button>
+
+        <button class="modal-btn" style="background:#e2e8f0; color:#334155;" onclick="closeStuckChoice()">
+          వద్దు, నేనే ప్రయత్నిస్తాను / Keep Trying
+        </button>
       </div>
     </div>
 
@@ -770,24 +836,29 @@
       </div>
     </div>
 
-    <!-- VICTORY MODAL -->
+    <!-- VICTORY MODAL WITH WORD WISDOM -->
     <div class="modal-backdrop" id="victory-modal">
       <div class="modal-card">
         <div style="font-size: 46px;">🏆</div>
-        <h2 style="font-family:'Ramabhadra',sans-serif; color: #1b5e20; margin-top: 4px;">అద్భుతం! / Awesome!</h2>
-        <p style="color: #64748b; font-size: 0.88rem;">ఈ స్థాయి విజయవంతంగా పూర్తయింది! / Level Completed!</p>
-        <div style="font-size: 28px; margin: 8px 0; color: #fbbf24;">⭐⭐⭐</div>
+        <h2 style="font-family:'Ramabhadra',sans-serif; color: #1b5e20; margin-top: 4px;">అద్భుతం! / Congratulations!</h2>
+        <p style="color: #64748b; font-size: 0.88rem;">ఈ స్థాయి విజయవంతంగా పూర్తయింది!</p>
+        <div style="font-size: 28px; margin: 6px 0; color: #fbbf24;">⭐⭐⭐</div>
         <p style="font-size:0.95rem; font-weight:700; color:#1e293b;">+100 నక్షత్రాలు / Stars Earned!</p>
+        
+        <div class="wisdom-box" id="victory-wisdom">
+          📖 పద విశేషం: కమలం మన జాతీయ పుష్పం.
+        </div>
+
         <button class="modal-btn" onclick="nextLevel()">తదుపరి స్థాయి ➔ / Next Level</button>
       </div>
     </div>
 
-    <!-- KAVI PARICHAYAM HERITAGE TRIBUTE MODAL -->
+    <!-- KAVI PARICHAYAM MODAL -->
     <div class="modal-backdrop" id="tribute-modal">
       <div class="modal-card">
         <div style="font-size: 44px;">📜</div>
         <h2 style="font-family:'Ramabhadra',sans-serif; color: #b45309;">కవితా రత్నం & కవి పరిచయం</h2>
-        <p style="color: #64748b; font-size: 0.82rem; margin-bottom: 6px;">10 స్థాయిలను పూర్తి చేసినందుకు లభించిన ప్రత్యేక సాహిత్య జ్ఞానం!</p>
+        <p style="color: #64748b; font-size: 0.82rem; margin-bottom: 6px;">10 స్థాయిలను పూర్తి చేసినందుకు లభించిన ప్రత్యేక సాహిత్య గౌరవం!</p>
         
         <div class="kavi-card" id="kavi-content">
           <div class="kavi-name-header" id="kavi-poet">కవి పేరు</div>
@@ -843,45 +914,53 @@
           o.start(now + idx * 0.1);
           o.stop(now + idx * 0.1 + 0.25);
         });
+      } else if (type === 'achievement') {
+        [587.33, 739.99, 880.00, 1174.66].forEach((freq, idx) => {
+          const o = audioCtx.createOscillator();
+          const g = audioCtx.createGain();
+          o.connect(g);
+          g.connect(audioCtx.destination);
+          o.frequency.setValueAtTime(freq, now + idx * 0.09);
+          g.gain.setValueAtTime(0.2, now + idx * 0.09);
+          g.gain.linearRampToValueAtTime(0.01, now + idx * 0.09 + 0.3);
+          o.start(now + idx * 0.09);
+          o.stop(now + idx * 0.09 + 0.3);
+        });
       }
     }
 
-    // Complete Full-Noun Telugu Crosswords (Zero truncated letters, zero answer spoilers)
+    // Complete Audited Telugu Crosswords with Word Wisdom
     const CATEGORIES_DATA = {
       general: [
         {
           level: 1, gridSize: 3,
+          wisdom: '📖 పద విశేషం: "కమలం" బురదలో పుట్టినా నిర్మలంగా వికసించే మన జాతీయ పుష్పం.',
           words: [
-            // Across: (1,0)=క, (1,1)=మ, (1,2)=లం -> కమలం
-            { num: 1, word: ['క', 'మ', 'లం'], dir: 'H', r: 1, c: 0, clue: 'చెరువులో వికసించే అందమైన తామర పుష్పం', hint: 'సరస్సులలో నీటిపై తేలియాడే మన జాతీయ పుష్పం' },
-            // Down: (0,2)=నీ, (1,2)=లం -> నీలం (Crosses cleanly at 'లం' at (1,2))
+            { num: 1, word: ['క', 'మ', 'లం'], dir: 'H', r: 1, c: 0, clue: 'చెరువులో వికసించే అందమైన తామర పుష్పం', hint: 'సరస్సులలో నీటిపై తేలియాడే మన పవిత్ర జాతీయ పుష్పం' },
             { num: 2, word: ['నీ', 'లం'], dir: 'V', r: 0, c: 2, clue: 'ఆకాశం మరియు సముద్రం కనిపించే చల్లని రంగు', hint: 'నెమలి కంఠంలో, ఆకాశంలో మెరిసే ప్రశాంతమైన వర్ణం' }
           ]
         },
         {
           level: 2, gridSize: 3,
+          wisdom: '📖 పద విశేషం: "సమయం" ఎవరికోసమూ ఆగదు; దానిని సద్వినియోగం చేసుకున్నవారే విజేతలు.',
           words: [
-            // Across: (1,0)=స, (1,1)=మ, (1,2)=యం -> సమయం
             { num: 1, word: ['స', 'మ', 'యం'], dir: 'H', r: 1, c: 0, clue: 'గడియారం చూపే అమూల్యమైన కాలం', hint: 'గంటలు మరియు నిమిషాలతో కొలిచేది' },
-            // Down: (0,1)=క, (1,1)=మ, (2,1)=లం -> కమలం (Crosses cleanly at 'మ' at (1,1))
             { num: 2, word: ['క', 'మ', 'లం'], dir: 'V', r: 0, c: 1, clue: 'పద్మం అని పిలువబడే పవిత్ర జలపుష్పం', hint: 'చెరువు నీటిలో వికసించే అందమైన పువ్వు' }
           ]
         },
         {
           level: 3, gridSize: 3,
+          wisdom: '📖 పద విశేషం: "ఆనందం" మన ఆలోచనలలోనే ఉంటుంది; ఇతరులకు పంచితే అది రెట్టింపు అవుతుంది.',
           words: [
-            // Across: (1,0)=ఆ, (1,1)=నం, (1,2)=దం -> ఆనందం
             { num: 1, word: ['ఆ', 'నం', 'దం'], dir: 'H', r: 1, c: 0, clue: 'మనసుకు కలిగే అమితమైన సంతోషం', hint: 'ఉల్లాసం మరియు చిరునవ్వులు పూయించే భావన' },
-            // Down: (0,2)=చం, (1,2)=దం -> చందం (Crosses at 'దం' at (1,2))
             { num: 2, word: ['చం', 'దం'], dir: 'V', r: 0, c: 2, clue: 'అందమైన రూపం లేదా ఒద్దికైన విధం', hint: 'చక్కని తీరు లేదా మనోహరమైన ఆకృతి' }
           ]
         },
         {
           level: 10, gridSize: 3,
+          wisdom: '📖 పద విశేషం: "భారతి" అంటే జ్ఞాన స్వరూపిణి సరస్వతి మరియు మన భారతమాత అని అర్థం.',
           words: [
-            // Across: (1,0)=భా, (1,1)=ర, (1,2)=తి -> భారతి
             { num: 1, word: ['భా', 'ర', 'తి'], dir: 'H', r: 1, c: 0, clue: 'జ్ఞానాన్ని ప్రసాదించే చదువుల తల్లి సరస్వతి', hint: 'వీణాపాణి, వాగ్దేవి అని పిలువబడే దేవత' },
-            // Down: (0,2)=నీ, (1,2)=తి -> నీతి (Crosses at 'తి' at (1,2))
             { num: 2, word: ['నీ', 'తి'], dir: 'V', r: 0, c: 2, clue: 'ధర్మబద్ధమైన సన్మార్గ ప్రవర్తన', hint: 'శతక పద్యాలు మానవాళికి బోధించే సత్య మార్గం' }
           ]
         }
@@ -889,19 +968,17 @@
       poems: [
         {
           level: 1, gridSize: 3,
+          wisdom: '📜 పద్య విశేషం: వేమన తన మూడు లైన్ల ఆటవెలది పద్యాలతో సామాన్యులకు సైతం వేదాంతాన్ని అందించారు.',
           words: [
-            // Across: (1,0)=వే, (1,1)=మ, (1,2)=న -> వేమన
             { num: 1, word: ['వే', 'మ', 'న'], dir: 'H', r: 1, c: 0, clue: 'విశ్వదాభిరామ మకుటంతో శతకం రాసిన యోగి', hint: 'సమాజ హితం కోసం ఆటవెలది ఛందస్సులో పద్యాలు చెప్పిన ప్రజాకవి' },
-            // Down: (0,2)=ర, (1,2)=చ, (2,2)=న -> రచన (Crosses at 'న' at (1,2))
             { num: 2, word: ['ర', 'చ', 'న'], dir: 'V', r: 0, c: 2, clue: 'కవి రచించిన సాహిత్యం లేదా గ్రంథం', hint: 'కలానికి జీవం పోస్తూ రాసిన పద్య లేదా గద్య సంపుటి' }
           ]
         },
         {
           level: 2, gridSize: 3,
+          wisdom: '📜 పద్య విశేషం: సత్యం, ధర్మం అనే పునాదులపై నిర్మితమైన "నీతి" సమాజాన్ని ఎల్లప్పుడూ కాపాడుతుంది.',
           words: [
-            // Across: (1,0)=నీ, (1,1)=తి -> నీతి
             { num: 1, word: ['నీ', 'తి'], dir: 'H', r: 1, c: 0, clue: 'ధర్మబద్ధమైన సన్మార్గ ప్రవర్తన', hint: 'శతక కవులు మానవాళికి బోధించిన సత్య మార్గం' },
-            // Down: (0,1)=జా, (1,1)=తి -> జాతి (Crosses at 'తి' at (1,1))
             { num: 2, word: ['జా', 'తి'], dir: 'V', r: 0, c: 1, clue: 'మానవ సమాజం లేదా వంశం', hint: 'ఒకే మూలాలను పంచుకునే ప్రజల సమూహం' }
           ]
         }
@@ -909,19 +986,17 @@
       proverbs: [
         {
           level: 1, gridSize: 3,
+          wisdom: '💡 సామెత అర్థం: పుట్టుకతో వచ్చిన సహజ స్వభావాన్ని మార్చడం చాలా కష్టం అని ఈ సామెత తెలియజేస్తుంది.',
           words: [
-            // Across: (1,0)=తో, (1,1)=క -> తోక
             { num: 1, word: ['తో', 'క'], dir: 'H', r: 1, c: 0, clue: 'కుక్క ______ వంకర (సామెత పూరించండి)', hint: 'ఎన్ని రోజులు గొట్టంలో ఉంచినా తిన్నగా మారని జంతువు భాగం' },
-            // Down: (0,1)=పా, (1,1)=క -> పాక (Crosses at 'క' at (1,1))
             { num: 2, word: ['పా', 'క'], dir: 'V', r: 0, c: 1, clue: 'తాటాకులతో వేసిన చిన్న పూరి గుడిసె', hint: 'పల్లెటూర్లలో నీడ కోసం వేసుకునే ఆకుల గూడు' }
           ]
         },
         {
           level: 2, gridSize: 3,
+          wisdom: '💡 సామెత అర్థం: అవసరానికి మించిన అత్యాశ మనిషిని కష్టాల్లోకి నెడుతుందని పెద్దలు చెప్పిన మాట.',
           words: [
-            // Across: (1,0)=ఆ, (1,1)=శ -> ఆశ
             { num: 1, word: ['ఆ', 'శ'], dir: 'H', r: 1, c: 0, clue: 'దురా____ దుఃఖానికి చేటు (సామెత పూరించండి)', hint: 'పరిమితి లేని మితిమీరిన కోరిక' },
-            // Down: (0,1)=ది, (1,1)=శ -> దిశ (Crosses at 'శ' at (1,1))
             { num: 2, word: ['ది', 'శ'], dir: 'V', r: 0, c: 1, clue: 'తూర్పు, పడమర లాంటి మార్గం', hint: 'గమ్యాన్ని లేదా దిక్కును సూచించే పదం' }
           ]
         }
@@ -965,15 +1040,15 @@
     let savedScore = localStorage.getItem('telugu_padam_score');
     let score = (savedScore !== null) ? parseInt(savedScore) : 50;
 
-    let streak = 1;
+    let streak = 0;
     let selectedCell = null;
     let activeWord = null;
     let gridState = {};
     let voiceEnabled = true;
     let availableVoices = [];
     let wrongAttemptsCount = 0;
-    let skipUnlocked = false;
-    let wordHintStage = {}; // Tracks whether clue (1) or full answer (2) has been used per word
+    let wordHintStage = {};
+    let currentPaletteLetters = [];
 
     function saveProgress() {
       localStorage.setItem('telugu_padam_cat_progress', JSON.stringify(categoryProgress));
@@ -988,6 +1063,23 @@
     if ('speechSynthesis' in window) {
       primeVoices();
       window.speechSynthesis.onvoiceschanged = primeVoices;
+    }
+
+    // Animated Achievement Celebration Banner
+    function showAchievementAnimation(icon, title, desc) {
+      playChime('achievement');
+      if (window.confetti) {
+        window.confetti({ particleCount: 70, spread: 80, origin: { y: 0.3 } });
+      }
+      document.getElementById('ach-icon').textContent = icon;
+      document.getElementById('ach-title').textContent = title;
+      document.getElementById('ach-desc').textContent = desc;
+      
+      const toast = document.getElementById('achievement-toast');
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3800);
     }
 
     function startCategory(catKey) {
@@ -1015,9 +1107,7 @@
       const lvl = catList[currentLvlIdx % catList.length];
       
       wrongAttemptsCount = 0;
-      skipUnlocked = false;
       wordHintStage = {};
-      updateSkipButtonState();
 
       document.getElementById('lvl-num').textContent = lvl.level;
       document.getElementById('score-num').textContent = score;
@@ -1087,11 +1177,11 @@
         }
       }
 
-      setupKeyboard(lvl);
+      setupKeyboard();
 
       activeWord = lvl.words[0];
       highlightBoard(`${lvl.words[0].r}_${lvl.words[0].c}`, false);
-      document.getElementById('companion-text').textContent = `స్థాయి / Level ${lvl.level}: అక్షరాలను నింపి 'సరిచూడు' బటన్ నొక్కండి.`;
+      setCompanionText(`స్థాయి ${lvl.level}: సంఖ్య 1 లేదా 2 నొక్కి సూచన వినండి.`, false);
     }
 
     function onCellClicked(key, wordsInCell, startingWordOfThisCell) {
@@ -1118,7 +1208,6 @@
       const activeTab = document.getElementById(`tab-${activeWord.num}`);
       if (activeTab) activeTab.classList.add('active');
 
-      // Update Hint Button according to current word's stage (Stage 0 = -10 Clue, Stage 1 = -20 Answer)
       updateHintButtonUI();
 
       const activeWordKeys = new Set();
@@ -1144,7 +1233,7 @@
       playChime('tap');
 
       if (shouldSpeak) {
-        setCompanionText(`${activeWord.num}. ${activeWord.clue}`);
+        setCompanionText(`${activeWord.num}. ${activeWord.clue}`, true);
       }
     }
 
@@ -1154,21 +1243,15 @@
       const stage = wordHintStage[activeWord.num] || 0;
 
       if (stage === 0) {
-        hintBtn.classList.remove('answer-mode');
-        hintBtn.innerHTML = '💡 సహాయం / Hint<br />(ఖర్చు: 10 ⭐)';
-      } else if (stage === 1) {
-        hintBtn.classList.add('answer-mode');
-        hintBtn.innerHTML = '🔓 జవాబు / Answer<br />(ఖర్చు: 20 ⭐)';
+        hintBtn.classList.remove('choice-mode');
+        hintBtn.innerHTML = '💡 సహాయం / Hint<br />(10 ⭐)';
       } else {
-        hintBtn.classList.remove('answer-mode');
-        hintBtn.innerHTML = '✅ జవాబు ఇవ్వబడింది<br />(Solved)';
+        hintBtn.classList.add('choice-mode');
+        hintBtn.innerHTML = '🤔 మరిన్ని ఎంపికలు<br />(More Options)';
       }
     }
 
-    function setupKeyboard(lvl) {
-      const palette = document.getElementById('letters-keyboard');
-      palette.innerHTML = '';
-
+    function setupKeyboard() {
       const requiredLetters = [];
       for (const [key, val] of Object.entries(gridState)) {
         if (!requiredLetters.includes(val.expected)) {
@@ -1177,20 +1260,30 @@
       }
 
       const distractors = ['రా', 'సి', 'కం', 'తా', 'మ', 'న', 'లి', 'డి', 'ప', 'గ', 'తి'];
-      const finalPalette = [...requiredLetters];
+      currentPaletteLetters = [...requiredLetters];
       let distractorIdx = 0;
 
-      while (finalPalette.length < 8) {
+      while (currentPaletteLetters.length < 8) {
         const candidate = distractors[distractorIdx % distractors.length];
-        if (!finalPalette.includes(candidate)) {
-          finalPalette.push(candidate);
+        if (!currentPaletteLetters.includes(candidate)) {
+          currentPaletteLetters.push(candidate);
         }
         distractorIdx++;
       }
 
-      finalPalette.sort(() => Math.random() - 0.5);
+      renderKeyboardKeys();
+    }
 
-      finalPalette.forEach(letter => {
+    function shuffleKeyboard() {
+      playChime('tap');
+      currentPaletteLetters.sort(() => Math.random() - 0.5);
+      renderKeyboardKeys();
+    }
+
+    function renderKeyboardKeys() {
+      const palette = document.getElementById('letters-keyboard');
+      palette.innerHTML = '';
+      currentPaletteLetters.sort(() => Math.random() - 0.5).forEach(letter => {
         const key = document.createElement('button');
         key.className = 'palette-key';
         key.textContent = letter;
@@ -1260,7 +1353,7 @@
 
       if (!allFilled) {
         playChime('error');
-        setCompanionText('అన్ని గడులను అక్షరాలతో నింపి సరిచూడండి!');
+        setCompanionText('అన్ని గడులను అక్షరాలతో నింపి సరిచూడండి!', true);
         return;
       }
 
@@ -1269,39 +1362,97 @@
       } else {
         playChime('error');
         wrongAttemptsCount++;
-        setCompanionText(`తప్పులు ఉన్నాయి! ఎరుపు రంగు గడులను సరిచేయండి (${wrongAttemptsCount}/3).`);
+        streak = 0; // Reset consecutive clean win streak
+        document.getElementById('streak-num').textContent = streak;
 
         if (wrongAttemptsCount >= 3) {
-          unlockSkipButton('3 సార్లు సరిపోలలేదు. మీరు ఈ స్థాయిని దాటవేయవచ్చు!');
+          setCompanionText('తప్పులు ఉన్నాయి! మీరు కావాలంటే స్థాయిని దాటవేయవచ్చు.', true);
+          document.getElementById('stuck-choice-modal').style.display = 'flex';
+        } else {
+          setCompanionText(`తప్పులు ఉన్నాయి! ఎరుపు రంగు గడులను సరిచేయండి (${wrongAttemptsCount}/3).`, true);
         }
       }
     }
 
-    function unlockSkipButton(reason) {
-      if (skipUnlocked) return;
-      skipUnlocked = true;
-      updateSkipButtonState();
-      setCompanionText(`⏩ దాటవేయి బటన్ యాక్టివేట్ అయింది! ${reason}`);
-    }
+    // Two-Tier Hint Flow: 1st Tap = Clue (-10 Stars), 2nd Tap = Stuck Choice Modal
+    function handleHintClick() {
+      if (!activeWord) return;
+      const stage = wordHintStage[activeWord.num] || 0;
 
-    function updateSkipButtonState() {
-      const btn = document.getElementById('skip-btn');
-      if (skipUnlocked) {
-        btn.classList.add('unlocked');
-        btn.title = 'ఈ స్థాయిని దాటవేసి తదుపరి స్థాయికి వెళ్ళండి';
+      if (stage === 0) {
+        if (score >= 10) {
+          score -= 10;
+          document.getElementById('score-num').textContent = score;
+          document.getElementById('lobby-stars').textContent = score;
+          saveProgress();
+          playChime('tap');
+
+          wordHintStage[activeWord.num] = 1;
+          updateHintButtonUI();
+          setCompanionText(`💡 సహాయం: ${activeWord.hint}`, true);
+        } else {
+          setCompanionText('నక్షత్రాలు తక్కువగా ఉన్నాయి. ఈ స్థాయిని దాటవేయడానికి ఎంపిక తెరుస్తున్నాము.', true);
+          document.getElementById('stuck-choice-modal').style.display = 'flex';
+        }
       } else {
-        btn.classList.remove('unlocked');
-        btn.title = '3 తప్పులు లేదా నక్షత్రాలు లేనప్పుడు అన్‌లాక్ అవుతుంది';
+        // Open the Stuck Choice Modal (Reveal 1 Letter vs Skip Level)
+        document.getElementById('stuck-choice-modal').style.display = 'flex';
       }
     }
 
-    function skipCurrentLevel() {
-      if (!skipUnlocked) {
-        setCompanionText('3 సార్లు తప్పుగా సరిచూసినా లేదా నక్షత్రాలు లేకపోయినా దాటవేయి అన్‌లాక్ అవుతుంది!');
+    function closeStuckChoice() {
+      document.getElementById('stuck-choice-modal').style.display = 'none';
+    }
+
+    function revealOneLetterOption() {
+      closeStuckChoice();
+      if (!activeWord) return;
+
+      if (score < 20) {
+        setCompanionText('క్షమించండి! ఒక అక్షరం తెరవడానికి ఇరవై నక్షత్రాలు అవసరం. మీరు స్థాయిని దాటవేయవచ్చు.', true);
         return;
       }
+
+      // Find the first un-solved or wrong cell in activeWord
+      let revealed = false;
+      for (let i = 0; i < activeWord.word.length; i++) {
+        const rPos = activeWord.dir === 'H' ? activeWord.r : activeWord.r + i;
+        const cPos = activeWord.dir === 'H' ? activeWord.c + i : activeWord.c;
+        const key = `${rPos}_${cPos}`;
+
+        if (gridState[key] && gridState[key].current !== activeWord.word[i]) {
+          score -= 20;
+          document.getElementById('score-num').textContent = score;
+          document.getElementById('lobby-stars').textContent = score;
+          saveProgress();
+
+          gridState[key].current = activeWord.word[i];
+          const cellEl = document.querySelector(`.grid-cell[data-key="${key}"]`);
+          if (cellEl) {
+            const letterSpan = cellEl.querySelector('.cell-letter');
+            if (letterSpan) letterSpan.textContent = activeWord.word[i];
+            cellEl.classList.remove('error-cell');
+            cellEl.classList.add('solved');
+          }
+
+          playChime('tap');
+          setCompanionText(`ఇరవై నక్షత్రాలతో "${activeWord.word[i]}" అక్షరం నింపబడింది! మిగిలినది పూర్తి చేయండి.`, true);
+          revealed = true;
+          break;
+        }
+      }
+
+      if (!revealed) {
+        setCompanionText('ఈ పదంలోని అన్ని అక్షరాలు ఇప్పటికే సరైనవే!', true);
+      }
+    }
+
+    function skipLevelFromChoice() {
+      closeStuckChoice();
+      streak = 0;
+      document.getElementById('streak-num').textContent = streak;
       playChime('tap');
-      setCompanionText('స్థాయిని దాటవేస్తున్నారు...');
+      setCompanionText('స్థాయిని దాటవేసి తదుపరి స్థాయికి వెళ్తున్నాము.', true);
       categoryProgress[currentCategory] = (categoryProgress[currentCategory] || 0) + 1;
       saveProgress();
       initLevel();
@@ -1313,19 +1464,30 @@
         window.confetti({ particleCount: 90, spread: 75, origin: { y: 0.6 } });
       }
       score += 100;
+      streak++;
       document.getElementById('score-num').textContent = score;
       document.getElementById('lobby-stars').textContent = score;
+      document.getElementById('streak-num').textContent = streak;
       saveProgress();
+
+      // Check 3-in-a-row Streak Achievement
+      if (streak > 0 && streak % 3 === 0) {
+        score += 50;
+        document.getElementById('score-num').textContent = score;
+        saveProgress();
+        showAchievementAnimation('🔥', `హ్యాట్రిక్ విజయం (${streak} వరుస)!`, '+50 బోనస్ నక్షత్రాలు లభించాయి!');
+      }
 
       const catList = CATEGORIES_DATA[currentCategory] || CATEGORIES_DATA['general'];
       const currentLvlIdx = categoryProgress[currentCategory] || 0;
-      const currentLevel = catList[currentLvlIdx % catList.length].level;
+      const lvlObj = catList[currentLvlIdx % catList.length];
 
-      if (currentLevel % 10 === 0) {
+      if (lvlObj.level % 10 === 0) {
         showTributeModal();
       } else {
+        document.getElementById('victory-wisdom').textContent = lvlObj.wisdom || 'అద్భుతంగా పూర్తి చేశారు!';
         document.getElementById('victory-modal').style.display = 'flex';
-        setCompanionText('అద్భుతం! అన్ని పదాలు సరైనవి. స్థాయి పూర్తయింది!');
+        setCompanionText('అభినందనలు! అన్ని పదాలు సరైనవి. స్థాయి పూర్తయింది!', true);
       }
     }
 
@@ -1334,66 +1496,6 @@
       categoryProgress[currentCategory] = (categoryProgress[currentCategory] || 0) + 1;
       saveProgress();
       initLevel();
-    }
-
-    // Two-Tier Hint System: 1st Tap = -10 Stars (Clue) | 2nd Tap = -20 Stars (Full Answer Reveal)
-    function useHint() {
-      if (!activeWord) return;
-      const stage = wordHintStage[activeWord.num] || 0;
-
-      if (stage === 0) {
-        // Tier 1: Give Clue (-10 Stars)
-        if (score >= 10) {
-          score -= 10;
-          document.getElementById('score-num').textContent = score;
-          document.getElementById('lobby-stars').textContent = score;
-          saveProgress();
-          playChime('tap');
-          
-          wordHintStage[activeWord.num] = 1;
-          updateHintButtonUI();
-          setCompanionText(`💡 సహాయం (-10 ⭐): ${activeWord.hint}`);
-        } else {
-          setCompanionText('💡 నక్షత్రాలు లేవు (సహాయం కోసం 10 ⭐ అవసరం). దాటవేయి బటన్ అన్‌లాక్ అయింది!');
-          unlockSkipButton('సహాయానికి సరిపడా నక్షత్రాలు లేవు.');
-        }
-      } else if (stage === 1) {
-        // Tier 2: Give Direct Answer (-20 Stars)
-        if (score >= 20) {
-          score -= 20;
-          document.getElementById('score-num').textContent = score;
-          document.getElementById('lobby-stars').textContent = score;
-          saveProgress();
-          playChime('tap');
-
-          // Auto-fill the entire active word into the grid
-          for (let i = 0; i < activeWord.word.length; i++) {
-            const rPos = activeWord.dir === 'H' ? activeWord.r : activeWord.r + i;
-            const cPos = activeWord.dir === 'H' ? activeWord.c + i : activeWord.c;
-            const key = `${rPos}_${cPos}`;
-            if (gridState[key]) {
-              gridState[key].current = activeWord.word[i];
-              const cellEl = document.querySelector(`.grid-cell[data-key="${key}"]`);
-              if (cellEl) {
-                const letterSpan = cellEl.querySelector('.cell-letter');
-                if (letterSpan) letterSpan.textContent = activeWord.word[i];
-                cellEl.classList.remove('error-cell');
-                cellEl.classList.add('solved');
-              }
-            }
-          }
-
-          wordHintStage[activeWord.num] = 2;
-          updateHintButtonUI();
-          const fullAnswerWord = activeWord.word.join('');
-          setCompanionText(`🔓 జవాబు (-20 ⭐): "${fullAnswerWord}" నింపబడింది! 'సరిచూడు' నొక్కండి.`);
-        } else {
-          setCompanionText('🔓 జవాబు పొందడానికి 20 ⭐ అవసరం. మీరు స్థాయిని దాటవేయవచ్చు!');
-          unlockSkipButton('జవాబు పొందడానికి నక్షత్రాలు లేవు.');
-        }
-      } else {
-        setCompanionText('✅ ఈ పదానికి జవాబు ఇప్పటికే నింపబడింది!');
-      }
     }
 
     function pauseGame() {
@@ -1420,7 +1522,8 @@
       document.getElementById('kavi-meaning').textContent = `తాత్పర్యం: ${tribute.meaning}`;
       
       document.getElementById('tribute-modal').style.display = 'flex';
-      setCompanionText(`కవితా రత్నం & కవి పరిచయం! ${tribute.poet}`);
+      showAchievementAnimation('📜', 'కవితా రత్నం గౌరవం!', `${tribute.poet} పరిచయం అన్‌లాక్ అయింది!`);
+      setCompanionText(`కవితా రత్నం గౌరవం! ${tribute.poet}`, true);
     }
 
     function closeTributeAndAdvance() {
@@ -1446,18 +1549,30 @@
       localStorage.setItem('telugu_padam_last_bonus', new Date().toDateString());
       saveProgress();
       document.getElementById('bonus-modal').style.display = 'none';
+      showAchievementAnimation('🎁', 'రోజువారీ బోనస్!', '+25 నక్షత్రాలు మీ ఖాతాలో జమ అయ్యాయి!');
     }
 
-    function setCompanionText(txt) {
+    // Crystal-Clear Speech Normalizer (Converts underscores to single "ఖాళీ" and "-20" to "ఇరవై")
+    function cleanTextForSpeech(rawTxt) {
+      let spoken = rawTxt.split('/')[0]; // Speak Telugu portion cleanly
+      spoken = spoken.replace(/[_]+/g, ' ఖాళీ '); // Replace any sequence of underscores with a single "ఖాళీ"
+      spoken = spoken.replace(/-20/g, ' ఇరవై నక్షత్రాలు ');
+      spoken = spoken.replace(/-10/g, ' పది నక్షత్రాలు ');
+      spoken = spoken.replace(/⭐/g, ' నక్షత్రాలు ');
+      spoken = spoken.replace(/[💡🔓⏩🏆📜🎁🔥]/g, ''); // Strip emojis from voice reading
+      return spoken.trim();
+    }
+
+    function setCompanionText(txt, shouldSpeak = true) {
       document.getElementById('companion-text').textContent = txt;
-      if (!voiceEnabled || !('speechSynthesis' in window)) return;
+      if (!shouldSpeak || !voiceEnabled || !('speechSynthesis' in window)) return;
 
       try {
         window.speechSynthesis.cancel();
         primeVoices();
 
-        const teluguPart = txt.split('/')[0];
-        const utter = new SpeechSynthesisUtterance(teluguPart);
+        const cleanSpeech = cleanTextForSpeech(txt);
+        const utter = new SpeechSynthesisUtterance(cleanSpeech);
         utter.rate = 0.88;
         utter.pitch = 1.0;
 
@@ -1488,7 +1603,7 @@
       if (audioCtx.state === 'suspended') audioCtx.resume();
       primeVoices();
       if (activeWord) {
-        setCompanionText(`${activeWord.num}. ${activeWord.clue}`);
+        setCompanionText(`${activeWord.num}. ${activeWord.clue}`, true);
       }
     }
 
