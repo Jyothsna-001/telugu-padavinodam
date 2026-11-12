@@ -1073,12 +1073,12 @@
       </div>
     </div>
 
-    <!-- KAVI PARICHAYAM MODAL -->
+    <!-- KAVI PARICHAYAM MODAL (APPEARS EVERY 10 LEVELS UNCONDITIONALLY) -->
     <div class="modal-backdrop" id="tribute-modal">
       <div class="modal-card">
         <div style="font-size: 44px;">📜</div>
         <h2 style="font-family:'Ramabhadra',sans-serif; color: #b45309;">కవితా రత్నం & కవి పరిచయం</h2>
-        <p style="color: #64748b; font-size: 0.82rem; margin-bottom: 6px;">10 స్థాయిలను పూర్తిగా సాధించినందుకు లభించిన ప్రత్యేక సాహిత్య గౌరవం!</p>
+        <p style="color: #64748b; font-size: 0.82rem; margin-bottom: 6px;" id="tribute-milestone-subtitle">10 స్థాయిల మైలురాయిని చేరుకున్నందుకు ప్రత్యేక సాహిత్య గౌరవం!</p>
         
         <div class="kavi-card" id="kavi-content">
           <div class="kavi-name-header" id="kavi-poet">కవి పేరు</div>
@@ -1542,7 +1542,6 @@
       document.getElementById('lobby-stars').textContent = score;
       document.getElementById('streak-num').textContent = streak;
 
-      // Configure Read-Only Past Level UI vs Active Play UI
       const reviewBanner = document.getElementById('review-banner');
       const keyboardBox = document.getElementById('letters-keyboard');
       const reviewReturnBox = document.getElementById('review-return-box');
@@ -1594,7 +1593,6 @@
           if (!cellWordMap[key]) cellWordMap[key] = [];
           cellWordMap[key].push(w);
 
-          // Automatically display full answers on past levels in read-only mode
           const prefill = isPastReview ? w.word[i] : '';
           gridState[key] = { expected: w.word[i], current: prefill, solved: isPastReview };
         }
@@ -1822,7 +1820,6 @@
       if (!activeWord) return;
       const hintBtn = document.getElementById('hint-btn');
 
-      // Past level review mode -> Free hint (0 stars)
       if (isReviewingPastLevel()) {
         hintBtn.classList.remove('choice-mode');
         hintBtn.classList.add('free-review-mode');
@@ -1881,7 +1878,7 @@
     }
 
     function inputLetter(char) {
-      if (isReviewingPastLevel()) return; // Read-only protection on past levels
+      if (isReviewingPastLevel()) return;
       if (!selectedCell || !gridState[selectedCell]) return;
       gridState[selectedCell].current = char;
       const cellEl = document.querySelector(`.grid-cell[data-key="${selectedCell}"]`);
@@ -1896,7 +1893,7 @@
     }
 
     function eraseCurrentCell() {
-      if (isReviewingPastLevel()) return; // Read-only protection on past levels
+      if (isReviewingPastLevel()) return;
       if (!selectedCell || !gridState[selectedCell]) return;
       gridState[selectedCell].current = '';
       const cellEl = document.querySelector(`.grid-cell[data-key="${selectedCell}"]`);
@@ -1969,7 +1966,6 @@
     function handleHintClick() {
       if (!activeWord) return;
 
-      // Free hint without star deduction when reviewing past levels
       if (isReviewingPastLevel()) {
         playChime('tap');
         setCompanionText(`💡 సూచన (ఉచితం): ${activeWord.hint}`, true);
@@ -2054,10 +2050,13 @@
       }
     }
 
+    // Skips level; if skipping the 10th, 20th, 30th... level, STILL shows Kavi Parichayam
     function skipLevelFromChoice() {
       closeStuckChoice();
       const statusKey = `${currentCategory}_${activeViewingIdx}`;
       levelHistory[statusKey] = 'skipped';
+
+      const completedLevelNumber = activeViewingIdx + 1;
 
       if (score >= 25) {
         score -= 25;
@@ -2071,6 +2070,13 @@
       streak = 0;
       document.getElementById('streak-num').textContent = streak;
       playChime('tap');
+
+      // Show Kavi Parichayam every 10 levels unconditionally, even if skipped
+      if (completedLevelNumber % 10 === 0) {
+        saveProgress();
+        showTributeModal(completedLevelNumber);
+        return;
+      }
 
       activeViewingIdx++;
       if (activeViewingIdx > (categoryProgress[currentCategory] || 0)) {
@@ -2091,6 +2097,7 @@
       const statusKey = `${currentCategory}_${activeViewingIdx}`;
       const catList = CATEGORIES_DATA[currentCategory] || CATEGORIES_DATA['general'];
       const lvlObj = catList[activeViewingIdx % catList.length];
+      const completedLevelNumber = activeViewingIdx + 1;
 
       levelHistory[statusKey] = 'solved';
       score += 100;
@@ -2109,9 +2116,9 @@
         showAchievementAnimation('🔥', `హ్యాట్రిక్ విజయం (${streak} వరుస)!`, '+50 బోనస్ నక్షత్రాలు లభించాయి!');
       }
 
-      const totalSolvedInCat = categorySolvedCount[currentCategory];
-      if (totalSolvedInCat > 0 && totalSolvedInCat % 10 === 0) {
-        showTributeModal();
+      // Unconditional Kavi Parichayam trigger after every 10 levels (10, 20, 30...)
+      if (completedLevelNumber % 10 === 0) {
+        showTributeModal(completedLevelNumber);
         return;
       }
 
@@ -2145,8 +2152,11 @@
       initLevel();
     }
 
-    function showTributeModal() {
-      const tribute = TRIBUTES[Math.floor(Math.random() * TRIBUTES.length)];
+    function showTributeModal(milestoneLevel = 10) {
+      const tributeIdx = (Math.floor(milestoneLevel / 10) - 1) % TRIBUTES.length;
+      const tribute = TRIBUTES[tributeIdx >= 0 ? tributeIdx : 0];
+      
+      document.getElementById('tribute-milestone-subtitle').textContent = `${milestoneLevel} స్థాయిల మైలురాయిని చేరుకున్నందుకు ప్రత్యేక సాహిత్య గౌరవం!`;
       document.getElementById('kavi-poet').textContent = tribute.poet;
       document.getElementById('kavi-origin').textContent = tribute.origin;
       document.getElementById('kavi-title-info').textContent = tribute.titleInfo;
@@ -2191,6 +2201,7 @@
     function cleanTextForSpeech(rawTxt) {
       let spoken = rawTxt.split('/')[0];
       spoken = spoken.replace(/[_]+/g, ' dash ');
+      spoken = spoken.replace(/-30/g, ' ముప్పై నక్షత్రాలు ');
       spoken = spoken.replace(/-25/g, ' ఇరవై ఐదు నక్షత్రాలు ');
       spoken = spoken.replace(/-20/g, ' ఇరవై నక్షత్రాలు ');
       spoken = spoken.replace(/-10/g, ' పది నక్షత్రాలు ');
