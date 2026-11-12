@@ -11,64 +11,96 @@
   <link href="https://fonts.googleapis.com/css2?family=Mandali&family=Ramabhadra&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
   <style>
-    :root { --primary: #1b5e20; --bg: #eceff1; --text: #0f172a; --cell-border: #94a3b8; }
+    :root {
+      --primary: #1b5e20;
+      --primary-soft: #e8f5e9;
+      --primary-border: #81c784;
+      --bg: linear-gradient(135deg, #e0f2fe 0%, #dcfce7 100%);
+      --card-border: #cbd5e1;
+      --text: #0f172a;
+      --cell-border: #94a3b8;
+    }
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
-    body { font-family: 'Mandali', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 8px; }
-    .app-wrapper { width: 100%; max-width: 440px; min-height: 92vh; background: #fff; border-radius: 26px; box-shadow: 0 16px 40px rgba(0,0,0,0.12); display: flex; flex-direction: column; justify-content: space-between; padding: 14px; border: 3px solid #e2e8f0; position: relative; overflow-y: auto; }
+    body { font-family: 'Mandali', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 8px; transition: background 0.6s ease; }
+    .app-wrapper { width: 100%; max-width: 440px; min-height: 92vh; background: rgba(255,255,255,0.97); border-radius: 26px; box-shadow: 0 18px 45px rgba(0,0,0,0.16); display: flex; flex-direction: column; justify-content: space-between; padding: 12px 14px; border: 3px solid var(--card-border); position: relative; overflow-y: auto; transition: all 0.5s ease; }
     .view-screen { width: 100%; display: flex; flex-direction: column; justify-content: space-between; flex: 1; gap: 6px; }
-    .achievement-toast { position: absolute; top: -120px; left: 50%; transform: translateX(-50%); width: 90%; background: linear-gradient(135deg, #fef3c7, #fde68a); border: 2.5px solid #f59e0b; border-radius: 16px; padding: 10px 14px; display: flex; align-items: center; gap: 10px; box-shadow: 0 12px 28px rgba(245,158,11,0.35); z-index: 250; transition: top 0.45s ease; }
-    .achievement-toast.show { top: 14px; }
+    .achievement-toast { position: absolute; top: -130px; left: 50%; transform: translateX(-50%); width: 92%; background: linear-gradient(135deg, #fef3c7, #fde68a); border: 2.5px solid #f59e0b; border-radius: 16px; padding: 10px 14px; display: flex; align-items: center; gap: 10px; box-shadow: 0 12px 28px rgba(245,158,11,0.35); z-index: 250; transition: top 0.45s ease; }
+    .achievement-toast.show { top: 12px; }
     .lobby-header { text-align: center; }
-    .lobby-parrot { font-size: 38px; }
-    .lobby-title { font-family: 'Ramabhadra', sans-serif; font-size: 1.38rem; color: var(--primary); }
-    .lobby-subtitle { font-size: 0.82rem; color: #64748b; }
+    .lobby-parrot { font-size: 38px; display: inline-block; animation: floatParrot 2.4s infinite ease-in-out; }
+    @keyframes floatParrot { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+    .lobby-title { font-family: 'Ramabhadra', sans-serif; font-size: 1.4rem; color: var(--primary); }
+    .lobby-subtitle { font-size: 0.8rem; color: #475569; font-weight: 700; }
     .welcome-bonus-banner { background: linear-gradient(135deg, #fef3c7, #fffbeb); border: 2px dashed #f59e0b; border-radius: 12px; padding: 6px 12px; display: flex; align-items: center; justify-content: space-between; }
-    .bonus-tag { font-size: 0.76rem; font-weight: 700; color: #92400e; line-height: 1.25; }
+    .bonus-tag { font-size: 0.75rem; font-weight: 700; color: #92400e; line-height: 1.25; }
     .bonus-amount { font-size: 1.1rem; font-weight: 800; color: #b45309; font-family: 'Ramabhadra', sans-serif; }
-    .save-feature-box { background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 12px; padding: 6px 10px; font-size: 0.76rem; line-height: 1.28; color: #14532d; }
+    .save-feature-box { background: var(--primary-soft); border: 1.5px solid var(--primary-border); border-radius: 12px; padding: 7px 10px; font-size: 0.74rem; line-height: 1.32; color: #0f172a; }
     .dict-lobby-btn { width: 100%; padding: 7px 12px; background: linear-gradient(135deg, #eff6ff, #dbeafe); border: 2px solid #60a5fa; border-radius: 12px; font-family: 'Ramabhadra', sans-serif; font-size: 0.88rem; color: #1e40af; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
-    .category-selection-headline { text-align: center; font-size: 0.82rem; font-weight: 700; color: #334155; background: #f1f5f9; padding: 4px 10px; border-radius: 10px; border: 1px solid #cbd5e1; }
+    .category-selection-headline { text-align: center; font-size: 0.8rem; font-weight: 700; color: #334155; background: #f1f5f9; padding: 4px 10px; border-radius: 10px; border: 1px solid #cbd5e1; }
     .category-cards-list { display: flex; flex-direction: column; gap: 7px; padding-bottom: 4px; }
     .cat-select-card { background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 14px; padding: 9px 12px; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: all 0.15s ease; }
-    .cat-select-card:hover, .cat-select-card:active { border-color: var(--primary); background: #f0fdf4; transform: translateY(-1px); }
+    .cat-select-card:hover, .cat-select-card:active { border-color: var(--primary); background: var(--primary-soft); transform: translateY(-1px); }
     .cat-icon-badge { font-size: 24px; background: #fff; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 10px; border: 1.5px solid #e2e8f0; flex-shrink: 0; }
     .cat-details { flex: 1; }
     .cat-details h3 { font-family: 'Ramabhadra', sans-serif; font-size: 0.95rem; color: #1e293b; line-height: 1.2; }
-    .cat-details p { font-size: 0.73rem; color: #64748b; margin-top: 2px; }
+    .cat-details p { font-size: 0.72rem; color: #64748b; margin-top: 2px; }
     header { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 5px 8px; background: #f8fafc; border-radius: 12px; border: 1.5px solid #e2e8f0; gap: 4px; }
-    .back-btn, .pause-btn { background: #fff; border: 1.5px solid #cbd5e1; border-radius: 9px; padding: 4px 7px; font-size: 0.75rem; font-weight: 700; color: #334155; cursor: pointer; }
+    .back-btn, .pause-btn { background: #fff; border: 1.5px solid #cbd5e1; border-radius: 9px; padding: 4px 7px; font-size: 0.74rem; font-weight: 700; color: #334155; cursor: pointer; }
     .stats-bar { display: flex; align-items: center; gap: 4px; }
-    .stat-badge { font-size: 0.75rem; font-weight: 700; background: #fff; padding: 3px 6px; border-radius: 8px; border: 1.5px solid #cbd5e1; }
-    .lvl-map-btn { background: #e8f5e9; color: #1b5e20; border: 1.5px solid #81c784; border-radius: 8px; padding: 3px 7px; font-size: 0.75rem; font-weight: 800; cursor: pointer; }
-    .review-banner { display: none; width: 100%; background: #eff6ff; border: 1.5px solid #93c5fd; border-radius: 10px; padding: 5px 10px; font-size: 0.78rem; font-weight: 700; color: #1e40af; justify-content: center; }
-    .companion-banner { width: 100%; background: linear-gradient(135deg, #e8f5e9, #f1f8e9); border: 2px solid #81c784; border-radius: 12px; padding: 6px 10px; display: flex; align-items: center; gap: 8px; cursor: pointer; }
-    .companion-speech { flex: 1; font-size: 0.8rem; line-height: 1.3; color: #1b5e20; font-weight: 700; }
-    .voice-chip { background: #1b5e20; color: #fff; padding: 3px 7px; border-radius: 8px; font-size: 0.7rem; font-weight: 700; border: none; cursor: pointer; }
-    .clue-nav-bar { display: flex; gap: 6px; width: 100%; }
-    .clue-tab { flex: 1; padding: 5px 8px; background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 0.78rem; font-weight: 700; color: #475569; cursor: pointer; text-align: center; }
-    .clue-tab.active { background: #334155; color: #fff; border-color: #334155; }
-    .game-area { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 4px 0; flex: 1; }
-    .grid-board { display: inline-grid; gap: 6px; background: #e2e8f0; padding: 10px; border-radius: 16px; border: 2px solid #cbd5e1; }
-    .grid-cell { width: 52px; height: 52px; background: #fff; border: 2.5px solid var(--cell-border); border-bottom-width: 4px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.38rem; font-family: 'Ramabhadra', sans-serif; cursor: pointer; position: relative; }
+    .stat-badge { font-size: 0.74rem; font-weight: 700; background: #fff; padding: 3px 6px; border-radius: 8px; border: 1.5px solid #cbd5e1; }
+    .lvl-map-btn { background: var(--primary-soft); color: var(--primary); border: 1.5px solid var(--primary-border); border-radius: 8px; padding: 3px 7px; font-size: 0.74rem; font-weight: 800; cursor: pointer; }
+    .sub-status-row { display: flex; align-items: center; justify-content: space-between; gap: 6px; width: 100%; }
+    .tier-pill { font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 8px; background: #fef3c7; color: #92400e; border: 1px solid #f59e0b; }
+    .theme-pill { font-size: 0.7rem; font-weight: 700; padding: 2px 8px; border-radius: 8px; background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; }
+    .mode-badge-banner { display: none; width: 100%; background: linear-gradient(90deg, #fef3c7, #fde68a); border: 1.5px solid #f59e0b; border-radius: 10px; padding: 4px 10px; font-size: 0.76rem; font-weight: 800; color: #92400e; text-align: center; }
+    .review-banner { display: none; width: 100%; background: #eff6ff; border: 1.5px solid #93c5fd; border-radius: 10px; padding: 4px 10px; font-size: 0.76rem; font-weight: 700; color: #1e40af; justify-content: center; }
+    .companion-banner { width: 100%; background: var(--primary-soft); border: 2px solid var(--primary-border); border-radius: 12px; padding: 6px 10px; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: all 0.4s ease; }
+    .companion-speech { flex: 1; font-size: 0.79rem; line-height: 1.28; color: var(--primary); font-weight: 700; }
+    .voice-chip { background: var(--primary); color: #fff; padding: 3px 7px; border-radius: 8px; font-size: 0.69rem; font-weight: 700; border: none; cursor: pointer; }
+    .clue-nav-bar { display: flex; gap: 5px; width: 100%; flex-wrap: wrap; }
+    .clue-tab { flex: 1; padding: 4px 6px; background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 9px; font-size: 0.74rem; font-weight: 700; color: #475569; cursor: pointer; text-align: center; white-space: nowrap; }
+    .clue-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .game-area { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 2px 0; flex: 1; }
+    .grid-board { display: inline-grid; gap: 5px; background: #e2e8f0; padding: 9px; border-radius: 16px; border: 2px solid #cbd5e1; }
+    .grid-cell { width: 49px; height: 49px; background: #fff; border: 2.5px solid var(--cell-border); border-bottom-width: 4px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 1.32rem; font-family: 'Ramabhadra', sans-serif; cursor: pointer; position: relative; }
     .grid-cell.active-word { background: #fffbeb !important; border-color: #fbbf24 !important; }
-    .grid-cell.selected { background: #fff !important; border-color: #1b5e20 !important; box-shadow: 0 0 0 3px rgba(27,94,32,0.35) !important; transform: scale(1.04); z-index: 5; }
+    .grid-cell.selected { background: #fff !important; border-color: var(--primary) !important; box-shadow: 0 0 0 3px rgba(27,94,32,0.28) !important; transform: scale(1.04); z-index: 5; }
     .grid-cell.error-cell { background: #fee2e2 !important; color: #b91c1c !important; border-color: #ef4444 !important; }
-    .grid-cell.solved { background: #e8f5e9 !important; color: #1b5e20 !important; border-color: #4caf50 !important; border-bottom-width: 2.5px; }
+    .grid-cell.solved { background: var(--primary-soft) !important; color: var(--primary) !important; border-color: var(--primary-border) !important; border-bottom-width: 2.5px; }
     .grid-cell.blocked { background: transparent !important; border: none !important; pointer-events: none; }
-    .cell-badge { position: absolute; top: 2px; left: 4px; font-size: 0.68rem; font-family: 'Ramabhadra', sans-serif; color: #1b5e20; font-weight: 800; pointer-events: none; }
+    .cell-badge { position: absolute; top: 1px; left: 4px; font-size: 0.65rem; font-family: 'Ramabhadra', sans-serif; color: var(--primary); font-weight: 800; pointer-events: none; }
     .clue-panel { width: 100%; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 6px 10px; display: flex; align-items: center; justify-content: space-between; gap: 6px; }
-    .clue-dir-tag { font-size: 0.66rem; font-weight: 700; color: #1b5e20; background: #e8f5e9; padding: 2px 5px; border-radius: 6px; display: inline-block; }
-    .clue-text { font-size: 0.9rem; font-weight: 700; color: #0f172a; line-height: 1.25; }
-    .hint-btn { background: #fffbeb; color: #b45309; border: 2px solid #fde68a; padding: 5px 8px; border-radius: 10px; font-family: 'Mandali', sans-serif; font-size: 0.74rem; font-weight: 700; cursor: pointer; text-align: center; line-height: 1.2; flex-shrink: 0; }
+    .clue-dir-tag { font-size: 0.65rem; font-weight: 700; color: var(--primary); background: var(--primary-soft); padding: 2px 5px; border-radius: 6px; display: inline-block; }
+    .clue-text { font-size: 0.86rem; font-weight: 700; color: #0f172a; line-height: 1.24; }
+    .hint-btn { background: #fffbeb; color: #b45309; border: 2px solid #fde68a; padding: 5px 8px; border-radius: 10px; font-family: 'Mandali', sans-serif; font-size: 0.72rem; font-weight: 700; cursor: pointer; text-align: center; line-height: 1.2; flex-shrink: 0; }
     .hint-btn.choice-mode { background: #eff6ff; color: #1d4ed8; border-color: #93c5fd; }
     .hint-btn.free-review-mode { background: #f0fdf4; color: #15803d; border-color: #86efac; }
-    .palette-box { width: 100%; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-    .palette-key { background: #fff; border: 2px solid #cbd5e1; border-bottom: 4px solid #94a3b8; border-radius: 11px; height: 42px; display: flex; align-items: center; justify-content: center; font-size: 1.18rem; font-family: 'Ramabhadra', sans-serif; cursor: pointer; }
+    .palette-box { width: 100%; display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+    .palette-key { background: #fff; border: 2px solid #cbd5e1; border-bottom: 4px solid #94a3b8; border-radius: 10px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 1.15rem; font-family: 'Ramabhadra', sans-serif; cursor: pointer; }
     .review-return-box { display: none; width: 100%; background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 12px; padding: 8px; }
-    .return-current-btn { width: 100%; padding: 10px; background: var(--primary); color: #fff; border: none; border-radius: 10px; font-family: 'Ramabhadra', sans-serif; font-size: 0.9rem; cursor: pointer; }
+    .return-current-btn { width: 100%; padding: 9px; background: var(--primary); color: #fff; border: none; border-radius: 10px; font-family: 'Ramabhadra', sans-serif; font-size: 0.88rem; cursor: pointer; }
     .controls-tray { width: 100%; display: flex; gap: 6px; }
-    .action-btn { flex: 1; padding: 7px 6px; background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 10px; font-family: 'Mandali', sans-serif; font-size: 0.78rem; font-weight: 700; color: #334155; cursor: pointer; }
-    .action-btn.verify-btn { background: #1b5e20; color: #fff; border-color: #166534; flex: 1.3; }
+    .action-btn { flex: 1; padding: 6px; background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 10px; font-family: 'Mandali', sans-serif; font-size: 0.76rem; font-weight: 700; color: #334155; cursor: pointer; }
+    .action-btn.verify-btn { background: var(--primary); color: #fff; border-color: var(--primary); flex: 1.3; }
+
+    /* CAR RACE BONUS MINI-GAME */
+    .race-area { display: none; width: 100%; flex-direction: column; align-items: center; gap: 6px; flex: 1; justify-content: space-between; }
+    .race-clue-box { width: 100%; background: #fef3c7; border: 2px solid #f59e0b; border-radius: 12px; padding: 6px 10px; text-align: center; font-weight: 800; color: #92400e; font-size: 0.85rem; }
+    .road-track { width: 252px; height: 220px; background: #334155; border-left: 6px solid #facc15; border-right: 6px solid #facc15; border-radius: 14px; position: relative; overflow: hidden; display: grid; grid-template-columns: repeat(3, 1fr); box-shadow: inset 0 0 20px rgba(0,0,0,0.4); }
+    .road-lane { border-right: 2px dashed rgba(255,255,255,0.35); position: relative; height: 100%; }
+    .road-lane:last-child { border-right: none; }
+    .word-gate { position: absolute; width: 74px; left: 50%; transform: translateX(-50%); background: #fff; border: 2.5px solid #2563eb; border-radius: 10px; padding: 4px 2px; text-align: center; font-family: 'Ramabhadra', sans-serif; font-size: 0.88rem; color: #1e293b; box-shadow: 0 4px 10px rgba(0,0,0,0.25); }
+    .player-car { position: absolute; bottom: 8px; font-size: 32px; transition: left 0.16s ease; z-index: 10; transform: translateX(-50%); }
+    .race-controls { display: flex; gap: 10px; width: 100%; justify-content: center; }
+    .steer-btn { flex: 1; padding: 8px; background: var(--primary); color: #fff; border: none; border-radius: 12px; font-family: 'Ramabhadra', sans-serif; font-size: 0.9rem; cursor: pointer; }
+
+    /* LUCKY SPIN WHEEL MODAL */
+    .wheel-wrapper { position: relative; width: 200px; height: 200px; margin: 10px auto; }
+    .wheel-pointer { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); font-size: 26px; z-index: 20; }
+    .spin-wheel { width: 100%; height: 100%; border-radius: 50%; border: 5px solid #b45309; position: relative; overflow: hidden; transition: transform 3.2s cubic-bezier(0.18, 0.85, 0.25, 1); background: conic-gradient(#fde68a 0deg 60deg, #fca5a5 60deg 120deg, #86efac 120deg 180deg, #93c5fd 180deg 240deg, #d8b4fe 240deg 300deg, #fdba74 300deg 360deg); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
+    .wheel-label { position: absolute; left: 50%; top: 50%; transform-origin: 0 0; font-family: 'Ramabhadra', sans-serif; font-size: 0.8rem; font-weight: 900; color: #0f172a; }
+
+    /* MODALS */
     .modal-backdrop { display: none; position: absolute; inset: 0; background: rgba(15,23,42,0.75); backdrop-filter: blur(4px); z-index: 100; align-items: center; justify-content: center; padding: 16px; border-radius: 26px; }
     .modal-card { background: #fff; width: 100%; border-radius: 18px; padding: 16px; text-align: center; max-height: 88vh; overflow-y: auto; }
     .modal-btn { width: 100%; padding: 10px; background: var(--primary); color: #fff; border: none; border-radius: 12px; font-family: 'Ramabhadra', sans-serif; font-size: 0.88rem; cursor: pointer; margin-top: 8px; line-height: 1.25; }
@@ -80,7 +112,7 @@
     .lvl-node.locked-node { background: #f1f5f9; border-color: #e2e8f0; color: #94a3b8; cursor: not-allowed; opacity: 0.65; }
     .dict-list { display: flex; flex-direction: column; gap: 7px; margin: 10px 0; text-align: left; max-height: 55vh; overflow-y: auto; }
     .dict-item { background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 10px; padding: 8px 10px; cursor: pointer; }
-    .dict-word-header { display: flex; justify-content: space-between; font-family: 'Ramabhadra', sans-serif; font-size: 1rem; color: #1b5e20; }
+    .dict-word-header { display: flex; justify-content: space-between; font-family: 'Ramabhadra', sans-serif; font-size: 1rem; color: var(--primary); }
     .dict-clue-sub { font-size: 0.78rem; color: #334155; margin-top: 2px; }
     .wisdom-box { background: #f0fdf4; border: 1.5px solid #bbf7d0; border-radius: 10px; padding: 9px; margin: 8px 0; font-size: 0.82rem; color: #166534; }
     .kavi-card { background: linear-gradient(135deg, #fffbeb, #fef3c7); border: 2px solid #f59e0b; padding: 12px; border-radius: 12px; margin: 8px 0; text-align: left; }
@@ -105,7 +137,7 @@
       <div class="lobby-header">
         <div class="lobby-parrot">🦜</div>
         <h1 class="lobby-title">తెలుగు పదవినోదం</h1>
-        <p class="lobby-subtitle">Telugu Crossword Puzzles</p>
+        <p class="lobby-subtitle">Telugu Crossword, Word Chains & Car Race</p>
       </div>
 
       <div class="welcome-bonus-banner">
@@ -114,8 +146,11 @@
       </div>
 
       <div class="save-feature-box">
-        <strong>💾 ఆట భద్రత & గత స్థాయిల పరిశీలన / Auto-Save & Past Levels:</strong>
-        మీరు ఎప్పుడైనా వేరే వర్గానికి మారవచ్చు. ఆటలో పైన ఉన్న <b>"📋 స్థాయి"</b> నొక్కి గత స్థాయిల జవాబులను ఉచితంగా చూడవచ్చు!
+        <strong>🚀 ప్రతి 5 స్థాయిలకు పెరిగే సవాళ్లు / 5-Level Progression:</strong>
+        • ప్రతి 5 స్థాయిలకు: <b>🔗 పద శృంఖల (Word Chain) & కఠినత పెరుగుదల!</b><br/>
+        • ప్రతి 7వ స్థాయి: <b>🏎️ అక్షర కార్ రేస్ (Car Race Bonus)</b><br/>
+        • ప్రతి 8వ స్థాయి: <b>🎡 అదృష్ట చక్రం (Lucky Spin Wheel)</b><br/>
+        • స్థాయి 20 నుండి ప్రతి 5 స్థాయిలకు: <b>🎨 ఆకర్షణీయమైన కొత్త థీమ్స్!</b>
       </div>
 
       <button class="dict-lobby-btn" type="button" onclick="openDictionaryModal()">
@@ -166,6 +201,13 @@
         </div>
       </header>
 
+      <div class="sub-status-row">
+        <span class="tier-pill" id="tier-pill">🌱 దశ 1: సరళం (Beginner)</span>
+        <span class="theme-pill" id="theme-pill">🌿 ప్రకృతి థీమ్</span>
+      </div>
+
+      <div class="mode-badge-banner" id="mode-badge-banner">🔗 పద శృంఖల స్థాయి! (3-Word Chain Stage)</div>
+
       <div class="review-banner" id="review-banner">
         <span>👁 గత స్థాయి జవాబుల పరిశీలన (Read-Only Answers)</span>
       </div>
@@ -176,32 +218,72 @@
         <button class="voice-chip" type="button" onclick="speakCurrentClue(); event.stopPropagation();">🔊 విను</button>
       </div>
 
-      <div class="clue-nav-bar" id="clue-nav-bar"></div>
+      <!-- CROSSWORD VIEW -->
+      <div id="crossword-view-box" style="display:flex; flex-direction:column; flex:1; justify-content:space-between; gap:5px;">
+        <div class="clue-nav-bar" id="clue-nav-bar"></div>
 
-      <main class="game-area">
-        <div class="grid-board" id="puzzle-grid"></div>
-      </main>
+        <main class="game-area">
+          <div class="grid-board" id="puzzle-grid"></div>
+        </main>
 
-      <div class="clue-panel">
-        <div style="flex:1;">
-          <div class="clue-dir-tag" id="clue-direction">అడ్డం (1)</div>
-          <div class="clue-text" id="clue-content">సూచన...</div>
+        <div class="clue-panel">
+          <div style="flex:1;">
+            <div class="clue-dir-tag" id="clue-direction">అడ్డం (1)</div>
+            <div class="clue-text" id="clue-content">సూచన...</div>
+          </div>
+          <button class="hint-btn" id="hint-btn" type="button" onclick="handleHintClick()">💡 సహాయం<br />(10 ⭐)</button>
         </div>
-        <button class="hint-btn" id="hint-btn" type="button" onclick="handleHintClick()">💡 సహాయం<br />(10 ⭐)</button>
+
+        <div class="palette-box" id="letters-keyboard"></div>
+
+        <div class="review-return-box" id="review-return-box">
+          <button class="return-current-btn" type="button" onclick="returnToCurrentActiveLevel()">
+            ▶ ప్రస్తుత స్థాయికి తిరిగి వెళ్ళు / Back to Current Level
+          </button>
+        </div>
+
+        <div class="controls-tray" id="active-controls-tray">
+          <button class="action-btn verify-btn" type="button" onclick="verifyCurrentPuzzle()">✓ సరిచూడు / Verify</button>
+          <button class="action-btn" type="button" onclick="eraseCurrentCell()">⌫ తొలగించు</button>
+          <button class="action-btn" type="button" onclick="toggleVoice()">🔊 <span id="voice-label">వాయిస్</span></button>
+        </div>
       </div>
 
-      <div class="palette-box" id="letters-keyboard"></div>
-
-      <div class="review-return-box" id="review-return-box">
-        <button class="return-current-btn" type="button" onclick="returnToCurrentActiveLevel()">
-          ▶ ప్రస్తుత స్థాయికి తిరిగి వెళ్ళు / Back to Current Level
-        </button>
+      <!-- CAR RACE BONUS VIEW (EVERY 7th LEVEL) -->
+      <div class="race-area" id="race-view-box">
+        <div class="race-clue-box" id="race-clue-box">🏎️ అక్షర రేస్: సరైన తెలుగు పదం ఉన్న గేట్ వైపు కారును నడపండి!</div>
+        <div style="font-size:0.78rem; font-weight:800; color:#334155;">గేట్లు / Gates: <span id="race-progress">0 / 3</span></div>
+        <div class="road-track" id="road-track">
+          <div class="road-lane"></div>
+          <div class="road-lane"></div>
+          <div class="road-lane"></div>
+          <div class="player-car" id="player-car" style="left: 50%;">🏎️</div>
+        </div>
+        <div class="race-controls">
+          <button class="steer-btn" type="button" onclick="steerCar(-1)">⬅ ఎడమ / Left</button>
+          <button class="steer-btn" type="button" onclick="steerCar(1)">కుడి / Right ➡</button>
+        </div>
       </div>
+    </div>
 
-      <div class="controls-tray" id="active-controls-tray">
-        <button class="action-btn verify-btn" type="button" onclick="verifyCurrentPuzzle()">✓ సరిచూడు / Verify</button>
-        <button class="action-btn" type="button" onclick="eraseCurrentCell()">⌫ తొలగించు</button>
-        <button class="action-btn" type="button" onclick="toggleVoice()">🔊 <span id="voice-label">వాయిస్</span></button>
+    <!-- LUCKY SPIN WHEEL MODAL (EVERY 8th LEVEL) -->
+    <div class="modal-backdrop" id="spin-modal">
+      <div class="modal-card">
+        <h2 style="font-family:'Ramabhadra',sans-serif; color:#b45309; font-size:1.18rem;">🎡 అదృష్ట చక్రం / Lucky Spin Wheel!</h2>
+        <p style="color:#64748b; font-size:0.78rem;">8 స్థాయిల మైలురాయి! చక్రాన్ని తిప్పి ఉచిత నక్షత్రాలను గెలుచుకోండి!</p>
+        <div class="wheel-wrapper">
+          <div class="wheel-pointer">🔻</div>
+          <div class="spin-wheel" id="spin-wheel">
+            <div class="wheel-label" style="transform: rotate(30deg) translate(24px, -6px);">+50 ⭐</div>
+            <div class="wheel-label" style="transform: rotate(90deg) translate(24px, -6px);">+100 ⭐</div>
+            <div class="wheel-label" style="transform: rotate(150deg) translate(24px, -6px);">+150 ⭐</div>
+            <div class="wheel-label" style="transform: rotate(210deg) translate(24px, -6px);">+200 ⭐</div>
+            <div class="wheel-label" style="transform: rotate(270deg) translate(24px, -6px);">+250 ⭐</div>
+            <div class="wheel-label" style="transform: rotate(330deg) translate(24px, -6px);">+500 ⭐</div>
+          </div>
+        </div>
+        <p id="spin-result-text" style="font-weight:800; color:#1b5e20; min-height:22px; font-size:0.92rem;"></p>
+        <button class="modal-btn" id="spin-action-btn" type="button" style="background:#d97706;" onclick="spinLuckyWheel()">🎡 చక్రం తిప్పు / Spin Now!</button>
       </div>
     </div>
 
@@ -265,7 +347,7 @@
     <div class="modal-backdrop" id="victory-modal">
       <div class="modal-card">
         <div style="font-size:42px;">🏆</div>
-        <h2 style="font-family:'Ramabhadra',sans-serif; color:#1b5e20;">అద్భుతం! / Congratulations!</h2>
+        <h2 style="font-family:'Ramabhadra',sans-serif; color:var(--primary);">అద్భుతం! / Congratulations!</h2>
         <div style="font-size:26px; margin:4px 0;">⭐⭐⭐</div>
         <p style="font-size:0.92rem; font-weight:700;">+100 నక్షత్రాలు / Stars Earned!</p>
         <div class="wisdom-box" id="victory-wisdom">📖 పద విశేషం</div>
@@ -298,8 +380,7 @@
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playChime(type) {
       if (audioCtx.state === 'suspended') audioCtx.resume();
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
+      const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
       osc.connect(gain); gain.connect(audioCtx.destination);
       const now = audioCtx.currentTime;
       if (type === 'tap') {
@@ -321,105 +402,161 @@
       }
     }
 
-    // 45 Triple-Verified Telugu Crosswords (15 per category, 0 Coordinate Collisions)
+    // Dynamic Visual Themes (Shifts at Level 20, 25, 30, 35, 40... every 5 levels)
+    const VISUAL_THEMES = [
+      { name: '🌿 ప్రకృతి థీమ్', primary: '#1b5e20', soft: '#e8f5e9', border: '#81c784', bg: 'linear-gradient(135deg, #e0f2fe 0%, #dcfce7 100%)' },
+      { name: '🌅 గోదావరి సంధ్య', primary: '#b45309', soft: '#fef3c7', border: '#f59e0b', bg: 'linear-gradient(135deg, #ffedd5 0%, #fef08a 100%)' },
+      { name: '🌊 సాగర నీలం', primary: '#0369a1', soft: '#e0f2fe', border: '#38bdf8', bg: 'linear-gradient(135deg, #bae6fd 0%, #e0e7ff 100%)' },
+      { name: '👑 రాజ దర్బార్', primary: '#6d28d9', soft: '#f3e8ff', border: '#c084fc', bg: 'linear-gradient(135deg, #f3e8ff 0%, #fae8ff 100%)' },
+      { name: '🌺 పండుగ శోభ', primary: '#be123c', soft: '#ffe4e6', border: '#fb7185', bg: 'linear-gradient(135deg, #ffe4e6 0%, #ffedd5 100%)' }
+    ];
+
+    function applyThemeAndDifficultyTier(levelNumber) {
+      // 1. Difficulty Tier steps up every 5 levels
+      const tierNum = Math.floor((levelNumber - 1) / 5) + 1;
+      const tierLabels = [
+        '🌱 దశ 1: సరళం (Beginner)',
+        '⚡ దశ 2: చురుకు (Easy-Med)',
+        '🔥 దశ 3: మధ్యస్థం (Otthu Words)',
+        '💎 దశ 4: కఠినం (3-Word Grids)',
+        '👑 దశ 5: విద్వాన్ (Master)'
+      ];
+      document.getElementById('tier-pill').textContent = tierLabels[Math.min(tierNum - 1, tierLabels.length - 1)];
+
+      // 2. Dynamic Theme changes starting at Level 20-25 and every 5 levels thereafter
+      let themeIdx = 0;
+      if (levelNumber >= 20) {
+        themeIdx = (Math.floor((levelNumber - 20) / 5) + 1) % VISUAL_THEMES.length;
+        if (themeIdx === 0) themeIdx = 1;
+      }
+      const t = VISUAL_THEMES[themeIdx];
+      document.documentElement.style.setProperty('--primary', t.primary);
+      document.documentElement.style.setProperty('--primary-soft', t.soft);
+      document.documentElement.style.setProperty('--primary-border', t.border);
+      document.documentElement.style.setProperty('--bg', t.bg);
+      document.getElementById('theme-pill').textContent = t.name;
+    }
+
+    // 60 Triple-Verified Levels (20 per category, stepping up toughness every 5 levels + Word Chains on L5, L15, L20)
     const CATEGORIES_DATA = {
       general: [
-        // L1: క-మ-లం (1,0..1,2) x నీ-లం (0,2..1,2) -> Shared (1,2) = 'లం'
-        { level: 1, gridSize: 3, distractors: ['కా','కం','లి','న'], wisdom: '📖 పద విశేషం: "కమలం" మన జాతీయ పుష్పం.', words: [{ num: 1, word: ['క','మ','లం'], dir: 'H', r: 1, c: 0, clue: 'చెరువులో వికసించే తామర పుష్పం', hint: 'సరస్సులలో నీటిపై తేలియాడే జాతీయ పుష్పం' }, { num: 2, word: ['నీ','లం'], dir: 'V', r: 0, c: 2, clue: 'ఆకాశం కనిపించే చల్లని రంగు', hint: 'నెమలి కంఠంలో మెరిసే వర్ణం' }] },
-        // L2: స-మ-యం (1,0..1,2) x జ-యం (0,2..1,2) -> Shared (1,2) = 'యం'
-        { level: 2, gridSize: 3, distractors: ['సా','మా','యా','కం'], wisdom: '📖 పద విశేషం: "సమయం" సద్వినియోగం చేసుకుంటే "జయం" లభిస్తుంది.', words: [{ num: 1, word: ['స','మ','యం'], dir: 'H', r: 1, c: 0, clue: 'గడియారం చూపే అమూల్యమైన కాలం', hint: 'గంటలు, నిమిషాలతో కొలిచేది' }, { num: 2, word: ['జ','యం'], dir: 'V', r: 0, c: 2, clue: 'కృషితో సాధించే గెలుపు లేదా విజయం', hint: 'ఓటమికి వ్యతిరేకమైన గెలుపు' }] },
-        // L3: ఆ-నం-దం (1,0..1,2) x చం-దం (0,2..1,2) -> Shared (1,2) = 'దం'
-        { level: 3, gridSize: 3, distractors: ['అ','న','ద','చ'], wisdom: '📖 పద విశేషం: "ఆనందం" పంచితే రెట్టింపు అవుతుంది.', words: [{ num: 1, word: ['ఆ','నం','దం'], dir: 'H', r: 1, c: 0, clue: 'మనసుకు కలిగే అమితమైన సంతోషం', hint: 'ఉల్లాసం పూయించే భావన' }, { num: 2, word: ['చం','దం'], dir: 'V', r: 0, c: 2, clue: 'అందమైన రూపం లేదా ఒద్దికైన విధం', hint: 'చక్కని తీరు లేదా ఆకృతి' }] },
-        // L4: గ-గ-నం (1,0..1,2) x వ-నం (0,2..1,2) -> Shared (1,2) = 'నం'
-        { level: 4, gridSize: 3, distractors: ['గా','గ','న','జ'], wisdom: '📖 పద విశేషం: "గగనం" అంటే విశాల ఆకాశం.', words: [{ num: 1, word: ['గ','గ','నం'], dir: 'H', r: 1, c: 0, clue: 'చుక్కలు మెరిసే విశాల ఆకాశం', hint: 'మేఘాలు తేలియాడే నీలి నింగి' }, { num: 2, word: ['వ','నం'], dir: 'V', r: 0, c: 2, clue: 'పచ్చని చెట్లతో నిండిన అడవి', hint: 'వృక్షాలకు నిలయమైన కారడవి' }] },
-        // L5: ప-వ-నం (1,0..1,2) x ధ-నం (0,2..1,2) -> Shared (1,2) = 'నం'
-        { level: 5, gridSize: 3, distractors: ['పా','వా','కం','న'], wisdom: '📖 పద విశేషం: "పవనం" అంటే చల్లని గాలి.', words: [{ num: 1, word: ['ప','వ','నం'], dir: 'H', r: 1, c: 0, clue: 'చల్లగా వీచే సమీరం లేదా గాలి', hint: 'ఆకులను కదిలించే వాయుదేవుడు' }, { num: 2, word: ['ధ','నం'], dir: 'V', r: 0, c: 2, clue: 'సంపద లేదా డబ్బు', hint: 'లక్ష్మీదేవి అనుగ్రహంతో లభించే విత్తం' }] },
-        // L6: క-ల-శం (1,0..1,2) x దే-శం (0,2..1,2) -> Shared (1,2) = 'శం'
-        { level: 6, gridSize: 3, distractors: ['క','లా','శ','ద'], wisdom: '📖 పద విశేషం: "కలశం" శుభకార్యాలలో పూజలందుకుంటుంది.', words: [{ num: 1, word: ['క','ల','శం'], dir: 'H', r: 1, c: 0, clue: 'పూజలో కొబ్బరికాయ ఉంచే పవిత్ర పాత్ర', hint: 'మామిడి ఆకులతో అలంకరించే మంగళ పాత్ర' }, { num: 2, word: ['దే','శం'], dir: 'V', r: 0, c: 2, clue: 'మనం నివసించే మాతృభూమి', hint: 'భారత ______ మన జన్మభూమి' }] },
-        // L7: పు-స్త-కం (1,0..1,2) x లో-కం (0,2..1,2) -> Shared (1,2) = 'కం'
-        { level: 7, gridSize: 3, distractors: ['పు','స్తా','క','ల'], wisdom: '📖 పద విశేషం: మంచి "పుస్తకం" ఉత్తమ మిత్రుడు.', words: [{ num: 1, word: ['పు','స్త','కం'], dir: 'H', r: 1, c: 0, clue: 'జ్ఞానాన్ని అందించే చదువుల గ్రంథం', hint: 'పేజీలు తిప్పుతూ చదువుకునే అక్షర నిధి' }, { num: 2, word: ['లో','కం'], dir: 'V', r: 0, c: 2, clue: 'మనం నివసించే ప్రపంచం లేదా జగత్తు', hint: 'భూమండలం లేదా విశ్వం' }] },
-        // L8: వి-న-యం (1,0..1,2) x భ-యం (0,2..1,2) -> Shared (1,2) = 'యం'
-        { level: 8, gridSize: 3, distractors: ['వి','నా','య','భ'], wisdom: '📖 పద విశేషం: విద్య వల్ల "వినయం" లభిస్తుంది.', words: [{ num: 1, word: ['వి','న','యం'], dir: 'H', r: 1, c: 0, clue: 'పెద్దల పట్ల చూపే మర్యాద మరియు అణకువ', hint: 'విద్య నేర్చిన వారికి ఉండే ఉత్తమ లక్షణం' }, { num: 2, word: ['భ','యం'], dir: 'V', r: 0, c: 2, clue: 'చీకటి లేదా ప్రమాదం చూస్తే కలిగే బెదురు', hint: 'ధైర్యానికి వ్యతిరేకమైన భావన' }] },
-        // L9: ఉ-ద-యం (1,0..1,2) x హృ-ద-యం (0,1..2,1) -> Shared (1,1) = 'ద'
-        { level: 9, gridSize: 3, distractors: ['ఉ','దా','య','హ'], wisdom: '📖 పద విశేషం: ప్రతి "ఉదయం" కొత్త ఆశలను మోసుకొస్తుంది.', words: [{ num: 1, word: ['ఉ','ద','యం'], dir: 'H', r: 1, c: 0, clue: 'సూర్యుడు తూర్పున ఉదయించే వేళ', hint: 'రాత్రి ముగిసి వెలుగు వచ్చే ప్రభాత సమయం' }, { num: 2, word: ['హృ','ద','యం'], dir: 'V', r: 0, c: 1, clue: 'శరీరంలో రక్తాన్ని ప్రసరింపజేసే గుండె', hint: 'ప్రేమకు నిలయమైన మనసు' }] },
-        // L10: భా-ర-తి (1,0..1,2) x నీ-తి (0,2..1,2) -> Shared (1,2) = 'తి'
-        { level: 10, gridSize: 3, distractors: ['భ','రా','తీ','ని'], wisdom: '📖 పద విశేషం: "భారతి" అంటే చదువుల తల్లి సరస్వతి.', words: [{ num: 1, word: ['భా','ర','తి'], dir: 'H', r: 1, c: 0, clue: 'జ్ఞానాన్ని ప్రసాదించే చదువుల తల్లి సరస్వతి', hint: 'వీణాపాణి, వాగ్దేవి అని పిలువబడే దేవత' }, { num: 2, word: ['నీ','తి'], dir: 'V', r: 0, c: 2, clue: 'ధర్మబద్ధమైన సన్మార్గ ప్రవర్తన', hint: 'శతక పద్యాలు బోధించే సత్య మార్గం' }] },
-        // L11 (4x4): సూ-ర్యు-డు (1,0..1,2) x నే-డు (0,2..1,2) -> Shared (1,2) = 'డు'
-        { level: 11, gridSize: 4, distractors: ['సు','ర్యు','నె','రే'], wisdom: '📖 పద విశేషం: "సూర్యుడు" సమస్త జీవకోటికి ప్రాణశక్తి.', words: [{ num: 1, word: ['సూ','ర్యు','డు'], dir: 'H', r: 1, c: 0, clue: 'పగలు వెలుగునిచ్చే ఆకాశ భానుడు', hint: 'తూర్పున ఉదయించే రవి' }, { num: 2, word: ['నే','డు'], dir: 'V', r: 0, c: 2, clue: 'ఈ రోజు లేదా వర్తమాన దినం', hint: 'నిన్నటి తర్వాత, రేపటికి ముందు వచ్చే రోజు' }] },
-        // L12 (4x4): న-క్ష-త్రం (1,0..1,2) x చి-త్రం (0,2..1,2) -> Shared (1,2) = 'త్రం'
-        { level: 12, gridSize: 4, distractors: ['నా','క్షా','చీ','త'], wisdom: '📖 పద విశేషం: రాత్రి ఆకాశంలో మెరిసే "నక్షత్రం".', words: [{ num: 1, word: ['న','క్ష','త్రం'], dir: 'H', r: 1, c: 0, clue: 'రాత్రి ఆకాశంలో మెరిసే తార', hint: 'ఇరవై ఏడు తారలు' }, { num: 2, word: ['చి','త్రం'], dir: 'V', r: 0, c: 2, clue: 'కళాకారుడు గీసే బొమ్మ లేదా దృశ్యం', hint: 'రంగులతో వేసే ప్రతిరూపం' }] },
-        // L13 (4x4): వి-ద్యా-ర్థి (1,0..1,2) x ఉ-ద్యా-నం (0,1..2,1) -> Shared (1,1) = 'ద్యా'
-        { level: 13, gridSize: 4, distractors: ['వీ','ద్య','ఊ','న'], wisdom: '📖 పద విశేషం: వినయం, జిజ్ఞాస కలిగిన "విద్యార్థి" ఉన్నత శిఖరాలను చేరుకుంటాడు.', words: [{ num: 1, word: ['వి','ద్యా','ర్థి'], dir: 'H', r: 1, c: 0, clue: 'పాఠశాలలో చదువుకునే శిష్యుడు', hint: 'జ్ఞానాన్ని అర్జించే చదువరి' }, { num: 2, word: ['ప','ద్యా','లు'], dir: 'V', r: 0, c: 1, clue: 'వేమన, సుమతీ శతకాలలో రాగయుక్తంగా పాడేవి', hint: 'పద్యం యొక్క బహువచనం' }] },
-        // L14 (4x4): ప్ర-కృ-తి (1,0..1,2) x ఆ-కృ-తి (0,1..2,1) -> Shared (1,1) = 'కృ'
-        { level: 14, gridSize: 4, distractors: ['ప్రా','క','అ','తీ'], wisdom: '📖 పద విశేషం: పచ్చని "ప్రకృతి" మనందరికీ జీవనాధారం.', words: [{ num: 1, word: ['ప్ర','కృ','తి'], dir: 'H', r: 1, c: 0, clue: 'పచ్చని అడవులు, నదులతో కూడిన సృష్టి సౌందర్యం', hint: 'భూమాత యొక్క సహజ సిద్ధమైన రూపం' }, { num: 2, word: ['ఆ','కృ','తి'], dir: 'V', r: 0, c: 1, clue: 'కంటికి కనిపించే రూపం లేదా ఆకారం', hint: 'బొమ్మ యొక్క స్వరూపం' }] },
-        // L15 (4x4): ఆ-శీ-ర్వా-దం (1,0..1,3) x వే-దం (0,3..1,3) -> Shared (1,3) = 'దం'
-        { level: 15, gridSize: 4, distractors: ['అ','శి','వె','దా'], wisdom: '📖 పద విశేషం: పెద్దల "ఆశీర్వాదం" ఎల్లప్పుడూ రక్షాకవచంలా కాపాడుతుంది.', words: [{ num: 1, word: ['ఆ','శీ','ర్వా','దం'], dir: 'H', r: 1, c: 0, clue: 'పెద్దలు మనస్ఫూర్తిగా ఇచ్చే దీవెన', hint: 'శుభం కలగాలని పెద్దలు పలికే మంగళ వచనం' }, { num: 2, word: ['వే','దం'], dir: 'V', r: 0, c: 3, clue: 'అత్యంత ప్రాచీనమైన పవిత్ర జ్ఞాన గ్రంథం', hint: 'ఋగ్వేదం, యజుర్వేదం వంటి శ్రుతి గ్రంథాలు' }] }
+        // TIER 1 (Levels 1-5: 3x3 Simple Words + Level 5 Word Chain)
+        { level: 1, gridSize: 3, distractors: ['కా','కం','లి','న'], wisdom: '📖 పద విశేషం: "కమలం" మన జాతీయ పుష్పం.', words: [{ num: 1, word: ['క','మ','లం'], dir: 'H', r: 1, c: 0, clue: '🪷 చెరువులో వికసించే తామర పుష్పం (Lotus)', hint: 'సరస్సులలో నీటిపై తేలియాడే జాతీయ పుష్పం' }, { num: 2, word: ['నీ','లం'], dir: 'V', r: 0, c: 2, clue: '🌊 ఆకాశం కనిపించే చల్లని రంగు (Blue)', hint: 'నెమలి కంఠంలో మెరిసే వర్ణం' }] },
+        { level: 2, gridSize: 3, distractors: ['సా','మా','యా','కం'], wisdom: '📖 పద విశేషం: "సమయం" సద్వినియోగం చేసుకుంటే "జయం" లభిస్తుంది.', words: [{ num: 1, word: ['స','మ','యం'], dir: 'H', r: 1, c: 0, clue: '⏰ గడియారం చూపే అమూల్యమైన కాలం (Time)', hint: 'గంటలు, నిమిషాలతో కొలిచేది' }, { num: 2, word: ['జ','యం'], dir: 'V', r: 0, c: 2, clue: '🏆 కృషితో సాధించే గెలుపు (Victory)', hint: 'ఓటమికి వ్యతిరేకమైన గెలుపు' }] },
+        { level: 3, gridSize: 3, distractors: ['అ','న','ద','చ'], wisdom: '📖 పద విశేషం: "ఆనందం" పంచితే రెట్టింపు అవుతుంది.', words: [{ num: 1, word: ['ఆ','నం','దం'], dir: 'H', r: 1, c: 0, clue: '😊 మనసుకు కలిగే అమితమైన సంతోషం (Joy)', hint: 'ఉల్లాసం పూయించే భావన' }, { num: 2, word: ['చం','దం'], dir: 'V', r: 0, c: 2, clue: '✨ అందమైన రూపం లేదా విధం (Beauty)', hint: 'చక్కని తీరు లేదా ఆకృతి' }] },
+        { level: 4, gridSize: 3, distractors: ['గా','గ','న','జ'], wisdom: '📖 పద విశేషం: "గగనం" అంటే విశాల ఆకాశం.', words: [{ num: 1, word: ['గ','గ','నం'], dir: 'H', r: 1, c: 0, clue: '🌌 చుక్కలు మెరిసే విశాల ఆకాశం (Sky)', hint: 'మేఘాలు తేలియాడే నీలి నింగి' }, { num: 2, word: ['వ','నం'], dir: 'V', r: 0, c: 2, clue: '🌳 పచ్చని చెట్లతో నిండిన అడవి (Forest)', hint: 'వృక్షాలకు నిలయమైన కారడవి' }] },
+        // L5 WORD CHAIN: క-మ-లం (0,0..0,2) -> లం-క (0,2..1,2) -> క-లం (1,2..1,3)
+        { level: 5, isChain: true, gridSize: 4, distractors: ['కా','మా','లా','పా'], wisdom: '🔗 పద శృంఖల: కమలం ➔ లంక ➔ కలం!', words: [
+          { num: 1, word: ['క','మ','లం'], dir: 'H', r: 0, c: 0, clue: '🪷 తామర పువ్వు (Lotus)', hint: 'జాతీయ పుష్పం' },
+          { num: 2, word: ['లం','క'], dir: 'V', r: 0, c: 2, clue: '🏝️ సముద్రం మధ్యలో ఉండే ద్వీపం (Island)', hint: 'రామాయణంలో రావణుని రాజ్యం' },
+          { num: 3, word: ['క','లం'], dir: 'H', r: 1, c: 2, clue: '✒️ అక్షరాలు రాసే సాధనం (Pen)', hint: 'కాగితంపై రాసే పెన్ను' }
+        ] },
+
+        // TIER 2 (Levels 6-10: Deeper Vocabulary + L7 Car Race + L8 Spin Wheel + L10 Poet)
+        { level: 6, gridSize: 3, distractors: ['క','లా','శ','ద'], wisdom: '📖 పద విశేషం: "కలశం" శుభకార్యాలలో పూజలందుకుంటుంది.', words: [{ num: 1, word: ['క','ల','శం'], dir: 'H', r: 1, c: 0, clue: '🏺 పూజలో కొబ్బరికాయ ఉంచే పాత్ర (Sacred Pot)', hint: 'మామిడి ఆకులతో అలంకరించే మంగళ పాత్ర' }, { num: 2, word: ['దే','శం'], dir: 'V', r: 0, c: 2, clue: '🇮🇳 మనం నివసించే మాతృభూమి (Country)', hint: 'భారత ______ మన జన్మభూమి' }] },
+        { level: 7, gridSize: 3, distractors: ['పు','స్తా','క','ల'], wisdom: '📖 పద విశేషం: మంచి "పుస్తకం" ఉత్తమ మిత్రుడు.', words: [{ num: 1, word: ['పు','స్త','కం'], dir: 'H', r: 1, c: 0, clue: '📚 జ్ఞానాన్ని అందించే చదువుల గ్రంథం (Book)', hint: 'పేజీలు తిప్పుతూ చదువుకునే అక్షర నిధి' }, { num: 2, word: ['లో','కం'], dir: 'V', r: 0, c: 2, clue: '🌍 మనం నివసించే ప్రపంచం (World)', hint: 'భూమండలం లేదా విశ్వం' }] },
+        { level: 8, gridSize: 3, distractors: ['వి','నా','య','భ'], wisdom: '📖 పద విశేషం: విద్య వల్ల "వినయం" లభిస్తుంది.', words: [{ num: 1, word: ['వి','న','యం'], dir: 'H', r: 1, c: 0, clue: '🙏 పెద్దల పట్ల చూపే మర్యాద (Humility)', hint: 'విద్య నేర్చిన వారికి ఉండే ఉత్తమ లక్షణం' }, { num: 2, word: ['భ','యం'], dir: 'V', r: 0, c: 2, clue: '😨 ప్రమాదం చూస్తే కలిగే బెదురు (Fear)', hint: 'ధైర్యానికి వ్యతిరేకమైన భావన' }] },
+        { level: 9, gridSize: 3, distractors: ['ఉ','దా','య','హ'], wisdom: '📖 పద విశేషం: ప్రతి "ఉదయం" కొత్త ఆశలను మోసుకొస్తుంది.', words: [{ num: 1, word: ['ఉ','ద','యం'], dir: 'H', r: 1, c: 0, clue: '🌅 సూర్యుడు తూర్పున ఉదయించే వేళ (Morning)', hint: 'రాత్రి ముగిసి వెలుగు వచ్చే ప్రభాత సమయం' }, { num: 2, word: ['హృ','ద','యం'], dir: 'V', r: 0, c: 1, clue: '❤️ రక్తాన్ని ప్రసరింపజేసే గుండె (Heart)', hint: 'ప్రేమకు నిలయమైన మనసు' }] },
+        { level: 10, gridSize: 3, distractors: ['భ','రా','తీ','ని'], wisdom: '📖 పద విశేషం: "భారతి" అంటే చదువుల తల్లి సరస్వతి.', words: [{ num: 1, word: ['భా','ర','తి'], dir: 'H', r: 1, c: 0, clue: '🪕 చదువుల తల్లి సరస్వతి (Goddess Saraswati)', hint: 'వీణాపాణి, వాగ్దేవి అని పిలువబడే దేవత' }, { num: 2, word: ['నీ','తి'], dir: 'V', r: 0, c: 2, clue: '⚖️ ధర్మబద్ధమైన సన్మార్గ ప్రవర్తన (Morality)', hint: 'శతక పద్యాలు బోధించే సత్య మార్గం' }] },
+
+        // TIER 3 (Levels 11-15: 4x4 Grid + Conjunct Otthu Words + 10 Keyboard Tiles + L15 Word Chain)
+        { level: 11, gridSize: 4, distractors: ['సు','ర్యు','నె','రే','కా','డి'], wisdom: '📖 పద విశేషం: "సూర్యుడు" సమస్త జీవకోటికి ప్రాణశక్తి.', words: [{ num: 1, word: ['సూ','ర్యు','డు'], dir: 'H', r: 1, c: 0, clue: '☀️ పగలు వెలుగునిచ్చే భానుడు (Sun)', hint: 'తూర్పున ఉదయించే రవి' }, { num: 2, word: ['నే','డు'], dir: 'V', r: 0, c: 2, clue: '📅 ఈ రోజు లేదా వర్తమాన దినం (Today)', hint: 'నిన్నటి తర్వాత వచ్చే రోజు' }] },
+        { level: 12, gridSize: 4, distractors: ['నా','క్షా','చీ','త','ల','మ'], wisdom: '📖 పద విశేషం: రాత్రి ఆకాశంలో మెరిసే "నక్షత్రం".', words: [{ num: 1, word: ['న','క్ష','త్రం'], dir: 'H', r: 1, c: 0, clue: '⭐ రాత్రి ఆకాశంలో మెరిసే తార (Star)', hint: 'ఇరవై ఏడు తారలు' }, { num: 2, word: ['చి','త్రం'], dir: 'V', r: 0, c: 2, clue: '🎨 కళాకారుడు గీసే బొమ్మ (Picture)', hint: 'రంగులతో వేసే ప్రతిరూపం' }] },
+        { level: 13, gridSize: 4, distractors: ['వీ','ద్య','ఊ','న','క','మ'], wisdom: '📖 పద విశేషం: వినయం కలిగిన "విద్యార్థి" ఉన్నత శిఖరాలను చేరుకుంటాడు.', words: [{ num: 1, word: ['వి','ద్యా','ర్థి'], dir: 'H', r: 1, c: 0, clue: '🎒 పాఠశాలలో చదువుకునే శిష్యుడు (Student)', hint: 'జ్ఞానాన్ని అర్జించే చదువరి' }, { num: 2, word: ['ప','ద్యా','లు'], dir: 'V', r: 0, c: 1, clue: '📜 శతకాలలో రాగయుక్తంగా పాడేవి (Poems)', hint: 'పద్యం యొక్క బహువచనం' }] },
+        { level: 14, gridSize: 4, distractors: ['ప్రా','క','అ','తీ','మ','న'], wisdom: '📖 పద విశేషం: పచ్చని "ప్రకృతి" మనందరికీ జీవనాధారం.', words: [{ num: 1, word: ['ప్ర','కృ','తి'], dir: 'H', r: 1, c: 0, clue: '🌿 అడవులు, నదులతో కూడిన సృష్టి (Nature)', hint: 'భూమాత సహజ రూపం' }, { num: 2, word: ['ఆ','కృ','తి'], dir: 'V', r: 0, c: 1, clue: '🔷 కంటికి కనిపించే రూపం (Shape)', hint: 'బొమ్మ యొక్క స్వరూపం' }] },
+        // L15 WORD CHAIN: ప-వ-నం (0,0..0,2) -> నం-ది (0,2..1,2) -> ది-శ (1,2..1,3)
+        { level: 15, isChain: true, gridSize: 4, distractors: ['పా','వా','దీ','శా','మ','క'], wisdom: '🔗 పద శృంఖల: పవనం ➔ నంది ➔ దిశ!', words: [
+          { num: 1, word: ['ప','వ','నం'], dir: 'H', r: 0, c: 0, clue: '🍃 చల్లగా వీచే గాలి (Wind)', hint: 'సమీరం' },
+          { num: 2, word: ['నం','ది'], dir: 'V', r: 0, c: 2, clue: '🐂 శివాలయంలో ఉండే పవిత్ర వాహనం (Nandi)', hint: 'పరమశివుని వాహనం' },
+          { num: 3, word: ['ది','శ'], dir: 'H', r: 1, c: 2, clue: '🧭 తూర్పు, పడమర లాంటి దిక్కు (Direction)', hint: 'మార్గాన్ని చూపేది' }
+        ] },
+
+        // TIER 4 (Levels 16-20: Hard 3-Word Intersecting Grids + 12 Keyboard Tiles)
+        { level: 16, gridSize: 4, distractors: ['అ','శి','వె','దా','మ','న','క','ల'], wisdom: '📖 పద విశేషం: పెద్దల "ఆశీర్వాదం" రక్షాకవచంలా కాపాడుతుంది.', words: [
+          { num: 1, word: ['ఆ','శీ','ర్వా','దం'], dir: 'H', r: 1, c: 0, clue: '🙌 పెద్దలు మనస్ఫూర్తిగా ఇచ్చే దీవెన (Blessing)', hint: 'శుభం కలగాలని పలికే వచనం' },
+          { num: 2, word: ['వే','దం'], dir: 'V', r: 0, c: 3, clue: '🕉️ ప్రాచీన పవిత్ర జ్ఞాన గ్రంథం (Veda)', hint: 'ఋగ్వేదం వంటి శ్రుతి' },
+          { num: 3, word: ['ఆ','శ'], dir: 'V', r: 1, c: 0, clue: '✨ కోరిక లేదా ఎదురుచూపు (Hope)', hint: 'మనసులోని కోరిక' }
+        ] },
+        { level: 17, gridSize: 4, distractors: ['సా','మా','జా','కా','ల','ప','గ','తి'], wisdom: '📖 పద విశేషం: "సమాజం" పట్ల బాధ్యత కలిగి ఉండాలి.', words: [
+          { num: 1, word: ['స','మా','జం'], dir: 'H', r: 1, c: 0, clue: '🤝 ప్రజలందరూ కలిసి జీవించే సంఘం (Society)', hint: 'మానవ సంఘం' },
+          { num: 2, word: ['గ','జం'], dir: 'V', r: 0, c: 2, clue: '🐘 అడవిలో తిరిగే పెద్ద ఏనుగు (Elephant)', hint: 'హస్తి, కరి' },
+          { num: 3, word: ['స','భ'], dir: 'V', r: 1, c: 0, clue: '🏛️ పండితులు, ప్రజలు కూడే సమావేశం (Assembly)', hint: 'సమావేశం' }
+        ] },
+        { level: 18, gridSize: 4, distractors: ['భా','రా','తా','మా','క','ల','ప','గ'], wisdom: '📖 పద విశేషం: "భారతం" పంచమ వేదంగా ప్రసిద్ధి చెందింది.', words: [
+          { num: 1, word: ['భా','ర','తం'], dir: 'H', r: 1, c: 0, clue: '🏹 వ్యాసుడు రచించిన ఇతిహాసం (Mahabharata)', hint: 'పంచమ వేదం' },
+          { num: 2, word: ['ర','థం'], dir: 'V', r: 1, c: 1, clue: '🛞 గుర్రాలు లాగే రాజ వాహనం (Chariot)', hint: 'తేరు' },
+          { num: 3, word: ['గీ','తం'], dir: 'V', r: 0, c: 2, clue: '🎵 రాగయుక్తంగా పాడే పాట (Song)', hint: 'జాతీయ ______' }
+        ] },
+        { level: 19, gridSize: 4, distractors: ['చం','ద్రా','సూ','ర్యు','క','ల','ప','గ'], wisdom: '📖 పద విశేషం: పున్నమి నాడు "చంద్రుడు" నిండుగా వెలుగుతాడు.', words: [
+          { num: 1, word: ['చం','ద్రు','డు'], dir: 'H', r: 1, c: 0, clue: '🌙 రాత్రి వెన్నెల కురిపించే జాబిల్లి (Moon)', hint: 'చందమామ' },
+          { num: 2, word: ['నే','డు'], dir: 'V', r: 0, c: 2, clue: '📅 ఈ రోజు (Today)', hint: 'వర్తమాన దినం' },
+          { num: 3, word: ['చం','దం'], dir: 'V', r: 1, c: 0, clue: '✨ అందమైన తీరు (Manner)', hint: 'ఒద్దికైన రూపం' }
+        ] },
+        { level: 20, isChain: true, gridSize: 4, distractors: ['సా','గ','రా','జా','క','ల','ప','తి'], wisdom: '🔗 పద శృంఖల: సాగరం ➔ రంజని ➔ నిజం!', words: [
+          { num: 1, word: ['సా','గ','రం'], dir: 'H', r: 0, c: 0, clue: '🌊 అలలతో నిండిన మహా సముద్రం (Ocean)', hint: 'కడలి' },
+          { num: 2, word: ['రం','జ','ని'], dir: 'V', r: 0, c: 2, clue: '🎶 సంగీతంలో ఒక మధుర రాగం (Ranjani Raga)', hint: 'ఆనందాన్ని ఇచ్చే రాగం' },
+          { num: 3, word: ['ని','జం'], dir: 'H', r: 2, c: 2, clue: '⚖️ ఎప్పటికీ మారని సత్యం (Truth)', hint: 'అబద్ధం కానిది' }
+        ] }
       ],
       poems: [
-        // L1: వే-మ-న (1,0..1,2) x స-మ-త (0,1..2,1) -> Shared (1,1) = 'మ'
-        { level: 1, gridSize: 3, distractors: ['వె','మా','నా','సా'], wisdom: '📜 పద్య విశేషం: వేమన తన ఆటవెలది పద్యాలతో సమతా భావాన్ని అందించారు.', words: [{ num: 1, word: ['వే','మ','న'], dir: 'H', r: 1, c: 0, clue: 'విశ్వదాభిరామ మకుటంతో శతకం రాసిన యోగి', hint: 'ఆటవెలది ఛందస్సులో పద్యాలు చెప్పిన ప్రజాకవి' }, { num: 2, word: ['స','మ','త'], dir: 'V', r: 0, c: 1, clue: 'అందరూ సమానమే అనే సమత్వ భావన', hint: 'భేదభావం లేని సమానత్వం' }] },
-        // L2: నీ-తి (1,0..1,1) x జా-తి (0,1..1,1) -> Shared (1,1) = 'తి'
-        { level: 2, gridSize: 3, distractors: ['ని','తీ','జ','యా'], wisdom: '📜 పద్య విశేషం: "నీతి" సమాజాన్ని కాపాడుతుంది.', words: [{ num: 1, word: ['నీ','తి'], dir: 'H', r: 1, c: 0, clue: 'ధర్మబద్ధమైన సన్మార్గ ప్రవర్తన', hint: 'శతక కవులు బోధించిన సత్య మార్గం' }, { num: 2, word: ['జా','తి'], dir: 'V', r: 0, c: 1, clue: 'మానవ సమాజం లేదా వంశం', hint: 'ఒకే మూలాలను పంచుకునే ప్రజల సమూహం' }] },
-        // L3: సు-మ-తి (1,0..1,2) x స్వా-తి (0,2..1,2) -> Shared (1,2) = 'తి'
-        { level: 3, gridSize: 3, distractors: ['సు','మా','తీ','స్వ'], wisdom: '📜 పద్య విశేషం: "సుమతి" అంటే మంచి బుద్ధి గలవాడు.', words: [{ num: 1, word: ['సు','మ','తి'], dir: 'H', r: 1, c: 0, clue: 'మంచి బుద్ధి గలవాడు అని సంబోధించే శతకం', hint: 'బద్దెన రచించిన నీతి శతకం' }, { num: 2, word: ['స్వా','తి'], dir: 'V', r: 0, c: 2, clue: 'ముత్యపు చిప్పలో వానచినుకు పడే నక్షత్రం', hint: 'శుభ నక్షత్రం' }] },
-        // L4: క-వి-త (1,0..1,2) x ల-త (0,2..1,2) -> Shared (1,2) = 'త'
-        { level: 4, gridSize: 3, distractors: ['క','వీ','తా','ర'], wisdom: '📜 పద్య విశేషం: "కవిత" హృదయాన్ని కదిలించే భావ వ్యక్తీకరణ.', words: [{ num: 1, word: ['క','వి','త'], dir: 'H', r: 1, c: 0, clue: 'కవి హృదయం నుండి జాలువారే పద్యం', hint: 'భావగర్భితమైన సాహిత్య ప్రక్రియ' }, { num: 2, word: ['ల','త'], dir: 'V', r: 0, c: 2, clue: 'చెట్టును అల్లుకునే తీగ', hint: 'పూల తీగను పిలిచే పదం' }] },
-        // L5: ప-ద్యం (1,0..1,1) x గ-ద్యం (0,1..1,1) -> Shared (1,1) = 'ద్యం'
-        { level: 5, gridSize: 3, distractors: ['పా','ద్య','గా','నా'], wisdom: '📜 పద్య విశేషం: "పద్యం" తెలుగు భాషకు ప్రత్యేక అలంకారం.', words: [{ num: 1, word: ['ప','ద్యం'], dir: 'H', r: 1, c: 0, clue: 'ఛందస్సుతో కూడిన నాలుగు పాదాల కవిత', hint: 'శతకాలలో రాగయుక్తంగా చదివే రచన' }, { num: 2, word: ['గ','ద్యం'], dir: 'V', r: 0, c: 1, clue: 'వచన రూపంలో ఉండే సాహిత్య రచన', hint: 'వాక్యాలలో రాసే వచనం' }] },
-        // L6: స-త్యం (1,0..1,1) x ని-త్యం (0,1..1,1) -> Shared (1,1) = 'త్యం'
-        { level: 6, gridSize: 3, distractors: ['సా','త్య','నీ','న'], wisdom: '📜 పద్య విశేషం: "సత్యం" ఎల్లప్పుడూ జయిస్తుంది.', words: [{ num: 1, word: ['స','త్యం'], dir: 'H', r: 1, c: 0, clue: 'ఎప్పటికీ మారని నిజం', hint: 'అబద్ధానికి వ్యతిరేకమైన మార్గం' }, { num: 2, word: ['ని','త్యం'], dir: 'V', r: 0, c: 1, clue: 'ప్రతిరోజూ లేదా ఎల్లప్పుడూ జరిగేది', hint: 'శాశ్వతంగా ఉండేది' }] },
-        // L7: దా-త (1,0..1,1) x సీ-త (0,1..1,1) -> Shared (1,1) = 'త'
-        { level: 7, gridSize: 3, distractors: ['ద','తా','సి','మా'], wisdom: '📜 పద్య విశేషం: ఆకొన్న వారికి అన్నం పెట్టేవాడే "దాత".', words: [{ num: 1, word: ['దా','త'], dir: 'H', r: 1, c: 0, clue: 'సంకోచం లేకుండా దానం చేసే గొప్ప వ్యక్తి', hint: 'ఉదార స్వభావి' }, { num: 2, word: ['సీ','త'], dir: 'V', r: 0, c: 1, clue: 'రామాయణంలో జనక మహారాజు కుమార్తె', hint: 'శ్రీరాముని ధర్మపత్ని' }] },
-        // L8: గు-రు-వు (1,0..1,2) x తా-వు (0,2..1,2) -> Shared (1,2) = 'వు'
-        { level: 8, gridSize: 3, distractors: ['గూ','రూ','వూ','త'], wisdom: '📜 పద్య విశేషం: జ్ఞానజ్యోతిని వెలిగించేవారే "గురువు".', words: [{ num: 1, word: ['గు','రు','వు'], dir: 'H', r: 1, c: 0, clue: 'విద్యను బోధించే ఆచార్యుడు', hint: 'ఉపాధ్యాయుడు' }, { num: 2, word: ['తా','వు'], dir: 'V', r: 0, c: 2, clue: 'నివసించే చోటు లేదా స్థానం', hint: 'ఉండే ప్రదేశం అని అర్థం వచ్చే తెలుగు పదం' }] },
-        // L9: భా-ష (1,0..1,1) x ఉ-ష (0,1..1,1) -> Shared (1,1) = 'ష'
-        { level: 9, gridSize: 3, distractors: ['భ','షా','ఊ','ఆ'], wisdom: '📜 పద్య విశేషం: దేశ భాషలందు తెలుగు లెస్స.', words: [{ num: 1, word: ['భా','ష'], dir: 'H', r: 1, c: 0, clue: 'మన భావాలను పంచుకునే మాతృవాణి', hint: 'తెలుగు, సంస్కృతం వంటి వాక్ రూపం' }, { num: 2, word: ['ఉ','ష'], dir: 'V', r: 0, c: 1, clue: 'తెల్లవారుజామున కనిపించే సూర్యోదయ కాంతి', hint: 'అరుణోదయ వేళ' }] },
-        // L10: కా-వ్యం (1,0..1,1) x ది-వ్యం (0,1..1,1) -> Shared (1,1) = 'వ్యం'
-        { level: 10, gridSize: 3, distractors: ['క','వ్య','దీ','న'], wisdom: '📜 పద్య విశేషం: రసవత్తరమైన పద్యాలు, వర్ణనలతో కూడిన గ్రంథమే "కావ్యం".', words: [{ num: 1, word: ['కా','వ్యం'], dir: 'H', r: 1, c: 0, clue: 'మహాకవులు రచించే పద్య గ్రంథం', hint: 'ప్రబంధ సాహిత్యం' }, { num: 2, word: ['ది','వ్యం'], dir: 'V', r: 0, c: 1, clue: 'అత్యంత శ్రేష్ఠమైనది లేదా పవిత్రమైనది', hint: 'దేవతలకు సంబంధించినది' }] },
-        // L11 (4x4): శ-త-కం (1,0..1,2) x లో-కం (0,2..1,2) -> Shared (1,2) = 'కం'
-        { level: 11, gridSize: 4, distractors: ['శా','తా','క','ల'], wisdom: '📜 పద్య విశేషం: నూరు పద్యాల సంపుటిని "శతకం" అంటారు.', words: [{ num: 1, word: ['శ','త','కం'], dir: 'H', r: 1, c: 0, clue: 'నూరు పద్యాలతో రచించే సాహిత్య ప్రక్రియ', hint: 'వేమన, సుమతీ వంటి పద్య సంపుటి' }, { num: 2, word: ['లో','కం'], dir: 'V', r: 0, c: 2, clue: 'మనం నివసించే ఈ ప్రపంచం లేదా జగత్తు', hint: 'భూమండలం లేదా విశ్వం' }] },
-        // L12 (4x4): మ-కు-టం (1,0..1,2) x ప-టం (0,2..1,2) -> Shared (1,2) = 'టం'
-        { level: 12, gridSize: 4, distractors: ['మా','కూ','ట','పా'], wisdom: '📜 పద్య విశేషం: ప్రతి పద్యం చివరన వచ్చే పదాన్ని "మకుటం" అంటారు.', words: [{ num: 1, word: ['మ','కు','టం'], dir: 'H', r: 1, c: 0, clue: 'శతక పద్యాల చివరన వచ్చే కిరీటం లాంటి పదం', hint: 'విశ్వదాభిరామ వినుర వేమ వంటి పద్య ముగింపు' }, { num: 2, word: ['ప','టం'], dir: 'V', r: 0, c: 2, clue: 'దేశ సరిహద్దులను చూపే చిత్రం లేదా బొమ్మ', hint: 'భారతదేశ చిత్ర ______' }] },
-        // L13 (4x4): గౌ-ర-వం (1,0..1,2) x భా-వం (0,2..1,2) -> Shared (1,2) = 'వం'
-        { level: 13, gridSize: 4, distractors: ['గ','రా','వ','భ'], wisdom: '📜 పద్య విశేషం: పెద్దల పట్ల "గౌరవం" కలిగి ఉండటం ఉత్తమ సంస్కారం.', words: [{ num: 1, word: ['గౌ','ర','వం'], dir: 'H', r: 1, c: 0, clue: 'పెద్దల పట్ల చూపే మర్యాద మరియు పూజ్యభావం', hint: 'ఆదరణ మరియు మన్నన' }, { num: 2, word: ['భా','వం'], dir: 'V', r: 0, c: 2, clue: 'పద్యంలో దాగి ఉన్న అంతరార్థం లేదా ఆలోచన', hint: 'మనసులోని అభిప్రాయం' }] },
-        // L14 (4x4): అ-మృ-తం (1,0..1,2) x గీ-తం (0,2..1,2) -> Shared (1,2) = 'తం'
-        { level: 14, gridSize: 4, distractors: ['ఆ','మ','త','గి'], wisdom: '📜 పద్య విశేషం: ఆకొన్న కూడే "అమృతం" అని బద్దెన చెప్పారు.', words: [{ num: 1, word: ['అ','మృ','తం'], dir: 'H', r: 1, c: 0, clue: 'దేవతలు సేవించే దివ్య పానీయం', hint: 'ఆకొన్న కూడే ______' }, { num: 2, word: ['గీ','తం'], dir: 'V', r: 0, c: 2, clue: 'రాగయుక్తంగా పాడుకునే పాట', hint: 'జాతీయ ______ జనగణమన' }] },
-        // L15 (4x4): సా-హి-త్యం (1,0..1,2) x ని-త్యం (0,2..1,2) -> Shared (1,2) = 'త్యం'
-        { level: 15, gridSize: 4, distractors: ['స','హీ','త్య','నీ'], wisdom: '📜 పద్య విశేషం: సమాజానికి హితాన్ని కలిగించేదే నిజమైన "సాహిత్యం".', words: [{ num: 1, word: ['సా','హి','త్యం'], dir: 'H', r: 1, c: 0, clue: 'కవిత్వం, కథలు, నాటకాలతో కూడిన వాజ్మయం', hint: 'భాషకు ప్రాణం పోసే అక్షర కళ' }, { num: 2, word: ['ని','త్యం'], dir: 'V', r: 0, c: 2, clue: 'ఎల్లప్పుడూ శాశ్వతంగా ఉండేది', hint: 'ప్రతిరోజూ జరిగేది' }] }
+        { level: 1, gridSize: 3, distractors: ['వె','మా','నా','సా'], wisdom: '📜 పద్య విశేషం: వేమన తన ఆటవెలది పద్యాలతో సమతా భావాన్ని అందించారు.', words: [{ num: 1, word: ['వే','మ','న'], dir: 'H', r: 1, c: 0, clue: '🧘 విశ్వదాభిరామ మకుటంతో శతకం రాసిన యోగి (Vemana)', hint: 'ప్రజాకవి' }, { num: 2, word: ['స','మ','త'], dir: 'V', r: 0, c: 1, clue: '⚖️ అందరూ సమానమే అనే భావన (Equality)', hint: 'భేదభావం లేని సమానత్వం' }] },
+        { level: 2, gridSize: 3, distractors: ['ని','తీ','జ','యా'], wisdom: '📜 పద్య విశేషం: "నీతి" సమాజాన్ని కాపాడుతుంది.', words: [{ num: 1, word: ['నీ','తి'], dir: 'H', r: 1, c: 0, clue: '📜 ధర్మబద్ధమైన సన్మార్గ ప్రవర్తన (Morals)', hint: 'శతక కవులు బోధించిన సత్య మార్గం' }, { num: 2, word: ['జా','తి'], dir: 'V', r: 0, c: 1, clue: '👥 మానవ సమాజం లేదా వంశం (Nation/Tribe)', hint: 'ఒకే మూలాలను పంచుకునే సమూహం' }] },
+        { level: 3, gridSize: 3, distractors: ['సు','మా','తీ','స్వ'], wisdom: '📜 పద్య విశేషం: "సుమతి" అంటే మంచి బుద్ధి గలవాడు.', words: [{ num: 1, word: ['సు','మ','తి'], dir: 'H', r: 1, c: 0, clue: '💡 మంచి బుద్ధి గలవాడు అనే శతకం (Sumathi)', hint: 'బద్దెన రచించిన శతకం' }, { num: 2, word: ['స్వా','తి'], dir: 'V', r: 0, c: 2, clue: '🦪 ముత్యపు చిప్పలో వానచినుకు పడే నక్షత్రం (Swathi Star)', hint: 'శుభ నక్షత్రం' }] },
+        { level: 4, gridSize: 3, distractors: ['క','వీ','తా','ర'], wisdom: '📜 పద్య విశేషం: "కవిత" హృదయాన్ని కదిలించే భావ వ్యక్తీకరణ.', words: [{ num: 1, word: ['క','వి','త'], dir: 'H', r: 1, c: 0, clue: '✍️ కవి హృదయం నుండి జాలువారే గేయం (Poem)', hint: 'భావగర్భితమైన సాహిత్య ప్రక్రియ' }, { num: 2, word: ['ల','త'], dir: 'V', r: 0, c: 2, clue: '🌿 చెట్టును అల్లుకునే పూల తీగ (Creeper)', hint: 'తీగను పిలిచే పదం' }] },
+        { level: 5, isChain: true, gridSize: 4, distractors: ['పా','గా','నా','మా'], wisdom: '🔗 పద శృంఖల: పద్యం ➔ ద్యుతి ➔ తిలకం!', words: [
+          { num: 1, word: ['ప','ద్యం'], dir: 'H', r: 0, c: 0, clue: '📜 ఛందస్సుతో కూడిన కవిత (Verse)', hint: 'శతకంలో పాడేది' },
+          { num: 2, word: ['గ','ద్యం'], dir: 'V', r: 0, c: 1, clue: '📖 వచన రూప రచన (Prose)', hint: 'వాక్యాలలో రాసేది' },
+          { num: 3, word: ['ప','దం'], dir: 'V', r: 0, c: 0, clue: '👣 మాట లేదా అడుగు (Word)', hint: 'పాటలో చరణం' }
+        ] },
+        { level: 6, gridSize: 3, distractors: ['సా','త్య','నీ','న'], wisdom: '📜 పద్య విశేషం: "సత్యం" ఎల్లప్పుడూ జయిస్తుంది.', words: [{ num: 1, word: ['స','త్యం'], dir: 'H', r: 1, c: 0, clue: '☀️ ఎప్పటికీ మారని నిజం (Truth)', hint: 'అబద్ధానికి వ్యతిరేకం' }, { num: 2, word: ['ని','త్యం'], dir: 'V', r: 0, c: 1, clue: '♾️ ప్రతిరోజూ లేదా ఎల్లప్పుడూ జరిగేది (Daily)', hint: 'శాశ్వతంగా ఉండేది' }] },
+        { level: 7, gridSize: 3, distractors: ['ద','తా','సి','మా'], wisdom: '📜 పద్య విశేషం: ఆకొన్న వారికి అన్నం పెట్టేవాడే "దాత".', words: [{ num: 1, word: ['దా','త'], dir: 'H', r: 1, c: 0, clue: '🎁 దానం చేసే గొప్ప వ్యక్తి (Donor)', hint: 'ఉదార స్వభావి' }, { num: 2, word: ['సీ','త'], dir: 'V', r: 0, c: 1, clue: '👑 జనక మహారాజు కుమార్తె (Goddess Sita)', hint: 'శ్రీరాముని ధర్మపత్ని' }] },
+        { level: 8, gridSize: 3, distractors: ['గూ','రూ','వూ','త'], wisdom: '📜 పద్య విశేషం: జ్ఞానజ్యోతిని వెలిగించేవారే "గురువు".', words: [{ num: 1, word: ['గు','రు','వు'], dir: 'H', r: 1, c: 0, clue: '🎓 విద్యను బోధించే ఆచార్యుడు (Teacher)', hint: 'ఉపాధ్యాయుడు' }, { num: 2, word: ['తా','వు'], dir: 'V', r: 0, c: 2, clue: '🏡 నివసించే చోటు లేదా స్థానం (Place)', hint: 'ఉండే ప్రదేశం' }] },
+        { level: 9, gridSize: 3, distractors: ['భ','షా','ఊ','ఆ'], wisdom: '📜 పద్య విశేషం: దేశ భాషలందు తెలుగు లెస్స.', words: [{ num: 1, word: ['భా','ష'], dir: 'H', r: 1, c: 0, clue: '🗣️ మన భావాలను పంచుకునే మాతృవాణి (Language)', hint: 'తెలుగు, సంస్కృతం వంటి వాక్ రూపం' }, { num: 2, word: ['ఉ','ష'], dir: 'V', r: 0, c: 1, clue: '🌅 తెల్లవారుజామున సూర్యోదయ కాంతి (Dawn)', hint: 'అరుణోదయ వేళ' }] },
+        { level: 10, gridSize: 3, distractors: ['క','వ్య','దీ','న'], wisdom: '📜 పద్య విశేషం: రసవత్తరమైన వర్ణనలతో కూడిన గ్రంథమే "కావ్యం".', words: [{ num: 1, word: ['కా','వ్యం'], dir: 'H', r: 1, c: 0, clue: '📚 మహాకవులు రచించే పద్య గ్రంథం (Epic)', hint: 'ప్రబంధ సాహిత్యం' }, { num: 2, word: ['ది','వ్యం'], dir: 'V', r: 0, c: 1, clue: '✨ అత్యంత శ్రేష్ఠమైనది (Divine)', hint: 'దేవతలకు సంబంధించినది' }] },
+        { level: 11, gridSize: 4, distractors: ['శా','తా','క','ల','మ','న'], wisdom: '📜 పద్య విశేషం: నూరు పద్యాల సంపుటిని "శతకం" అంటారు.', words: [{ num: 1, word: ['శ','త','కం'], dir: 'H', r: 1, c: 0, clue: '💯 నూరు పద్యాలతో రచించే ప్రక్రియ (Shatakam)', hint: 'వేమన, సుమతీ సంపుటి' }, { num: 2, word: ['లో','కం'], dir: 'V', r: 0, c: 2, clue: '🌍 ప్రపంచం లేదా జగత్తు (World)', hint: 'విశ్వం' }] },
+        { level: 12, gridSize: 4, distractors: ['మా','కూ','ట','పా','క','ల'], wisdom: '📜 పద్య విశేషం: ప్రతి పద్యం చివరన వచ్చే పదాన్ని "మకుటం" అంటారు.', words: [{ num: 1, word: ['మ','కు','టం'], dir: 'H', r: 1, c: 0, clue: '👑 శతక పద్యాల చివరన వచ్చే కిరీటం లాంటి పదం (Crown/Refrain)', hint: 'విశ్వదాభిరామ వినుర వేమ' }, { num: 2, word: ['ప','టం'], dir: 'V', r: 0, c: 2, clue: '🗺️ దేశ సరిహద్దులను చూపే చిత్రం (Map/Chart)', hint: 'భారతదేశ చిత్ర ______' }] },
+        { level: 13, gridSize: 4, distractors: ['గ','రా','వ','భ','క','ల'], wisdom: '📜 పద్య విశేషం: పెద్దల పట్ల "గౌరవం" కలిగి ఉండటం ఉత్తమ సంస్కారం.', words: [{ num: 1, word: ['గౌ','ర','వం'], dir: 'H', r: 1, c: 0, clue: '🙏 పెద్దల పట్ల చూపే మర్యాద (Respect)', hint: 'ఆదరణ మరియు మన్నన' }, { num: 2, word: ['భా','వం'], dir: 'V', r: 0, c: 2, clue: '💭 పద్యంలో దాగి ఉన్న అంతరార్థం (Meaning)', hint: 'మనసులోని అభిప్రాయం' }] },
+        { level: 14, gridSize: 4, distractors: ['ఆ','మ','త','గి','క','ల'], wisdom: '📜 పద్య విశేషం: ఆకొన్న కూడే "అమృతం" అని బద్దెన చెప్పారు.', words: [{ num: 1, word: ['అ','మృ','తం'], dir: 'H', r: 1, c: 0, clue: '🍯 దేవతలు సేవించే దివ్య పానీయం (Nectar)', hint: 'ఆకొన్న కూడే ______' }, { num: 2, word: ['గీ','తం'], dir: 'V', r: 0, c: 2, clue: '🎵 రాగయుక్తంగా పాడుకునే పాట (Song)', hint: 'జాతీయ ______' }] },
+        { level: 15, isChain: true, gridSize: 4, distractors: ['స','హీ','త్య','నీ','క','ల'], wisdom: '🔗 పద శృంఖల: సాహిత్యం ➔ నిత్యం!', words: [
+          { num: 1, word: ['సా','హి','త్యం'], dir: 'H', r: 1, c: 0, clue: '📚 కవిత్వం, కథలతో కూడిన వాజ్మయం (Literature)', hint: 'భాషకు ప్రాణం పోసే కళ' },
+          { num: 2, word: ['ని','త్యం'], dir: 'V', r: 0, c: 2, clue: '♾️ ఎల్లప్పుడూ ఉండేది (Eternal)', hint: 'ప్రతిరోజూ జరిగేది' },
+          { num: 3, word: ['సా','రం'], dir: 'V', r: 1, c: 0, clue: '✨ పద్యంలోని ముఖ్య సారాంశం (Essence)', hint: 'ముఖ్య అర్థం' }
+        ] }
       ],
       proverbs: [
-        // L1: తో-క (1,0..1,1) x పా-క (0,1..1,1) -> Shared (1,1) = 'క'
-        { level: 1, gridSize: 3, distractors: ['తొ','కా','ప','కం'], wisdom: '💡 సామెత అర్థం: పుట్టుకతో వచ్చిన సహజ స్వభావం మారదు.', words: [{ num: 1, word: ['తో','క'], dir: 'H', r: 1, c: 0, clue: 'కుక్క ______ వంకర (సామెత పూరించండి)', hint: 'గొట్టంలో ఉంచినా తిన్నగా మారని భాగం' }, { num: 2, word: ['పా','క'], dir: 'V', r: 0, c: 1, clue: 'తాటాకులతో వేసిన చిన్న పూరి గుడిసె', hint: 'ఆకుల గూడు' }] },
-        // L2: ఆ-శ (1,0..1,1) x ది-శ (0,1..1,1) -> Shared (1,1) = 'శ'
-        { level: 2, gridSize: 3, distractors: ['అ','స','దీ','శా'], wisdom: '💡 సామెత అర్థం: మితిమీరిన అత్యాశ కష్టాల్లోకి నెడుతుంది.', words: [{ num: 1, word: ['ఆ','శ'], dir: 'H', r: 1, c: 0, clue: 'అతి ______ దుఃఖానికి చేటు (సామెత పూరించండి)', hint: 'మితిమీరిన కోరిక' }, { num: 2, word: ['ది','శ'], dir: 'V', r: 0, c: 1, clue: 'తూర్పు, పడమర లాంటి మార్గం', hint: 'దిక్కును సూచించే పదం' }] },
-        // L3: చే-ప (1,0..1,1) x పా-ప (0,1..1,1) -> Shared (1,1) = 'ప'
-        { level: 3, gridSize: 3, distractors: ['చె','పా','ప','తా'], wisdom: '💡 సామెత అర్థం: పెద్దవారు చిన్నవారిని అణచివేసే సందర్భం.', words: [{ num: 1, word: ['చే','ప'], dir: 'H', r: 1, c: 0, clue: 'చిన్న ______ ను పెద్దది మింగినట్లు (సామెత)', hint: 'నీటిలో నివసించే మత్స్యం' }, { num: 2, word: ['పా','ప'], dir: 'V', r: 0, c: 1, clue: 'బోసి నవ్వుల పసిబిడ్డ లేదా చిన్నారి', hint: 'తల్లి ఒడిలో ఆడుకునే శిశువు' }] },
-        // L4: ఇ-ల్లు (1,0..1,1) x ము-ల్లు (0,1..1,1) -> Shared (1,1) = 'ల్లు'
-        { level: 4, gridSize: 3, distractors: ['ఈ','లు','మూ','ల'], wisdom: '💡 సామెత అర్థం: ముందు మన లోపాలను సరిదిద్దుకోవాలి.', words: [{ num: 1, word: ['ఇ','ల్లు'], dir: 'H', r: 1, c: 0, clue: '______ అలకగానే పండుగ కాదు (సామెత)', hint: 'మనం నివసించే గృహం' }, { num: 2, word: ['ము','ల్లు'], dir: 'V', r: 0, c: 1, clue: 'గులాబీ మొక్కకు ఉండే పదునైన భాగం', hint: '______ ను ______ తోనే తీయాలి' }] },
-        // L5: ని-ప్పు (1,0..1,1) x ఉ-ప్పు (0,1..1,1) -> Shared (1,1) = 'ప్పు'
-        { level: 5, gridSize: 3, distractors: ['నీ','పు','ఊ','ప'], wisdom: '💡 సామెత అర్థం: కారణం లేకుండా వదంతులు రావు.', words: [{ num: 1, word: ['ని','ప్పు'], dir: 'H', r: 1, c: 0, clue: '______ లేనిదే పొగ రాదు (సామెత)', hint: 'వేడినిచ్చే అగ్ని' }, { num: 2, word: ['ఉ','ప్పు'], dir: 'V', r: 0, c: 1, clue: 'వంటకు రుచినిచ్చే సముద్ర లవణం', hint: '______ తిన్నవాడు నీళ్లు తాగక తప్పదు' }] },
-        // L6: చె-రు-వు (1,0..1,2) x ఆ-వు (0,2..1,2) -> Shared (1,2) = 'వు'
-        { level: 6, gridSize: 3, distractors: ['చే','రూ','అ','వూ'], wisdom: '💡 సామెత అర్థం: నాయకుడు సరిగ్గా లేకపోతే అనుచరులు దారి తప్పుతారు.', words: [{ num: 1, word: ['చె','రు','వు'], dir: 'H', r: 1, c: 0, clue: 'కలువలు వికసించే ఊరి నీటి తటాకం', hint: 'వర్షపు నీరు నిలిచే పెద్ద కుంట' }, { num: 2, word: ['ఆ','వు'], dir: 'V', r: 0, c: 2, clue: '______ చేలో మేస్తే దూడ గట్టున మేస్తుందా?', hint: 'పాలను ఇచ్చే పవిత్ర గోమాత' }] },
-        // L7: క-త్తి (1,0..1,1) x సు-త్తి (0,1..1,1) -> Shared (1,1) = 'త్తి'
-        { level: 7, gridSize: 3, distractors: ['కా','తి','సూ','త'], wisdom: '💡 సామెత అర్థం: శారీరక బలం కంటే జ్ఞానం గొప్పది.', words: [{ num: 1, word: ['క','త్తి'], dir: 'H', r: 1, c: 0, clue: 'కలం కన్నా పదునైన ఆయుధం కాదు', hint: 'పదునైన ఖడ్గం' }, { num: 2, word: ['సు','త్తి'], dir: 'V', r: 0, c: 1, clue: 'మేకులు కొట్టడానికి వాడే పనిముట్టు', hint: 'బరువైన ఇనుప సుత్తె' }] },
-        // L8: ప-ని (1,0..1,1) x మ-ని-షి (0,1..2,1) -> Shared (1,1) = 'ని'
-        { level: 8, gridSize: 3, distractors: ['పా','నీ','మా','షీ'], wisdom: '💡 సామెత అర్థం: ఎప్పటి పని అప్పుడే పూర్తి చేయాలి.', words: [{ num: 1, word: ['ప','ని'], dir: 'H', r: 1, c: 0, clue: 'నేటి ______ రేపటికి వాయిదా వేయవద్దు', hint: 'మనం చేసే కార్యం' }, { num: 2, word: ['మ','ని','షి'], dir: 'V', r: 0, c: 1, clue: 'ఆలోచనా శక్తి గల మానవుడు', hint: 'సంఘజీవి' }] },
-        // L9: కొం-డ (1,0..1,1) x బం-డ (0,1..1,1) -> Shared (1,1) = 'డ'
-        { level: 9, gridSize: 3, distractors: ['కో','డా','బా','డం'], wisdom: '💡 సామెత అర్థం: గొప్ప ఆర్భాటం చేసి చిన్న ఫలితం సాధించడం.', words: [{ num: 1, word: ['కొం','డ'], dir: 'H', r: 1, c: 0, clue: '______ తవ్వి ఎలుకను పట్టినట్లు (సామెత)', hint: 'ఎత్తైన పర్వతం' }, { num: 2, word: ['బం','డ'], dir: 'V', r: 0, c: 1, clue: 'పెద్ద రాతి శిల', hint: '______ రాయి కూడా కరుగుతుంది' }] },
-        // L10: దీ-పం (1,0..1,1) x రూ-పం (0,1..1,1) -> Shared (1,1) = 'పం'
-        { level: 10, gridSize: 3, distractors: ['ది','ప','రు','పా'], wisdom: '💡 సామెత అర్థం: సమయం మించిపోకముందే జాగ్రత్త పడాలి.', words: [{ num: 1, word: ['దీ','పం'], dir: 'H', r: 1, c: 0, clue: '______ ఉండగానే ఇల్లు చక్కబెట్టుకోవాలి', hint: 'వెలుగునిచ్చే నూనె జ్యోతి' }, { num: 2, word: ['రూ','పం'], dir: 'V', r: 0, c: 1, clue: 'బాహ్య ఆకారం లేదా స్వరూపం', hint: 'కంటికి కనిపించే ఆకృతి' }] },
-        // L11 (4x4): అ-దృ-ష్టం (1,0..1,2) x క-ష్టం (0,2..1,2) -> Shared (1,2) = 'ష్టం'
-        { level: 11, gridSize: 4, distractors: ['ఆ','ద','కా','ష్ట'], wisdom: '💡 సామెత అర్థం: నిరంతర కృషి ఉంటేనే అదృష్టం తోడవుతుంది.', words: [{ num: 1, word: ['అ','దృ','ష్టం'], dir: 'H', r: 1, c: 0, clue: '______ ఉంటే ఆవగింజంత చాలు (సామెత)', hint: 'శుభయోగం లేదా ప్రాప్తం' }, { num: 2, word: ['క','ష్టం'], dir: 'V', r: 0, c: 2, clue: 'శ్రమ లేదా బాధ (______ సుఖాల కలయికే జీవితం)', hint: 'కఠినమైన పని' }] },
-        // L12 (4x4): ని-జం (1,0..1,1) x గ-జం (0,1..1,1) -> Shared (1,1) = 'జం'
-        { level: 12, gridSize: 4, distractors: ['నీ','జ','గా','జా'], wisdom: '💡 సామెత అర్థం: సత్యం నిప్పు లాంటిది.', words: [{ num: 1, word: ['ని','జం'], dir: 'H', r: 1, c: 0, clue: '______ నిప్పు లాంటిది (సామెత)', hint: 'అబద్ధం కాని యథార్థం' }, { num: 2, word: ['గ','జం'], dir: 'V', r: 0, c: 1, clue: 'అడవిలో తిరిగే పెద్ద ఏనుగు', hint: 'హస్తి, కరి అని పిలిచే జంతువు' }] },
-        // L13 (4x4): ఆ-రో-గ్యం (1,0..1,2) x భా-గ్యం (0,2..1,2) -> Shared (1,2) = 'గ్యం'
-        { level: 13, gridSize: 4, distractors: ['అ','రొ','భ','గ్య'], wisdom: '💡 సామెత అర్థం: ఆరోగ్యమే మహాభాగ్యం.', words: [{ num: 1, word: ['ఆ','రో','గ్యం'], dir: 'H', r: 1, c: 0, clue: '______ మహాభాగ్యం (సామెత పూరించండి)', hint: 'వ్యాధులు లేని శారీరక దృఢత్వం' }, { num: 2, word: ['భా','గ్యం'], dir: 'V', r: 0, c: 2, clue: 'ఐశ్వర్యం లేదా గొప్ప అదృష్టం', hint: 'సిరి సంపదలు' }] },
-        // L14 (4x4): చె-ట్టు (1,0..1,1) x ప-ట్టు (0,1..1,1) -> Shared (1,1) = 'ట్టు'
-        { level: 14, gridSize: 4, distractors: ['చే','టు','పా','ట'], wisdom: '💡 సామెత అర్థం: ఇతరుల పేరు చెప్పుకుని లాభపడటం.', words: [{ num: 1, word: ['చె','ట్టు'], dir: 'H', r: 1, c: 0, clue: '______ పేరు చెప్పి కాయలు అమ్మినట్లు (సామెత)', hint: 'నీడ, పండ్లు ఇచ్చే వృక్షం' }, { num: 2, word: ['ప','ట్టు'], dir: 'V', r: 0, c: 1, clue: '______ వదలని విక్రమార్కుడు (సామెత పదం)', hint: 'గట్టిగా పట్టుకోవడం' }] },
-        // L15 (4x4): వి-ద్య (1,0..1,1) x ప-ద్య-ము (0,1..2,1) -> Shared (1,1) = 'ద్య'
-        { level: 15, gridSize: 4, distractors: ['వీ','ద్యా','పా','మ'], wisdom: '💡 సామెత అర్థం: దొంగలు దోచుకోలేని సంపద "విద్య".', words: [{ num: 1, word: ['వి','ద్య'], dir: 'H', r: 1, c: 0, clue: '______ లేని వాడు వింత పశువు (సామెత)', hint: 'చదువు మరియు జ్ఞానం' }, { num: 2, word: ['ప','ద్య','ము'], dir: 'V', r: 0, c: 1, clue: 'ఛందస్సుతో కూడిన తెలుగు కవిత', hint: 'శతకంలో పాడుకునే నాలుగు పాదాల రచన' }] }
+        { level: 1, gridSize: 3, distractors: ['తొ','కా','ప','కం'], wisdom: '💡 సామెత అర్థం: పుట్టుకతో వచ్చిన సహజ స్వభావం మారదు.', words: [{ num: 1, word: ['తో','క'], dir: 'H', r: 1, c: 0, clue: '🐕 కుక్క ______ వంకర (Dog Tail)', hint: 'గొట్టంలో ఉంచినా తిన్నగా మారని భాగం' }, { num: 2, word: ['పా','క'], dir: 'V', r: 0, c: 1, clue: '🛖 తాటాకులతో వేసిన పూరి గుడిసె (Hut)', hint: 'ఆకుల గూడు' }] },
+        { level: 2, gridSize: 3, distractors: ['అ','స','దీ','శా'], wisdom: '💡 సామెత అర్థం: మితిమీరిన అత్యాశ కష్టాల్లోకి నెడుతుంది.', words: [{ num: 1, word: ['ఆ','శ'], dir: 'H', r: 1, c: 0, clue: '✨ అతి ______ దుఃఖానికి చేటు (Greed/Desire)', hint: 'మితిమీరిన కోరిక' }, { num: 2, word: ['ది','శ'], dir: 'V', r: 0, c: 1, clue: '🧭 తూర్పు, పడమర లాంటి మార్గం (Direction)', hint: 'దిక్కును సూచించే పదం' }] },
+        { level: 3, gridSize: 3, distractors: ['చె','పా','ప','తా'], wisdom: '💡 సామెత అర్థం: పెద్దవారు చిన్నవారిని అణచివేసే సందర్భం.', words: [{ num: 1, word: ['చే','ప'], dir: 'H', r: 1, c: 0, clue: '🐟 చిన్న ______ ను పెద్దది మింగినట్లు (Fish)', hint: 'నీటిలో నివసించే మత్స్యం' }, { num: 2, word: ['పా','ప'], dir: 'V', r: 0, c: 1, clue: '👶 బోసి నవ్వుల పసిబిడ్డ (Baby)', hint: 'తల్లి ఒడిలో ఆడుకునే శిశువు' }] },
+        { level: 4, gridSize: 3, distractors: ['ఈ','లు','మూ','ల'], wisdom: '💡 సామెత అర్థం: ముందు మన లోపాలను సరిదిద్దుకోవాలి.', words: [{ num: 1, word: ['ఇ','ల్లు'], dir: 'H', r: 1, c: 0, clue: '🏠 ______ అలకగానే పండుగ కాదు (House)', hint: 'మనం నివసించే గృహం' }, { num: 2, word: ['ము','ల్లు'], dir: 'V', r: 0, c: 1, clue: '🌹 గులాబీ మొక్కకు ఉండే పదునైన భాగం (Thorn)', hint: '______ ను ______ తోనే తీయాలి' }] },
+        { level: 5, isChain: true, gridSize: 4, distractors: ['నీ','పు','ఊ','ప'], wisdom: '🔗 పద శృంఖల: నిప్పు ➔ ఉప్పు!', words: [
+          { num: 1, word: ['ని','ప్పు'], dir: 'H', r: 1, c: 0, clue: '🔥 ______ లేనిదే పొగ రాదు (Fire)', hint: 'వేడినిచ్చే అగ్ని' },
+          { num: 2, word: ['ఉ','ప్పు'], dir: 'V', r: 0, c: 1, clue: '🧂 వంటకు రుచినిచ్చే లవణం (Salt)', hint: '______ తిన్నవాడు నీళ్లు తాగక తప్పదు' },
+          { num: 3, word: ['ని','జం'], dir: 'V', r: 1, c: 0, clue: '⚖️ ______ నిప్పు లాంటిది (Truth)', hint: 'సత్యం' }
+        ] },
+        { level: 6, gridSize: 3, distractors: ['చే','రూ','అ','వూ'], wisdom: '💡 సామెత అర్థం: నాయకుడు సరిగ్గా లేకపోతే అనుచరులు దారి తప్పుతారు.', words: [{ num: 1, word: ['చె','రు','వు'], dir: 'H', r: 1, c: 0, clue: '🏞️ కలువలు వికసించే ఊరి నీటి తటాకం (Lake)', hint: 'వర్షపు నీరు నిలిచే పెద్ద కుంట' }, { num: 2, word: ['ఆ','వు'], dir: 'V', r: 0, c: 2, clue: '🐄 ______ చేలో మేస్తే దూడ గట్టున మేస్తుందా? (Cow)', hint: 'పాలను ఇచ్చే పవిత్ర గోమాత' }] },
+        { level: 7, gridSize: 3, distractors: ['కా','తి','సూ','త'], wisdom: '💡 సామెత అర్థం: శారీరక బలం కంటే జ్ఞానం గొప్పది.', words: [{ num: 1, word: ['క','త్తి'], dir: 'H', r: 1, c: 0, clue: '🗡️ కలం కన్నా పదునైన ఆయుధం కాదు (Sword)', hint: 'పదునైన ఖడ్గం' }, { num: 2, word: ['సు','త్తి'], dir: 'V', r: 0, c: 1, clue: '🔨 మేకులు కొట్టడానికి వాడే పనిముట్టు (Hammer)', hint: 'బరువైన ఇనుప సుత్తె' }] },
+        { level: 8, gridSize: 3, distractors: ['పా','నీ','మా','షీ'], wisdom: '💡 సామెత అర్థం: ఎప్పటి పని అప్పుడే పూర్తి చేయాలి.', words: [{ num: 1, word: ['ప','ని'], dir: 'H', r: 1, c: 0, clue: '🛠️ నేటి ______ రేపటికి వాయిదా వేయవద్దు (Work)', hint: 'మనం చేసే కార్యం' }, { num: 2, word: ['మ','ని','షి'], dir: 'V', r: 0, c: 1, clue: '🧑 ఆలోచనా శక్తి గల మానవుడు (Human)', hint: 'సంఘజీవి' }] },
+        { level: 9, gridSize: 3, distractors: ['కో','డా','బా','డం'], wisdom: '💡 సామెత అర్థం: గొప్ప ఆర్భాటం చేసి చిన్న ఫలితం సాధించడం.', words: [{ num: 1, word: ['కొం','డ'], dir: 'H', r: 1, c: 0, clue: '⛰️ ______ తవ్వి ఎలుకను పట్టినట్లు (Mountain)', hint: 'ఎత్తైన పర్వతం' }, { num: 2, word: ['బం','డ'], dir: 'V', r: 0, c: 1, clue: '🪨 పెద్ద రాతి శిల (Boulder)', hint: '______ రాయి కూడా కరుగుతుంది' }] },
+        { level: 10, gridSize: 3, distractors: ['ది','ప','రు','పా'], wisdom: '💡 సామెత అర్థం: సమయం మించిపోకముందే జాగ్రత్త పడాలి.', words: [{ num: 1, word: ['దీ','పం'], dir: 'H', r: 1, c: 0, clue: '🪔 ______ ఉండగానే ఇల్లు చక్కబెట్టుకోవాలి (Lamp)', hint: 'వెలుగునిచ్చే నూనె జ్యోతి' }, { num: 2, word: ['రూ','పం'], dir: 'V', r: 0, c: 1, clue: '🖼️ బాహ్య ఆకారం లేదా స్వరూపం (Form)', hint: 'కంటికి కనిపించే ఆకృతి' }] },
+        { level: 11, gridSize: 4, distractors: ['ఆ','ద','కా','ష్ట','మ','న'], wisdom: '💡 సామెత అర్థం: నిరంతర కృషి ఉంటేనే అదృష్టం తోడవుతుంది.', words: [{ num: 1, word: ['అ','దృ','ష్టం'], dir: 'H', r: 1, c: 0, clue: '🍀 ______ ఉంటే ఆవగింజంత చాలు (Luck)', hint: 'శుభయోగం లేదా ప్రాప్తం' }, { num: 2, word: ['క','ష్టం'], dir: 'V', r: 0, c: 2, clue: '💪 శ్రమ లేదా బాధ (Hardship)', hint: 'కఠినమైన పని' }] },
+        { level: 12, gridSize: 4, distractors: ['నీ','జ','గా','జా','క','ల'], wisdom: '💡 సామెత అర్థం: సత్యం నిప్పు లాంటిది.', words: [{ num: 1, word: ['ని','జం'], dir: 'H', r: 1, c: 0, clue: '⚖️ ______ నిప్పు లాంటిది (Truth)', hint: 'అబద్ధం కాని యథార్థం' }, { num: 2, word: ['గ','జం'], dir: 'V', r: 0, c: 1, clue: '🐘 అడవిలో తిరిగే పెద్ద ఏనుగు (Elephant)', hint: 'హస్తి, కరి అని పిలిచే జంతువు' }] },
+        { level: 13, gridSize: 4, distractors: ['అ','రొ','భ','గ్య','క','ల'], wisdom: '💡 సామెత అర్థం: ఆరోగ్యమే మహాభాగ్యం.', words: [{ num: 1, word: ['ఆ','రో','గ్యం'], dir: 'H', r: 1, c: 0, clue: '🍎 ______ మహాభాగ్యం (Health)', hint: 'వ్యాధులు లేని శారీరక దృఢత్వం' }, { num: 2, word: ['భా','గ్యం'], dir: 'V', r: 0, c: 2, clue: '💰 ఐశ్వర్యం లేదా గొప్ప అదృష్టం (Fortune)', hint: 'సిరి సంపదలు' }] },
+        { level: 14, gridSize: 4, distractors: ['చే','టు','పా','ట','క','ల'], wisdom: '💡 సామెత అర్థం: ఇతరుల పేరు చెప్పుకుని లాభపడటం.', words: [{ num: 1, word: ['చె','ట్టు'], dir: 'H', r: 1, c: 0, clue: '🌳 ______ పేరు చెప్పి కాయలు అమ్మినట్లు (Tree)', hint: 'నీడ, పండ్లు ఇచ్చే వృక్షం' }, { num: 2, word: ['ప','ట్టు'], dir: 'V', r: 0, c: 1, clue: '✊ ______ వదలని విక్రమార్కుడు (Grip/Silk)', hint: 'గట్టిగా పట్టుకోవడం' }] },
+        { level: 15, isChain: true, gridSize: 4, distractors: ['వీ','ద్యా','పా','మ','క','ల'], wisdom: '🔗 పద శృంఖల: విద్య ➔ పద్యము!', words: [
+          { num: 1, word: ['వి','ద్య'], dir: 'H', r: 1, c: 0, clue: '🎓 ______ లేని వాడు వింత పశువు (Education)', hint: 'చదువు మరియు జ్ఞానం' },
+          { num: 2, word: ['ప','ద్య','ము'], dir: 'V', r: 0, c: 1, clue: '📜 ఛందస్సుతో కూడిన కవిత (Poem)', hint: 'శతకంలో పాడుకునే రచన' },
+          { num: 3, word: ['వి','జ','యం'], dir: 'V', r: 1, c: 0, clue: '🏆 కృషితో సాధించే గెలుపు (Victory)', hint: 'గెలుపు' }
+        ] }
       ]
     };
+
+    const RACE_QUESTIONS = [
+      { prompt: '🪷 జాతీయ పుష్పం (Lotus) = ?', correct: 'కమలం', wrong: ['కలశం', 'కాగితం'] },
+      { prompt: '⏰ గడియారం చూపే కాలం (Time) = ?', correct: 'సమయం', wrong: ['సమాజం', 'సముద్రం'] },
+      { prompt: '☀️ వెలుగునిచ్చే భానుడు (Sun) = ?', correct: 'సూర్యుడు', wrong: ['చంద్రుడు', 'మిత్రుడు'] },
+      { prompt: '📚 చదువుల గ్రంథం (Book) = ?', correct: 'పుస్తకం', wrong: ['పల్లెటూరు', 'పతంగి'] },
+      { prompt: '🐟 నీటిలో ఈదే మత్స్యం (Fish) = ?', correct: 'చేప', wrong: ['చెట్టు', 'చెరువు'] }
+    ];
 
     const TRIBUTES = [
       { poet: 'మహాకవి వేమన (యోగి వేమన)', origin: 'కడప జిల్లా, 17వ శతాబ్దం', titleInfo: 'ప్రజాకవి, యోగిశ్రేష్ఠుడు', works: 'వేమన శతకం', verse: 'ఉప్పు కప్పురంబు నొక్క పోలిక నుండు\nచూడ చూడ రుచుల జాడ వేరు\nపురుషులందు పుణ్య పురుషులు వేరయా\nవిశ్వదాభిరామ వినుర వేమ!', meaning: 'బాహ్య రూపం ఒకేలా ఉన్నా గుణాన్ని బట్టి మానవుల ఉత్తమత్వం బయటపడుతుంది.' },
@@ -434,6 +571,9 @@
     let savedScore = localStorage.getItem('telugu_padam_score');
     let score = (savedScore !== null) ? parseInt(savedScore) : 50;
     let streak = 0, selectedCell = null, activeWord = null, gridState = {}, voiceEnabled = true, availableVoices = [], wrongAttemptsCount = 0, wordHintStage = {};
+
+    // Car Race & Spin Wheel state
+    let carLane = 1, raceGatesCleared = 0, raceTimer = null, isSpinning = false, wheelDeg = 0;
 
     function saveProgress() {
       localStorage.setItem('telugu_padam_cat_progress', JSON.stringify(categoryProgress));
@@ -474,6 +614,7 @@
     }
 
     function backToLobby() {
+      clearInterval(raceTimer);
       saveProgress();
       document.getElementById('gameplay-screen').style.display = 'none';
       document.getElementById('lobby-screen').style.display = 'flex';
@@ -486,15 +627,36 @@
     function returnToCurrentActiveLevel() { activeViewingIdx = categoryProgress[currentCategory] || 0; initLevel(); }
 
     function initLevel() {
+      clearInterval(raceTimer);
       const catList = CATEGORIES_DATA[currentCategory] || CATEGORIES_DATA['general'];
       const lvl = catList[activeViewingIdx % catList.length];
+      const levelNumber = activeViewingIdx + 1;
       const isPastReview = isReviewingPastLevel();
       wrongAttemptsCount = 0; wordHintStage = {};
 
-      document.getElementById('lvl-num').textContent = activeViewingIdx + 1;
+      document.getElementById('lvl-num').textContent = levelNumber;
       document.getElementById('score-num').textContent = score;
       document.getElementById('lobby-stars').textContent = score;
       document.getElementById('streak-num').textContent = streak;
+
+      applyThemeAndDifficultyTier(levelNumber);
+
+      // Every 7th Level (if not reviewing past level) -> Trigger Playable Akshara Car Race Mini-Game!
+      if (!isPastReview && levelNumber % 7 === 0) {
+        startCarRaceStage(levelNumber);
+        return;
+      }
+
+      document.getElementById('race-view-box').style.display = 'none';
+      document.getElementById('crossword-view-box').style.display = 'flex';
+
+      const chainBanner = document.getElementById('mode-badge-banner');
+      if (lvl.isChain || levelNumber % 5 === 0) {
+        chainBanner.style.display = 'block';
+        chainBanner.textContent = `🔗 స్థాయి ${levelNumber}: పద శృంఖల సవాలు! (Connected Word Chain)`;
+      } else {
+        chainBanner.style.display = 'none';
+      }
 
       document.getElementById('review-banner').style.display = isPastReview ? 'flex' : 'none';
       document.getElementById('letters-keyboard').style.display = isPastReview ? 'none' : 'grid';
@@ -506,14 +668,14 @@
       lvl.words.forEach((w) => {
         const tab = document.createElement('div');
         tab.className = 'clue-tab'; tab.id = `tab-${w.num}`;
-        tab.textContent = `${w.num}. ${w.dir === 'H' ? 'అడ్డం / Across' : 'నిలువు / Down'}`;
+        tab.textContent = `${w.num}. ${w.dir === 'H' ? 'అడ్డం' : 'నిలువు'}`;
         tab.onclick = () => { activeWord = w; highlightBoard(`${w.r}_${w.c}`, true); };
         navBar.appendChild(tab);
       });
 
       const container = document.getElementById('puzzle-grid');
       container.innerHTML = '';
-      container.style.gridTemplateColumns = `repeat(${lvl.gridSize}, 52px)`;
+      container.style.gridTemplateColumns = `repeat(${lvl.gridSize}, 49px)`;
       gridState = {};
       const cellWordMap = {}, headCellMap = {};
 
@@ -553,10 +715,131 @@
         }
       }
 
-      if (!isPastReview) setupKeyboard(lvl);
+      if (!isPastReview) setupKeyboard(lvl, levelNumber);
       activeWord = lvl.words[0];
       highlightBoard(`${lvl.words[0].r}_${lvl.words[0].c}`, false);
-      setCompanionText(isPastReview ? `గత స్థాయి ${activeViewingIdx + 1} జవాబులు ఇక్కడ ఉన్నాయి.` : `స్థాయి ${activeViewingIdx + 1}: సంఖ్య 1 లేదా 2 నొక్కి సూచన వినండి.`, false);
+      setCompanionText(isPastReview ? `గత స్థాయి ${levelNumber} జవాబులు ఇక్కడ ఉన్నాయి.` : `స్థాయి ${levelNumber}: సూచన వినడానికి గడిని నొక్కండి.`, false);
+    }
+
+    // AKSHARA CAR RACE MINI-GAME (Every 7th Level)
+    function startCarRaceStage(levelNumber) {
+      document.getElementById('crossword-view-box').style.display = 'none';
+      document.getElementById('mode-badge-banner').style.display = 'block';
+      document.getElementById('mode-badge-banner').textContent = `🏎️ బోనస్ స్థాయి ${levelNumber}: అక్షర కార్ రేస్!`;
+      document.getElementById('race-view-box').style.display = 'flex';
+
+      carLane = 1;
+      raceGatesCleared = 0;
+      updateCarPosition();
+      document.getElementById('race-progress').textContent = `0 / 3`;
+      setCompanionText('అక్షర కార్ రేస్! సరైన తెలుగు పదం ఉన్న గేట్ వైపు కారును నడపండి!', true);
+      spawnNextRaceGate();
+    }
+
+    function updateCarPosition() {
+      const laneCenters = ['16.6%', '50%', '83.3%'];
+      document.getElementById('player-car').style.left = laneCenters[carLane];
+    }
+
+    function steerCar(dir) {
+      carLane = Math.max(0, Math.min(2, carLane + dir));
+      playChime('tap');
+      updateCarPosition();
+    }
+
+    function spawnNextRaceGate() {
+      clearInterval(raceTimer);
+      const track = document.getElementById('road-track');
+      track.querySelectorAll('.word-gate').forEach(g => g.remove());
+
+      const q = RACE_QUESTIONS[Math.floor(Math.random() * RACE_QUESTIONS.length)];
+      document.getElementById('race-clue-box').textContent = `🏎️ ${q.prompt}`;
+
+      const correctLane = Math.floor(Math.random() * 3);
+      const options = [];
+      let wIdx = 0;
+      for (let i = 0; i < 3; i++) {
+        options.push(i === correctLane ? q.correct : q.wrong[wIdx++]);
+      }
+
+      const lanes = track.querySelectorAll('.road-lane');
+      const gateEls = [];
+      options.forEach((wordTxt, laneIdx) => {
+        const g = document.createElement('div');
+        g.className = 'word-gate';
+        g.textContent = wordTxt;
+        g.style.top = '-40px';
+        lanes[laneIdx].appendChild(g);
+        gateEls.push(g);
+      });
+
+      let yPos = -40;
+      raceTimer = setInterval(() => {
+        yPos += 4;
+        gateEls.forEach(g => g.style.top = `${yPos}px`);
+
+        if (yPos >= 158) {
+          clearInterval(raceTimer);
+          if (carLane === correctLane) {
+            playChime('win');
+            raceGatesCleared++;
+            document.getElementById('race-progress').textContent = `${raceGatesCleared} / 3`;
+            if (raceGatesCleared >= 3) {
+              setCompanionText('అద్భుతం! కార్ రేస్ గెలిచారు!', true);
+              triggerVictory();
+            } else {
+              setTimeout(spawnNextRaceGate, 400);
+            }
+          } else {
+            playChime('error');
+            setCompanionText(`అయ్యో! సరైన పదం "${q.correct}". మళ్ళీ ప్రయత్నించండి!`, true);
+            setTimeout(spawnNextRaceGate, 700);
+          }
+        }
+      }, 45);
+    }
+
+    // LUCKY SPIN WHEEL (Every 8th Level)
+    function showSpinWheelModal() {
+      isSpinning = false;
+      document.getElementById('spin-result-text').textContent = '';
+      const btn = document.getElementById('spin-action-btn');
+      btn.textContent = '🎡 చక్రం తిప్పు / Spin Now!';
+      btn.onclick = spinLuckyWheel;
+      document.getElementById('spin-modal').style.display = 'flex';
+      setCompanionText('అదృష్ట చక్రం! తిప్పి ఉచిత నక్షత్రాలను గెలుచుకోండి!', true);
+    }
+
+    function spinLuckyWheel() {
+      if (isSpinning) return;
+      isSpinning = true;
+      playChime('tap');
+
+      const rewards = [50, 100, 150, 200, 250, 500];
+      const pickIdx = Math.floor(Math.random() * rewards.length);
+      const wonCoins = rewards[pickIdx];
+
+      wheelDeg += 1440 + (360 - (pickIdx * 60 + 30));
+      document.getElementById('spin-wheel').style.transform = `rotate(${wheelDeg}deg)`;
+
+      setTimeout(() => {
+        playChime('win');
+        if (window.confetti) window.confetti({ particleCount: 90, spread: 80, origin: { y: 0.5 } });
+        score += wonCoins;
+        document.getElementById('score-num').textContent = score;
+        document.getElementById('lobby-stars').textContent = score;
+        saveProgress();
+
+        document.getElementById('spin-result-text').textContent = `🎉 అభినందనలు! +${wonCoins} ⭐ నక్షత్రాలు గెలుచుకున్నారు!`;
+        setCompanionText(`అభినందనలు! ${wonCoins} నక్షత్రాలు మీ ఖాతాలో చేరాయి!`, true);
+
+        const btn = document.getElementById('spin-action-btn');
+        btn.textContent = 'తదుపరి స్థాయి ➔ / Continue';
+        btn.onclick = () => {
+          document.getElementById('spin-modal').style.display = 'none';
+          nextLevel();
+        };
+      }, 3300);
     }
 
     function openLevelSelector() {
@@ -674,8 +957,8 @@
       else { hintBtn.className = 'hint-btn choice-mode'; hintBtn.innerHTML = '🤔 మరిన్ని ఎంపికలు<br />(Options)'; }
     }
 
-    // Collects every letter directly from lvl.words so zero letters can ever go missing
-    function setupKeyboard(lvl) {
+    // Increases keyboard distractor count every 5 levels (8 tiles -> 10 tiles -> 12 tiles)
+    function setupKeyboard(lvl, levelNumber) {
       const requiredLetters = [];
       lvl.words.forEach(w => {
         w.word.forEach(ch => {
@@ -683,12 +966,13 @@
         });
       });
 
+      const targetTileCount = levelNumber >= 16 ? 12 : (levelNumber >= 11 ? 10 : 8);
       const smartDistractors = lvl.distractors || ['రా','సి','కం','తా','మ','న','లి','డి'];
-      const fallbackPool = ['రా','సి','కం','తా','మ','న','లి','డి','ప','గ','తి'];
+      const fallbackPool = ['రా','సి','కం','తా','మ','న','లి','డి','ప','గ','తి','కా','వ','శ'];
       const paletteLetters = [...requiredLetters];
-      for (const d of smartDistractors) if (paletteLetters.length < 8 && !paletteLetters.includes(d)) paletteLetters.push(d);
+      for (const d of smartDistractors) if (paletteLetters.length < targetTileCount && !paletteLetters.includes(d)) paletteLetters.push(d);
       let idx = 0;
-      while (paletteLetters.length < 8) {
+      while (paletteLetters.length < targetTileCount) {
         const c = fallbackPool[idx++ % fallbackPool.length];
         if (!paletteLetters.includes(c)) paletteLetters.push(c);
       }
@@ -805,7 +1089,11 @@
         score += 50; document.getElementById('score-num').textContent = score; saveProgress();
         showAchievementAnimation('🔥', `హ్యాట్రిక్ విజయం (${streak} వరుస)!`, '+50 బోనస్ నక్షత్రాలు!');
       }
+
+      // Every 10th Level -> Poet Tribute
       if (completedLevelNumber % 10 === 0) { showTributeModal(completedLevelNumber); return; }
+      // Every 8th Level -> Lucky Spin Wheel
+      if (completedLevelNumber % 8 === 0) { showSpinWheelModal(); return; }
 
       document.getElementById('victory-wisdom').textContent = lvlObj.wisdom || 'అద్భుతంగా పూర్తి చేశారు!';
       document.getElementById('victory-modal').style.display = 'flex';
@@ -819,7 +1107,7 @@
       saveProgress(); initLevel();
     }
 
-    function pauseGame() { saveProgress(); document.getElementById('pause-modal').style.display = 'flex'; }
+    function pauseGame() { clearInterval(raceTimer); saveProgress(); document.getElementById('pause-modal').style.display = 'flex'; }
     function resumeGame() { document.getElementById('pause-modal').style.display = 'none'; }
     function restartLevel() { document.getElementById('pause-modal').style.display = 'none'; if (!isReviewingPastLevel()) initLevel(); }
 
@@ -855,7 +1143,7 @@
     }
 
     function cleanTextForSpeech(rawTxt) {
-      return rawTxt.split('/')[0].replace(/[_]+/g, ' dash ').replace(/-25/g, ' ఇరవై ఐదు నక్షత్రాలు ').replace(/-20/g, ' ఇరవై నక్షత్రాలు ').replace(/-10/g, ' పది నక్షత్రాలు ').replace(/⭐/g, ' నక్షత్రాలు ').replace(/[💡🔓⏩🏆📜🎁🔥👁✅🔄]/g, '').trim();
+      return rawTxt.split('(')[0].split('/')[0].replace(/[_]+/g, ' dash ').replace(/-25/g, ' ఇరవై ఐదు నక్షత్రాలు ').replace(/-20/g, ' ఇరవై నక్షత్రాలు ').replace(/-10/g, ' పది నక్షత్రాలు ').replace(/⭐/g, ' నక్షత్రాలు ').replace(/[💡🔓⏩🏆📜🎁🔥👁✅🔄🪷🌊⏰😊✨🌌🌳🏝️✒️🏺🇮🇳📚🌍🙏😨🌅❤️🪕⚖️☀️📅🎨🎒🌿🔷🙌🕉️🤝🐘🏛️🏹🛞🎵🌙🧭🧘👥🦪✍️♾️👑🎓🏡🗣️💯🗺️💭🍯🐕🛖🐟👶🏠🌹🏞️🐄🗡️🔨🛠️🧑⛰️🪨🪔🖼️🍀💪🍎💰✊🏎️🎡]/g, '').trim();
     }
 
     function setCompanionText(txt, shouldSpeak = true) {
@@ -874,16 +1162,9 @@
     function speakCurrentClue() { if (activeWord) setCompanionText(`${activeWord.num}. ${activeWord.clue}`, true); }
     function toggleVoice() { voiceEnabled = !voiceEnabled; document.getElementById('voice-label').textContent = voiceEnabled ? 'వాయిస్' : 'మ్యూట్'; if (voiceEnabled) speakCurrentClue(); else window.speechSynthesis.cancel(); }
 
-    // Automatically purge stuck Service Worker caches so updates show immediately
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(regs => {
-        for (let reg of regs) reg.unregister();
-      });
-      if ('caches' in window) {
-        caches.keys().then(names => {
-          for (let name of names) caches.delete(name);
-        });
-      }
+      navigator.serviceWorker.getRegistrations().then(regs => { for (let reg of regs) reg.unregister(); });
+      if ('caches' in window) caches.keys().then(names => { for (let name of names) caches.delete(name); });
     }
 
     document.getElementById('lobby-stars').textContent = score;
