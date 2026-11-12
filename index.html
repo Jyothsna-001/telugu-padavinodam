@@ -323,10 +323,13 @@
       border: 1.5px solid #81c784;
       border-radius: 8px;
       padding: 3px 7px;
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       font-weight: 800;
       cursor: pointer;
       white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 3px;
     }
 
     .pause-btn {
@@ -339,33 +342,21 @@
       cursor: pointer;
     }
 
-    /* REVIEW / PRACTICE BANNER */
+    /* READ-ONLY PAST LEVEL BANNER */
     .review-banner {
       display: none;
       width: 100%;
       margin-top: 5px;
-      background: #fffbeb;
-      border: 1.5px solid #fbbf24;
+      background: #eff6ff;
+      border: 1.5px solid #93c5fd;
       border-radius: 10px;
-      padding: 5px 8px;
-      font-size: 0.76rem;
+      padding: 6px 10px;
+      font-size: 0.78rem;
       font-weight: 700;
-      color: #92400e;
+      color: #1e40af;
       align-items: center;
       justify-content: space-between;
       gap: 6px;
-    }
-
-    .reveal-skipped-btn {
-      background: #d97706;
-      color: #ffffff;
-      border: none;
-      border-radius: 7px;
-      padding: 4px 8px;
-      font-size: 0.74rem;
-      font-weight: 700;
-      cursor: pointer;
-      white-space: nowrap;
     }
 
     .companion-banner {
@@ -572,6 +563,12 @@
       border-color: #93c5fd;
     }
 
+    .hint-btn.free-review-mode {
+      background: #f0fdf4;
+      color: #15803d;
+      border-color: #86efac;
+    }
+
     .palette-box {
       width: 100%;
       display: grid;
@@ -597,6 +594,29 @@
     .palette-key:active {
       transform: translateY(2px);
       border-bottom-width: 2px;
+    }
+
+    /* READ-ONLY RETURN BAR (REPLACES KEYBOARD ON PAST LEVELS) */
+    .review-return-box {
+      display: none;
+      width: 100%;
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .return-current-btn {
+      width: 100%;
+      padding: 10px;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Ramabhadra', sans-serif;
+      font-size: 0.92rem;
+      cursor: pointer;
     }
 
     .controls-tray {
@@ -671,7 +691,7 @@
       line-height: 1.25;
     }
 
-    /* LEVEL SELECTOR GRID (BACKWARD ONLY - NO FORWARD JUMPING) */
+    /* LEVEL SELECTOR GRID (BACKWARD ONLY - FORWARD LOCKED) */
     .level-grid-list {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -703,12 +723,6 @@
       background: #fff7ed;
       border-color: #fdba74;
       color: #c2410c;
-    }
-
-    .lvl-node.revealed-node {
-      background: #eff6ff;
-      border-color: #93c5fd;
-      color: #1e40af;
     }
 
     .lvl-node.current-node {
@@ -863,9 +877,9 @@
       </div>
 
       <div class="save-feature-box">
-        <strong>💾 ఆట భద్రత & వర్గాల మార్పు / Auto-Save & Switch:</strong>
-        మీరు ఎప్పుడైనా ఆటను ఆపి (Pause), వేరే వర్గానికి మారవచ్చు. మీ పురోగతి మరియు నక్షత్రాలు ఎల్లప్పుడూ సేవ్ చేయబడతాయి.
-        <span class="en-sub">Pause anytime, shift categories freely, or review past levels and your unlocked vocabulary dictionary anytime.</span>
+        <strong>💾 ఆట భద్రత & గత స్థాయిల పరిశీలన / Auto-Save & Past Levels:</strong>
+        మీరు ఎప్పుడైనా ఆటను ఆపి వేరే వర్గానికి మారవచ్చు. ఆటలో పైన ఉన్న <b>"📋 స్థాయి"</b> బటన్ నొక్కి గత స్థాయిలను మరియు వాటి జవాబులను ఉచితంగా చూసుకోవచ్చు!
+        <span class="en-sub">Shift categories anytime with auto-save. Tap the top "📋 Level" button in-game anytime to revisit past levels and view all answers for free!</span>
       </div>
 
       <button class="dict-lobby-btn" onclick="openDictionaryModal()">
@@ -913,19 +927,16 @@
         <div class="stats-bar">
           <div class="stat-badge" title="వరుస విజయాలు">🔥 <span id="streak-num">0</span></div>
           <div class="stat-badge" title="మీ నక్షత్రాలు">⭐ <span id="score-num">50</span></div>
-          <button class="lvl-map-btn" onclick="openLevelSelector()" title="గత స్థాయిలను చూడండి">
+          <button class="lvl-map-btn" onclick="openLevelSelector()" title="గత స్థాయిలు & జవాబులు చూడండి">
             📋 స్థాయి <span id="lvl-num">1</span> ▾
           </button>
           <button class="pause-btn" onclick="pauseGame()">⏸</button>
         </div>
       </header>
 
-      <!-- PRACTICE / SKIPPED REVIEW BANNER -->
+      <!-- READ-ONLY PAST LEVEL BANNER -->
       <div class="review-banner" id="review-banner">
-        <span id="review-banner-text">🔄 గత స్థాయి పునశ్చరణ (నక్షత్రాలు కలవవు)</span>
-        <button class="reveal-skipped-btn" id="reveal-skipped-btn" style="display:none;" onclick="revealSkippedLevelAnswer()">
-          👁 జవాబు చూడు (-30 ⭐)
-        </button>
+        <span>👁 గత స్థాయి జవాబుల పరిశీలన (Read-Only Answers)</span>
       </div>
 
       <div class="companion-banner" onclick="speakCurrentClue()">
@@ -952,23 +963,32 @@
         </button>
       </div>
 
+      <!-- ACTIVE PLAY KEYBOARD -->
       <div class="palette-box" id="letters-keyboard"></div>
 
-      <div class="controls-tray">
+      <!-- READ-ONLY PAST LEVEL RETURN BOX -->
+      <div class="review-return-box" id="review-return-box">
+        <button class="return-current-btn" onclick="returnToCurrentActiveLevel()">
+          ▶ ప్రస్తుత స్థాయికి తిరిగి వెళ్ళు / Back to Current Level
+        </button>
+      </div>
+
+      <!-- ACTIVE PLAY CONTROLS -->
+      <div class="controls-tray" id="active-controls-tray">
         <button class="action-btn verify-btn" onclick="verifyCurrentPuzzle()">✓ సరిచూడు / Verify</button>
         <button class="action-btn" onclick="eraseCurrentCell()">⌫ తొలగించు / Delete</button>
         <button class="action-btn" onclick="toggleVoice()">🔊 <span id="voice-label">వాయిస్</span></button>
       </div>
     </div>
 
-    <!-- LEVEL SELECTOR MODAL (BACKWARD REVIEW ONLY - FORWARD LOCKED) -->
+    <!-- LEVEL SELECTOR MODAL (BACKWARD ONLY - FORWARD LOCKED) -->
     <div class="modal-backdrop" id="level-selector-modal">
       <div class="modal-card">
         <h2 style="font-family:'Ramabhadra',sans-serif; color:var(--primary); font-size:1.15rem;">
-          📋 స్థాయిల జాబితా / Level History
+          📋 స్థాయిల జాబితా / Past & Current Levels
         </h2>
         <p style="color:#64748b; font-size:0.78rem; margin-top:2px;">
-          గత స్థాయిలను మాత్రమే పరిశీలించగలరు (ముందు స్థాయిలు లాక్ చేయబడ్డాయి)
+          గత స్థాయిని నొక్కి దాని జవాబులను ఉచితంగా చూడవచ్చు (ముందు స్థాయిలు లాక్ చేయబడ్డాయి)
         </p>
         <div class="level-grid-list" id="level-grid-list"></div>
         <button class="modal-btn" style="background:#475569;" onclick="closeLevelSelector()">మూసివేయి / Close</button>
@@ -982,7 +1002,7 @@
           📚 నా తెలుగు పదకోశం / My Dictionary
         </h2>
         <p style="color:#64748b; font-size:0.78rem; margin-top:2px;">
-          మీరు సాధించిన లేదా తెలుసుకున్న పదాలు (నొక్కి ఉచ్చారణ వినండి)
+          మీరు సాధించిన లేదా చూసిన పదాలు (నొక్కి ఉచ్చారణ వినండి)
         </p>
         <div class="dict-list" id="dictionary-list"></div>
         <button class="modal-btn" style="background:#1e40af;" onclick="closeDictionaryModal()">మూసివేయి / Close</button>
@@ -1016,6 +1036,7 @@
         <h2 style="font-family:'Ramabhadra',sans-serif; color:var(--primary); margin-bottom:2px;">ఆట నిలిపివేయబడింది / Game Paused</h2>
         <p style="color:#64748b; font-size:0.84rem; margin-bottom:12px;">మీ పురోగతి సురక్షితంగా సేవ్ చేయబడింది / Your progress is safely saved.</p>
         <button class="modal-btn" onclick="resumeGame()">ఆట కొనసాగించు ▶ / Resume Game</button>
+        <button class="modal-btn" style="background:#0284c7;" onclick="openLevelsFromPause()">📋 గత స్థాయిలు & జవాబులు / Past Levels</button>
         <button class="modal-btn" style="background:#2563eb;" onclick="openDictFromPause()">📚 నా పదకోశం / Word Dictionary</button>
         <button class="modal-btn" style="background:#475569;" onclick="restartLevel()">మళ్ళీ ప్రారంభించు 🔄 / Restart Level</button>
         <button class="modal-btn" style="background:#b91c1c;" onclick="backToLobbyFromPause()">వర్గాల మెనూ 🏠 / Shift Category</button>
@@ -1038,11 +1059,11 @@
     <!-- VICTORY MODAL WITH WORD WISDOM -->
     <div class="modal-backdrop" id="victory-modal">
       <div class="modal-card">
-        <div style="font-size: 46px;" id="victory-trophy">🏆</div>
-        <h2 style="font-family:'Ramabhadra',sans-serif; color: #1b5e20; margin-top: 4px;" id="victory-title">అద్భుతం! / Congratulations!</h2>
-        <p style="color: #64748b; font-size: 0.88rem;" id="victory-subtitle">ఈ స్థాయి విజయవంతంగా పూర్తయింది!</p>
-        <div style="font-size: 28px; margin: 6px 0; color: #fbbf24;" id="victory-stars-icon">⭐⭐⭐</div>
-        <p style="font-size:0.95rem; font-weight:700; color:#1e293b;" id="victory-reward-text">+100 నక్షత్రాలు / Stars Earned!</p>
+        <div style="font-size: 46px;">🏆</div>
+        <h2 style="font-family:'Ramabhadra',sans-serif; color: #1b5e20; margin-top: 4px;">అద్భుతం! / Congratulations!</h2>
+        <p style="color: #64748b; font-size: 0.88rem;">ఈ స్థాయి విజయవంతంగా పూర్తయింది!</p>
+        <div style="font-size: 28px; margin: 6px 0; color: #fbbf24;">⭐⭐⭐</div>
+        <p style="font-size:0.95rem; font-weight:700; color:#1e293b;">+100 నక్షత్రాలు / Stars Earned!</p>
         
         <div class="wisdom-box" id="victory-wisdom">
           📖 పద విశేషం: కమలం మన జాతీయ పుష్పం.
@@ -1405,7 +1426,6 @@
     ];
 
     let currentCategory = 'general';
-    // Highest unlocked level index per category (prevents jumping forward)
     let categoryProgress = JSON.parse(localStorage.getItem('telugu_padam_cat_progress')) || {
       general: 0,
       poems: 0,
@@ -1413,7 +1433,6 @@
     };
     let activeViewingIdx = 0;
 
-    // Status per level: { "general_0": "solved", "general_1": "skipped", "general_2": "revealed" }
     let levelHistory = JSON.parse(localStorage.getItem('telugu_padam_level_history')) || {};
 
     let categorySolvedCount = JSON.parse(localStorage.getItem('telugu_padam_solved_count')) || {
@@ -1474,6 +1493,11 @@
       }, 3800);
     }
 
+    function isReviewingPastLevel() {
+      const maxUnlocked = categoryProgress[currentCategory] || 0;
+      return activeViewingIdx < maxUnlocked;
+    }
+
     function startCategory(catKey) {
       currentCategory = catKey;
       activeViewingIdx = categoryProgress[currentCategory] || 0;
@@ -1495,11 +1519,20 @@
       backToLobby();
     }
 
+    function openLevelsFromPause() {
+      document.getElementById('pause-modal').style.display = 'none';
+      openLevelSelector();
+    }
+
+    function returnToCurrentActiveLevel() {
+      activeViewingIdx = categoryProgress[currentCategory] || 0;
+      initLevel();
+    }
+
     function initLevel() {
       const catList = CATEGORIES_DATA[currentCategory] || CATEGORIES_DATA['general'];
       const lvl = catList[activeViewingIdx % catList.length];
-      const statusKey = `${currentCategory}_${activeViewingIdx}`;
-      const status = levelHistory[statusKey] || 'unsolved';
+      const isPastReview = isReviewingPastLevel();
       
       wrongAttemptsCount = 0;
       wordHintStage = {};
@@ -1509,24 +1542,22 @@
       document.getElementById('lobby-stars').textContent = score;
       document.getElementById('streak-num').textContent = streak;
 
-      // Configure Review / Practice Banner
+      // Configure Read-Only Past Level UI vs Active Play UI
       const reviewBanner = document.getElementById('review-banner');
-      const reviewText = document.getElementById('review-banner-text');
-      const revealSkippedBtn = document.getElementById('reveal-skipped-btn');
+      const keyboardBox = document.getElementById('letters-keyboard');
+      const reviewReturnBox = document.getElementById('review-return-box');
+      const activeControls = document.getElementById('active-controls-tray');
 
-      if (status === 'solved' || status === 'revealed') {
+      if (isPastReview) {
         reviewBanner.style.display = 'flex';
-        reviewText.textContent = status === 'revealed'
-          ? '👁 జవాబు చూడబడింది (నక్షత్రాలు కలవవు / No Stars)'
-          : '✅ గత స్థాయి పునశ్చరణ (నక్షత్రాలు కలవవు / Practice)';
-        revealSkippedBtn.style.display = 'none';
-      } else if (status === 'skipped') {
-        reviewBanner.style.display = 'flex';
-        reviewText.textContent = '⏩ దాటవేసిన స్థాయి (సాధిస్తే +100 ⭐)';
-        revealSkippedBtn.style.display = 'inline-block';
+        keyboardBox.style.display = 'none';
+        activeControls.style.display = 'none';
+        reviewReturnBox.style.display = 'block';
       } else {
         reviewBanner.style.display = 'none';
-        revealSkippedBtn.style.display = 'none';
+        keyboardBox.style.display = 'grid';
+        activeControls.style.display = 'flex';
+        reviewReturnBox.style.display = 'none';
       }
 
       const navBar = document.getElementById('clue-nav-bar');
@@ -1563,9 +1594,9 @@
           if (!cellWordMap[key]) cellWordMap[key] = [];
           cellWordMap[key].push(w);
 
-          // Pre-fill letters if level was already solved or revealed
-          const prefill = (status === 'solved' || status === 'revealed') ? w.word[i] : '';
-          gridState[key] = { expected: w.word[i], current: prefill, solved: Boolean(prefill) };
+          // Automatically display full answers on past levels in read-only mode
+          const prefill = isPastReview ? w.word[i] : '';
+          gridState[key] = { expected: w.word[i], current: prefill, solved: isPastReview };
         }
       });
 
@@ -1600,14 +1631,22 @@
         }
       }
 
-      setupKeyboard(lvl);
+      if (!isPastReview) {
+        setupKeyboard(lvl);
+      }
 
       activeWord = lvl.words[0];
       highlightBoard(`${lvl.words[0].r}_${lvl.words[0].c}`, false);
-      setCompanionText(`స్థాయి ${activeViewingIdx + 1}: సంఖ్య 1 లేదా 2 నొక్కి సూచన వినండి.`, false);
+
+      if (isPastReview) {
+        setCompanionText(`గత స్థాయి ${activeViewingIdx + 1} జవాబులు ఇక్కడ ఉన్నాయి. ఉచితంగా సూచనలు కూడా చూడవచ్చు!`, false);
+      } else if (activeViewingIdx > 0) {
+        setCompanionText(`స్థాయి ${activeViewingIdx + 1}: గత స్థాయిల జవాబుల కోసం పైన "📋 స్థాయి" నొక్కండి.`, false);
+      } else {
+        setCompanionText(`స్థాయి 1: సంఖ్య 1 లేదా 2 నొక్కి సూచన వినండి.`, false);
+      }
     }
 
-    // LEVEL SELECTOR: Strictly allows current & previous levels ONLY (Future levels locked)
     function openLevelSelector() {
       const catList = CATEGORIES_DATA[currentCategory] || CATEGORIES_DATA['general'];
       const maxUnlocked = categoryProgress[currentCategory] || 0;
@@ -1622,7 +1661,6 @@
         const status = levelHistory[statusKey];
 
         if (i > maxUnlocked) {
-          // Future levels locked
           node.classList.add('locked-node');
           node.innerHTML = `<span>స్థాయి ${i + 1}</span><span>🔒</span>`;
           node.onclick = () => {
@@ -1634,16 +1672,13 @@
           let icon = '▶️';
           if (status === 'solved') {
             node.classList.add('solved-node');
-            icon = '✅';
-          } else if (status === 'revealed') {
-            node.classList.add('revealed-node');
-            icon = '👁';
+            icon = '✅ జవాబు చూడు';
           } else if (status === 'skipped') {
             node.classList.add('skipped-node');
-            icon = '⏩';
+            icon = '👁 జవాబు చూడు';
           }
 
-          node.innerHTML = `<span>స్థాయి ${i + 1}</span><span>${icon}</span>`;
+          node.innerHTML = `<span>స్థాయి ${i + 1}</span><span style="font-size:0.74rem;">${icon}</span>`;
           node.onclick = () => {
             activeViewingIdx = i;
             closeLevelSelector();
@@ -1660,36 +1695,16 @@
       document.getElementById('level-selector-modal').style.display = 'none';
     }
 
-    // Reveal full answer for a skipped level (-30 Stars, permanently disables stars for this level)
-    function revealSkippedLevelAnswer() {
-      const statusKey = `${currentCategory}_${activeViewingIdx}`;
-      if (score < 30) {
-        setCompanionText('జవాబు చూడటానికి ముప్పై నక్షత్రాలు అవసరం.', true);
-        playChime('error');
-        return;
-      }
-
-      score -= 30;
-      levelHistory[statusKey] = 'revealed';
-      document.getElementById('score-num').textContent = score;
-      document.getElementById('lobby-stars').textContent = score;
-      saveProgress();
-
-      playChime('tap');
-      initLevel();
-      setCompanionText('జవాబు చూపించబడింది మరియు మీ పదకోశంలో చేర్చబడింది!', true);
-    }
-
-    // PERSONAL WORD DICTIONARY (Shows only solved or revealed words)
     function getUnlockedDictionaryWords() {
       const entries = [];
       const seenWords = new Set();
 
       Object.keys(CATEGORIES_DATA).forEach(catKey => {
         const list = CATEGORIES_DATA[catKey];
+        const maxUnlocked = categoryProgress[catKey] || 0;
         list.forEach((lvlObj, idx) => {
           const status = levelHistory[`${catKey}_${idx}`];
-          if (status === 'solved' || status === 'revealed') {
+          if (status === 'solved' || idx < maxUnlocked) {
             lvlObj.words.forEach(w => {
               const fullWord = w.word.join('');
               if (!seenWords.has(fullWord)) {
@@ -1717,7 +1732,7 @@
         listContainer.innerHTML = `
           <div style="padding:16px; color:#64748b; font-size:0.86rem;">
             ఇంకా ఏ పదాలు చేర్చబడలేదు. స్థాయిలను పూర్తి చేసి మీ పదకోశాన్ని పెంచుకోండి!<br/>
-            (Solve levels to unlock words in your dictionary)
+            (Complete levels to unlock words in your dictionary)
           </div>
         `;
       } else {
@@ -1806,6 +1821,16 @@
     function updateHintButtonUI() {
       if (!activeWord) return;
       const hintBtn = document.getElementById('hint-btn');
+
+      // Past level review mode -> Free hint (0 stars)
+      if (isReviewingPastLevel()) {
+        hintBtn.classList.remove('choice-mode');
+        hintBtn.classList.add('free-review-mode');
+        hintBtn.innerHTML = '💡 సహాయం / Hint<br />(ఉచితం / Free)';
+        return;
+      }
+
+      hintBtn.classList.remove('free-review-mode');
       const stage = wordHintStage[activeWord.num] || 0;
 
       if (stage === 0) {
@@ -1856,6 +1881,7 @@
     }
 
     function inputLetter(char) {
+      if (isReviewingPastLevel()) return; // Read-only protection on past levels
       if (!selectedCell || !gridState[selectedCell]) return;
       gridState[selectedCell].current = char;
       const cellEl = document.querySelector(`.grid-cell[data-key="${selectedCell}"]`);
@@ -1870,6 +1896,7 @@
     }
 
     function eraseCurrentCell() {
+      if (isReviewingPastLevel()) return; // Read-only protection on past levels
       if (!selectedCell || !gridState[selectedCell]) return;
       gridState[selectedCell].current = '';
       const cellEl = document.querySelector(`.grid-cell[data-key="${selectedCell}"]`);
@@ -1893,6 +1920,8 @@
     }
 
     function verifyCurrentPuzzle() {
+      if (isReviewingPastLevel()) return;
+
       let allFilled = true;
       let hasError = false;
 
@@ -1939,6 +1968,14 @@
 
     function handleHintClick() {
       if (!activeWord) return;
+
+      // Free hint without star deduction when reviewing past levels
+      if (isReviewingPastLevel()) {
+        playChime('tap');
+        setCompanionText(`💡 సూచన (ఉచితం): ${activeWord.hint}`, true);
+        return;
+      }
+
       const stage = wordHintStage[activeWord.num] || 0;
 
       if (stage === 0) {
@@ -2020,9 +2057,7 @@
     function skipLevelFromChoice() {
       closeStuckChoice();
       const statusKey = `${currentCategory}_${activeViewingIdx}`;
-      if (!levelHistory[statusKey]) {
-        levelHistory[statusKey] = 'skipped';
-      }
+      levelHistory[statusKey] = 'skipped';
 
       if (score >= 25) {
         score -= 25;
@@ -2046,63 +2081,43 @@
     }
 
     function triggerVictory() {
+      if (isReviewingPastLevel()) return;
+
       playChime('win');
       if (window.confetti) {
         window.confetti({ particleCount: 90, spread: 75, origin: { y: 0.6 } });
       }
 
       const statusKey = `${currentCategory}_${activeViewingIdx}`;
-      const prevStatus = levelHistory[statusKey];
       const catList = CATEGORIES_DATA[currentCategory] || CATEGORIES_DATA['general'];
       const lvlObj = catList[activeViewingIdx % catList.length];
 
-      // STRICT ANTI-FARMING CHECK: Only award stars if NOT already solved and NOT revealed
-      const isEligibleForStars = (prevStatus !== 'solved' && prevStatus !== 'revealed');
+      levelHistory[statusKey] = 'solved';
+      score += 100;
+      streak++;
+      categorySolvedCount[currentCategory] = (categorySolvedCount[currentCategory] || 0) + 1;
 
-      if (isEligibleForStars) {
-        levelHistory[statusKey] = 'solved';
-        score += 100;
-        streak++;
-        categorySolvedCount[currentCategory] = (categorySolvedCount[currentCategory] || 0) + 1;
+      document.getElementById('score-num').textContent = score;
+      document.getElementById('lobby-stars').textContent = score;
+      document.getElementById('streak-num').textContent = streak;
+      saveProgress();
 
+      if (streak > 0 && streak % 3 === 0) {
+        score += 50;
         document.getElementById('score-num').textContent = score;
-        document.getElementById('lobby-stars').textContent = score;
-        document.getElementById('streak-num').textContent = streak;
         saveProgress();
-
-        if (streak > 0 && streak % 3 === 0) {
-          score += 50;
-          document.getElementById('score-num').textContent = score;
-          saveProgress();
-          showAchievementAnimation('🔥', `హ్యాట్రిక్ విజయం (${streak} వరుస)!`, '+50 బోనస్ నక్షత్రాలు లభించాయి!');
-        }
-
-        const totalSolvedInCat = categorySolvedCount[currentCategory];
-        if (totalSolvedInCat > 0 && totalSolvedInCat % 10 === 0) {
-          showTributeModal();
-          return;
-        }
-
-        document.getElementById('victory-trophy').textContent = '🏆';
-        document.getElementById('victory-title').textContent = 'అద్భుతం! / Congratulations!';
-        document.getElementById('victory-subtitle').textContent = 'ఈ స్థాయి విజయవంతంగా పూర్తయింది!';
-        document.getElementById('victory-stars-icon').textContent = '⭐⭐⭐';
-        document.getElementById('victory-reward-text').textContent = '+100 నక్షత్రాలు / Stars Earned!';
-        document.getElementById('victory-wisdom').textContent = lvlObj.wisdom || 'అద్భుతంగా పూర్తి చేశారు!';
-        document.getElementById('victory-modal').style.display = 'flex';
-        setCompanionText('అభినందనలు! అన్ని పదాలు సరైనవి. స్థాయి పూర్తయింది!', true);
-      } else {
-        // Practice / Already Revealed Mode -> Zero Stars Added
-        saveProgress();
-        document.getElementById('victory-trophy').textContent = '🔄';
-        document.getElementById('victory-title').textContent = 'పునశ్చరణ పూర్తయింది!';
-        document.getElementById('victory-subtitle').textContent = 'Practice / Review Completed';
-        document.getElementById('victory-stars-icon').textContent = '📖';
-        document.getElementById('victory-reward-text').textContent = '0 నక్షత్రాలు (గతంలోనే జవాబు చూసిన/సాధించిన స్థాయి)';
-        document.getElementById('victory-wisdom').textContent = lvlObj.wisdom || 'చక్కగా పునశ్చరణ చేశారు!';
-        document.getElementById('victory-modal').style.display = 'flex';
-        setCompanionText('పునశ్చరణ పూర్తయింది! గతంలోనే ఈ స్థాయి పూర్తయినందున అదనపు నక్షత్రాలు కలవవు.', true);
+        showAchievementAnimation('🔥', `హ్యాట్రిక్ విజయం (${streak} వరుస)!`, '+50 బోనస్ నక్షత్రాలు లభించాయి!');
       }
+
+      const totalSolvedInCat = categorySolvedCount[currentCategory];
+      if (totalSolvedInCat > 0 && totalSolvedInCat % 10 === 0) {
+        showTributeModal();
+        return;
+      }
+
+      document.getElementById('victory-wisdom').textContent = lvlObj.wisdom || 'అద్భుతంగా పూర్తి చేశారు!';
+      document.getElementById('victory-modal').style.display = 'flex';
+      setCompanionText('అభినందనలు! అన్ని పదాలు సరైనవి. స్థాయి పూర్తయింది!', true);
     }
 
     function nextLevel() {
@@ -2126,17 +2141,8 @@
 
     function restartLevel() {
       document.getElementById('pause-modal').style.display = 'none';
-      // Clear grid cells manually for practice without resetting solved/revealed status
-      for (const [key, val] of Object.entries(gridState)) {
-        val.current = '';
-        val.solved = false;
-      }
-      document.querySelectorAll('.grid-cell').forEach(el => {
-        el.classList.remove('solved', 'error-cell');
-        const span = el.querySelector('.cell-letter');
-        if (span) span.textContent = '';
-      });
-      setCompanionText('స్థాయి మళ్ళీ ప్రారంభించబడింది!', true);
+      if (isReviewingPastLevel()) return;
+      initLevel();
     }
 
     function showTributeModal() {
@@ -2185,7 +2191,6 @@
     function cleanTextForSpeech(rawTxt) {
       let spoken = rawTxt.split('/')[0];
       spoken = spoken.replace(/[_]+/g, ' dash ');
-      spoken = spoken.replace(/-30/g, ' ముప్పై నక్షత్రాలు ');
       spoken = spoken.replace(/-25/g, ' ఇరవై ఐదు నక్షత్రాలు ');
       spoken = spoken.replace(/-20/g, ' ఇరవై నక్షత్రాలు ');
       spoken = spoken.replace(/-10/g, ' పది నక్షత్రాలు ');
