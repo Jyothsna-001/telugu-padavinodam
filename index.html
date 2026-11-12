@@ -790,7 +790,7 @@
       </div>
     </div>
 
-    <!-- STUCK CHOICE MODAL (Reveal 1 Letter -20 vs Skip Level -25 / Free at 0 Stars) -->
+    <!-- STUCK CHOICE MODAL (Reveal 1 Letter -20 vs Skip Level -25 / Free at <25 Stars) -->
     <div class="modal-backdrop" id="stuck-choice-modal">
       <div class="modal-card">
         <div style="font-size: 40px;">🤔</div>
@@ -1580,7 +1580,7 @@
 
     function cleanTextForSpeech(rawTxt) {
       let spoken = rawTxt.split('/')[0];
-      spoken = spoken.replace(/[_]+/g, ' ఖాళీ ');
+      spoken = spoken.replace(/[_]+/g, ' dash ');
       spoken = spoken.replace(/-25/g, ' ఇరవై ఐదు నక్షత్రాలు ');
       spoken = spoken.replace(/-20/g, ' ఇరవై నక్షత్రాలు ');
       spoken = spoken.replace(/-10/g, ' పది నక్షత్రాలు ');
