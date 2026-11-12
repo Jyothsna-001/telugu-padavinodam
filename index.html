@@ -540,18 +540,18 @@
     .controls-tray {
       width: 100%;
       display: flex;
-      gap: 5px;
+      gap: 6px;
       margin-top: 6px;
     }
 
     .action-btn {
       flex: 1;
-      padding: 7px 3px;
+      padding: 7px 6px;
       background: #f8fafc;
       border: 1.5px solid #cbd5e1;
       border-radius: 10px;
       font-family: 'Mandali', sans-serif;
-      font-size: 0.76rem;
+      font-size: 0.8rem;
       font-weight: 700;
       color: #334155;
       cursor: pointer;
@@ -785,13 +785,12 @@
 
       <div class="controls-tray">
         <button class="action-btn verify-btn" onclick="verifyCurrentPuzzle()">✓ సరిచూడు / Verify</button>
-        <button class="action-btn" onclick="shuffleKeyboard()">🔀 కలుపు</button>
-        <button class="action-btn" onclick="eraseCurrentCell()">⌫ తొలగించు</button>
+        <button class="action-btn" onclick="eraseCurrentCell()">⌫ తొలగించు / Delete</button>
         <button class="action-btn" onclick="toggleVoice()">🔊 <span id="voice-label">వాయిస్</span></button>
       </div>
     </div>
 
-    <!-- STUCK CHOICE MODAL (Reveal 1 Letter -20 vs Skip Level -20 / Emergency Free) -->
+    <!-- STUCK CHOICE MODAL (Reveal 1 Letter -20 vs Skip Level -25 / Free at 0 Stars) -->
     <div class="modal-backdrop" id="stuck-choice-modal">
       <div class="modal-card">
         <div style="font-size: 40px;">🤔</div>
@@ -803,7 +802,7 @@
         </button>
 
         <button class="modal-btn" id="skip-choice-btn" style="background:#ea580c;" onclick="skipLevelFromChoice()">
-          ⏩ ఈ స్థాయిని దాటవేయి (-20 ⭐)<br /><span style="font-size:0.78rem; font-family:'Mandali',sans-serif;">Skip to Next Level (Costs 20 Stars)</span>
+          ⏩ ఈ స్థాయిని దాటవేయి (-25 ⭐)<br /><span style="font-size:0.78rem; font-family:'Mandali',sans-serif;">Skip to Next Level (Costs 25 Stars)</span>
         </button>
 
         <button class="modal-btn" style="background:#e2e8f0; color:#334155;" onclick="closeStuckChoice()">
@@ -929,7 +928,6 @@
       }
     }
 
-    // Complete Audited Telugu Crosswords with Word Wisdom & Smart Distractors
     const CATEGORIES_DATA = {
       general: [
         {
@@ -1061,7 +1059,6 @@
     let availableVoices = [];
     let wrongAttemptsCount = 0;
     let wordHintStage = {};
-    let currentPaletteLetters = [];
 
     function saveProgress() {
       localStorage.setItem('telugu_padam_cat_progress', JSON.stringify(categoryProgress));
@@ -1272,39 +1269,28 @@
         }
       }
 
-      // Use confusable gunintham distractors so players must spell accurately
       const smartDistractors = lvl.distractors || ['రా', 'సి', 'కం', 'తా', 'మ', 'న', 'లి', 'డి'];
       const fallbackPool = ['రా', 'సి', 'కం', 'తా', 'మ', 'న', 'లి', 'డి', 'ప', 'గ', 'తి'];
-      currentPaletteLetters = [...requiredLetters];
+      const paletteLetters = [...requiredLetters];
 
       for (const d of smartDistractors) {
-        if (currentPaletteLetters.length < 8 && !currentPaletteLetters.includes(d)) {
-          currentPaletteLetters.push(d);
+        if (paletteLetters.length < 8 && !paletteLetters.includes(d)) {
+          paletteLetters.push(d);
         }
       }
 
       let idx = 0;
-      while (currentPaletteLetters.length < 8) {
+      while (paletteLetters.length < 8) {
         const candidate = fallbackPool[idx % fallbackPool.length];
-        if (!currentPaletteLetters.includes(candidate)) {
-          currentPaletteLetters.push(candidate);
+        if (!paletteLetters.includes(candidate)) {
+          paletteLetters.push(candidate);
         }
         idx++;
       }
 
-      renderKeyboardKeys();
-    }
-
-    function shuffleKeyboard() {
-      playChime('tap');
-      currentPaletteLetters.sort(() => Math.random() - 0.5);
-      renderKeyboardKeys();
-    }
-
-    function renderKeyboardKeys() {
       const palette = document.getElementById('letters-keyboard');
       palette.innerHTML = '';
-      currentPaletteLetters.sort(() => Math.random() - 0.5).forEach(letter => {
+      paletteLetters.sort(() => Math.random() - 0.5).forEach(letter => {
         const key = document.createElement('button');
         key.className = 'palette-key';
         key.textContent = letter;
@@ -1422,11 +1408,11 @@
 
     function openStuckChoiceModal() {
       const skipBtn = document.getElementById('skip-choice-btn');
-      // Prevent zero-star deadlock: If stars < 20, allow emergency free skip
-      if (score >= 20) {
-        skipBtn.innerHTML = '⏩ ఈ స్థాయిని దాటవేయి (-20 ⭐)<br /><span style="font-size:0.78rem; font-family:\'Mandali\',sans-serif;">Skip to Next Level (Costs 20 Stars)</span>';
+      // Deduct -25 Stars when they have stars; Free only when they have no stars (< 25)
+      if (score >= 25) {
+        skipBtn.innerHTML = '⏩ ఈ స్థాయిని దాటవేయి (-25 ⭐)<br /><span style="font-size:0.78rem; font-family:\'Mandali\',sans-serif;">Skip to Next Level (Costs 25 Stars)</span>';
       } else {
-        skipBtn.innerHTML = '⏩ ఈ స్థాయిని దాటవేయి (ఉచిత అత్యవసర దాటవేత)<br /><span style="font-size:0.78rem; font-family:\'Mandali\',sans-serif;">Emergency Free Skip (Insufficient Stars)</span>';
+        skipBtn.innerHTML = '⏩ ఈ స్థాయిని దాటవేయి (ఉచితం / Free)<br /><span style="font-size:0.78rem; font-family:\'Mandali\',sans-serif;">Free Skip (No Stars Available)</span>';
       }
       document.getElementById('stuck-choice-modal').style.display = 'flex';
     }
@@ -1479,11 +1465,11 @@
 
     function skipLevelFromChoice() {
       closeStuckChoice();
-      if (score >= 20) {
-        score -= 20;
+      if (score >= 25) {
+        score -= 25;
         document.getElementById('score-num').textContent = score;
         document.getElementById('lobby-stars').textContent = score;
-        setCompanionText('ఇరవై నక్షత్రాలతో స్థాయిని దాటవేసి తదుపరి స్థాయికి వెళ్తున్నాము.', true);
+        setCompanionText('ఇరవై ఐదు నక్షత్రాలతో స్థాయిని దాటవేసి తదుపరి స్థాయికి వెళ్తున్నాము.', true);
       } else {
         setCompanionText('నక్షత్రాలు లేనందున ఉచితంగా తదుపరి స్థాయికి వెళ్తున్నాము.', true);
       }
@@ -1510,7 +1496,6 @@
       document.getElementById('streak-num').textContent = streak;
       saveProgress();
 
-      // Check 3-in-a-row Streak Achievement
       if (streak > 0 && streak % 3 === 0) {
         score += 50;
         document.getElementById('score-num').textContent = score;
@@ -1523,7 +1508,6 @@
       const lvlObj = catList[currentLvlIdx % catList.length];
       const totalSolvedInCat = categorySolvedCount[currentCategory];
 
-      // Award Kavi Parichayam only on genuine milestones (e.g. Level 10 solved or 10 cumulative solves)
       if (lvlObj.level % 10 === 0 || (totalSolvedInCat > 0 && totalSolvedInCat % 10 === 0)) {
         showTributeModal();
       } else {
@@ -1597,6 +1581,7 @@
     function cleanTextForSpeech(rawTxt) {
       let spoken = rawTxt.split('/')[0];
       spoken = spoken.replace(/[_]+/g, ' ఖాళీ ');
+      spoken = spoken.replace(/-25/g, ' ఇరవై ఐదు నక్షత్రాలు ');
       spoken = spoken.replace(/-20/g, ' ఇరవై నక్షత్రాలు ');
       spoken = spoken.replace(/-10/g, ' పది నక్షత్రాలు ');
       spoken = spoken.replace(/⭐/g, ' నక్షత్రాలు ');
