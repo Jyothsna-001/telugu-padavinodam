@@ -146,7 +146,7 @@
       </div>
 
       <div class="save-feature-box">
-        <strong>🚀 ప్రతి 5 స్థాయిలకు పెరిగే సవాళ్లు / 5-Level Progression:</strong>
+        <strong>🚀 ప్రతి 5 స్థాయిలకు పెరిగే సవాళ్లు / 5-Level Progression:</strong><br/>
         • ప్రతి 5 స్థాయిలకు: <b>🔗 పద శృంఖల (Word Chain) & కఠినత పెరుగుదల!</b><br/>
         • ప్రతి 7వ స్థాయి: <b>🏎️ అక్షర కార్ రేస్ (Car Race Bonus)</b><br/>
         • ప్రతి 8వ స్థాయి: <b>🎡 అదృష్ట చక్రం (Lucky Spin Wheel)</b><br/>
@@ -412,7 +412,6 @@
     ];
 
     function applyThemeAndDifficultyTier(levelNumber) {
-      // 1. Difficulty Tier steps up every 5 levels
       const tierNum = Math.floor((levelNumber - 1) / 5) + 1;
       const tierLabels = [
         '🌱 దశ 1: సరళం (Beginner)',
@@ -423,7 +422,6 @@
       ];
       document.getElementById('tier-pill').textContent = tierLabels[Math.min(tierNum - 1, tierLabels.length - 1)];
 
-      // 2. Dynamic Theme changes starting at Level 20-25 and every 5 levels thereafter
       let themeIdx = 0;
       if (levelNumber >= 20) {
         themeIdx = (Math.floor((levelNumber - 20) / 5) + 1) % VISUAL_THEMES.length;
@@ -437,13 +435,13 @@
       document.getElementById('theme-pill').textContent = t.name;
     }
 
-    // 60 Triple-Verified Levels (20 per category, stepping up toughness every 5 levels + Word Chains on L5, L15, L20)
+    // Verified Levels across General, Poems, and Proverbs
     const CATEGORIES_DATA = {
       general: [
         // TIER 1 (Levels 1-5: 3x3 Simple Words + Level 5 Word Chain)
         { level: 1, gridSize: 3, distractors: ['కా','కం','లి','న'], wisdom: '📖 పద విశేషం: "కమలం" మన జాతీయ పుష్పం.', words: [{ num: 1, word: ['క','మ','లం'], dir: 'H', r: 1, c: 0, clue: '🪷 చెరువులో వికసించే తామర పుష్పం (Lotus)', hint: 'సరస్సులలో నీటిపై తేలియాడే జాతీయ పుష్పం' }, { num: 2, word: ['నీ','లం'], dir: 'V', r: 0, c: 2, clue: '🌊 ఆకాశం కనిపించే చల్లని రంగు (Blue)', hint: 'నెమలి కంఠంలో మెరిసే వర్ణం' }] },
         { level: 2, gridSize: 3, distractors: ['సా','మా','యా','కం'], wisdom: '📖 పద విశేషం: "సమయం" సద్వినియోగం చేసుకుంటే "జయం" లభిస్తుంది.', words: [{ num: 1, word: ['స','మ','యం'], dir: 'H', r: 1, c: 0, clue: '⏰ గడియారం చూపే అమూల్యమైన కాలం (Time)', hint: 'గంటలు, నిమిషాలతో కొలిచేది' }, { num: 2, word: ['జ','యం'], dir: 'V', r: 0, c: 2, clue: '🏆 కృషితో సాధించే గెలుపు (Victory)', hint: 'ఓటమికి వ్యతిరేకమైన గెలుపు' }] },
-        { level: 3, gridSize: 3, distractors: ['అ','న','ద','చ'], wisdom: '📖 పద విశేషం: "ఆనందం" పంచితే రెట్టింపు అవుతుంది.', words: [{ num: 1, word: ['ఆ','నం','దం'], dir: 'H', r: 1, c: 0, clue: '😊 మనసుకు కలిగే అమితమైన సంతోషం (Joy)', hint: 'ఉల్లాసం పూయించే భావన' }, { num: 2, word: ['చం','దం'], dir: 'V', r: 0, c: 2, clue: '✨ అందమైన రూపం లేదా విధం (Beauty)', hint: 'చక్కని తీరు లేదా ఆకృతి' }] },
+        { level: 3, gridSize: 3, distractors: ['అ','న','ద','చ'], wisdom: '📖 పద విశేషం: "ఆనందం" పంచితే రెట్టింపు అవుతుంది.', words: [{ num: 1, word: ['ఆ','నం','దం'], dir: 'H', r: 1, c: 0, clue: '😊 మనసుకు కలిగే అమితమైన సంతోషం (Joy)', hint: 'ఉల్లాసం పూయించే భావన' }, { num: 2, word: ['చం','దం'], dir: 'V', r: 0, c: 2, clue: '✨ చక్కని తీరు లేదా విధం (Manner / Grace)', hint: 'మంచి పద్ధతి లేదా శైలి (చం__)' }] },
         { level: 4, gridSize: 3, distractors: ['గా','గ','న','జ'], wisdom: '📖 పద విశేషం: "గగనం" అంటే విశాల ఆకాశం.', words: [{ num: 1, word: ['గ','గ','నం'], dir: 'H', r: 1, c: 0, clue: '🌌 చుక్కలు మెరిసే విశాల ఆకాశం (Sky)', hint: 'మేఘాలు తేలియాడే నీలి నింగి' }, { num: 2, word: ['వ','నం'], dir: 'V', r: 0, c: 2, clue: '🌳 పచ్చని చెట్లతో నిండిన అడవి (Forest)', hint: 'వృక్షాలకు నిలయమైన కారడవి' }] },
         // L5 WORD CHAIN: క-మ-లం (0,0..0,2) -> లం-క (0,2..1,2) -> క-లం (1,2..1,3)
         { level: 5, isChain: true, gridSize: 4, distractors: ['కా','మా','లా','పా'], wisdom: '🔗 పద శృంఖల: కమలం ➔ లంక ➔ కలం!', words: [
@@ -490,7 +488,7 @@
         { level: 19, gridSize: 4, distractors: ['చం','ద్రా','సూ','ర్యు','క','ల','ప','గ'], wisdom: '📖 పద విశేషం: పున్నమి నాడు "చంద్రుడు" నిండుగా వెలుగుతాడు.', words: [
           { num: 1, word: ['చం','ద్రు','డు'], dir: 'H', r: 1, c: 0, clue: '🌙 రాత్రి వెన్నెల కురిపించే జాబిల్లి (Moon)', hint: 'చందమామ' },
           { num: 2, word: ['నే','డు'], dir: 'V', r: 0, c: 2, clue: '📅 ఈ రోజు (Today)', hint: 'వర్తమాన దినం' },
-          { num: 3, word: ['చం','దం'], dir: 'V', r: 1, c: 0, clue: '✨ అందమైన తీరు (Manner)', hint: 'ఒద్దికైన రూపం' }
+          { num: 3, word: ['చం','దం'], dir: 'V', r: 1, c: 0, clue: '✨ చక్కని తీరు లేదా విధం (Manner)', hint: 'ఒద్దికైన రూపం' }
         ] },
         { level: 20, isChain: true, gridSize: 4, distractors: ['సా','గ','రా','జా','క','ల','ప','తి'], wisdom: '🔗 పద శృంఖల: సాగరం ➔ రంజని ➔ నిజం!', words: [
           { num: 1, word: ['సా','గ','రం'], dir: 'H', r: 0, c: 0, clue: '🌊 అలలతో నిండిన మహా సముద్రం (Ocean)', hint: 'కడలి' },
@@ -503,10 +501,10 @@
         { level: 2, gridSize: 3, distractors: ['ని','తీ','జ','యా'], wisdom: '📜 పద్య విశేషం: "నీతి" సమాజాన్ని కాపాడుతుంది.', words: [{ num: 1, word: ['నీ','తి'], dir: 'H', r: 1, c: 0, clue: '📜 ధర్మబద్ధమైన సన్మార్గ ప్రవర్తన (Morals)', hint: 'శతక కవులు బోధించిన సత్య మార్గం' }, { num: 2, word: ['జా','తి'], dir: 'V', r: 0, c: 1, clue: '👥 మానవ సమాజం లేదా వంశం (Nation/Tribe)', hint: 'ఒకే మూలాలను పంచుకునే సమూహం' }] },
         { level: 3, gridSize: 3, distractors: ['సు','మా','తీ','స్వ'], wisdom: '📜 పద్య విశేషం: "సుమతి" అంటే మంచి బుద్ధి గలవాడు.', words: [{ num: 1, word: ['సు','మ','తి'], dir: 'H', r: 1, c: 0, clue: '💡 మంచి బుద్ధి గలవాడు అనే శతకం (Sumathi)', hint: 'బద్దెన రచించిన శతకం' }, { num: 2, word: ['స్వా','తి'], dir: 'V', r: 0, c: 2, clue: '🦪 ముత్యపు చిప్పలో వానచినుకు పడే నక్షత్రం (Swathi Star)', hint: 'శుభ నక్షత్రం' }] },
         { level: 4, gridSize: 3, distractors: ['క','వీ','తా','ర'], wisdom: '📜 పద్య విశేషం: "కవిత" హృదయాన్ని కదిలించే భావ వ్యక్తీకరణ.', words: [{ num: 1, word: ['క','వి','త'], dir: 'H', r: 1, c: 0, clue: '✍️ కవి హృదయం నుండి జాలువారే గేయం (Poem)', hint: 'భావగర్భితమైన సాహిత్య ప్రక్రియ' }, { num: 2, word: ['ల','త'], dir: 'V', r: 0, c: 2, clue: '🌿 చెట్టును అల్లుకునే పూల తీగ (Creeper)', hint: 'తీగను పిలిచే పదం' }] },
-        { level: 5, isChain: true, gridSize: 4, distractors: ['పా','గా','నా','మా'], wisdom: '🔗 పద శృంఖల: పద్యం ➔ ద్యుతి ➔ తిలకం!', words: [
-          { num: 1, word: ['ప','ద్యం'], dir: 'H', r: 0, c: 0, clue: '📜 ఛందస్సుతో కూడిన కవిత (Verse)', hint: 'శతకంలో పాడేది' },
+        { level: 5, isChain: true, gridSize: 4, distractors: ['పా','గా','నా','మా'], wisdom: '🔗 పద శృంఖల: పద్యం ➔ గద్యం ➔ పదం!', words: [
+          { num: 1, word: ['ప','ద్యం'], dir: 'H', r: 1, c: 0, clue: '📜 ఛందస్సుతో కూడిన కవిత (Verse)', hint: 'శతకంలో పాడేది' },
           { num: 2, word: ['గ','ద్యం'], dir: 'V', r: 0, c: 1, clue: '📖 వచన రూప రచన (Prose)', hint: 'వాక్యాలలో రాసేది' },
-          { num: 3, word: ['ప','దం'], dir: 'V', r: 0, c: 0, clue: '👣 మాట లేదా అడుగు (Word)', hint: 'పాటలో చరణం' }
+          { num: 3, word: ['ప','దం'], dir: 'V', r: 1, c: 0, clue: '👣 మాట లేదా అడుగు (Word)', hint: 'పాటలో చరణం' }
         ] },
         { level: 6, gridSize: 3, distractors: ['సా','త్య','నీ','న'], wisdom: '📜 పద్య విశేషం: "సత్యం" ఎల్లప్పుడూ జయిస్తుంది.', words: [{ num: 1, word: ['స','త్యం'], dir: 'H', r: 1, c: 0, clue: '☀️ ఎప్పటికీ మారని నిజం (Truth)', hint: 'అబద్ధానికి వ్యతిరేకం' }, { num: 2, word: ['ని','త్యం'], dir: 'V', r: 0, c: 1, clue: '♾️ ప్రతిరోజూ లేదా ఎల్లప్పుడూ జరిగేది (Daily)', hint: 'శాశ్వతంగా ఉండేది' }] },
         { level: 7, gridSize: 3, distractors: ['ద','తా','సి','మా'], wisdom: '📜 పద్య విశేషం: ఆకొన్న వారికి అన్నం పెట్టేవాడే "దాత".', words: [{ num: 1, word: ['దా','త'], dir: 'H', r: 1, c: 0, clue: '🎁 దానం చేసే గొప్ప వ్యక్తి (Donor)', hint: 'ఉదార స్వభావి' }, { num: 2, word: ['సీ','త'], dir: 'V', r: 0, c: 1, clue: '👑 జనక మహారాజు కుమార్తె (Goddess Sita)', hint: 'శ్రీరాముని ధర్మపత్ని' }] },
@@ -518,7 +516,7 @@
         { level: 13, gridSize: 4, distractors: ['గ','రా','వ','భ','క','ల'], wisdom: '📜 పద్య విశేషం: పెద్దల పట్ల "గౌరవం" కలిగి ఉండటం ఉత్తమ సంస్కారం.', words: [{ num: 1, word: ['గౌ','ర','వం'], dir: 'H', r: 1, c: 0, clue: '🙏 పెద్దల పట్ల చూపే మర్యాద (Respect)', hint: 'ఆదరణ మరియు మన్నన' }, { num: 2, word: ['భా','వం'], dir: 'V', r: 0, c: 2, clue: '💭 పద్యంలో దాగి ఉన్న అంతరార్థం (Meaning)', hint: 'మనసులోని అభిప్రాయం' }] },
         { level: 14, gridSize: 4, distractors: ['ఆ','మ','త','గి','క','ల'], wisdom: '📜 పద్య విశేషం: ఆకొన్న కూడే "అమృతం" అని బద్దెన చెప్పారు.', words: [{ num: 1, word: ['అ','మృ','తం'], dir: 'H', r: 1, c: 0, clue: '🍯 దేవతలు సేవించే దివ్య పానీయం (Nectar)', hint: 'ఆకొన్న కూడే ______' }, { num: 2, word: ['గీ','తం'], dir: 'V', r: 0, c: 2, clue: '🎵 రాగయుక్తంగా పాడుకునే పాట (Song)', hint: 'జాతీయ ______' }] },
         { level: 15, isChain: true, gridSize: 4, distractors: ['స','హీ','త్య','నీ','క','ల'], wisdom: '🔗 పద శృంఖల: సాహిత్యం ➔ నిత్యం!', words: [
-          { num: 1, word: ['సా','హి','త్యం'], dir: 'H', r: 1, c: 0, clue: '📚 కవిత్వం, కథలతో కూడిన వాజ్మయం (Literature)', hint: 'భాషకు ప్రాణం పోసే కళ' },
+          { num: 1, word: ['సా','హి','త్యం'], dir: 'H', r: 1, c: 0, clue: '📚 కవిత్వం, కథలతో కూడిన వాఙ్మయం (Literature)', hint: 'భాషకు ప్రాణం పోసే కళ' },
           { num: 2, word: ['ని','త్యం'], dir: 'V', r: 0, c: 2, clue: '♾️ ఎల్లప్పుడూ ఉండేది (Eternal)', hint: 'ప్రతిరోజూ జరిగేది' },
           { num: 3, word: ['సా','రం'], dir: 'V', r: 1, c: 0, clue: '✨ పద్యంలోని ముఖ్య సారాంశం (Essence)', hint: 'ముఖ్య అర్థం' }
         ] }
