@@ -28,7 +28,10 @@
     .achievement-toast.show { top: 12px; }
     .lobby-header { text-align: center; position: relative; }
     .lobby-parrot { font-size: 36px; display: inline-block; animation: floatParrot 2.4s infinite ease-in-out; }
-    @keyframes floatParrot { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+    @keyframes floatParrot { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+    @keyframes geniePop { 0% { transform: scale(0.7) translateY(20px); opacity: 0; } 60% { transform: scale(1.08) translateY(-6px); opacity: 1; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
+    @keyframes genieGlow { 0%, 100% { box-shadow: 0 0 14px rgba(14,165,233,0.35); } 50% { box-shadow: 0 0 28px rgba(245,158,11,0.65); } }
+    @keyframes sparkleFloat { 0%, 100% { transform: translateY(0) scale(1); opacity: 0.7; } 50% { transform: translateY(-8px) scale(1.25); opacity: 1; } }
     @keyframes shakeCell { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
     @keyframes popCell { 0% { transform: scale(1); } 50% { transform: scale(1.12); } 100% { transform: scale(1); } }
     .lobby-title { font-family: 'Ramabhadra', sans-serif; font-size: 1.38rem; color: var(--primary); }
@@ -107,14 +110,17 @@
 
     /* MODALS */
     .modal-backdrop { display: none; position: absolute; inset: 0; background: rgba(15,23,42,0.78); backdrop-filter: blur(4px); z-index: 100; align-items: center; justify-content: center; padding: 16px; border-radius: 26px; }
-    .modal-card { background: #fff; width: 100%; border-radius: 18px; padding: 16px; text-align: center; max-height: 88vh; overflow-y: auto; }
+    .modal-card { background: #fff; width: 100%; border-radius: 18px; padding: 16px; text-align: center; max-height: 88vh; overflow-y: auto; position: relative; }
     .modal-btn { width: 100%; padding: 10px; background: var(--primary); color: #fff; border: none; border-radius: 12px; font-family: 'Ramabhadra', sans-serif; font-size: 0.88rem; cursor: pointer; margin-top: 8px; line-height: 1.25; }
     .whatsapp-btn { width: 100%; padding: 10px; background: #16a34a; color: #fff; border: none; border-radius: 12px; font-family: 'Ramabhadra', sans-serif; font-size: 0.88rem; cursor: pointer; margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 6px; }
-    .genie-card { background: linear-gradient(135deg, #ecfeff 0%, #fefce8 100%); border: 2.5px solid #0ea5e9; }
-    .genie-avatar { font-size: 54px; display: inline-block; animation: floatParrot 2s infinite ease-in-out; }
+    .genie-card { background: linear-gradient(135deg, #ecfeff 0%, #fefce8 100%); border: 2.5px solid #0ea5e9; animation: geniePop 0.45s ease, genieGlow 2.4s infinite ease-in-out; }
+    .genie-avatar-wrap { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 4px; }
+    .genie-sparkle { font-size: 22px; animation: sparkleFloat 1.6s infinite ease-in-out; }
+    .genie-avatar { font-size: 56px; display: inline-block; animation: floatParrot 1.8s infinite ease-in-out; }
+    .genie-speak-btn { background: #0284c7; color: #fff; border: none; border-radius: 10px; padding: 4px 10px; font-size: 0.74rem; font-weight: 700; cursor: pointer; margin-top: 4px; }
     .genie-speech-box { background: #fff; border: 2px solid #bae6fd; border-radius: 14px; padding: 12px; margin: 10px 0; font-size: 0.85rem; line-height: 1.45; color: #0f172a; text-align: left; }
     .genie-dots { display: flex; justify-content: center; gap: 6px; margin: 8px 0; }
-    .genie-dot { width: 8px; height: 8px; border-radius: 50%; background: #cbd5e1; }
+    .genie-dot { width: 8px; height: 8px; border-radius: 50%; background: #cbd5e1; transition: all 0.25s ease; }
     .genie-dot.active { background: #0284c7; width: 20px; border-radius: 6px; }
     .genie-actions { display: flex; gap: 8px; margin-top: 10px; }
     .level-grid-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px; margin: 10px 0; }
@@ -225,7 +231,7 @@
       </header>
 
       <div class="sub-status-row">
-        <span class="tier-pill" id="tier-pill">🌱 దశ 1: సరళం (Beginner)</span>
+        <span class="tier-pill" id="tier-pill">🌱 దశ 1: సరళం (Levels 1-4)</span>
         <span class="theme-pill" id="theme-pill">🌿 ప్రకృతి థీమ్</span>
       </div>
 
@@ -294,9 +300,14 @@
 
     <!-- AYITHE GENIE INTRO MODAL -->
     <div class="modal-backdrop" id="genie-intro-modal">
-      <div class="modal-card genie-card">
-        <div class="genie-avatar" id="genie-step-icon">🧞‍♂️</div>
+      <div class="modal-card genie-card" id="genie-card-el">
+        <div class="genie-avatar-wrap">
+          <span class="genie-sparkle">✨</span>
+          <div class="genie-avatar" id="genie-step-icon">🧞‍♂️</div>
+          <span class="genie-sparkle" style="animation-delay:0.5s;">✨</span>
+        </div>
         <h2 style="font-family:'Ramabhadra',sans-serif; color:#0369a1; font-size:1.15rem;" id="genie-step-title">అయితే జీనీ స్వాగతం!</h2>
+        <button class="genie-speak-btn" type="button" onclick="speakGenieStep()">🔊 జీనీ మాట విను / Listen</button>
         <div class="genie-speech-box" id="genie-step-body"></div>
         <div class="genie-dots">
           <div class="genie-dot active" id="gdot-0"></div>
@@ -451,22 +462,25 @@
       }
     }
 
-    // AYITHE GENIE HOME INTRO STEPS
+    // AYITHE GENIE HOME INTRO STEPS (With Voice Narration!)
     const GENIE_INTRO_STEPS = [
       {
         icon: '🧞‍♂️',
         title: 'అయితే... తెలుగు పదవినోదానికి స్వాగతం!',
-        body: 'హాయ్! నేను మీ <b>అయితే జీనీ (Ayithe Genie)</b>! ✨<br/><br/>ఇక్కడ తెలుగు పదాలు, సామెతలు, మరియు మన <b>@aithe360 Shorts</b> పజిల్స్ ఆడుతూ మీ బుర్రకు పదును పెట్టొచ్చు. స్టార్టింగ్‌లోనే మీకు <b>50 ⭐ ఉచిత బోనస్</b> ఇచ్చాము!'
+        body: 'హాయ్! నేను మీ <b>అయితే జీనీ (Ayithe Genie)</b>! ✨<br/><br/>ఇక్కడ తెలుగు పదాలు, సామెతలు, మరియు మన <b>@aithe360 Shorts</b> పజిల్స్ ఆడుతూ మీ బుర్రకు పదును పెట్టొచ్చు. స్టార్టింగ్‌లోనే మీకు <b>50 ⭐ ఉచిత బోనస్</b> ఇచ్చాము!',
+        speech: 'అయితే! తెలుగు పదవినోదానికి స్వాగతం! నేను మీ అయితే జీనీ. ఇక్కడ తెలుగు పదాలు, సామెతలు ఆడుతూ మీ బుర్రకు పదును పెట్టొచ్చు. స్టార్టింగ్ లోనే మీకు ఫిఫ్టీ నక్షత్రాలు ఉచిత బోనస్ ఇచ్చాము!'
       },
       {
         icon: '🚀',
         title: '10 స్థాయిల అద్భుత ప్రయాణం!',
-        body: 'ప్రతి వర్గంలో <b>10 ఆసక్తికరమైన స్థాయిలు</b> ఉంటాయి:<br/>• <b>స్థాయి 5:</b> 🔗 పద శృంఖల + 📜 ప్రత్యేక <b>కవి పరిచయం</b>!<br/>• <b>స్థాయి 7:</b> 🏎️ అక్షర కార్ రేస్ బోనస్!<br/>• <b>స్థాయి 8:</b> 🎡 అదృష్ట చక్రం (Lucky Spin)!'
+        body: 'ప్రతి వర్గంలో <b>10 ఆసక్తికరమైన స్థాయిలు</b> ఉంటాయి:<br/>• <b>Level 5:</b> 🔗 పద శృంఖల + 📜 ప్రత్యేక <b>కవి పరిచయం</b>!<br/>• <b>Level 7:</b> 🏎️ అక్షర కార్ రేస్ బోనస్!<br/>• <b>Level 8:</b> 🎡 అదృష్ట చక్రం (Lucky Spin)!',
+        speech: 'ప్రతి వర్గంలో టెన్ ఆసక్తికరమైన స్థాయిలు ఉంటాయి. లెవెల్ ఫైవ్ లో ప్రత్యేక కవి పరిచయం, లెవెల్ సెవెన్ లో అక్షర కార్ రేస్, లెవెల్ ఎయిట్ లో అదృష్ట చక్రం ఉంటాయి!'
       },
       {
         icon: '🦜',
         title: 'మీ గైడ్: అక్షర మిత్ర (Akshara Mitra)!',
-        body: 'ఆట మొదలవగానే నా నేస్తం <b>🦜 అక్షర మిత్ర</b> మీకు తోడుగా ఉంటుంది!<br/><br/>సూచనలు చదివి వినిపించడం, సహాయం (Hints) ఇవ్వడం అంతా అక్షర మిత్ర చూసుకుంటుంది. ఇక ఆలస్యం ఎందుకు? <b>వర్గాన్ని ఎంచుకుని స్టార్ట్ చెయ్!</b>'
+        body: 'ఆట మొదలవగానే నా నేస్తం <b>🦜 అక్షర మిత్ర</b> మీకు తోడుగా ఉంటుంది!<br/><br/>సూచనలు చదివి వినిపించడం, సహాయం (Hints) ఇవ్వడం అంతా అక్షర మిత్ర చూసుకుంటుంది. ఇక ఆలస్యం ఎందుకు? <b>వర్గాన్ని ఎంచుకుని స్టార్ట్ చెయ్!</b>',
+        speech: 'ఆట మొదలవగానే నా నేస్తం అక్షర మిత్ర మీకు తోడుగా ఉంటుంది. సూచనలు చదివి వినిపించడం, సహాయం ఇవ్వడం అంతా అక్షర మిత్ర చూసుకుంటుంది. ఇక ఆలస్యం ఎందుకు? వర్గాన్ని ఎంచుకుని స్టార్ట్ చెయ్!'
       }
     ];
     let genieStepIdx = 0;
@@ -476,6 +490,8 @@
       genieStepIdx = 0;
       renderGenieStep();
       document.getElementById('genie-intro-modal').style.display = 'flex';
+      if (window.confetti) window.confetti({ particleCount: 45, spread: 60, origin: { y: 0.45 } });
+      speakGenieStep();
     }
 
     function renderGenieStep() {
@@ -490,17 +506,24 @@
         genieStepIdx === GENIE_INTRO_STEPS.length - 1 ? 'ఆట స్టార్ట్ చేద్దాం! 🚀' : 'తరువాత ➔ / Next';
     }
 
+    function speakGenieStep() {
+      const s = GENIE_INTRO_STEPS[genieStepIdx];
+      speakTextDirectly(s.speech);
+    }
+
     function nextGenieStep() {
       playChime('tap');
       if (genieStepIdx < GENIE_INTRO_STEPS.length - 1) {
         genieStepIdx++;
         renderGenieStep();
+        speakGenieStep();
       } else {
         closeGenieIntro();
       }
     }
 
     function closeGenieIntro() {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
       localStorage.setItem('telugu_padam_genie_seen', 'yes');
       document.getElementById('genie-intro-modal').style.display = 'none';
       checkDailyBonus();
@@ -532,20 +555,49 @@
     // 10-Level Curated Data across Ayithe Specials, General, Poems, and Proverbs
     const CATEGORIES_DATA = {
       ayithe: [
-        { level: 1, gridSize: 3, distractors: ['స','ధ','క','లం'], wisdom: '🎬 Ep 1 (వేమన): "సాధనమున పనులు సమకూరు ధరలోన!" — Practice beats luck every single time!', words: [{ num: 1, word: ['సా','ధ','న'], dir: 'H', r: 1, c: 0, clue: '🏀 వేమన చెప్పిన విజయానికి అసలైన మంత్రం (Practice)', hint: '______మున పనులు సమకూరు ధరలోన' }, { num: 2, word: ['వ','న'], dir: 'V', r: 0, c: 2, clue: '🌳 పచ్చని అడవికి సంక్షిప్త రూపం (Forest)', hint: 'వనం లోని మొదటి రెండు అక్షరాలు' }] },
-        { level: 2, gridSize: 3, distractors: ['ఆ','చా','ర','ణా'], wisdom: '🎬 Ep 2 (తెనాలి): "ఆరంభశూరత్వం కాదు, ఆచరణ ముఖ్యం!" — Starting beats overthinking!', words: [{ num: 1, word: ['ఆ','చ','ర','ణ'].slice(0,3), dir: 'H', r: 1, c: 0, clue: '✨ తెనాలి రామకృష్ణ మెచ్చిన "ఆచరణ" తొలి 3 అక్షరాలు', hint: 'ఆ-చ-ర' }, { num: 2, word: ['వి','చ','ర'].slice(0,2), dir: 'V', r: 0, c: 1, clue: '🤔 ఆలోచన (వి-చ)', hint: 'విచక్షణ తొలి అక్షరాలు' }] },
-        { level: 3, gridSize: 3, distractors: ['తే','లి','వి','న'], wisdom: '💡 తెలివి (Wit) + సమయస్ఫూర్తి = తెనాలి రామకృష్ణ స్టైల్!', words: [{ num: 1, word: ['తె','లి','వి'], dir: 'H', r: 1, c: 0, clue: '🧠 తెనాలి రామకృష్ణకు పేరు తెచ్చిన గుణం (Intelligence)', hint: 'బుద్ధిబలం' }, { num: 2, word: ['క','వి'], dir: 'V', r: 0, c: 2, clue: '✍️ పద్యాలు రాసే పండితుడు (Poet)', hint: 'వేమన ఒక ప్రజా ______' }] },
-        { level: 4, gridSize: 3, distractors: ['సా','మా','యా','జ'], wisdom: '⏰ సమయం విలువ తెలిసిన వాడికే జయం!', words: [{ num: 1, word: ['స','మ','యం'], dir: 'H', r: 1, c: 0, clue: '⏰ వెన్నెల డెడ్‌లైన్ టైమర్ చూపేది (Time)', hint: 'కాలం' }, { num: 2, word: ['జ','యం'], dir: 'V', r: 0, c: 2, clue: '🏆 పని పూర్తి చేశాక వచ్చే గెలుపు (Victory)', hint: 'విజయం' }] },
-        { level: 5, isChain: true, gridSize: 4, distractors: ['వే','మా','నా','పా'], wisdom: '🔗 పద శృంఖల: వేమన ➔ సమత ➔ కవిత!', words: [
-          { num: 1, word: ['వే','మ','న'], dir: 'H', r: 1, c: 0, clue: '🧘 మన Ep 1 లో వచ్చిన ప్రజాకవి (Vemana)', hint: 'విశ్వదాభిరామ వినుర వేమ' },
+        // Level 1: సాధన (H) + ధనం (V) intersecting cleanly at ధ
+        { level: 1, gridSize: 3, distractors: ['స','క','లం','వ'], wisdom: '🎬 Episode 1 (వేమన): "సాధనమున పనులు సమకూరు ధరలోన!" — Practice beats luck every single time!', words: [
+          { num: 1, word: ['సా','ధ','న'], dir: 'H', r: 1, c: 0, clue: '🏀 వేమన చెప్పిన విజయానికి అసలైన మంత్రం (Practice)', hint: '______మున పనులు సమకూరు ధరలోన' },
+          { num: 2, word: ['ధ','నం'], dir: 'V', r: 1, c: 1, clue: '💰 కష్టపడి సంపాదించే సంపద (Wealth)', hint: 'విద్యయే నిజమైన ______' }
+        ] },
+        // Level 2: ఆచరణ (H) + వచనం (V) intersecting cleanly at చ
+        { level: 2, gridSize: 4, distractors: ['ఆ','చా','రా','ణా'], wisdom: '🎬 Episode 2 (తెనాలి): "ఆరంభశూరత్వం కాదు, ఆచరణ ముఖ్యం!" — Starting beats overthinking!', words: [
+          { num: 1, word: ['ఆ','చ','ర','ణ'], dir: 'H', r: 1, c: 0, clue: '✨ తెనాలి రామకృష్ణ మెచ్చిన పనిని ప్రారంభించే గుణం (Execution)', hint: 'ఆరంభశూరత్వం కాదు, ______ ముఖ్యం' },
+          { num: 2, word: ['వ','చ','నం'], dir: 'V', r: 0, c: 1, clue: '📜 పద్యం కాకుండా వాక్య రూపంలో రాసే మాట (Prose / Saying)', hint: 'మంచి మాట లేదా సూక్తి' }
+        ] },
+        { level: 3, gridSize: 3, distractors: ['తే','లి','వి','న'], wisdom: '💡 తెలివి (Wit) + సమయస్ఫూర్తి = తెనాలి రామకృష్ణ స్టైల్!', words: [
+          { num: 1, word: ['తె','లి','వి'], dir: 'H', r: 1, c: 0, clue: '🧠 తెనాలి రామకృష్ణకు పేరు తెచ్చిన గుణం (Intelligence)', hint: 'బుద్ధిబలం' },
+          { num: 2, word: ['క','వి'], dir: 'V', r: 0, c: 2, clue: '✍️ పద్యాలు రాసే పండితుడు (Poet)', hint: 'వేమన ఒక ప్రజా ______' }
+        ] },
+        { level: 4, gridSize: 3, distractors: ['సా','మా','యా','జ'], wisdom: '⏰ సమయం విలువ తెలిసిన వాడికే జయం!', words: [
+          { num: 1, word: ['స','మ','యం'], dir: 'H', r: 1, c: 0, clue: '⏰ వెన్నెల డెడ్‌లైన్ టైమర్ చూపేది (Time)', hint: 'కాలం' },
+          { num: 2, word: ['జ','యం'], dir: 'V', r: 0, c: 2, clue: '🏆 పని పూర్తి చేశాక వచ్చే గెలుపు (Victory)', hint: 'విజయం' }
+        ] },
+        { level: 5, isChain: true, gridSize: 4, distractors: ['వె','మా','నా','పా'], wisdom: '🔗 పద శృంఖల: వేమన ➔ సమత ➔ నవ!', words: [
+          { num: 1, word: ['వే','మ','న'], dir: 'H', r: 1, c: 0, clue: '🧘 మన Episode 1 లో వచ్చిన ప్రజాకవి (People\'s Poet)', hint: 'విశ్వదాభిరామ వినుర ______' },
           { num: 2, word: ['స','మ','త'], dir: 'V', r: 0, c: 1, clue: '⚖️ అందరూ సమానం అనే భావన (Equality)', hint: 'సమానత్వం' },
           { num: 3, word: ['న','వ'], dir: 'V', r: 1, c: 2, clue: '✨ కొత్తదనం (New)', hint: 'నవయుగం లోని తొలి పదం' }
         ] },
-        { level: 6, gridSize: 3, distractors: ['వె','నె','లా','క'], wisdom: '🌙 వెన్నెల: మన @aithe360 సిరీస్ కొత్త హీరోయిన్!', words: [{ num: 1, word: ['వె','న్నె','ల'], dir: 'H', r: 1, c: 0, clue: '🌙 చంద్రుడు కురిపించే చల్లని కాంతి (Moonlight)', hint: 'మన Ep 2 పాత్ర పేరు!' }, { num: 2, word: ['క','ల'], dir: 'V', r: 0, c: 2, clue: '💭 నిద్రలో వచ్చే స్వప్నం (Dream)', hint: 'లక్ష్యం లేదా స్వప్నం' }] },
-        { level: 7, gridSize: 3, distractors: ['పు','స్తా','క','ల'], wisdom: '📚 మంచి పుస్తకం ఉత్తమ మిత్రుడు.', words: [{ num: 1, word: ['పు','స్త','కం'], dir: 'H', r: 1, c: 0, clue: '📚 జ్ఞానాన్ని ఇచ్చే గ్రంథం (Book)', hint: 'చదువుకునేది' }, { num: 2, word: ['లో','కం'], dir: 'V', r: 0, c: 2, clue: '🌍 ప్రపంచం (World)', hint: 'విశ్వం' }] },
-        { level: 8, gridSize: 3, distractors: ['వి','నా','య','భ'], wisdom: '🙏 విద్య వల్ల వినయం లభిస్తుంది.', words: [{ num: 1, word: ['వి','న','యం'], dir: 'H', r: 1, c: 0, clue: '🙏 పెద్దల పట్ల మర్యాద (Humility)', hint: 'విద్య నేర్చిన వారికి ఉండే గుణం' }, { num: 2, word: ['భ','యం'], dir: 'V', r: 0, c: 2, clue: '😨 ధైర్యానికి వ్యతిరేకం (Fear)', hint: 'బెదురు' }] },
-        { level: 9, gridSize: 3, distractors: ['దీ','ప','రు','పా'], wisdom: '💡 దీపం ఉండగానే ఇల్లు చక్కబెట్టుకోవాలి — Act while you have time!', words: [{ num: 1, word: ['దీ','పం'], dir: 'H', r: 1, c: 0, clue: '🪔 ______ ఉండగానే ఇల్లు చక్కబెట్టుకోవాలి (Lamp)', hint: 'వెలుగునిచ్చే జ్యోతి' }, { num: 2, word: ['రూ','పం'], dir: 'V', r: 0, c: 1, clue: '🖼️ బాహ్య ఆకారం (Form)', hint: 'స్వరూపం' }] },
-        { level: 10, gridSize: 3, distractors: ['భా','రా','తీ','ని'], wisdom: '🏆 అభినందనలు! మీరు @aithe360 తెలుగు పదవిజేత!', words: [{ num: 1, word: ['భా','ర','తి'], dir: 'H', r: 1, c: 0, clue: '🪕 చదువుల తల్లి సరస్వతి (Saraswati)', hint: 'వాగ్దేవి' }, { num: 2, word: ['నీ','తి'], dir: 'V', r: 0, c: 2, clue: '⚖️ సన్మార్గ ప్రవర్తన (Morality)', hint: 'మంచి మార్గం' }] }
+        { level: 6, gridSize: 3, distractors: ['వె','నె','లా','క'], wisdom: '🌙 వెన్నెల: మన @aithe360 సిరీస్ కొత్త హీరోయిన్!', words: [
+          { num: 1, word: ['వె','న్నె','ల'], dir: 'H', r: 1, c: 0, clue: '🌙 చంద్రుడు కురిపించే చల్లని కాంతి (Moonlight)', hint: 'మన Episode 2 పాత్ర పేరు!' },
+          { num: 2, word: ['క','ల'], dir: 'V', r: 0, c: 2, clue: '💭 నిద్రలో వచ్చే స్వప్నం (Dream)', hint: 'లక్ష్యం లేదా స్వప్నం' }
+        ] },
+        { level: 7, gridSize: 3, distractors: ['పు','స్తా','క','ల'], wisdom: '📚 మంచి పుస్తకం ఉత్తమ మిత్రుడు.', words: [
+          { num: 1, word: ['పు','స్త','కం'], dir: 'H', r: 1, c: 0, clue: '📚 జ్ఞానాన్ని ఇచ్చే గ్రంథం (Book)', hint: 'చదువుకునేది' },
+          { num: 2, word: ['లో','కం'], dir: 'V', r: 0, c: 2, clue: '🌍 ప్రపంచం (World)', hint: 'విశ్వం' }
+        ] },
+        { level: 8, gridSize: 3, distractors: ['వి','నా','య','భ'], wisdom: '🙏 విద్య వల్ల వినయం లభిస్తుంది.', words: [
+          { num: 1, word: ['వి','న','యం'], dir: 'H', r: 1, c: 0, clue: '🙏 పెద్దల పట్ల మర్యాద (Humility)', hint: 'విద్య నేర్చిన వారికి ఉండే గుణం' },
+          { num: 2, word: ['భ','యం'], dir: 'V', r: 0, c: 2, clue: '😨 ధైర్యానికి వ్యతిరేకం (Fear)', hint: 'బెదురు' }
+        ] },
+        { level: 9, gridSize: 3, distractors: ['దీ','ప','రు','పా'], wisdom: '💡 దీపం ఉండగానే ఇల్లు చక్కబెట్టుకోవాలి — Act while you have time!', words: [
+          { num: 1, word: ['దీ','పం'], dir: 'H', r: 1, c: 0, clue: '🪔 ______ ఉండగానే ఇల్లు చక్కబెట్టుకోవాలి (Lamp)', hint: 'వెలుగునిచ్చే జ్యోతి' },
+          { num: 2, word: ['రూ','పం'], dir: 'V', r: 0, c: 1, clue: '🖼️ బాహ్య ఆకారం (Form)', hint: 'స్వరూపం' }
+        ] },
+        { level: 10, gridSize: 3, distractors: ['భా','రా','తీ','ని'], wisdom: '🏆 అభినందనలు! మీరు @aithe360 తెలుగు పదవిజేత!', words: [
+          { num: 1, word: ['భా','ర','తి'], dir: 'H', r: 1, c: 0, clue: '🪕 చదువుల తల్లి సరస్వతి (Saraswati)', hint: 'వాగ్దేవి' },
+          { num: 2, word: ['నీ','తి'], dir: 'V', r: 0, c: 2, clue: '⚖️ సన్మార్గ ప్రవర్తన (Morality)', hint: 'మంచి మార్గం' }
+        ] }
       ],
       general: [
         { level: 1, gridSize: 3, distractors: ['కా','కం','లి','న'], wisdom: '📖 పద విశేషం: "కమలం" మన జాతీయ పుష్పం — Lotus blooms pure even in mud!', words: [{ num: 1, word: ['క','మ','లం'], dir: 'H', r: 1, c: 0, clue: '🪷 చెరువులో వికసించే తామర పుష్పం (Lotus)', hint: 'సరస్సులలో నీటిపై తేలియాడే జాతీయ పుష్పం' }, { num: 2, word: ['నీ','లం'], dir: 'V', r: 0, c: 2, clue: '🌊 ఆకాశం కనిపించే చల్లని రంగు (Blue)', hint: 'నెమలి కంఠంలో మెరిసే వర్ణం' }] },
@@ -564,9 +616,9 @@
         { level: 10, gridSize: 3, distractors: ['భ','రా','తీ','ని'], wisdom: '📖 పద విశేషం: "భారతి" అంటే చదువుల తల్లి సరస్వతి.', words: [{ num: 1, word: ['భా','ర','తి'], dir: 'H', r: 1, c: 0, clue: '🪕 చదువుల తల్లి సరస్వతి (Goddess Saraswati)', hint: 'వీణాపాణి, వాగ్దేవి అని పిలువబడే దేవత' }, { num: 2, word: ['నీ','తి'], dir: 'V', r: 0, c: 2, clue: '⚖️ ధర్మబద్ధమైన సన్మార్గ ప్రవర్తన (Morality)', hint: 'శతక పద్యాలు బోధించే సత్య మార్గం' }] }
       ],
       poems: [
-        { level: 1, gridSize: 3, distractors: ['వె','మా','నా','సా'], wisdom: '📜 పద్య విశేషం: వేమన తన ఆటవెలది పద్యాలతో సమతా భావాన్ని అందించారు.', words: [{ num: 1, word: ['వే','మ','న'], dir: 'H', r: 1, c: 0, clue: '🧘 విశ్వదాభిరామ మకుటంతో శతకం రాసిన యోగి (Vemana)', hint: 'ప్రజాకవి' }, { num: 2, word: ['స','మ','త'], dir: 'V', r: 0, c: 1, clue: '⚖️ అందరూ సమానమే అనే భావన (Equality)', hint: 'భేదభావం లేని సమానత్వం' }] },
+        { level: 1, gridSize: 3, distractors: ['వె','మా','నా','సా'], wisdom: '📜 పద్య విశేషం: వేమన తన ఆటవెలది పద్యాలతో సమతా భావాన్ని అందించారు.', words: [{ num: 1, word: ['వే','మ','న'], dir: 'H', r: 1, c: 0, clue: '🧘 విశ్వదాభిరామ మకుటంతో శతకం రాసిన యోగి (People\'s Poet)', hint: 'ప్రజాకవి' }, { num: 2, word: ['స','మ','త'], dir: 'V', r: 0, c: 1, clue: '⚖️ అందరూ సమానమే అనే భావన (Equality)', hint: 'భేదభావం లేని సమానత్వం' }] },
         { level: 2, gridSize: 3, distractors: ['ని','తీ','జ','యా'], wisdom: '📜 పద్య విశేషం: "నీతి" సమాజాన్ని కాపాడుతుంది.', words: [{ num: 1, word: ['నీ','తి'], dir: 'H', r: 1, c: 0, clue: '📜 ధర్మబద్ధమైన సన్మార్గ ప్రవర్తన (Morals)', hint: 'శతక కవులు బోధించిన సత్య మార్గం' }, { num: 2, word: ['జా','తి'], dir: 'V', r: 0, c: 1, clue: '👥 మానవ సమాజం లేదా వంశం (Nation/Tribe)', hint: 'ఒకే మూలాలను పంచుకునే సమూహం' }] },
-        { level: 3, gridSize: 3, distractors: ['సు','మా','తీ','స్వ'], wisdom: '📜 పద్య విశేషం: "సుమతి" అంటే మంచి బుద్ధి గలవాడు.', words: [{ num: 1, word: ['సు','మ','తి'], dir: 'H', r: 1, c: 0, clue: '💡 మంచి బుద్ధి గలవాడు అనే శతకం (Sumathi)', hint: 'బద్దెన రచించిన శతకం' }, { num: 2, word: ['స్వా','తి'], dir: 'V', r: 0, c: 2, clue: '🦪 ముత్యపు చిప్పలో వానచినుకు పడే నక్షత్రం (Swathi Star)', hint: 'శుభ నక్షత్రం' }] },
+        { level: 3, gridSize: 3, distractors: ['సు','మా','తీ','స్వ'], wisdom: '📜 పద్య విశేషం: "సుమతి" అంటే మంచి బుద్ధి గలవాడు.', words: [{ num: 1, word: ['సు','మ','తి'], dir: 'H', r: 1, c: 0, clue: '💡 మంచి బుద్ధి గలవాడు అనే శతకం (Good Mind)', hint: 'బద్దెన రచించిన శతకం' }, { num: 2, word: ['స్వా','తి'], dir: 'V', r: 0, c: 2, clue: '🦪 ముత్యపు చిప్పలో వానచినుకు పడే నక్షత్రం (Star)', hint: 'శుభ నక్షత్రం' }] },
         { level: 4, gridSize: 3, distractors: ['క','వీ','తా','ర'], wisdom: '📜 పద్య విశేషం: "కవిత" హృదయాన్ని కదిలించే భావ వ్యక్తీకరణ.', words: [{ num: 1, word: ['క','వి','త'], dir: 'H', r: 1, c: 0, clue: '✍️ కవి హృదయం నుండి జాలువారే గేయం (Poem)', hint: 'భావగర్భితమైన సాహిత్య ప్రక్రియ' }, { num: 2, word: ['ల','త'], dir: 'V', r: 0, c: 2, clue: '🌿 చెట్టును అల్లుకునే పూల తీగ (Creeper)', hint: 'తీగను పిలిచే పదం' }] },
         { level: 5, isChain: true, gridSize: 4, distractors: ['పా','గా','నా','మా'], wisdom: '🔗 పద శృంఖల: పద్యం ➔ గద్యం ➔ పదం!', words: [
           { num: 1, word: ['ప','ద్యం'], dir: 'H', r: 1, c: 0, clue: '📜 ఛందస్సుతో కూడిన కవిత (Verse)', hint: 'శతకంలో పాడేది' },
@@ -574,7 +626,7 @@
           { num: 3, word: ['ప','దం'], dir: 'V', r: 1, c: 0, clue: '👣 మాట లేదా అడుగు (Word)', hint: 'పాటలో చరణం' }
         ] },
         { level: 6, gridSize: 3, distractors: ['సా','త్య','నీ','న'], wisdom: '📜 పద్య విశేషం: "సత్యం" ఎల్లప్పుడూ జయిస్తుంది.', words: [{ num: 1, word: ['స','త్యం'], dir: 'H', r: 1, c: 0, clue: '☀️ ఎప్పటికీ మారని నిజం (Truth)', hint: 'అబద్ధానికి వ్యతిరేకం' }, { num: 2, word: ['ని','త్యం'], dir: 'V', r: 0, c: 1, clue: '♾️ ప్రతిరోజూ లేదా ఎల్లప్పుడూ జరిగేది (Daily)', hint: 'శాశ్వతంగా ఉండేది' }] },
-        { level: 7, gridSize: 3, distractors: ['ద','తా','సి','మా'], wisdom: '📜 పద్య విశేషం: ఆకొన్న వారికి అన్నం పెట్టేవాడే "దాత".', words: [{ num: 1, word: ['దా','త'], dir: 'H', r: 1, c: 0, clue: '🎁 దానం చేసే గొప్ప వ్యక్తి (Donor)', hint: 'ఉదార స్వభావి' }, { num: 2, word: ['సీ','త'], dir: 'V', r: 0, c: 1, clue: '👑 జనక మహారాజు కుమార్తె (Goddess Sita)', hint: 'శ్రీరాముని ధర్మపత్ని' }] },
+        { level: 7, gridSize: 3, distractors: ['ద','తా','సి','మా'], wisdom: '📜 పద్య విశేషం: ఆకొన్న వారికి అన్నం పెట్టేవాడే "దాత".', words: [{ num: 1, word: ['దా','త'], dir: 'H', r: 1, c: 0, clue: '🎁 దానం చేసే గొప్ప వ్యక్తి (Donor)', hint: 'ఉదార స్వభావి' }, { num: 2, word: ['సీ','త'], dir: 'V', r: 0, c: 1, clue: '👑 జనక మహారాజు కుమార్తె (Goddess)', hint: 'శ్రీరాముని ధర్మపత్ని' }] },
         { level: 8, gridSize: 3, distractors: ['గూ','రూ','వూ','త'], wisdom: '📜 పద్య విశేషం: జ్ఞానజ్యోతిని వెలిగించేవారే "గురువు".', words: [{ num: 1, word: ['గు','రు','వు'], dir: 'H', r: 1, c: 0, clue: '🎓 విద్యను బోధించే ఆచార్యుడు (Teacher)', hint: 'ఉపాధ్యాయుడు' }, { num: 2, word: ['తా','వు'], dir: 'V', r: 0, c: 2, clue: '🏡 నివసించే చోటు లేదా స్థానం (Place)', hint: 'ఉండే ప్రదేశం' }] },
         { level: 9, gridSize: 3, distractors: ['భ','షా','ఊ','ఆ'], wisdom: '📜 పద్య విశేషం: దేశ భాషలందు తెలుగు లెస్స.', words: [{ num: 1, word: ['భా','ష'], dir: 'H', r: 1, c: 0, clue: '🗣️ మన భావాలను పంచుకునే మాతృవాణి (Language)', hint: 'తెలుగు, సంస్కృతం వంటి వాక్ రూపం' }, { num: 2, word: ['ఉ','ష'], dir: 'V', r: 0, c: 1, clue: '🌅 తెల్లవారుజామున సూర్యోదయ కాంతి (Dawn)', hint: 'అరుణోదయ వేళ' }] },
         { level: 10, gridSize: 3, distractors: ['క','వ్య','దీ','న'], wisdom: '📜 పద్య విశేషం: రసవత్తరమైన వర్ణనలతో కూడిన గ్రంథమే "కావ్యం".', words: [{ num: 1, word: ['కా','వ్యం'], dir: 'H', r: 1, c: 0, clue: '📚 మహాకవులు రచించే పద్య గ్రంథం (Epic)', hint: 'ప్రబంధ సాహిత్యం' }, { num: 2, word: ['ది','వ్యం'], dir: 'V', r: 0, c: 1, clue: '✨ అత్యంత శ్రేష్ఠమైనది (Divine)', hint: 'దేవతలకు సంబంధించినది' }] }
@@ -767,7 +819,7 @@
       if (!isPastReview) setupKeyboard(lvl, levelNumber);
       activeWord = lvl.words[0];
       highlightBoard(`${lvl.words[0].r}_${lvl.words[0].c}`, false);
-      setCompanionText(isPastReview ? `గత స్థాయి ${levelNumber} జవాబులు ఇక్కడ ఉన్నాయి.` : `హాయ్! నేను అక్షర మిత్ర. స్థాయి ${levelNumber} సూచన వినడానికి గడిని నొక్కండి!`, false);
+      setCompanionText(isPastReview ? `గత స్థాయి ${levelNumber} జవాబులు ఇక్కడ ఉన్నాయి.` : `హాయ్! నేను అక్షర మిత్ర. Level ${levelNumber} సూచన వినడానికి గడిని నొక్కండి!`, false);
     }
 
     // AKSHARA CAR RACE MINI-GAME (Level 7)
@@ -1158,7 +1210,7 @@
       document.getElementById('victory-wisdom').textContent = lvlObj.wisdom || 'అద్భుతంగా పూర్తి చేశారు!';
       document.getElementById('victory-next-btn').textContent = isFinalLevel ? 'వర్గాల మెనూకి వెళ్ళు 🏠' : 'తదుపరి స్థాయి ➔ / Next Level';
       document.getElementById('victory-modal').style.display = 'flex';
-      setCompanionText(isFinalLevel ? 'అభినందనలు! మీరు మొత్తం పది స్థాయిలను అద్భుతంగా పూర్తి చేశారు!' : 'అభినందనలు! స్థాయి పూర్తయింది!', true);
+      setCompanionText(isFinalLevel ? 'అభినందనలు! మీరు మొత్తం టెన్ స్థాయిలను అద్భుతంగా పూర్తి చేశారు!' : 'అభినందనలు! స్థాయి పూర్తయింది!', true);
     }
 
     function nextLevel() {
@@ -1210,20 +1262,37 @@
     }
 
     function cleanTextForSpeech(rawTxt) {
-      return rawTxt.split('(')[0].split('/')[0].replace(/[_]+/g, ' dash ').replace(/-25/g, ' ఇరవై ఐదు నక్షత్రాలు ').replace(/-20/g, ' ఇరవై నక్షత్రాలు ').replace(/-10/g, ' పది నక్షత్రాలు ').replace(/⭐/g, ' నక్షత్రాలు ').replace(/[💡🔓⏩🏆📜🎁🔥👁✅🔄🪷🌊⏰😊✨🌌🌳🏝️✒️🏺🇮🇳📚🌍🙏😨🌅❤️🪕⚖️☀️📅🎨🎒🌿🔷🙌🕉️🤝🐘🏛️🏹🛞🎵🌙🧭🧘👥🦪✍️♾️👑🎓🏡🗣️💯🗺️💭🍯🐕🛖🐟👶🏠🌹🏞️🐄🗡️🔨🛠️🧑⛰️🪨🪔🖼️🍀💪🍎💰✊🏎️🎡🧞‍♂️🦜🏀🎬📲]/g, '').trim();
+      const numWords = { '10': 'ten', '1': 'one', '2': 'two', '3': 'three', '4': 'four', '5': 'five', '6': 'six', '7': 'seven', '8': 'eight', '9': 'nine' };
+      let txt = rawTxt.split('(')[0].split('/')[0]
+        .replace(/\bEp\s*(\d+)/gi, (_, n) => `ఎపిసోడ్ ${numWords[n] || n}`)
+        .replace(/\bEpisode\s*(\d+)/gi, (_, n) => `ఎపిసోడ్ ${numWords[n] || n}`)
+        .replace(/\bLevel\s*(\d+)/gi, (_, n) => `లెవెల్ ${numWords[n] || n}`)
+        .replace(/\b(10|[1-9])\b/g, (m) => numWords[m] || m)
+        .replace(/[_]+/g, ' dash ')
+        .replace(/-25/g, ' twenty five stars ')
+        .replace(/-20/g, ' twenty stars ')
+        .replace(/-10/g, ' ten stars ')
+        .replace(/⭐/g, ' నక్షత్రాలు ')
+        .replace(/[💡🔓⏩🏆📜🎁🔥👁✅🔄🪷🌊⏰😊✨🌌🌳🏝️✒️🏺🇮🇳📚🌍🙏😨🌅❤️🪕⚖️☀️📅🎨🎒🌿🔷🙌🕉️🤝🐘🏛️🏹🛞🎵🌙🧭🧘👥🦪✍️♾️👑🎓🏡🗣️💯🗺️💭🍯🐕🛖🐟👶🏠🌹🏞️🐄🗡️🔨🛠️🧑⛰️🪨🪔🖼️🍀💪🍎💰✊🏎️🎡🧞‍♂️🦜🏀🎬📲]/g, '')
+        .trim();
+      return txt;
     }
 
-    function setCompanionText(txt, shouldSpeak = true) {
-      document.getElementById('companion-text').textContent = txt;
-      if (!shouldSpeak || !voiceEnabled || !('speechSynthesis' in window)) return;
+    function speakTextDirectly(txt) {
+      if (!voiceEnabled || !('speechSynthesis' in window)) return;
       try {
         window.speechSynthesis.cancel(); primeVoices();
         const utter = new SpeechSynthesisUtterance(cleanTextForSpeech(txt));
-        utter.rate = 0.88;
+        utter.rate = 0.9;
         const v = availableVoices.find(v => v.lang.startsWith('te')) || availableVoices.find(v => v.lang.startsWith('hi')) || availableVoices.find(v => v.lang.includes('IN'));
         if (v) { utter.voice = v; utter.lang = v.lang; } else utter.lang = 'te-IN';
         window.speechSynthesis.speak(utter);
       } catch (e) {}
+    }
+
+    function setCompanionText(txt, shouldSpeak = true) {
+      document.getElementById('companion-text').textContent = txt;
+      if (shouldSpeak) speakTextDirectly(txt);
     }
 
     function speakCurrentClue() { if (activeWord) setCompanionText(`${activeWord.num}. ${activeWord.clue}`, true); }
