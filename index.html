@@ -90,12 +90,15 @@
 
     /* CAR RACE BONUS MINI-GAME */
     .race-area { display: none; width: 100%; flex-direction: column; align-items: center; gap: 6px; flex: 1; justify-content: space-between; }
-    .race-clue-box { width: 100%; background: #fef3c7; border: 2px solid #f59e0b; border-radius: 12px; padding: 6px 10px; text-align: center; font-weight: 800; color: #92400e; font-size: 0.85rem; }
-    .road-track { width: 252px; height: 220px; background: #334155; border-left: 6px solid #facc15; border-right: 6px solid #facc15; border-radius: 14px; position: relative; overflow: hidden; display: grid; grid-template-columns: repeat(3, 1fr); box-shadow: inset 0 0 20px rgba(0,0,0,0.4); }
+    .race-howto-box { width: 100%; background: #eff6ff; border: 1.5px solid #93c5fd; border-radius: 10px; padding: 5px 8px; font-size: 0.74rem; font-weight: 700; color: #1e3a8a; text-align: center; line-height: 1.28; }
+    .race-clue-box { width: 100%; background: #fef3c7; border: 2px solid #f59e0b; border-radius: 12px; padding: 6px 10px; text-align: center; font-weight: 800; color: #92400e; font-size: 0.88rem; }
+    .road-track { width: 264px; height: 224px; background: #334155; border-left: 6px solid #facc15; border-right: 6px solid #facc15; border-radius: 14px; position: relative; overflow: hidden; display: grid; grid-template-columns: repeat(3, 1fr); box-shadow: inset 0 0 20px rgba(0,0,0,0.4); }
     .road-lane { border-right: 2px dashed rgba(255,255,255,0.35); position: relative; height: 100%; }
     .road-lane:last-child { border-right: none; }
-    .word-gate { position: absolute; width: 74px; left: 50%; transform: translateX(-50%); background: #fff; border: 2.5px solid #2563eb; border-radius: 10px; padding: 4px 2px; text-align: center; font-family: 'Ramabhadra', sans-serif; font-size: 0.88rem; color: #1e293b; box-shadow: 0 4px 10px rgba(0,0,0,0.25); }
+    .word-gate { position: absolute; width: 78px; left: 50%; transform: translateX(-50%); background: #fff; border: 2.5px solid #2563eb; border-radius: 10px; padding: 4px 2px; text-align: center; font-family: 'Ramabhadra', sans-serif; font-size: 0.88rem; color: #1e293b; box-shadow: 0 4px 10px rgba(0,0,0,0.25); }
     .player-car { position: absolute; bottom: 8px; font-size: 32px; transition: left 0.16s ease; z-index: 10; transform: translateX(-50%); }
+    .race-ready-overlay { position: absolute; inset: 0; background: rgba(15,23,42,0.78); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; z-index: 20; padding: 12px; text-align: center; color: #fff; }
+    .race-start-btn { background: #16a34a; color: #fff; border: none; border-radius: 12px; padding: 8px 16px; font-family: 'Ramabhadra', sans-serif; font-size: 0.9rem; cursor: pointer; box-shadow: 0 6px 14px rgba(22,163,74,0.4); }
     .race-controls { display: flex; gap: 10px; width: 100%; justify-content: center; }
     .steer-btn { flex: 1; padding: 8px; background: var(--primary); color: #fff; border: none; border-radius: 12px; font-family: 'Ramabhadra', sans-serif; font-size: 0.9rem; cursor: pointer; }
 
@@ -292,13 +295,22 @@
 
       <!-- CAR RACE BONUS VIEW (LEVEL 7) -->
       <div class="race-area" id="race-view-box">
-        <div class="race-clue-box" id="race-clue-box">🏎️ అక్షర రేస్: సరైన తెలుగు పదం ఉన్న గేట్ వైపు కారును నడపండి!</div>
-        <div style="font-size:0.78rem; font-weight:800; color:#334155;">గేట్లు / Gates: <span id="race-progress">0 / 3</span></div>
+        <div class="race-howto-box">
+          <strong>ఎలా ఆడాలి:</strong> పైన సూచన చదివి, సరైన తెలుగు పదం ఉన్న లైన్‌లోకి కారును నడపండి! (3 గేట్లు దాటితే గెలుపు)
+        </div>
+        <div class="race-clue-box" id="race-clue-box">🏎️ సూచన లోడ్ అవుతోంది...</div>
+        <div style="font-size:0.78rem; font-weight:800; color:#334155;">సరైన గేట్లు / Gates Cleared: <span id="race-progress">0 / 3</span></div>
         <div class="road-track" id="road-track">
           <div class="road-lane"></div>
           <div class="road-lane"></div>
           <div class="road-lane"></div>
           <div class="player-car" id="player-car" style="left: 50%;">🏎️</div>
+          <div class="race-ready-overlay" id="race-ready-overlay">
+            <div style="font-size:26px;">🏎️</div>
+            <div style="font-family:'Ramabhadra',sans-serif; font-size:0.95rem;">సూచన చదివారా?</div>
+            <div style="font-size:0.76rem; color:#e2e8f0;">సరైన పదం ఉన్న గేట్ కింద కారును ఉంచండి</div>
+            <button class="race-start-btn" type="button" onclick="beginRaceGateMovement()">▶ రేస్ మొదలుపెట్టు / Start</button>
+          </div>
         </div>
         <div class="race-controls">
           <button class="steer-btn" type="button" onclick="steerCar(-1)">⬅ ఎడమ / Left</button>
@@ -707,7 +719,7 @@
     let score = (savedScore !== null) ? parseInt(savedScore) : 50;
     let streak = 0, selectedCell = null, activeWord = null, gridState = {}, voiceEnabled = true, availableVoices = [], wrongAttemptsCount = 0, wordHintStage = {};
 
-    let carLane = 1, raceGatesCleared = 0, raceTimer = null, isSpinning = false, wheelDeg = 0;
+    let carLane = 1, raceGatesCleared = 0, raceTimer = null, currentRaceQuestion = null, isSpinning = false, wheelDeg = 0;
 
     function saveProgress() {
       localStorage.setItem('telugu_padam_cat_progress', JSON.stringify(categoryProgress));
@@ -855,6 +867,7 @@
       setCompanionText(isPastReview ? `గత స్థాయి ${levelNumber} జవాబులు ఇక్కడ ఉన్నాయి.` : `హాయ్! నేను అక్షర మిత్ర. Level ${levelNumber} సూచన వినడానికి గడిని నొక్కండి!`, false);
     }
 
+    // AKSHARA CAR RACE MINI-GAME (Level 7 - Clear instructions + Slow, readable speed)
     function startCarRaceStage(levelNumber) {
       document.getElementById('crossword-view-box').style.display = 'none';
       document.getElementById('mode-badge-banner').style.display = 'block';
@@ -865,8 +878,83 @@
       raceGatesCleared = 0;
       updateCarPosition();
       document.getElementById('race-progress').textContent = `0 / 3`;
-      setCompanionText('అక్షర కార్ రేస్! సరైన తెలుగు పదం ఉన్న గేట్ వైపు కారును నడపండి!', true);
-      spawnNextRaceGate();
+      prepareRaceRound(true);
+    }
+
+    function prepareRaceRound(showReadyPrompt = false) {
+      clearInterval(raceTimer);
+      const track = document.getElementById('road-track');
+      track.querySelectorAll('.word-gate').forEach(g => g.remove());
+
+      currentRaceQuestion = RACE_QUESTIONS[Math.floor(Math.random() * RACE_QUESTIONS.length)];
+      document.getElementById('race-clue-box').textContent = `🎯 ${currentRaceQuestion.prompt}`;
+
+      const correctLane = Math.floor(Math.random() * 3);
+      const options = [];
+      let wIdx = 0;
+      for (let i = 0; i < 3; i++) {
+        options.push(i === correctLane ? currentRaceQuestion.correct : currentRaceQuestion.wrong[wIdx++]);
+      }
+
+      const lanes = track.querySelectorAll('.road-lane');
+      const gateEls = [];
+      options.forEach((wordTxt, laneIdx) => {
+        const g = document.createElement('div');
+        g.className = 'word-gate';
+        g.dataset.correct = laneIdx === correctLane ? '1' : '0';
+        g.textContent = wordTxt;
+        g.style.top = '-44px';
+        lanes[laneIdx].appendChild(g);
+        gateEls.push(g);
+      });
+
+      const readyOverlay = document.getElementById('race-ready-overlay');
+      if (showReadyPrompt) {
+        readyOverlay.style.display = 'flex';
+        setCompanionText('సూచన చదివి, Start నొక్కండి. సరైన తెలుగు పదం ఉన్న లైన్‌లోకి కారును నడపండి!', true);
+      } else {
+        readyOverlay.style.display = 'none';
+        runRaceGatesLoop(gateEls, correctLane, currentRaceQuestion.correct);
+      }
+    }
+
+    function beginRaceGateMovement() {
+      playChime('tap');
+      document.getElementById('race-ready-overlay').style.display = 'none';
+      const track = document.getElementById('road-track');
+      const gateEls = Array.from(track.querySelectorAll('.word-gate'));
+      const correctLane = gateEls.findIndex(g => g.dataset.correct === '1');
+      runRaceGatesLoop(gateEls, correctLane, currentRaceQuestion ? currentRaceQuestion.correct : '');
+    }
+
+    function runRaceGatesLoop(gateEls, correctLane, correctWord) {
+      clearInterval(raceTimer);
+      let yPos = -44;
+      // Slower, comfortable speed: 2px every 65ms (~30 px/sec)
+      raceTimer = setInterval(() => {
+        yPos += 2;
+        gateEls.forEach(g => g.style.top = `${yPos}px`);
+
+        if (yPos >= 162) {
+          clearInterval(raceTimer);
+          if (carLane === correctLane) {
+            playChime('win');
+            raceGatesCleared++;
+            document.getElementById('race-progress').textContent = `${raceGatesCleared} / 3`;
+            if (raceGatesCleared >= 3) {
+              setCompanionText('అద్భుతం! మూడు గేట్లు దాటి కార్ రేస్ గెలిచారు!', true);
+              triggerVictory();
+            } else {
+              setCompanionText(`సరైనది! (${raceGatesCleared}/3). తదుపరి పదం వస్తోంది...`, true);
+              setTimeout(() => prepareRaceRound(false), 900);
+            }
+          } else {
+            playChime('error');
+            setCompanionText(`సరైన పదం "${correctWord}". మళ్ళీ ఈ గేట్ ప్రయత్నించండి!`, true);
+            setTimeout(() => prepareRaceRound(false), 1100);
+          }
+        }
+      }, 65);
     }
 
     function updateCarPosition() {
@@ -880,57 +968,12 @@
       updateCarPosition();
     }
 
-    function spawnNextRaceGate() {
-      clearInterval(raceTimer);
-      const track = document.getElementById('road-track');
-      track.querySelectorAll('.word-gate').forEach(g => g.remove());
-
-      const q = RACE_QUESTIONS[Math.floor(Math.random() * RACE_QUESTIONS.length)];
-      document.getElementById('race-clue-box').textContent = `🏎️ ${q.prompt}`;
-
-      const correctLane = Math.floor(Math.random() * 3);
-      const options = [];
-      let wIdx = 0;
-      for (let i = 0; i < 3; i++) {
-        options.push(i === correctLane ? q.correct : q.wrong[wIdx++]);
+    document.addEventListener('keydown', (e) => {
+      if (document.getElementById('race-view-box').style.display === 'flex') {
+        if (e.key === 'ArrowLeft') steerCar(-1);
+        else if (e.key === 'ArrowRight') steerCar(1);
       }
-
-      const lanes = track.querySelectorAll('.road-lane');
-      const gateEls = [];
-      options.forEach((wordTxt, laneIdx) => {
-        const g = document.createElement('div');
-        g.className = 'word-gate';
-        g.textContent = wordTxt;
-        g.style.top = '-40px';
-        lanes[laneIdx].appendChild(g);
-        gateEls.push(g);
-      });
-
-      let yPos = -40;
-      raceTimer = setInterval(() => {
-        yPos += 4;
-        gateEls.forEach(g => g.style.top = `${yPos}px`);
-
-        if (yPos >= 158) {
-          clearInterval(raceTimer);
-          if (carLane === correctLane) {
-            playChime('win');
-            raceGatesCleared++;
-            document.getElementById('race-progress').textContent = `${raceGatesCleared} / 3`;
-            if (raceGatesCleared >= 3) {
-              setCompanionText('అద్భుతం! కార్ రేస్ గెలిచారు!', true);
-              triggerVictory();
-            } else {
-              setTimeout(spawnNextRaceGate, 400);
-            }
-          } else {
-            playChime('error');
-            setCompanionText(`అయ్యో! సరైన పదం "${q.correct}". మళ్ళీ ప్రయత్నించండి!`, true);
-            setTimeout(spawnNextRaceGate, 700);
-          }
-        }
-      }, 45);
-    }
+    });
 
     function showSpinWheelModal() {
       isSpinning = false;
@@ -1302,7 +1345,7 @@
         .replace(/-20/g, ' twenty stars ')
         .replace(/-10/g, ' ten stars ')
         .replace(/⭐/g, ' నక్షత్రాలు ')
-        .replace(/[💡🔓⏩🏆📜🎁🔥👁✅🔄🪷🌊⏰😊✨🌌🌳🏝️✒️🏺🇮🇳📚🌍🙏😨🌅❤️🪕⚖️☀️📅🎨🎒🌿🔷🙌🕉️🤝🐘🏛️🏹🛞🎵🌙🧭🧘👥🦪✍️♾️👑🎓🏡🗣️💯🗺️💭🍯🐕🛖🐟👶🏠🌹🏞️🐄🗡️🔨🛠️🧑⛰️🪨🪔🖼️🍀💪🍎💰✊🏎️🎡🧞‍♂️🦜🏀🎬📲]/g, '')
+        .replace(/[💡🔓⏩🏆📜🎁🔥👁✅🔄🪷🌊⏰😊✨🌌🌳🏝️✒️🏺🇮🇳📚🌍🙏😨🌅❤️🪕⚖️☀️📅🎨🎒🌿🔷🙌🕉️🤝🐘🏛️🏹🛞🎵🌙🧭🧘👥🦪✍️♾️👑🎓🏡🗣️💯🗺️💭🍯🐕🛖🐟👶🏠🌹🏞️🐄🗡️🔨🛠️🧑⛰️🪨🪔🖼️🍀💪🍎💰✊🏎️🎡🧞‍♂️🦜🏀🎬📲🎯]/g, '')
         .trim();
       return txt;
     }
