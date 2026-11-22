@@ -867,7 +867,6 @@
       setCompanionText(isPastReview ? `గత స్థాయి ${levelNumber} జవాబులు ఇక్కడ ఉన్నాయి.` : `హాయ్! నేను అక్షర మిత్ర. Level ${levelNumber} సూచన వినడానికి గడిని నొక్కండి!`, false);
     }
 
-    // AKSHARA CAR RACE MINI-GAME (Level 7 - Clear instructions + Slow, readable speed)
     function startCarRaceStage(levelNumber) {
       document.getElementById('crossword-view-box').style.display = 'none';
       document.getElementById('mode-badge-banner').style.display = 'block';
@@ -930,7 +929,6 @@
     function runRaceGatesLoop(gateEls, correctLane, correctWord) {
       clearInterval(raceTimer);
       let yPos = -44;
-      // Slower, comfortable speed: 2px every 65ms (~30 px/sec)
       raceTimer = setInterval(() => {
         yPos += 2;
         gateEls.forEach(g => g.style.top = `${yPos}px`);
@@ -945,7 +943,6 @@
               setCompanionText('అద్భుతం! మూడు గేట్లు దాటి కార్ రేస్ గెలిచారు!', true);
               triggerVictory();
             } else {
-              setCompanionText(`సరైనది! (${raceGatesCleared}/3). తదుపరి పదం వస్తోంది...`, true);
               setTimeout(() => prepareRaceRound(false), 900);
             }
           } else {
@@ -975,6 +972,9 @@
       }
     });
 
+    // LUCKY SPIN WHEEL (Exact pointer-to-slice matching)
+    const SPIN_WHEEL_SLICES = [50, 100, 150, 200, 250, 500];
+
     function showSpinWheelModal() {
       isSpinning = false;
       document.getElementById('spin-result-text').textContent = '';
@@ -990,14 +990,21 @@
       isSpinning = true;
       playChime('tap');
 
-      const rewards = [50, 100, 150, 200, 250, 500];
-      const pickIdx = Math.floor(Math.random() * rewards.length);
-      const wonCoins = rewards[pickIdx];
+      const targetIdx = Math.floor(Math.random() * SPIN_WHEEL_SLICES.length);
+      const sliceCenterDeg = targetIdx * 60 + 30;
+      const desiredModDeg = (360 - sliceCenterDeg) % 360;
+      const currentModDeg = ((wheelDeg % 360) + 360) % 360;
+      const deltaToTarget = (desiredModDeg - currentModDeg + 360) % 360;
 
-      wheelDeg += 1440 + (360 - (pickIdx * 60 + 30));
+      wheelDeg += 1440 + deltaToTarget;
       document.getElementById('spin-wheel').style.transform = `rotate(${wheelDeg}deg)`;
 
       setTimeout(() => {
+        const finalModDeg = ((wheelDeg % 360) + 360) % 360;
+        const angleAtPointer = (360 - finalModDeg) % 360;
+        const landedIdx = Math.floor(angleAtPointer / 60) % SPIN_WHEEL_SLICES.length;
+        const wonCoins = SPIN_WHEEL_SLICES[landedIdx];
+
         playChime('win');
         if (window.confetti) window.confetti({ particleCount: 90, spread: 80, origin: { y: 0.5 } });
         score += wonCoins;
