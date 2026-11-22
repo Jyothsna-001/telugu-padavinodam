@@ -28,10 +28,12 @@
     .achievement-toast.show { top: 12px; }
     .lobby-header { text-align: center; position: relative; }
     .lobby-parrot { font-size: 36px; display: inline-block; animation: floatParrot 2.4s infinite ease-in-out; }
-    @keyframes floatParrot { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-    @keyframes geniePop { 0% { transform: scale(0.7) translateY(20px); opacity: 0; } 60% { transform: scale(1.08) translateY(-6px); opacity: 1; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
-    @keyframes genieGlow { 0%, 100% { box-shadow: 0 0 14px rgba(14,165,233,0.35); } 50% { box-shadow: 0 0 28px rgba(245,158,11,0.65); } }
-    @keyframes sparkleFloat { 0%, 100% { transform: translateY(0) scale(1); opacity: 0.7; } 50% { transform: translateY(-8px) scale(1.25); opacity: 1; } }
+    @keyframes floatParrot { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-7px) rotate(2deg); } }
+    @keyframes portalSpin { 0% { transform: translate(-50%, -50%) rotate(0deg) scale(0.4); opacity: 0; } 30% { opacity: 1; transform: translate(-50%, -50%) rotate(110deg) scale(1.08); } 100% { transform: translate(-50%, -50%) rotate(360deg) scale(1); opacity: 0.95; } }
+    @keyframes genieBurst { 0% { transform: scale(0.15) translateY(35px); opacity: 0; } 55% { transform: scale(1.18) translateY(-10px); opacity: 1; } 78% { transform: scale(0.95) translateY(2px); } 100% { transform: scale(1) translateY(0); opacity: 1; } }
+    @keyframes genieBob { 0%, 100% { transform: translateY(0px) scale(1); } 50% { transform: translateY(-8px) scale(1.04); } }
+    @keyframes genieGlow { 0%, 100% { box-shadow: 0 0 16px rgba(14,165,233,0.4); } 50% { box-shadow: 0 0 30px rgba(245,158,11,0.7); } }
+    @keyframes sparkleFloat { 0%, 100% { transform: translateY(0) scale(1); opacity: 0.7; } 50% { transform: translateY(-9px) scale(1.25); opacity: 1; } }
     @keyframes shakeCell { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
     @keyframes popCell { 0% { transform: scale(1); } 50% { transform: scale(1.12); } 100% { transform: scale(1); } }
     .lobby-title { font-family: 'Ramabhadra', sans-serif; font-size: 1.38rem; color: var(--primary); }
@@ -113,10 +115,13 @@
     .modal-card { background: #fff; width: 100%; border-radius: 18px; padding: 16px; text-align: center; max-height: 88vh; overflow-y: auto; position: relative; }
     .modal-btn { width: 100%; padding: 10px; background: var(--primary); color: #fff; border: none; border-radius: 12px; font-family: 'Ramabhadra', sans-serif; font-size: 0.88rem; cursor: pointer; margin-top: 8px; line-height: 1.25; }
     .whatsapp-btn { width: 100%; padding: 10px; background: #16a34a; color: #fff; border: none; border-radius: 12px; font-family: 'Ramabhadra', sans-serif; font-size: 0.88rem; cursor: pointer; margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 6px; }
-    .genie-card { background: linear-gradient(135deg, #ecfeff 0%, #fefce8 100%); border: 2.5px solid #0ea5e9; animation: geniePop 0.45s ease, genieGlow 2.4s infinite ease-in-out; }
-    .genie-avatar-wrap { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 4px; }
-    .genie-sparkle { font-size: 22px; animation: sparkleFloat 1.6s infinite ease-in-out; }
-    .genie-avatar { font-size: 56px; display: inline-block; animation: floatParrot 1.8s infinite ease-in-out; }
+    .genie-card { background: linear-gradient(135deg, #ecfeff 0%, #fefce8 100%); border: 2.5px solid #0ea5e9; animation: genieBurst 0.55s cubic-bezier(0.22, 1, 0.36, 1), genieGlow 2.4s infinite ease-in-out; }
+    .genie-stage { position: relative; width: 100%; min-height: 92px; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; overflow: hidden; border-radius: 14px; background: radial-gradient(circle at center, rgba(56,189,248,0.22), rgba(254,240,138,0.12), transparent 75%); }
+    .genie-portal-ring { position: absolute; left: 50%; top: 50%; width: 76px; height: 76px; border-radius: 50%; border: 3px dashed #0284c7; box-shadow: 0 0 18px rgba(14,165,233,0.55), inset 0 0 14px rgba(245,158,11,0.45); animation: portalSpin 4.5s linear infinite; pointer-events: none; }
+    .genie-avatar-wrap { position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; gap: 12px; animation: genieBurst 0.55s ease; }
+    .genie-sparkle { font-size: 22px; animation: sparkleFloat 1.5s infinite ease-in-out; }
+    .genie-avatar { font-size: 58px; display: inline-block; filter: drop-shadow(0 6px 10px rgba(2,132,199,0.35)); animation: genieBob 2s infinite ease-in-out; }
+    .genie-video-clip { width: 100%; max-height: 140px; border-radius: 12px; object-fit: cover; display: none; margin-bottom: 8px; border: 2px solid #38bdf8; }
     .genie-speech-box { background: #fff; border: 2px solid #bae6fd; border-radius: 14px; padding: 12px; margin: 10px 0; font-size: 0.85rem; line-height: 1.45; color: #0f172a; text-align: left; }
     .genie-dots { display: flex; justify-content: center; gap: 6px; margin: 8px 0; }
     .genie-dot { width: 8px; height: 8px; border-radius: 50%; background: #cbd5e1; transition: all 0.25s ease; }
@@ -300,10 +305,14 @@
     <!-- AYITHE GENIE INTRO MODAL -->
     <div class="modal-backdrop" id="genie-intro-modal">
       <div class="modal-card genie-card" id="genie-card-el">
-        <div class="genie-avatar-wrap">
-          <span class="genie-sparkle">✨</span>
-          <div class="genie-avatar" id="genie-step-icon">🧞‍♂️</div>
-          <span class="genie-sparkle" style="animation-delay:0.5s;">✨</span>
+        <video class="genie-video-clip" id="genie-video-clip" src="genie-intro.mp4" autoplay muted playsinline loop onerror="this.style.display='none'"></video>
+        <div class="genie-stage" id="genie-portal-stage">
+          <div class="genie-portal-ring"></div>
+          <div class="genie-avatar-wrap">
+            <span class="genie-sparkle">✨</span>
+            <div class="genie-avatar" id="genie-step-icon">🧞‍♂️</div>
+            <span class="genie-sparkle" style="animation-delay:0.5s;">✨</span>
+          </div>
         </div>
         <h2 style="font-family:'Ramabhadra',sans-serif; color:#0369a1; font-size:1.15rem;" id="genie-step-title">అయితే జీనీ స్వాగతం!</h2>
         <div class="genie-speech-box" id="genie-step-body"></div>
@@ -460,11 +469,11 @@
       }
     }
 
-    // AYITHE GENIE HOME INTRO STEPS (Always opens + 1-Tap Voice Unlock)
+    // AYITHE GENIE HOME INTRO STEPS (Portal Animation + 1-Tap Voice Unlock)
     const GENIE_INTRO_STEPS = [
       {
         icon: '🧞‍♂️',
-        title: 'అయితే జీనీ వచ్చేశాడు! ✨',
+        title: 'అయితే పోర్టల్ తెరుచుకుంది! ✨',
         body: 'తెలుగు పదవినోదానికి స్వాగతం! <br/><br/><b>నా గైడ్ వినడానికి కింద ఉన్న బటన్ నొక్కండి 👇</b>',
         speech: ''
       },
@@ -492,8 +501,20 @@
     function openGenieIntro() {
       genieStepIdx = 0;
       renderGenieStep();
-      document.getElementById('genie-intro-modal').style.display = 'flex';
-      if (window.confetti) window.confetti({ particleCount: 45, spread: 60, origin: { y: 0.45 } });
+      const modal = document.getElementById('genie-intro-modal');
+      modal.style.display = 'flex';
+      const stage = document.getElementById('genie-portal-stage');
+      if (stage) {
+        stage.style.animation = 'none';
+        void stage.offsetWidth;
+        stage.style.animation = 'genieBurst 0.55s ease';
+      }
+      const vid = document.getElementById('genie-video-clip');
+      if (vid && vid.getAttribute('src')) {
+        vid.currentTime = 0;
+        vid.play().catch(() => {});
+      }
+      if (window.confetti) window.confetti({ particleCount: 55, spread: 70, origin: { y: 0.45 } });
     }
 
     function renderGenieStep() {
@@ -560,7 +581,6 @@
       document.getElementById('theme-pill').textContent = t.name;
     }
 
-    // 10-Level Curated Data across Ayithe Specials, General, Poems, and Proverbs
     const CATEGORIES_DATA = {
       ayithe: [
         { level: 1, gridSize: 3, distractors: ['స','క','లం','వ'], wisdom: '🎬 Episode 1 (వేమన): "సాధనమున పనులు సమకూరు ధరలోన!" — Practice beats luck every single time!', words: [
@@ -748,7 +768,6 @@
 
       applyThemeAndDifficultyTier(levelNumber);
 
-      // Level 7 -> Playable Akshara Car Race Mini-Game!
       if (!isPastReview && levelNumber === 7) {
         startCarRaceStage(levelNumber);
         return;
@@ -828,7 +847,6 @@
       setCompanionText(isPastReview ? `గత స్థాయి ${levelNumber} జవాబులు ఇక్కడ ఉన్నాయి.` : `హాయ్! నేను అక్షర మిత్ర. Level ${levelNumber} సూచన వినడానికి గడిని నొక్కండి!`, false);
     }
 
-    // AKSHARA CAR RACE MINI-GAME (Level 7)
     function startCarRaceStage(levelNumber) {
       document.getElementById('crossword-view-box').style.display = 'none';
       document.getElementById('mode-badge-banner').style.display = 'block';
@@ -906,7 +924,6 @@
       }, 45);
     }
 
-    // LUCKY SPIN WHEEL (Level 8)
     function showSpinWheelModal() {
       isSpinning = false;
       document.getElementById('spin-result-text').textContent = '';
@@ -1204,9 +1221,7 @@
         showAchievementAnimation('🔥', `హ్యాట్రిక్ విజయం (${streak} వరుస)!`, '+50 బోనస్ నక్షత్రాలు!');
       }
 
-      // Level 5 ONLY -> Kavi Parichayam Milestone
       if (completedLevelNumber === 5) { showTributeModal(); return; }
-      // Level 8 -> Lucky Spin Wheel
       if (completedLevelNumber === 8) { showSpinWheelModal(); return; }
 
       const isFinalLevel = completedLevelNumber >= MAX_LEVELS;
