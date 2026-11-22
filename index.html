@@ -103,10 +103,10 @@
     .steer-btn { flex: 1; padding: 8px; background: var(--primary); color: #fff; border: none; border-radius: 12px; font-family: 'Ramabhadra', sans-serif; font-size: 0.9rem; cursor: pointer; }
 
     /* LUCKY SPIN WHEEL MODAL */
-    .wheel-wrapper { position: relative; width: 200px; height: 200px; margin: 10px auto; }
-    .wheel-pointer { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); font-size: 26px; z-index: 20; }
-    .spin-wheel { width: 100%; height: 100%; border-radius: 50%; border: 5px solid #b45309; position: relative; overflow: hidden; transition: transform 3.2s cubic-bezier(0.18, 0.85, 0.25, 1); background: conic-gradient(#fde68a 0deg 60deg, #fca5a5 60deg 120deg, #86efac 120deg 180deg, #93c5fd 180deg 240deg, #d8b4fe 240deg 300deg, #fdba74 300deg 360deg); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
-    .wheel-label { position: absolute; left: 50%; top: 50%; transform-origin: 0 0; font-family: 'Ramabhadra', sans-serif; font-size: 0.8rem; font-weight: 900; color: #0f172a; }
+    .wheel-wrapper { position: relative; width: 208px; height: 208px; margin: 12px auto; }
+    .wheel-pointer { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 26px; z-index: 20; }
+    .spin-wheel { width: 100%; height: 100%; border-radius: 50%; border: 5px solid #b45309; position: relative; transition: transform 3.2s cubic-bezier(0.18, 0.85, 0.25, 1); background: conic-gradient(#fde68a 0deg 60deg, #fca5a5 60deg 120deg, #86efac 120deg 180deg, #93c5fd 180deg 240deg, #d8b4fe 240deg 300deg, #fdba74 300deg 360deg); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
+    .wheel-slice-label { position: absolute; left: 50%; top: 50%; font-family: 'Ramabhadra', sans-serif; font-size: 0.78rem; font-weight: 900; color: #0f172a; white-space: nowrap; }
 
     /* SIMPLE ANIMATED EMOJI GENIE OVERLAY FOR AYITHE 360 */
     .genie-overlay { display: none; position: absolute; inset: 0; background: rgba(15,23,42,0.38); backdrop-filter: blur(2px); z-index: 120; flex-direction: column; justify-content: space-between; padding: 14px; border-radius: 26px; overflow: hidden; }
@@ -357,12 +357,12 @@
         <div class="wheel-wrapper">
           <div class="wheel-pointer">🔻</div>
           <div class="spin-wheel" id="spin-wheel">
-            <div class="wheel-label" style="transform: rotate(30deg) translate(24px, -6px);">+50 ⭐</div>
-            <div class="wheel-label" style="transform: rotate(90deg) translate(24px, -6px);">+100 ⭐</div>
-            <div class="wheel-label" style="transform: rotate(150deg) translate(24px, -6px);">+150 ⭐</div>
-            <div class="wheel-label" style="transform: rotate(210deg) translate(24px, -6px);">+200 ⭐</div>
-            <div class="wheel-label" style="transform: rotate(270deg) translate(24px, -6px);">+250 ⭐</div>
-            <div class="wheel-label" style="transform: rotate(330deg) translate(24px, -6px);">+500 ⭐</div>
+            <div class="wheel-slice-label" style="transform: translate(-50%, -50%) rotate(30deg) translateY(-66px) rotate(-30deg);">+50</div>
+            <div class="wheel-slice-label" style="transform: translate(-50%, -50%) rotate(90deg) translateY(-66px) rotate(-90deg);">+100</div>
+            <div class="wheel-slice-label" style="transform: translate(-50%, -50%) rotate(150deg) translateY(-66px) rotate(-150deg);">+150</div>
+            <div class="wheel-slice-label" style="transform: translate(-50%, -50%) rotate(210deg) translateY(-66px) rotate(-210deg);">+200</div>
+            <div class="wheel-slice-label" style="transform: translate(-50%, -50%) rotate(270deg) translateY(-66px) rotate(-270deg);">+250</div>
+            <div class="wheel-slice-label" style="transform: translate(-50%, -50%) rotate(330deg) translateY(-66px) rotate(-330deg);">+500</div>
           </div>
         </div>
         <p id="spin-result-text" style="font-weight:800; color:#1b5e20; min-height:22px; font-size:0.92rem;"></p>
@@ -972,7 +972,7 @@
       }
     });
 
-    // LUCKY SPIN WHEEL (Exact pointer-to-slice matching)
+    // LUCKY SPIN WHEEL (Exact slice alignment with conic-gradient)
     const SPIN_WHEEL_SLICES = [50, 100, 150, 200, 250, 500];
 
     function showSpinWheelModal() {
