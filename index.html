@@ -117,7 +117,6 @@
     .genie-avatar-wrap { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 4px; }
     .genie-sparkle { font-size: 22px; animation: sparkleFloat 1.6s infinite ease-in-out; }
     .genie-avatar { font-size: 56px; display: inline-block; animation: floatParrot 1.8s infinite ease-in-out; }
-    .genie-speak-btn { background: #0284c7; color: #fff; border: none; border-radius: 10px; padding: 4px 10px; font-size: 0.74rem; font-weight: 700; cursor: pointer; margin-top: 4px; }
     .genie-speech-box { background: #fff; border: 2px solid #bae6fd; border-radius: 14px; padding: 12px; margin: 10px 0; font-size: 0.85rem; line-height: 1.45; color: #0f172a; text-align: left; }
     .genie-dots { display: flex; justify-content: center; gap: 6px; margin: 8px 0; }
     .genie-dot { width: 8px; height: 8px; border-radius: 50%; background: #cbd5e1; transition: all 0.25s ease; }
@@ -154,7 +153,7 @@
     <!-- LOBBY SCREEN -->
     <div class="view-screen" id="lobby-screen">
       <div class="lobby-header">
-        <button class="genie-replay-btn" type="button" onclick="openGenieIntro(true)">🧞‍♂️ గైడ్</button>
+        <button class="genie-replay-btn" type="button" onclick="openGenieIntro()">🧞‍♂️ గైడ్</button>
         <div class="lobby-parrot">🧞‍♂️🦜</div>
         <h1 class="lobby-title">తెలుగు పదవినోదం</h1>
         <p class="lobby-subtitle">By @aithe360 • 10-Level Telugu Word Adventure</p>
@@ -307,7 +306,6 @@
           <span class="genie-sparkle" style="animation-delay:0.5s;">✨</span>
         </div>
         <h2 style="font-family:'Ramabhadra',sans-serif; color:#0369a1; font-size:1.15rem;" id="genie-step-title">అయితే జీనీ స్వాగతం!</h2>
-        <button class="genie-speak-btn" type="button" onclick="speakGenieStep()">🔊 జీనీ మాట విను / Listen</button>
         <div class="genie-speech-box" id="genie-step-body"></div>
         <div class="genie-dots">
           <div class="genie-dot active" id="gdot-0"></div>
@@ -316,7 +314,7 @@
         </div>
         <div class="genie-actions">
           <button class="modal-btn" type="button" style="background:#e2e8f0; color:#334155; flex:0.6; margin-top:0;" onclick="closeGenieIntro()">Skip</button>
-          <button class="modal-btn" id="genie-next-btn" type="button" style="background:#0284c7; flex:1.4; margin-top:0;" onclick="nextGenieStep()">తరువాత ➔ / Next</button>
+          <button class="modal-btn" id="genie-next-btn" type="button" style="background:#0284c7; flex:1.4; margin-top:0;" onclick="nextGenieStep()">🔊 జీనీ మాట వినండి! / Listen</button>
         </div>
       </div>
     </div>
@@ -462,8 +460,14 @@
       }
     }
 
-    // AYITHE GENIE HOME INTRO STEPS (With Voice Narration!)
+    // AYITHE GENIE HOME INTRO STEPS (Always opens + 1-Tap Voice Unlock)
     const GENIE_INTRO_STEPS = [
+      {
+        icon: '🧞‍♂️',
+        title: 'అయితే జీనీ వచ్చేశాడు! ✨',
+        body: 'తెలుగు పదవినోదానికి స్వాగతం! <br/><br/><b>నా గైడ్ వినడానికి కింద ఉన్న బటన్ నొక్కండి 👇</b>',
+        speech: ''
+      },
       {
         icon: '🧞‍♂️',
         title: 'అయితే... తెలుగు పదవినోదానికి స్వాగతం!',
@@ -485,13 +489,11 @@
     ];
     let genieStepIdx = 0;
 
-    function openGenieIntro(forceShow = false) {
-      if (!forceShow && localStorage.getItem('telugu_padam_genie_seen') === 'yes') return;
+    function openGenieIntro() {
       genieStepIdx = 0;
       renderGenieStep();
       document.getElementById('genie-intro-modal').style.display = 'flex';
       if (window.confetti) window.confetti({ particleCount: 45, spread: 60, origin: { y: 0.45 } });
-      speakGenieStep();
     }
 
     function renderGenieStep() {
@@ -500,15 +502,22 @@
       document.getElementById('genie-step-title').textContent = s.title;
       document.getElementById('genie-step-body').innerHTML = s.body;
       [0, 1, 2].forEach(i => {
-        document.getElementById(`gdot-${i}`).classList.toggle('active', i === genieStepIdx);
+        const dot = document.getElementById(`gdot-${i}`);
+        if (dot) dot.classList.toggle('active', i === Math.max(0, genieStepIdx - 1));
       });
-      document.getElementById('genie-next-btn').textContent =
-        genieStepIdx === GENIE_INTRO_STEPS.length - 1 ? 'ఆట స్టార్ట్ చేద్దాం! 🚀' : 'తరువాత ➔ / Next';
+      const nextBtn = document.getElementById('genie-next-btn');
+      if (genieStepIdx === 0) {
+        nextBtn.textContent = '🔊 జీనీ మాట వినండి! / Listen';
+      } else if (genieStepIdx === GENIE_INTRO_STEPS.length - 1) {
+        nextBtn.textContent = 'ఆట స్టార్ట్ చేద్దాం! 🚀';
+      } else {
+        nextBtn.textContent = 'తరువాత ➔ / Next';
+      }
     }
 
     function speakGenieStep() {
       const s = GENIE_INTRO_STEPS[genieStepIdx];
-      speakTextDirectly(s.speech);
+      if (s && s.speech) speakTextDirectly(s.speech);
     }
 
     function nextGenieStep() {
@@ -524,7 +533,6 @@
 
     function closeGenieIntro() {
       if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-      localStorage.setItem('telugu_padam_genie_seen', 'yes');
       document.getElementById('genie-intro-modal').style.display = 'none';
       checkDailyBonus();
     }
@@ -555,12 +563,10 @@
     // 10-Level Curated Data across Ayithe Specials, General, Poems, and Proverbs
     const CATEGORIES_DATA = {
       ayithe: [
-        // Level 1: సాధన (H) + ధనం (V) intersecting cleanly at ధ
         { level: 1, gridSize: 3, distractors: ['స','క','లం','వ'], wisdom: '🎬 Episode 1 (వేమన): "సాధనమున పనులు సమకూరు ధరలోన!" — Practice beats luck every single time!', words: [
           { num: 1, word: ['సా','ధ','న'], dir: 'H', r: 1, c: 0, clue: '🏀 వేమన చెప్పిన విజయానికి అసలైన మంత్రం (Practice)', hint: '______మున పనులు సమకూరు ధరలోన' },
           { num: 2, word: ['ధ','నం'], dir: 'V', r: 1, c: 1, clue: '💰 కష్టపడి సంపాదించే సంపద (Wealth)', hint: 'విద్యయే నిజమైన ______' }
         ] },
-        // Level 2: ఆచరణ (H) + వచనం (V) intersecting cleanly at చ
         { level: 2, gridSize: 4, distractors: ['ఆ','చా','రా','ణా'], wisdom: '🎬 Episode 2 (తెనాలి): "ఆరంభశూరత్వం కాదు, ఆచరణ ముఖ్యం!" — Starting beats overthinking!', words: [
           { num: 1, word: ['ఆ','చ','ర','ణ'], dir: 'H', r: 1, c: 0, clue: '✨ తెనాలి రామకృష్ణ మెచ్చిన పనిని ప్రారంభించే గుణం (Execution)', hint: 'ఆరంభశూరత్వం కాదు, ______ ముఖ్యం' },
           { num: 2, word: ['వ','చ','నం'], dir: 'V', r: 0, c: 1, clue: '📜 పద్యం కాకుండా వాక్య రూపంలో రాసే మాట (Prose / Saying)', hint: 'మంచి మాట లేదా సూక్తి' }
@@ -1306,12 +1312,8 @@
     document.getElementById('lobby-stars').textContent = score;
     updateDictCountBadge();
     setTimeout(() => {
-      if (localStorage.getItem('telugu_padam_genie_seen') !== 'yes') {
-        openGenieIntro(true);
-      } else {
-        checkDailyBonus();
-      }
-    }, 500);
+      openGenieIntro();
+    }, 350);
   </script>
 </body>
 </html>
