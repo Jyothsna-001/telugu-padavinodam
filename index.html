@@ -15,6 +15,8 @@
       --warm-sand: #fffbeb;
       --teal-accent: #0f766e;
       --teal-light: #f0fdfa;
+      --parrot-green: #16a34a;
+      --parrot-light: #dcfce7;
       --text-dark: #1f2937;
       --text-muted: #6b7280;
       --border-color: #e5e7eb;
@@ -22,35 +24,44 @@
       --error: #b91c1c;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Poppins', 'Noto Sans Telugu', sans-serif;
       background-color: var(--bg-color);
       color: var(--text-dark);
       line-height: 1.6;
-      padding: 20px 16px 90px;
+      padding: 18px 14px 40px;
       display: flex;
       justify-content: center;
+      overflow-x: hidden;
+    }
+
+    /* Fullscreen Sprinkles & Confetti Canvas */
+    #effectsCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
     }
 
     .app-container {
       width: 100%;
-      max-width: 660px;
+      max-width: 700px;
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 16px;
+      position: relative;
+      z-index: 1;
     }
 
-    /* Header & Dual Score Badges */
+    /* Header & Separate Score Badges */
     header {
       text-align: center;
       background: var(--card-bg);
-      padding: 20px;
+      padding: 18px;
       border-radius: 16px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
       border: 1px solid var(--border-color);
@@ -59,26 +70,26 @@
     header h1 {
       font-size: 1.75rem;
       color: var(--primary-gold);
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
 
     header p {
       font-size: 0.9rem;
       color: var(--text-muted);
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .score-bar {
       display: flex;
       justify-content: center;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
     .badge {
       padding: 6px 14px;
       border-radius: 999px;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 600;
       display: inline-flex;
       align-items: center;
@@ -91,13 +102,19 @@
       border: 1px solid #fde68a;
     }
 
+    .badge-level {
+      background: var(--parrot-light);
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+
     .badge-quiz {
       background: var(--teal-light);
       color: var(--teal-accent);
       border: 1px solid #99f6e4;
     }
 
-    /* Native-Styled Collapsible Telugu Movies Quiz Card (No Ad Look) */
+    /* Native Collapsible Telugu Movies Quiz Card */
     .quiz-accordion {
       border-radius: 16px;
       overflow: hidden;
@@ -112,19 +129,16 @@
       background: var(--warm-sand);
       color: var(--text-dark);
       border: none;
-      padding: 14px 18px;
+      padding: 13px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       cursor: pointer;
       font-family: inherit;
       text-align: left;
-      transition: background 0.2s ease;
     }
 
-    .quiz-toggle-bar:hover {
-      background: #fef3c7;
-    }
+    .quiz-toggle-bar:hover { background: #fef3c7; }
 
     .quiz-bar-left {
       display: flex;
@@ -133,14 +147,10 @@
       flex-wrap: wrap;
     }
 
-    .quiz-bar-title {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text-dark);
-    }
+    .quiz-bar-title { font-size: 0.98rem; font-weight: 700; }
 
     .quiz-bar-sub {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       background: var(--teal-light);
       color: var(--teal-accent);
       border: 1px solid #99f6e4;
@@ -153,7 +163,7 @@
       background: var(--teal-accent);
       color: #ffffff;
       font-weight: 600;
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       padding: 6px 14px;
       border-radius: 999px;
       white-space: nowrap;
@@ -161,14 +171,12 @@
 
     .quiz-panel {
       display: none;
-      padding: 20px;
+      padding: 18px;
       background: #ffffff;
       border-top: 1px solid var(--border-color);
     }
 
-    .quiz-panel.open {
-      display: block;
-    }
+    .quiz-panel.open { display: block; }
 
     .quiz-meta {
       display: flex;
@@ -179,10 +187,9 @@
     }
 
     .quiz-question {
-      font-size: 1.08rem;
+      font-size: 1.05rem;
       font-weight: 600;
-      margin-bottom: 16px;
-      color: var(--text-dark);
+      margin-bottom: 14px;
       line-height: 1.7;
     }
 
@@ -192,10 +199,8 @@
       gap: 10px;
     }
 
-    @media (max-width: 480px) {
-      .quiz-options {
-        grid-template-columns: 1fr;
-      }
+    @media (max-width: 500px) {
+      .quiz-options { grid-template-columns: 1fr; }
     }
 
     .option-btn {
@@ -204,10 +209,9 @@
       border-radius: 10px;
       background: #ffffff;
       font-family: inherit;
-      font-size: 0.96rem;
+      font-size: 0.95rem;
       cursor: pointer;
       text-align: left;
-      transition: all 0.15s ease;
     }
 
     .option-btn:hover:not(:disabled) {
@@ -215,37 +219,22 @@
       background: var(--teal-light);
     }
 
-    .option-btn.correct {
-      background: #dcfce7;
-      border-color: var(--success);
-      color: var(--success);
-      font-weight: 600;
-    }
-
-    .option-btn.wrong {
-      background: #fee2e2;
-      border-color: var(--error);
-      color: var(--error);
-    }
+    .option-btn.correct { background: #dcfce7; border-color: var(--success); color: var(--success); font-weight: 600; }
+    .option-btn.wrong { background: #fee2e2; border-color: var(--error); color: var(--error); }
 
     .quiz-footer {
-      margin-top: 16px;
+      margin-top: 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 10px;
     }
 
-    .quiz-feedback {
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
-
     .btn-next-quiz {
       background: var(--teal-accent);
       color: #fff;
       border: none;
-      padding: 8px 18px;
+      padding: 8px 16px;
       border-radius: 8px;
       font-family: inherit;
       font-weight: 600;
@@ -253,37 +242,195 @@
       display: none;
     }
 
-    /* Main Crossword Card with Categories */
-    .crossword-card {
-      background: var(--card-bg);
-      padding: 24px;
+    /* Integrated Aksharamitra Parrot Assistant Strip */
+    .parrot-card {
+      background: linear-gradient(135deg, #f0fdf4, #fffbeb);
+      border: 1.5px solid #86efac;
       border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-      border: 1px solid var(--border-color);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.08);
     }
 
-    .section-title {
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin-bottom: 12px;
+    .parrot-avatar {
+      width: 62px;
+      height: 62px;
+      flex-shrink: 0;
+      background: #ffffff;
+      border-radius: 50%;
+      border: 2px solid var(--parrot-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: transform 0.2s ease;
+    }
+
+    .parrot-avatar.speaking {
+      animation: parrotTalk 0.45s infinite alternate;
+    }
+
+    @keyframes parrotTalk {
+      from { transform: scale(1) rotate(-3deg); }
+      to { transform: scale(1.07) rotate(3deg); }
+    }
+
+    .parrot-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .parrot-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
     }
 
-    /* Category Pills */
+    .parrot-name {
+      font-weight: 700;
+      color: #166534;
+      font-size: 0.96rem;
+    }
+
+    .parrot-controls {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .btn-mini {
+      padding: 5px 11px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-guide { background: #dcfce7; color: #166534; border-color: #86efac; }
+    .btn-voice-hint { background: #fef3c7; color: #92400e; border-color: #fcd34d; }
+    .btn-mute { background: #ffffff; color: var(--text-muted); border-color: #d1d5db; }
+
+    .parrot-speech {
+      font-size: 0.9rem;
+      color: var(--text-dark);
+      background: #ffffff;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      line-height: 1.55;
+    }
+
+    .parrot-ask-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .parrot-ask-row input {
+      flex: 1;
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      font-family: inherit;
+      font-size: 0.84rem;
+    }
+
+    .parrot-ask-row button {
+      background: var(--parrot-green);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Main Crossword Card */
+    .crossword-card {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      border: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    .card-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: 1.12rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-pause {
+      background: #fff7ed;
+      color: #c2410c;
+      border: 1.5px solid #fdba74;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-pause.paused {
+      background: var(--parrot-green);
+      color: #ffffff;
+      border-color: var(--parrot-green);
+    }
+
+    /* Category Pills (Locked unless Paused) */
+    .category-section {
+      margin-bottom: 16px;
+      padding: 10px 12px;
+      background: #f9fafb;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .category-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
     .category-bar {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      margin-bottom: 18px;
     }
 
     .cat-btn {
       padding: 6px 14px;
       border-radius: 999px;
-      border: 1.5px solid #e5e7eb;
-      background: #f9fafb;
+      border: 1.5px solid #d1d5db;
+      background: #ffffff;
       color: var(--text-dark);
       font-family: inherit;
       font-size: 0.85rem;
@@ -292,20 +439,44 @@
       transition: all 0.15s ease;
     }
 
-    .cat-btn:hover {
-      border-color: var(--primary-gold);
-    }
-
     .cat-btn.active {
       background: var(--primary-gold);
       color: #ffffff;
       border-color: var(--primary-gold);
     }
 
+    .cat-btn.locked:not(.active) {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    /* Pause Overlay inside Game Area */
+    .game-play-area {
+      position: relative;
+    }
+
+    .pause-overlay {
+      display: none;
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(4px);
+      z-index: 10;
+      border-radius: 12px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      border: 2px dashed #fdba74;
+    }
+
+    .pause-overlay.visible { display: flex; }
+
     .grid-wrapper {
       display: flex;
       justify-content: center;
-      margin: 14px 0 22px;
+      margin: 12px 0 18px;
     }
 
     .crossword-grid {
@@ -338,36 +509,68 @@
       border-color: #1f2937;
     }
 
+    .cell.hinted {
+      background: #fef3c7;
+      border-color: var(--primary-gold);
+      color: #92400e;
+    }
+
     .clues-box {
       background: #f9fafb;
-      padding: 16px;
+      padding: 14px 16px;
       border-radius: 12px;
-      margin-bottom: 18px;
-      font-size: 0.95rem;
+      margin-bottom: 16px;
+      font-size: 0.94rem;
       line-height: 1.8;
     }
 
     .clues-box h3 {
       font-size: 0.95rem;
       color: var(--primary-gold);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
+    /* Complete Action Toolbar: Check, Hint, Skip, Clear */
     .action-row {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       justify-content: center;
+      flex-wrap: wrap;
     }
 
     .btn-primary {
       background: var(--primary-gold);
       color: #ffffff;
       border: none;
-      padding: 10px 22px;
+      padding: 10px 18px;
       border-radius: 10px;
       font-family: inherit;
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .btn-hint {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1.5px solid #fcd34d;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .btn-skip {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1.5px solid #bfdbfe;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 0.9rem;
       cursor: pointer;
     }
 
@@ -375,150 +578,156 @@
       background: #ffffff;
       color: var(--text-dark);
       border: 1.5px solid #d1d5db;
-      padding: 10px 18px;
+      padding: 10px 16px;
       border-radius: 10px;
       font-family: inherit;
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       cursor: pointer;
     }
 
     .cw-status {
       text-align: center;
-      margin-top: 14px;
+      margin-top: 12px;
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 0.94rem;
+      min-height: 24px;
     }
 
-    /* Floating Aksharamitra Chatbot Widget */
-    .chat-fab {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: var(--primary-gold-dark);
-      color: #ffffff;
-      border: none;
-      border-radius: 999px;
-      padding: 12px 18px;
-      font-family: inherit;
-      font-size: 0.92rem;
-      font-weight: 600;
-      box-shadow: 0 6px 18px rgba(180, 83, 9, 0.32);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      z-index: 1000;
-    }
-
-    .chat-drawer {
-      position: fixed;
-      bottom: 76px;
-      right: 20px;
-      width: 320px;
-      max-width: calc(100vw - 40px);
-      background: #ffffff;
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
+    /* Modals: Welcome Category Picker, Pictorial Kavi Parichayam, Mini-Game, Level 10 Blast */
+    .modal-backdrop {
       display: none;
-      flex-direction: column;
-      overflow: hidden;
-      z-index: 1000;
+      position: fixed;
+      inset: 0;
+      background: rgba(17, 24, 39, 0.65);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
     }
 
-    .chat-drawer.open {
+    .modal-backdrop.open { display: flex; }
+
+    .modal-card {
+      background: #ffffff;
+      border-radius: 20px;
+      max-width: 500px;
+      width: 100%;
+      padding: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.22);
+      text-align: center;
+      border: 2px solid #fde68a;
+      animation: popIn 0.25s ease;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-card h2 {
+      color: var(--primary-gold-dark);
+      font-size: 1.35rem;
+      margin-bottom: 8px;
+    }
+
+    .welcome-choices {
       display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 16px;
     }
 
-    .chat-header {
-      background: var(--primary-gold);
-      color: #ffffff;
-      padding: 12px 16px;
+    .welcome-choice-btn {
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 2px solid #fde68a;
+      background: var(--warm-sand);
+      font-family: inherit;
+      font-size: 1rem;
       font-weight: 700;
-      font-size: 0.95rem;
+      color: var(--text-dark);
+      cursor: pointer;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .chat-close {
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 1.1rem;
-      cursor: pointer;
-    }
-
-    .chat-messages {
-      padding: 14px;
-      height: 220px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      font-size: 0.88rem;
-      background: #faf7f2;
-    }
-
-    .msg-bot, .msg-user {
-      padding: 8px 12px;
-      border-radius: 12px;
-      max-width: 85%;
-      line-height: 1.5;
-    }
-
-    .msg-bot {
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-      align-self: flex-start;
-    }
-
-    .msg-user {
-      background: var(--primary-gold-light);
-      color: #92400e;
-      align-self: flex-end;
-      font-weight: 600;
-    }
-
-    .chat-input-row {
-      display: flex;
-      border-top: 1px solid var(--border-color);
-      background: #ffffff;
-    }
-
-    .chat-input-row input {
-      flex: 1;
-      border: none;
-      padding: 10px 12px;
-      font-family: inherit;
-      font-size: 0.88rem;
-      outline: none;
-    }
-
-    .chat-input-row button {
+    .welcome-choice-btn:hover {
       background: var(--primary-gold);
-      color: #fff;
-      border: none;
-      padding: 0 14px;
-      font-weight: 600;
+      color: #ffffff;
+      border-color: var(--primary-gold);
+    }
+
+    /* Pictorial Kavi Parichayam Styling */
+    .kavi-frame {
+      background: linear-gradient(135deg, #fffbeb, #fef3c7);
+      border: 2px solid #f59e0b;
+      border-radius: 16px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+
+    .kavi-portrait {
+      width: 110px;
+      height: 110px;
+      margin: 0 auto 10px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 3px solid #d97706;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .kavi-poem-box {
+      background: #ffffff;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-style: italic;
+      color: #92400e;
+      margin-top: 10px;
+      border-left: 4px solid #d97706;
+      font-size: 0.92rem;
+    }
+
+    /* Mini-Game Unscramble Tiles */
+    .scramble-tiles {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 16px 0;
+      flex-wrap: wrap;
+    }
+
+    .tile-chip {
+      padding: 10px 16px;
+      background: #fef3c7;
+      border: 2px solid #f59e0b;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      font-weight: 700;
       cursor: pointer;
     }
   </style>
 </head>
 <body>
+  <canvas id="effectsCanvas"></canvas>
+
   <div class="app-container">
-    <!-- Header with Separate Score Badges -->
+    <!-- Header -->
     <header>
       <h1>తెలుగు పద వినోదం</h1>
-      <p>సరదాగా తెలుగు పదాలు నేర్చుకుందాం!</p>
+      <p>సరదాగా తెలుగు పదాలు, పద్యాలు, సామెతలు నేర్చుకుందాం!</p>
       <div class="score-bar">
         <span class="badge badge-crossword">🏆 పద వినోదం స్కోర్: <strong id="cwScoreDisplay">0</strong></span>
+        <span class="badge badge-level">⭐ స్థాయి (Level): <strong id="levelDisplay">1</strong></span>
         <span class="badge badge-quiz">🎬 సినిమా క్విజ్ స్కోర్: <strong id="quizScoreDisplay">0</strong></span>
       </div>
     </header>
 
-    <!-- Warm, Native-Styled Collapsible Telugu Movies Quiz Card -->
+    <!-- Native Collapsible Telugu Movies Quiz Card -->
     <section class="quiz-accordion" aria-label="Telugu Movies Quiz">
       <button class="quiz-toggle-bar" id="quizToggleBtn" aria-expanded="false">
         <div class="quiz-bar-left">
@@ -536,162 +745,399 @@
         <div class="quiz-question" id="quizQuestion">Loading...</div>
         <div class="quiz-options" id="quizOptions"></div>
         <div class="quiz-footer">
-          <span class="quiz-feedback" id="quizFeedback"></span>
+          <span class="quiz-feedback" id="quizFeedback" style="font-size:0.9rem;font-weight:600;"></span>
           <button class="btn-next-quiz" id="nextQuizBtn">తదుపరి ప్రశ్న →</button>
         </div>
       </div>
     </section>
 
-    <!-- Main Telugu Crossword Area with Categories -->
+    <!-- Integrated Aksharamitra Parrot Assistant -->
+    <section class="parrot-card" aria-label="Aksharamitra Parrot Guide">
+      <div class="parrot-avatar" id="parrotAvatar" title="అక్షరమిత్ర చిలుక">
+        <!-- Custom SVG Parrot Mascot -->
+        <svg width="46" height="46" viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="34" r="18" fill="#22c55e"/>
+          <path d="M24 20C24 12 36 10 42 18C45 22 44 30 38 33L24 28V20Z" fill="#16a34a"/>
+          <path d="M41 21C47 21 50 25 47 29C44 31 40 29 39 26Z" fill="#f59e0b"/>
+          <path d="M40 26C44 27 45 30 42 31C39 31 38 28 40 26Z" fill="#dc2626"/>
+          <circle cx="35" cy="21" r="3.2" fill="#ffffff"/>
+          <circle cx="36" cy="21" r="1.6" fill="#111827"/>
+          <path d="M18 34C14 40 16 48 24 49C22 43 23 38 27 35Z" fill="#15803d"/>
+          <path d="M28 50L25 57M35 50L37 57" stroke="#d97706" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="parrot-body">
+        <div class="parrot-top">
+          <span class="parrot-name">🦜 అక్షరమిత్ర (Aksharamitra)</span>
+          <div class="parrot-controls">
+            <button class="btn-mini btn-guide" id="voiceGuideBtn">🔊 మార్గదర్శి (Guide)</button>
+            <button class="btn-mini btn-voice-hint" id="parrotHintBtn">💡 సూచన (Hint)</button>
+            <button class="btn-mini btn-mute" id="muteToggleBtn">🔈 వాయిస్ ఆన్</button>
+          </div>
+        </div>
+        <div class="parrot-speech" id="parrotSpeech">
+          నమస్కారం! నేను మీ అక్షరమిత్ర చిలుకను. ఆట నియమాలు వినడానికి "మార్గదర్శి" నొక్కండి లేదా సందేహం ఉంటే అడగండి!
+        </div>
+        <div class="parrot-ask-row">
+          <input type="text" id="parrotInput" placeholder="అక్షరమిత్రను అడగండి (ఉదా: సూచన, నియమాలు)..." />
+          <button id="parrotAskBtn">అడుగు</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Telugu Crossword Card -->
     <main class="crossword-card">
-      <div class="section-title">
-        <span>🧩 పద వినోదం (Crossword)</span>
-        <span id="categoryBadge" style="font-size: 0.85rem; color: var(--primary-gold);">సాధారణం</span>
+      <div class="card-top-bar">
+        <div class="section-title">
+          <span>🧩 పద వినోదం</span>
+          <span id="categoryBadge" style="font-size: 0.85rem; color: var(--primary-gold);">సాధారణ పదాలు</span>
+        </div>
+        <button class="btn-pause" id="pauseResumeBtn">⏸ పాజ్ (Pause)</button>
       </div>
 
-      <!-- Crossword Categories -->
-      <div class="category-bar" id="categoryBar">
-        <button class="cat-btn active" data-cat="general">సాధారణం (General)</button>
-        <button class="cat-btn" data-cat="nature">ప్రకృతి (Nature)</button>
-        <button class="cat-btn" data-cat="culture">సంస్కృతి (Culture)</button>
-        <button class="cat-btn" data-cat="literature">సాహిత్యం (Literature)</button>
+      <!-- Category Selection Bar (Locked during active play; unlocks on Pause) -->
+      <div class="category-section">
+        <div class="category-header">
+          <span>విభాగం (Category):</span>
+          <span id="catLockNote">🔒 విభాగం మార్చడానికి ముందుగా 'పాజ్' నొక్కండి</span>
+        </div>
+        <div class="category-bar" id="categoryBar">
+          <button class="cat-btn active" data-cat="general">సాధారణ పదాలు (General Words)</button>
+          <button class="cat-btn locked" data-cat="padyalu">పద్యాలు (Poems)</button>
+          <button class="cat-btn locked" data-cat="samethalu">సామెతలు (Proverbs)</button>
+        </div>
       </div>
 
-      <div class="grid-wrapper">
-        <div class="crossword-grid" id="crosswordGrid"></div>
-      </div>
+      <!-- Playable Area with Pause Curtain -->
+      <div class="game-play-area">
+        <div class="pause-overlay" id="pauseOverlay">
+          <h3 style="color:#c2410c;margin-bottom:6px;">⏸ ఆట తాత్కాలికంగా నిలిపివేయబడింది (Paused)</h3>
+          <p style="font-size:0.9rem;color:#4b5563;margin-bottom:14px;">
+            మీరు ఇప్పుడు పైన ఉన్న విభాగాన్ని (Category) మార్చుకోవచ్చు లేదా తిరిగి ఆటను కొనసాగించవచ్చు.
+          </p>
+          <button class="btn-primary" id="overlayResumeBtn">▶ ఆట కొనసాగించు (Resume)</button>
+        </div>
 
-      <div class="clues-box" id="cluesBox"></div>
+        <div class="grid-wrapper">
+          <div class="crossword-grid" id="crosswordGrid"></div>
+        </div>
 
-      <div class="action-row">
-        <button class="btn-primary" id="checkCwBtn">సమాధానం తనిఖీ చేయి</button>
-        <button class="btn-secondary" id="clearCwBtn">క్లియర్</button>
+        <div class="clues-box" id="cluesBox"></div>
+
+        <!-- Integrated Controls: Check, Hint, Skip, Clear -->
+        <div class="action-row">
+          <button class="btn-primary" id="checkCwBtn">✔ తనిఖీ (Check)</button>
+          <button class="btn-hint" id="hintCwBtn">💡 సూచన (Hint)</button>
+          <button class="btn-skip" id="skipCwBtn">⏭ దాటవేయి (Skip)</button>
+          <button class="btn-secondary" id="clearCwBtn">↺ క్లియర్ (Clear)</button>
+        </div>
+        <div class="cw-status" id="cwStatus"></div>
       </div>
-      <div class="cw-status" id="cwStatus"></div>
     </main>
   </div>
 
-  <!-- Floating Aksharamitra Chatbot -->
-  <button class="chat-fab" id="chatFab">💬 అక్షరమిత్ర (Aksharamitra)</button>
+  <!-- 1. Opening Category Choice Modal (with Sprinkles on Launch) -->
+  <div class="modal-backdrop open" id="welcomeModal">
+    <div class="modal-card">
+      <div style="font-size: 2.2rem; margin-bottom: 6px;">🦜✨🌸</div>
+      <h2>తెలుగు పద వినోదానికి స్వాగతం!</h2>
+      <p style="font-size: 0.92rem; color: var(--text-muted);">
+        మీ అక్షరమిత్ర చిలుక మీకు తోడుగా ఉంటుంది. ముందుగా మీరు ఆడాలనుకుంటున్న విభాగాన్ని ఎంచుకోండి:
+      </p>
+      <div class="welcome-choices">
+        <button class="welcome-choice-btn" data-start-cat="general">
+          <span>🌿 సాధారణ పదాలు (General Words)</span>
+          <span>ప్రారంభించు →</span>
+        </button>
+        <button class="welcome-choice-btn" data-start-cat="padyalu">
+          <span>📜 పద్యాలు (Poems)</span>
+          <span>ప్రారంభించు →</span>
+        </button>
+        <button class="welcome-choice-btn" data-start-cat="samethalu">
+          <span>🪔 సామెతలు (Proverbs)</span>
+          <span>ప్రారంభించు →</span>
+        </button>
+      </div>
+    </div>
+  </div>
 
-  <div class="chat-drawer" id="chatDrawer">
-    <div class="chat-header">
-      <span>🪔 అక్షరమిత్ర - పద సహాయకుడు</span>
-      <button class="chat-close" id="chatClose">✕</button>
+  <!-- 2. Pictorial Kavi Parichayam Modal (After 5 Levels) -->
+  <div class="modal-backdrop" id="kaviModal">
+    <div class="modal-card">
+      <span class="badge badge-crossword" style="margin-bottom:8px;">🌟 5 స్థాయిల ప్రత్యేక బహుమతి</span>
+      <h2>చిత్ర సహిత కవి పరిచయం</h2>
+      <div class="kavi-frame" id="kaviContent"></div>
+      <button class="btn-primary" id="closeKaviBtn">తదుపరి స్థాయికి వెళ్ళండి →</button>
     </div>
-    <div class="chat-messages" id="chatMessages">
-      <div class="msg-bot">నమస్కారం! నేను అక్షరమిత్ర. పద వినోదంలో ఏదైనా పదం లేదా అక్షరం గురించి సందేహం ఉంటే అడగండి (ఉదా: "క్లూ" లేదా "అర్థం").</div>
+  </div>
+
+  <!-- 3. Interactive Mini-Game Modal (After Level 6, then every 4 levels: 6, 10, 14...) -->
+  <div class="modal-backdrop" id="miniGameModal">
+    <div class="modal-card">
+      <span class="badge badge-level" style="margin-bottom:8px;">🎮 మధ్యంతర వినోద ఆట</span>
+      <h2>అక్షరాలను సరిచేసి పదం కనుగొనండి!</h2>
+      <p id="miniGameHint" style="font-size:0.9rem;color:var(--text-muted);margin-top:4px;"></p>
+      <div class="scramble-tiles" id="scrambleTiles"></div>
+      <div style="margin:10px 0;">
+        <input type="text" id="miniGameInput" placeholder="సరైన పదం ఇక్కడ టైప్ చేయండి"
+               style="padding:10px 14px;border:2px solid #cbd5e1;border-radius:10px;font-family:inherit;font-size:1rem;text-align:center;width:80%;" />
+      </div>
+      <div id="miniGameStatus" style="font-weight:600;font-size:0.9rem;min-height:22px;margin-bottom:10px;"></div>
+      <div style="display:flex;gap:10px;justify-content:center;">
+        <button class="btn-primary" id="submitMiniGameBtn">సమాధానం పంపు (+25)</button>
+        <button class="btn-secondary" id="skipMiniGameBtn">దాటవేయి</button>
+      </div>
     </div>
-    <div class="chat-input-row">
-      <input type="text" id="chatInput" placeholder="ఇక్కడ టైప్ చేయండి..." />
-      <button id="chatSend">పంపు</button>
+  </div>
+
+  <!-- 4. Every 10 Levels Grand Blast Celebration Modal -->
+  <div class="modal-backdrop" id="blastModal">
+    <div class="modal-card" style="border-color:#f59e0b;background:linear-gradient(180deg,#fffbeb,#ffffff);">
+      <div style="font-size: 3rem; margin-bottom: 6px;">🎊🏆🎉</div>
+      <h2 id="blastTitle">అద్భుతం! 10 స్థాయిలు పూర్తి చేశారు!</h2>
+      <p id="blastMessage" style="font-size:0.96rem;color:#374151;margin:10px 0 18px;">
+        మీ తెలుగు భాషా నైపుణ్యం అమోఘం! అక్షరమిత్ర తరఫున హృదయపూర్వక అభినందనలు!
+      </p>
+      <button class="btn-primary" id="closeBlastBtn">వేడుక ముగించి కొనసాగండి →</button>
     </div>
   </div>
 
   <script>
-    // --- Independent State Management ---
+    // ==========================================
+    // 1. SPRINKLES & BLAST PARTICLE ENGINE
+    // ==========================================
+    const canvas = document.getElementById('effectsCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let animId = null;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function launchParticles(count = 90, isBlast = false) {
+      const colors = ['#f59e0b', '#16a34a', '#0f766e', '#ec4899', '#eab308', '#3b82f6'];
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: isBlast ? canvas.width / 2 : Math.random() * canvas.width,
+          y: isBlast ? canvas.height / 2 : -10 - Math.random() * 120,
+          vx: isBlast ? (Math.random() - 0.5) * 14 : (Math.random() - 0.5) * 3,
+          vy: isBlast ? (Math.random() - 0.5) * 14 : 2 + Math.random() * 4,
+          size: 5 + Math.random() * 6,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: 1,
+          rot: Math.random() * 360
+        });
+      }
+      if (!animId) animateParticles();
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.08;
+        p.alpha -= 0.008;
+        p.rot += 4;
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, p.alpha);
+        ctx.translate(p.x, p.y);
+        ctx.rotate((p.rot * Math.PI) / 180);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+        ctx.restore();
+      });
+      particles = particles.filter((p) => p.alpha > 0 && p.y < canvas.height + 30);
+      if (particles.length > 0) {
+        animId = requestAnimationFrame(animateParticles);
+      } else {
+        animId = null;
+      }
+    }
+
+    // Trigger gentle opening sprinkles on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      launchParticles(85, false);
+    });
+
+    // ==========================================
+    // 2. AKSHARAMITRA PARROT VOICEOVER SYSTEM
+    // ==========================================
+    let voiceEnabled = true;
+    const parrotSpeech = document.getElementById('parrotSpeech');
+    const parrotAvatar = document.getElementById('parrotAvatar');
+    const muteToggleBtn = document.getElementById('muteToggleBtn');
+
+    function parrotSpeak(teluguText) {
+      parrotSpeech.textContent = teluguText;
+      if (!voiceEnabled || !('speechSynthesis' in window)) return;
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(teluguText);
+      const voices = window.speechSynthesis.getVoices();
+      const teVoice = voices.find(v => v.lang.toLowerCase().includes('te')) ||
+                      voices.find(v => v.lang.toLowerCase().includes('hi')) ||
+                      voices[0];
+      if (teVoice) utter.voice = teVoice;
+      utter.lang = 'te-IN';
+      utter.rate = 0.95;
+      utter.pitch = 1.15;
+
+      utter.onstart = () => parrotAvatar.classList.add('speaking');
+      utter.onend = () => parrotAvatar.classList.remove('speaking');
+      utter.onerror = () => parrotAvatar.classList.remove('speaking');
+
+      window.speechSynthesis.speak(utter);
+    }
+
+    muteToggleBtn.addEventListener('click', () => {
+      voiceEnabled = !voiceEnabled;
+      muteToggleBtn.textContent = voiceEnabled ? '🔈 వాయిస్ ఆన్' : '🔇 వాయిస్ ఆఫ్';
+      if (!voiceEnabled && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        parrotAvatar.classList.remove('speaking');
+      }
+    });
+
+    const gameGuideText =
+      "నమస్కారం! నేను అక్షరమిత్ర. ఆట నియమాలు: ఆధారాలు చదివి గడులలో తెలుగు అక్షరాలు నింపండి. " +
+      "సహాయం కావాలంటే 'సూచన' నొక్కండి. కష్టంగా ఉంటే 'దాటవేయి' ఎంచుకోవచ్చు. " +
+      "మరో విభాగానికి వెళ్లాలంటే ముందుగా 'పాజ్' బటన్ నొక్కాలి. ప్రతి 5 స్థాయిలకు కవి పరిచయం, 10 స్థాయిలకు మహా వేడుక ఉంటాయి!";
+
+    document.getElementById('voiceGuideBtn').addEventListener('click', () => {
+      parrotSpeak(gameGuideText);
+    });
+
+    // ==========================================
+    // 3. PUZZLE BANK (GENERAL, PADYALU, SAMETHALU)
+    // ==========================================
+    const puzzleBank = {
+      general: [
+        {
+          title: "సాధారణ పదాలు - గడి 1",
+          cells: [
+            { ans: "అ", num: "1" }, { ans: "మ" }, { ans: "ర" }, { ans: "ం" },
+            { ans: "మ" }, { blocked: true }, { ans: "వి", num: "2" }, { blocked: true },
+            { ans: "ల" }, { ans: "తా", num: "3" }, { ans: "ళ" }, { ans: "ం" },
+            { blocked: true }, { ans: "ర" }, { ans: "ం" }, { ans: "గం" }
+          ],
+          across: ["1. శాశ్వతమైనది / నాశనం లేనిది (4)", "3. ఇంటికి వేసేది / సంగీత లయ (3)"],
+          down: ["1. స్వచ్ఛమైన / సువాసన పువ్వు (3)", "2. సూర్యుడు & ఆకాశం (3)"],
+          voiceHint: "మొదటి అడ్డం పదం 'అ' తో మొదలై 'ం' తో ముగుస్తుంది. శాశ్వతమైనది అని అర్థం."
+        },
+        {
+          title: "సాధారణ పదాలు - గడి 2",
+          cells: [
+            { ans: "క", num: "1" }, { ans: "మ" }, { ans: "ల" }, { ans: "ం" },
+            { ans: "డ" }, { blocked: true }, { ans: "త", num: "2" }, { blocked: true },
+            { ans: "లి" }, { ans: "వ", num: "3" }, { ans: "న" }, { ans: "ం" },
+            { blocked: true }, { ans: "మ" }, { ans: "ల" }, { ans: "య" }
+          ],
+          across: ["1. మన జాతీయ పుష్పం (4)", "3. చెట్లు ఉండే అడవి (3)"],
+          down: ["1. సముద్రం (3)", "2. తీగ / లత (3)"],
+          voiceHint: "మొదటి అడ్డం పదం నీటిలో వికసించే మన జాతీయ పుష్పం 'కమలం'."
+        }
+      ],
+      padyalu: [
+        {
+          title: "పద్యాలు (Poems) - గడి 1",
+          cells: [
+            { ans: "వే", num: "1" }, { ans: "మ" }, { ans: "న" }, { blocked: true },
+            { ans: "దా" }, { blocked: true }, { ans: "య", num: "2" }, { ans: "తి" },
+            { ans: "నం" }, { ans: "ప", num: "3" }, { ans: "ద్య" }, { ans: "ం" },
+            { blocked: true }, { ans: "ద" }, { ans: "య" }, { blocked: true }
+          ],
+          across: ["1. 'విశ్వదాభిరామ వినుర...' శతక కవి (3)", "3. ఛందస్సుతో కూడిన కవిత (3)"],
+          down: ["1. వేద జ్ఞానం / దానం (3)", "2. రాజు / ఋషి (2)"],
+          voiceHint: "విశ్వదాభిరామ వినుర వేమ అని పలికిన ప్రజాకవి 'వేమన' మొదటి అడ్డం పదం."
+        },
+        {
+          title: "పద్యాలు (Poems) - గడి 2",
+          cells: [
+            { ans: "పో", num: "1" }, { ans: "త" }, { ans: "న" }, { blocked: true },
+            { ans: "గ" }, { blocked: true }, { ans: "న", num: "2" }, { ans: "న్న" },
+            { ans: "సు" }, { ans: "మ", num: "3" }, { ans: "తి" }, { blocked: true },
+            { blocked: true }, { ans: "న" }, { ans: "య" }, { blocked: true }
+          ],
+          across: ["1. భాగవతం రచించిన సహజ కవి (3)", "3. మంచి బుద్ధి గల శతకం (3)"],
+          down: ["1. పొగడ్త / కీర్తి (3)", "2. ఆదికవి నన్నయ (2)"],
+          voiceHint: "ఆంధ్ర మహాభాగవతం రాసిన సహజ కవి బమ్మెర 'పోతన' మొదటి పదం."
+        }
+      ],
+      samethalu: [
+        {
+          title: "సామెతలు (Proverbs) - గడి 1",
+          cells: [
+            { ans: "ఆ", num: "1" }, { ans: "రో" }, { ans: "గ్య" }, { ans: "మే" },
+            { ans: "క" }, { blocked: true }, { ans: "మ", num: "2" }, { blocked: true },
+            { ans: "లి" }, { ans: "భా", num: "3" }, { ans: "గ్య" }, { ans: "ం" },
+            { blocked: true }, { ans: "ష" }, { ans: "ం" }, { blocked: true }
+          ],
+          across: ["1. '_____ మహాభాగ్యం' సామెతలో మొదటి పదం (4)", "3. అదృష్టం / సంపద (3)"],
+          down: ["1. ఆకలి / కోరిక (3)", "2. మనసు / మతి (2)"],
+          voiceHint: "'ఆరోగ్యమే మహాభాగ్యం' అనే ప్రసిద్ధ సామెతలోని మొదటి పదం గమనించండి."
+        },
+        {
+          title: "సామెతలు (Proverbs) - గడి 2",
+          cells: [
+            { ans: "చె", num: "1" }, { ans: "ట్టు" }, { ans: "పే" }, { ans: "రు" },
+            { ans: "లు" }, { blocked: true }, { ans: "కా", num: "2" }, { blocked: true },
+            { ans: "క" }, { ans: "ప", num: "3" }, { ans: "ండ్లు" }, { blocked: true },
+            { blocked: true }, { ans: "ల" }, { ans: "త" }, { blocked: true }
+          ],
+          across: ["1. '______ చెప్పి కాయలు అమ్ముకోవడం' (4)", "3. చెట్టుకు కాసే ఫలాలు (2)"],
+          down: ["1. చెట్టు కొమ్మలు (3)", "2. కాయ / ఫలం (2)"],
+          voiceHint: "'చెట్టు పేరు చెప్పి కాయలు అమ్ముకోవడం' అనే సామెత గుర్తుకు తెచ్చుకోండి."
+        }
+      ]
+    };
+
+    // ==========================================
+    // 4. GAME STATE, PAUSE/RESUME & MILESTONES
+    // ==========================================
     let cwScore = Number(localStorage.getItem('tp_cw_score')) || 0;
     let quizScore = Number(localStorage.getItem('tp_quiz_score')) || 0;
+    let currentLevel = 1;
+    let currentCategory = 'general';
+    let catPuzzleIdx = { general: 0, padyalu: 0, samethalu: 0 };
+    let isPaused = false;
 
     const cwScoreDisplay = document.getElementById('cwScoreDisplay');
     const quizScoreDisplay = document.getElementById('quizScoreDisplay');
-
-    function updateScoreUI() {
-      cwScoreDisplay.textContent = cwScore;
-      quizScoreDisplay.textContent = quizScore;
-    }
-    updateScoreUI();
-
-    // --- Crossword Categories Data ---
-    const puzzlesByCategory = {
-      general: {
-        label: "సాధారణం (General)",
-        cells: [
-          { ans: "అ", num: "1" }, { ans: "మ" }, { ans: "ర" }, { ans: "ం" },
-          { ans: "మ" }, { blocked: true }, { ans: "వి", num: "2" }, { blocked: true },
-          { ans: "ల" }, { ans: "తా", num: "3" }, { ans: "ళ" }, { ans: "ం" },
-          { blocked: true }, { ans: "ర" }, { ans: "ం" }, { ans: "గం" }
-        ],
-        across: [
-          "1. నాశనం లేనిది / శాశ్వతమైనది (4 అక్షరాలు)",
-          "3. ఇంటికి వేసేది / సంగీత లయ (3 అక్షరాలు)"
-        ],
-        down: [
-          "1. నిర్మలమైనది / సువాసన గల పువ్వు (3 అక్షరాలు)",
-          "2. సూర్యుడు & ఆకాశం కలిసే పదం (3 అక్షరాలు)"
-        ],
-        hintText: "మొదటి అడ్డం పదం 'అ' తో మొదలై 'ం' తో ముగుస్తుంది!"
-      },
-      nature: {
-        label: "ప్రకృతి (Nature)",
-        cells: [
-          { ans: "క", num: "1" }, { ans: "మ" }, { ans: "ల" }, { ans: "ం" },
-          { ans: "డ" }, { blocked: true }, { ans: "త", num: "2" }, { blocked: true },
-          { ans: "లి" }, { ans: "వ", num: "3" }, { ans: "న" }, { ans: "ం" },
-          { blocked: true }, { ans: "మ" }, { ans: "ల" }, { ans: "య" }
-        ],
-        across: [
-          "1. నీటిలో వికసించే జాతీయ పుష్పం (4 అక్షరాలు)",
-          "3. చెట్లు, పొదలు ఉండే అడవి (3 అక్షరాలు)"
-        ],
-        down: [
-          "1. సముద్రం (3 అక్షరాలు)",
-          "2. తీగ / లత (3 అక్షరాలు)"
-        ],
-        hintText: "1 అడ్డం సమాధానం మన జాతీయ పుష్పం 'కమలం'."
-      },
-      culture: {
-        label: "సంస్కృతి (Culture)",
-        cells: [
-          { ans: "సం", num: "1" }, { ans: "క్రాం" }, { ans: "తి" }, { blocked: true },
-          { ans: "గీ" }, { blocked: true }, { ans: "రు", num: "2" }, { ans: "చి" },
-          { ans: "తం" }, { ans: "పం", num: "3" }, { ans: "డు" }, { ans: "గ" },
-          { blocked: true }, { ans: "ద" }, { ans: "య" }, { blocked: true }
-        ],
-        across: [
-          "1. తెలుగు వారి పెద్ద పండుగ (3 అక్షరాలు)",
-          "3. ఉత్సవం / వేడుక (3 అక్షరాలు)"
-        ],
-        down: [
-          "1. పాట / నాదం (3 అక్షరాలు)",
-          "2. రుచి / మధురం (3 అక్షరాలు)"
-        ],
-        hintText: "జనవరిలో జరుపుకునే పంటల పండుగ 'సంక్రాంతి'."
-      },
-      literature: {
-        label: "సాహిత్యం (Literature)",
-        cells: [
-          { ans: "క", num: "1" }, { ans: "వి" }, { ans: "త" }, { blocked: true },
-          { ans: "థ" }, { blocked: true }, { ans: "రు", num: "2" }, { ans: "చి" },
-          { blocked: true }, { ans: "ప", num: "3" }, { ans: "ద్య" }, { ans: "ం" },
-          { blocked: true }, { ans: "ద" }, { ans: "య" }, { blocked: true }
-        ],
-        across: [
-          "1. కవి రాసే భావయుక్త రచన (3 అక్షరాలు)",
-          "3. ఛందస్సుతో కూడిన శ్లోకం (3 అక్షరాలు)"
-        ],
-        down: [
-          "1. గాథ / స్టోరీ (2 అక్షరాలు)",
-          "3. అక్షరాల సముదాయం (2 అక్షరాలు)"
-        ],
-        hintText: "1 అడ్డం 'కవిత', 3 అడ్డం 'పద్యం'."
-      }
-    };
-
-    let currentCategory = 'general';
+    const levelDisplay = document.getElementById('levelDisplay');
     const crosswordGrid = document.getElementById('crosswordGrid');
     const cluesBox = document.getElementById('cluesBox');
     const categoryBadge = document.getElementById('categoryBadge');
     const cwStatus = document.getElementById('cwStatus');
 
-    function loadCategory(catKey) {
-      currentCategory = catKey;
-      const puzzle = puzzlesByCategory[catKey];
-      categoryBadge.textContent = puzzle.label;
+    function updateHeaderBadges() {
+      cwScoreDisplay.textContent = cwScore;
+      quizScoreDisplay.textContent = quizScore;
+      levelDisplay.textContent = currentLevel;
+    }
+    updateHeaderBadges();
+
+    function getCurrentPuzzle() {
+      const list = puzzleBank[currentCategory];
+      return list[catPuzzleIdx[currentCategory] % list.length];
+    }
+
+    function renderCrossword() {
+      const p = getCurrentPuzzle();
+      const catNames = {
+        general: 'సాధారణ పదాలు (General Words)',
+        padyalu: 'పద్యాలు (Poems)',
+        samethalu: 'సామెతలు (Proverbs)'
+      };
+      categoryBadge.textContent = `${catNames[currentCategory]} • స్థాయి ${currentLevel}`;
       cwStatus.textContent = '';
       crosswordGrid.innerHTML = '';
 
-      puzzle.cells.forEach((cell) => {
+      p.cells.forEach((cell) => {
         if (cell.blocked) {
           const div = document.createElement('div');
           div.className = 'cell blocked';
@@ -709,31 +1155,91 @@
       cluesBox.innerHTML = `
         <h3>ఆధారాలు (Clues):</h3>
         <div><strong>అడ్డం (Across):</strong></div>
-        ${puzzle.across.map(c => `<div>${c}</div>`).join('')}
+        ${p.across.map(c => `<div>${c}</div>`).join('')}
         <div style="margin-top: 6px;"><strong>నిలువు (Down):</strong></div>
-        ${puzzle.down.map(c => `<div>${c}</div>`).join('')}
+        ${p.down.map(c => `<div>${c}</div>`).join('')}
       `;
     }
 
-    document.querySelectorAll('.cat-btn').forEach((btn) => {
+    // Welcome Modal Category Picker -> Starts Game + Voice Guide
+    document.querySelectorAll('.welcome-choice-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        loadCategory(btn.dataset.cat);
+        currentCategory = btn.dataset.startCat;
+        document.querySelectorAll('.cat-btn').forEach(b => {
+          b.classList.toggle('active', b.dataset.cat === currentCategory);
+          b.classList.toggle('locked', b.dataset.cat !== currentCategory);
+        });
+        document.getElementById('welcomeModal').classList.remove('open');
+        renderCrossword();
+        parrotSpeak(gameGuideText);
       });
     });
 
-    loadCategory('general');
+    // Pause / Resume Logic (Required to Switch Category)
+    const pauseResumeBtn = document.getElementById('pauseResumeBtn');
+    const pauseOverlay = document.getElementById('pauseOverlay');
+    const catLockNote = document.getElementById('catLockNote');
 
-    // --- Crossword Check & Clear ---
+    function setPausedState(paused) {
+      isPaused = paused;
+      pauseOverlay.classList.toggle('visible', isPaused);
+      pauseResumeBtn.classList.toggle('paused', isPaused);
+      pauseResumeBtn.textContent = isPaused ? '▶ కొనసాగించు (Resume)' : '⏸ పాజ్ (Pause)';
+      catLockNote.textContent = isPaused
+        ? '🔓 విభాగాలు తెరవబడ్డాయి! కొత్త విభాగం ఎంచుకోండి'
+        : "🔒 విభాగం మార్చడానికి ముందుగా 'పాజ్' నొక్కండి";
+
+      document.querySelectorAll('.cat-btn').forEach((b) => {
+        if (isPaused) {
+          b.classList.remove('locked');
+        } else {
+          b.classList.toggle('locked', b.dataset.cat !== currentCategory);
+        }
+      });
+    }
+
+    pauseResumeBtn.addEventListener('click', () => setPausedState(!isPaused));
+    document.getElementById('overlayResumeBtn').addEventListener('click', () => setPausedState(false));
+
+    document.querySelectorAll('.cat-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (!isPaused && btn.dataset.cat !== currentCategory) {
+          parrotSpeak("విభాగం మార్చడానికి ముందుగా కుడివైపు ఉన్న 'పాజ్' బటన్ నొక్కండి మిత్రమా!");
+          return;
+        }
+        currentCategory = btn.dataset.cat;
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderCrossword();
+        setPausedState(false);
+        parrotSpeak(`మీరు ${btn.textContent} విభాగాన్ని ఎంచుకున్నారు. శుభం!`);
+      });
+    });
+
+    // Hint Button (Reveals a cell + Parrot speaks clue)
+    function giveHint() {
+      const p = getCurrentPuzzle();
+      const emptyInputs = Array.from(document.querySelectorAll('.crossword-grid input.cell'))
+        .filter(inp => inp.value.trim() !== inp.dataset.ans);
+
+      if (emptyInputs.length > 0) {
+        const target = emptyInputs[0];
+        target.value = target.dataset.ans;
+        target.classList.add('hinted');
+      }
+      parrotSpeak("సూచన: " + p.voiceHint);
+    }
+
+    document.getElementById('hintCwBtn').addEventListener('click', giveHint);
+    document.getElementById('parrotHintBtn').addEventListener('click', giveHint);
+
+    // Check Answer & Advance Level + Check Milestones
     document.getElementById('checkCwBtn').addEventListener('click', () => {
       const inputs = document.querySelectorAll('.crossword-grid input.cell');
       let allCorrect = true;
 
       inputs.forEach((inp) => {
-        const val = inp.value.trim();
-        const ans = inp.dataset.ans;
-        if (val === ans) {
+        if (inp.value.trim() === inp.dataset.ans) {
           inp.style.borderColor = 'var(--success)';
           inp.style.background = '#f0fdf4';
         } else {
@@ -746,25 +1252,206 @@
       if (allCorrect) {
         cwScore += 50;
         localStorage.setItem('tp_cw_score', cwScore);
-        updateScoreUI();
+        const completedLevel = currentLevel;
+        currentLevel += 1;
+        catPuzzleIdx[currentCategory] += 1;
+        updateHeaderBadges();
+
         cwStatus.style.color = 'var(--success)';
-        cwStatus.textContent = '🌟 అద్భుతం! గడి పూర్తి చేశారు (+50 పద వినోదం పాయింట్లు)';
+        cwStatus.textContent = `🌟 అద్భుతం! స్థాయి ${completedLevel} పూర్తి చేశారు (+50 పాయింట్లు)`;
+        parrotSpeak(`శభాష్! మీరు స్థాయి ${completedLevel} పూర్తి చేశారు!`);
+
+        setTimeout(() => {
+          triggerMilestoneIfAny(completedLevel);
+          renderCrossword();
+        }, 1100);
       } else {
         cwStatus.style.color = 'var(--error)';
-        cwStatus.textContent = 'కొన్ని అక్షరాలు సరిగ్గా లేవు. సందేహం ఉంటే అక్షరమిత్రను అడగండి!';
+        cwStatus.textContent = 'కొన్ని అక్షరాలు సరిగ్గా లేవు. సందేహం ఉంటే సూచన నొక్కండి!';
+        parrotSpeak('కొన్ని అక్షరాలు సరిపోలేదు మిత్రమా, మళ్ళీ ప్రయత్నించండి!');
       }
     });
 
+    // Skip Level Option
+    document.getElementById('skipCwBtn').addEventListener('click', () => {
+      const skippedLevel = currentLevel;
+      currentLevel += 1;
+      catPuzzleIdx[currentCategory] += 1;
+      updateHeaderBadges();
+      parrotSpeak(`స్థాయి ${skippedLevel} దాటవేశాము. తదుపరి గడిని ప్రయత్నించండి!`);
+      triggerMilestoneIfAny(skippedLevel);
+      renderCrossword();
+    });
+
+    // Clear Grid
     document.getElementById('clearCwBtn').addEventListener('click', () => {
       document.querySelectorAll('.crossword-grid input.cell').forEach((inp) => {
         inp.value = '';
+        inp.classList.remove('hinted');
         inp.style.borderColor = '#cbd5e1';
         inp.style.background = '#ffffff';
       });
       cwStatus.textContent = '';
     });
 
-    // --- Collapsible Telugu Movies Quiz Logic ---
+    // ==========================================
+    // 5. MILESTONE LOGIC:
+    // - Every 10 levels: Fullscreen Blast & Congrats
+    // - After 5 levels (5, 15, 25...): Pictorial Kavi Parichayam
+    // - After 6 levels, every 4 levels (6, 10, 14, 18...): Unique Mini-Game
+    // ==========================================
+    const kaviList = [
+      {
+        name: "ఆదికవి నన్నయ భట్టారకుడు",
+        era: "11వ శతాబ్దం • రాజమహేంద్రవరం",
+        desc: "తెలుగులో తొలి కావ్యమైన ఆంధ్ర మహాభారతంలో ఆది, సభా, అరణ్య పర్వాలను రచించి 'వాగనుశాసనుడు'గా కీర్తి పొందారు.",
+        poem: "“శ్రీ వాణీ గిరిజాశ్చిరాయ దధతో వక్షోముఖాంగేషు యే...”",
+        accent: "#d97706"
+      },
+      {
+        name: "బమ్మెర పోతన",
+        era: "15వ శతాబ్దం • బమ్మెర",
+        desc: "సహజ పాండిత్యంతో శ్రీమదాంధ్ర భాగవతాన్ని రచించి, భక్తి రసాన్ని తెలుగు ఇంటింటా పంచిన మహాకవి.",
+        poem: "“పలికెడిది భాగవతమట, పలికించెడి వాడు రామభద్రుండట...”",
+        accent: "#0f766e"
+      },
+      {
+        name: "ప్రజాకవి వేమన",
+        era: "17వ శతాబ్దం • కడప ప్రాంతం",
+        desc: "సరళమైన ఆటవెలది పద్యాలతో సమాజంలోని మూఢనమ్మకాలను, మానవ విలువలను బోధించిన తత్వవేత్త.",
+        poem: "“ఉప్పు కప్పురంబు నొక్కపోలిక నుండు, చూడ చూడ రుచుల జాడ వేరు...”",
+        accent: "#16a34a"
+      }
+    ];
+    let kaviIdx = 0;
+
+    const miniGames = [
+      { scrambled: ["లు", "గు", "తె"], answer: "తెలుగు", hint: "మన మాతృభాష (3 అక్షరాలు)" },
+      { scrambled: ["ర", "ం", "అ", "మ"], answer: "అమరం", hint: "శాశ్వతమైనది (4 అక్షరాలు)" },
+      { scrambled: ["వి", "త", "క"], answer: "కవిత", hint: "కవి రాసే రచన (3 అక్షరాలు)" },
+      { scrambled: ["ల", "ం", "క", "మ"], answer: "కమలం", hint: "జాతీయ పుష్పం (4 అక్షరాలు)" }
+    ];
+    let miniGameIdx = 0;
+
+    function triggerMilestoneIfAny(completedLevel) {
+      // 1. Every 10 levels -> Grand Blast
+      if (completedLevel % 10 === 0) {
+        launchParticles(180, true);
+        document.getElementById('blastTitle').textContent = `🎊 అద్భుతం! ${completedLevel} స్థాయిలు పూర్తి చేశారు!`;
+        document.getElementById('blastModal').classList.add('open');
+        parrotSpeak(`అభినందనలు! మీరు ${completedLevel} స్థాయిలు పూర్తి చేసి అద్భుత విజయం సాధించారు!`);
+      }
+
+      // 2. After 5 levels (multiples of 5 not 10, or level 5) -> Pictorial Kavi Parichayam
+      if (completedLevel % 5 === 0 && completedLevel % 10 !== 0) {
+        const kavi = kaviList[kaviIdx % kaviList.length];
+        kaviIdx++;
+        document.getElementById('kaviContent').innerHTML = `
+          <div class="kavi-portrait">
+            <svg width="86" height="86" viewBox="0 0 80 80" fill="none">
+              <circle cx="40" cy="40" r="38" fill="#fef3c7"/>
+              <circle cx="40" cy="30" r="14" fill="#f59e0b"/>
+              <path d="M22 66C22 52 58 52 58 66" fill="${kavi.accent}"/>
+              <path d="M28 20C34 12 46 12 52 20" stroke="#92400e" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="40" cy="24" r="2" fill="#dc2626"/>
+            </svg>
+          </div>
+          <h3 style="color:#92400e;font-size:1.15rem;">${kavi.name}</h3>
+          <div style="font-size:0.82rem;color:#6b7280;margin-bottom:8px;">${kavi.era}</div>
+          <p style="font-size:0.9rem;color:#1f2937;">${kavi.desc}</p>
+          <div class="kavi-poem-box">${kavi.poem}</div>
+        `;
+        document.getElementById('kaviModal').classList.add('open');
+        parrotSpeak(`5 స్థాయిల ప్రత్యేక బహుమతి! కవి పరిచయం: ${kavi.name}.`);
+      }
+
+      // 3. After 6 levels, then every 4 levels (6, 10, 14, 18...) -> Interactive Mini-Game
+      if (completedLevel >= 6 && (completedLevel - 6) % 4 === 0) {
+        openMiniGame();
+      }
+    }
+
+    document.getElementById('closeKaviBtn').addEventListener('click', () => {
+      document.getElementById('kaviModal').classList.remove('open');
+    });
+
+    document.getElementById('closeBlastBtn').addEventListener('click', () => {
+      document.getElementById('blastModal').classList.remove('open');
+    });
+
+    function openMiniGame() {
+      const mg = miniGames[miniGameIdx % miniGames.length];
+      document.getElementById('miniGameHint').textContent = `సూచన: ${mg.hint}`;
+      document.getElementById('miniGameInput').value = '';
+      document.getElementById('miniGameStatus').textContent = '';
+
+      const tilesDiv = document.getElementById('scrambleTiles');
+      tilesDiv.innerHTML = '';
+      mg.scrambled.forEach((syl) => {
+        const chip = document.createElement('button');
+        chip.className = 'tile-chip';
+        chip.textContent = syl;
+        chip.addEventListener('click', () => {
+          document.getElementById('miniGameInput').value += syl;
+        });
+        tilesDiv.appendChild(chip);
+      });
+
+      document.getElementById('miniGameModal').classList.add('open');
+    }
+
+    document.getElementById('submitMiniGameBtn').addEventListener('click', () => {
+      const mg = miniGames[miniGameIdx % miniGames.length];
+      const userVal = document.getElementById('miniGameInput').value.trim();
+      const statusEl = document.getElementById('miniGameStatus');
+
+      if (userVal === mg.answer) {
+        cwScore += 25;
+        localStorage.setItem('tp_cw_score', cwScore);
+        updateHeaderBadges();
+        miniGameIdx++;
+        statusEl.style.color = 'var(--success)';
+        statusEl.textContent = '🎉 సరైన పదం! +25 బోనస్ పాయింట్లు!';
+        parrotSpeak('అద్భుతం! మధ్యంతర ఆటలో +25 బోనస్ పాయింట్లు గెలుచుకున్నారు!');
+        setTimeout(() => {
+          document.getElementById('miniGameModal').classList.remove('open');
+        }, 900);
+      } else {
+        statusEl.style.color = 'var(--error)';
+        statusEl.textContent = 'సరిపోలేదు, మళ్ళీ ప్రయత్నించండి!';
+      }
+    });
+
+    document.getElementById('skipMiniGameBtn').addEventListener('click', () => {
+      miniGameIdx++;
+      document.getElementById('miniGameModal').classList.remove('open');
+    });
+
+    // Parrot Chat Input
+    function askParrot() {
+      const inp = document.getElementById('parrotInput');
+      const q = inp.value.trim();
+      if (!q) return;
+      inp.value = '';
+      const lower = q.toLowerCase();
+
+      if (lower.includes('సూచన') || lower.includes('hint') || lower.includes('clue')) {
+        giveHint();
+      } else if (lower.includes('నియమ') || lower.includes('guide') || lower.includes('help')) {
+        parrotSpeak(gameGuideText);
+      } else {
+        parrotSpeak(`మీరు ప్రస్తుతం "${getCurrentPuzzle().title}" ఆడుతున్నారు. సూచన కావాలంటే 'సూచన' బటన్ నొక్కండి!`);
+      }
+    }
+
+    document.getElementById('parrotAskBtn').addEventListener('click', askParrot);
+    document.getElementById('parrotInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') askParrot();
+    });
+
+    // ==========================================
+    // 6. COLLAPSIBLE TELUGU MOVIES QUIZ (SEPARATE SCORE)
+    // ==========================================
     const quizToggleBtn = document.getElementById('quizToggleBtn');
     const quizPanel = document.getElementById('quizPanel');
     const quizTogglePill = document.getElementById('quizTogglePill');
@@ -806,110 +1493,56 @@
     let currentQIndex = 0;
     let answeredCurrent = false;
 
-    const quizProgress = document.getElementById('quizProgress');
-    const quizQuestion = document.getElementById('quizQuestion');
-    const quizOptions = document.getElementById('quizOptions');
-    const quizFeedback = document.getElementById('quizFeedback');
-    const nextQuizBtn = document.getElementById('nextQuizBtn');
-
     function renderQuizQuestion() {
       answeredCurrent = false;
-      quizFeedback.textContent = '';
-      nextQuizBtn.style.display = 'none';
+      document.getElementById('quizFeedback').textContent = '';
+      document.getElementById('nextQuizBtn').style.display = 'none';
 
       const item = movieQuestions[currentQIndex];
-      quizProgress.textContent = `ప్రశ్న ${currentQIndex + 1} / ${movieQuestions.length}`;
-      quizQuestion.textContent = item.q;
-      quizOptions.innerHTML = '';
+      document.getElementById('quizProgress').textContent = `ప్రశ్న ${currentQIndex + 1} / ${movieQuestions.length}`;
+      document.getElementById('quizQuestion').textContent = item.q;
+      const optsDiv = document.getElementById('quizOptions');
+      optsDiv.innerHTML = '';
 
       item.options.forEach((optText, idx) => {
         const btn = document.createElement('button');
         btn.className = 'option-btn';
         btn.textContent = optText;
-        btn.addEventListener('click', () => handleQuizAnswer(idx, btn));
-        quizOptions.appendChild(btn);
+        btn.addEventListener('click', () => {
+          if (answeredCurrent) return;
+          answeredCurrent = true;
+          const allBtns = optsDiv.querySelectorAll('.option-btn');
+          allBtns.forEach((b, i) => {
+            b.disabled = true;
+            if (i === item.answer) b.classList.add('correct');
+          });
+          const fb = document.getElementById('quizFeedback');
+          if (idx === item.answer) {
+            quizScore += 10;
+            localStorage.setItem('tp_quiz_score', quizScore);
+            updateHeaderBadges();
+            fb.style.color = 'var(--success)';
+            fb.textContent = '🎉 సరైన సమాధానం! +10 పాయింట్లు';
+          } else {
+            btn.classList.add('wrong');
+            fb.style.color = 'var(--error)';
+            fb.textContent = '❌ తప్పు సమాధానం!';
+          }
+          const nextBtn = document.getElementById('nextQuizBtn');
+          nextBtn.style.display = 'inline-block';
+          nextBtn.textContent = currentQIndex === movieQuestions.length - 1 ? 'మళ్ళీ ఆడు ↻' : 'తదుపరి ప్రశ్న →';
+        });
+        optsDiv.appendChild(btn);
       });
     }
 
-    function handleQuizAnswer(selectedIndex, clickedBtn) {
-      if (answeredCurrent) return;
-      answeredCurrent = true;
-
-      const item = movieQuestions[currentQIndex];
-      const allBtns = quizOptions.querySelectorAll('.option-btn');
-
-      allBtns.forEach((b, idx) => {
-        b.disabled = true;
-        if (idx === item.answer) b.classList.add('correct');
-      });
-
-      if (selectedIndex === item.answer) {
-        quizScore += 10;
-        localStorage.setItem('tp_quiz_score', quizScore);
-        updateScoreUI();
-        quizFeedback.style.color = 'var(--success)';
-        quizFeedback.textContent = '🎉 సరైన సమాధానం! +10 పాయింట్లు';
-      } else {
-        clickedBtn.classList.add('wrong');
-        quizFeedback.style.color = 'var(--error)';
-        quizFeedback.textContent = '❌ తప్పు సమాధానం!';
-      }
-
-      nextQuizBtn.style.display = 'inline-block';
-      nextQuizBtn.textContent =
-        currentQIndex === movieQuestions.length - 1 ? 'మళ్ళీ ఆడు ↻' : 'తదుపరి ప్రశ్న →';
-    }
-
-    nextQuizBtn.addEventListener('click', () => {
+    document.getElementById('nextQuizBtn').addEventListener('click', () => {
       currentQIndex = (currentQIndex + 1) % movieQuestions.length;
       renderQuizQuestion();
     });
 
     renderQuizQuestion();
-
-    // --- Aksharamitra Chatbot Logic ---
-    const chatFab = document.getElementById('chatFab');
-    const chatDrawer = document.getElementById('chatDrawer');
-    const chatClose = document.getElementById('chatClose');
-    const chatMessages = document.getElementById('chatMessages');
-    const chatInput = document.getElementById('chatInput');
-    const chatSend = document.getElementById('chatSend');
-
-    chatFab.addEventListener('click', () => chatDrawer.classList.toggle('open'));
-    chatClose.addEventListener('click', () => chatDrawer.classList.remove('open'));
-
-    function sendChatMessage() {
-      const text = chatInput.value.trim();
-      if (!text) return;
-
-      const userDiv = document.createElement('div');
-      userDiv.className = 'msg-user';
-      userDiv.textContent = text;
-      chatMessages.appendChild(userDiv);
-      chatInput.value = '';
-
-      setTimeout(() => {
-        const botDiv = document.createElement('div');
-        botDiv.className = 'msg-bot';
-        const lower = text.toLowerCase();
-
-        if (lower.includes('క్లూ') || lower.includes('clue') || lower.includes('hint')) {
-          botDiv.textContent = `💡 చిన్న సూచన: ${puzzlesByCategory[currentCategory].hintText}`;
-        } else if (lower.includes('స్కోర్') || lower.includes('score')) {
-          botDiv.textContent = `మీ పద వినోదం స్కోర్ ${cwScore}, మరియు సినిమా క్విజ్ స్కోర్ ${quizScore} గా ఉన్నాయి!`;
-        } else {
-          botDiv.textContent = `ప్రస్తుతం మీరు "${puzzlesByCategory[currentCategory].label}" విభాగంలో ఆడుతున్నారు. చిన్న సహాయం కావాలంటే "క్లూ" అని టైప్ చేయండి!`;
-        }
-
-        chatMessages.appendChild(botDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-      }, 300);
-    }
-
-    chatSend.addEventListener('click', sendChatMessage);
-    chatInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') sendChatMessage();
-    });
+    renderCrossword();
   </script>
 </body>
 </html>
