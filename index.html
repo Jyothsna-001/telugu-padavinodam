@@ -10,10 +10,11 @@
       --bg-color: #faf7f2;
       --card-bg: #ffffff;
       --primary-gold: #d97706;
+      --primary-gold-dark: #b45309;
       --primary-gold-light: #fef3c7;
-      --quiz-purple: #4c1d95;
-      --quiz-purple-hover: #5b21b6;
-      --quiz-accent: #f59e0b;
+      --warm-sand: #fffbeb;
+      --teal-accent: #0f766e;
+      --teal-light: #f0fdfa;
       --text-dark: #1f2937;
       --text-muted: #6b7280;
       --border-color: #e5e7eb;
@@ -32,17 +33,17 @@
       background-color: var(--bg-color);
       color: var(--text-dark);
       line-height: 1.6;
-      padding: 20px 16px;
+      padding: 20px 16px 90px;
       display: flex;
       justify-content: center;
     }
 
     .app-container {
       width: 100%;
-      max-width: 640px;
+      max-width: 660px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 18px;
     }
 
     /* Header & Dual Score Badges */
@@ -91,30 +92,25 @@
     }
 
     .badge-quiz {
-      background: #ede9fe;
-      color: var(--quiz-purple);
-      border: 1px solid #ddd6fe;
+      background: var(--teal-light);
+      color: var(--teal-accent);
+      border: 1px solid #99f6e4;
     }
 
-    /* Collapsible Telugu Movies Quiz Bar */
+    /* Native-Styled Collapsible Telugu Movies Quiz Card (No Ad Look) */
     .quiz-accordion {
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 6px 16px rgba(76, 29, 149, 0.12);
-      border: 2px solid var(--quiz-purple);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      border: 1px solid #fcd34d;
+      border-left: 5px solid var(--teal-accent);
       background: var(--card-bg);
-      animation: subtlePulse 2.2s ease-in-out 2;
-    }
-
-    @keyframes subtlePulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.012); }
     }
 
     .quiz-toggle-bar {
       width: 100%;
-      background: linear-gradient(135deg, var(--quiz-purple), #6d28d9);
-      color: #ffffff;
+      background: var(--warm-sand);
+      color: var(--text-dark);
       border: none;
       padding: 14px 18px;
       display: flex;
@@ -127,7 +123,7 @@
     }
 
     .quiz-toggle-bar:hover {
-      background: linear-gradient(135deg, var(--quiz-purple-hover), #7c3aed);
+      background: #fef3c7;
     }
 
     .quiz-bar-left {
@@ -140,21 +136,24 @@
     .quiz-bar-title {
       font-size: 1rem;
       font-weight: 700;
+      color: var(--text-dark);
     }
 
     .quiz-bar-sub {
-      font-size: 0.8rem;
-      background: rgba(255, 255, 255, 0.18);
+      font-size: 0.78rem;
+      background: var(--teal-light);
+      color: var(--teal-accent);
+      border: 1px solid #99f6e4;
       padding: 2px 10px;
       border-radius: 999px;
-      color: #fde68a;
+      font-weight: 600;
     }
 
     .quiz-toggle-pill {
-      background: var(--quiz-accent);
-      color: #1f2937;
-      font-weight: 700;
-      font-size: 0.85rem;
+      background: var(--teal-accent);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.84rem;
       padding: 6px 14px;
       border-radius: 999px;
       white-space: nowrap;
@@ -163,7 +162,8 @@
     .quiz-panel {
       display: none;
       padding: 20px;
-      background: #fdfcff;
+      background: #ffffff;
+      border-top: 1px solid var(--border-color);
     }
 
     .quiz-panel.open {
@@ -173,13 +173,13 @@
     .quiz-meta {
       display: flex;
       justify-content: space-between;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       color: var(--text-muted);
       margin-bottom: 10px;
     }
 
     .quiz-question {
-      font-size: 1.1rem;
+      font-size: 1.08rem;
       font-weight: 600;
       margin-bottom: 16px;
       color: var(--text-dark);
@@ -199,20 +199,20 @@
     }
 
     .option-btn {
-      padding: 12px 14px;
+      padding: 11px 14px;
       border: 1.5px solid #d1d5db;
       border-radius: 10px;
       background: #ffffff;
       font-family: inherit;
-      font-size: 0.98rem;
+      font-size: 0.96rem;
       cursor: pointer;
       text-align: left;
       transition: all 0.15s ease;
     }
 
     .option-btn:hover:not(:disabled) {
-      border-color: var(--quiz-purple);
-      background: #f5f3ff;
+      border-color: var(--teal-accent);
+      background: var(--teal-light);
     }
 
     .option-btn.correct {
@@ -242,7 +242,7 @@
     }
 
     .btn-next-quiz {
-      background: var(--quiz-purple);
+      background: var(--teal-accent);
       color: #fff;
       border: none;
       padding: 8px 18px;
@@ -253,7 +253,7 @@
       display: none;
     }
 
-    /* Main Crossword Card */
+    /* Main Crossword Card with Categories */
     .crossword-card {
       background: var(--card-bg);
       padding: 24px;
@@ -265,16 +265,47 @@
     .section-title {
       font-size: 1.15rem;
       font-weight: 700;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
+    /* Category Pills */
+    .category-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .cat-btn {
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1.5px solid #e5e7eb;
+      background: #f9fafb;
+      color: var(--text-dark);
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .cat-btn:hover {
+      border-color: var(--primary-gold);
+    }
+
+    .cat-btn.active {
+      background: var(--primary-gold);
+      color: #ffffff;
+      border-color: var(--primary-gold);
+    }
+
     .grid-wrapper {
       display: flex;
       justify-content: center;
-      margin: 16px 0 22px;
+      margin: 14px 0 22px;
     }
 
     .crossword-grid {
@@ -358,6 +389,121 @@
       font-weight: 600;
       font-size: 0.95rem;
     }
+
+    /* Floating Aksharamitra Chatbot Widget */
+    .chat-fab {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--primary-gold-dark);
+      color: #ffffff;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 600;
+      box-shadow: 0 6px 18px rgba(180, 83, 9, 0.32);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 1000;
+    }
+
+    .chat-drawer {
+      position: fixed;
+      bottom: 76px;
+      right: 20px;
+      width: 320px;
+      max-width: calc(100vw - 40px);
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 1000;
+    }
+
+    .chat-drawer.open {
+      display: flex;
+    }
+
+    .chat-header {
+      background: var(--primary-gold);
+      color: #ffffff;
+      padding: 12px 16px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-close {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    .chat-messages {
+      padding: 14px;
+      height: 220px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 0.88rem;
+      background: #faf7f2;
+    }
+
+    .msg-bot, .msg-user {
+      padding: 8px 12px;
+      border-radius: 12px;
+      max-width: 85%;
+      line-height: 1.5;
+    }
+
+    .msg-bot {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      align-self: flex-start;
+    }
+
+    .msg-user {
+      background: var(--primary-gold-light);
+      color: #92400e;
+      align-self: flex-end;
+      font-weight: 600;
+    }
+
+    .chat-input-row {
+      display: flex;
+      border-top: 1px solid var(--border-color);
+      background: #ffffff;
+    }
+
+    .chat-input-row input {
+      flex: 1;
+      border: none;
+      padding: 10px 12px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      outline: none;
+    }
+
+    .chat-input-row button {
+      background: var(--primary-gold);
+      color: #fff;
+      border: none;
+      padding: 0 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -372,14 +518,14 @@
       </div>
     </header>
 
-    <!-- Collapsible Telugu Movies Quiz Bar -->
+    <!-- Warm, Native-Styled Collapsible Telugu Movies Quiz Card -->
     <section class="quiz-accordion" aria-label="Telugu Movies Quiz">
       <button class="quiz-toggle-bar" id="quizToggleBtn" aria-expanded="false">
         <div class="quiz-bar-left">
           <span class="quiz-bar-title">🎬 తెలుగు సినిమా క్విజ్ (Movies Quiz)</span>
-          <span class="quiz-bar-sub">ప్రత్యేక స్కోర్ • Separate Score</span>
+          <span class="quiz-bar-sub">ప్రత్యేక స్కోర్</span>
         </div>
-        <span class="quiz-toggle-pill" id="quizTogglePill">Play ▼</span>
+        <span class="quiz-toggle-pill" id="quizTogglePill">ఆడండి ▼</span>
       </button>
 
       <div class="quiz-panel" id="quizPanel">
@@ -396,50 +542,26 @@
       </div>
     </section>
 
-    <!-- Main Telugu Crossword Area -->
+    <!-- Main Telugu Crossword Area with Categories -->
     <main class="crossword-card">
       <div class="section-title">
-        <span>🧩 నేటి పద వినోదం (Crossword)</span>
-        <span style="font-size: 0.85rem; color: var(--text-muted);">స్థాయి 1</span>
+        <span>🧩 పద వినోదం (Crossword)</span>
+        <span id="categoryBadge" style="font-size: 0.85rem; color: var(--primary-gold);">సాధారణం</span>
+      </div>
+
+      <!-- Crossword Categories -->
+      <div class="category-bar" id="categoryBar">
+        <button class="cat-btn active" data-cat="general">సాధారణం (General)</button>
+        <button class="cat-btn" data-cat="nature">ప్రకృతి (Nature)</button>
+        <button class="cat-btn" data-cat="culture">సంస్కృతి (Culture)</button>
+        <button class="cat-btn" data-cat="literature">సాహిత్యం (Literature)</button>
       </div>
 
       <div class="grid-wrapper">
-        <div class="crossword-grid" id="crosswordGrid">
-          <!-- Row 1: అ మ ర ం (అమరం - Immortal) -->
-          <input class="cell" maxlength="3" data-ans="అ" placeholder="1" />
-          <input class="cell" maxlength="3" data-ans="మ" />
-          <input class="cell" maxlength="3" data-ans="ర" />
-          <input class="cell" maxlength="3" data-ans="ం" />
-
-          <!-- Row 2: మ [BLOCK] వి [BLOCK] -->
-          <input class="cell" maxlength="3" data-ans="మ" />
-          <div class="cell blocked"></div>
-          <input class="cell" maxlength="3" data-ans="వి" placeholder="2" />
-          <div class="cell blocked"></div>
-
-          <!-- Row 3: ల తా ళ ం (లతాళం / తాళం) -->
-          <input class="cell" maxlength="3" data-ans="ల" />
-          <input class="cell" maxlength="3" data-ans="తా" placeholder="3" />
-          <input class="cell" maxlength="3" data-ans="ళ" />
-          <input class="cell" maxlength="3" data-ans="ం" />
-
-          <!-- Row 4: [BLOCK] ర ం గం (రంగం) -->
-          <div class="cell blocked"></div>
-          <input class="cell" maxlength="3" data-ans="ర" />
-          <input class="cell" maxlength="3" data-ans="ం" />
-          <input class="cell" maxlength="3" data-ans="గం" />
-        </div>
+        <div class="crossword-grid" id="crosswordGrid"></div>
       </div>
 
-      <div class="clues-box">
-        <h3>ఆధారాలు (Clues):</h3>
-        <div><strong>అడ్డం (Across):</strong></div>
-        <div>1. నాశనం లేనిది / శాశ్వతమైనది (4 అక్షరాలు - అ మ ర ం)</div>
-        <div>3. ఇంటికి వేసేది / సంగీత లయ (3 అక్షరాలు - తా ళ ం)</div>
-        <div style="margin-top: 6px;"><strong>నిలువు (Down):</strong></div>
-        <div>1. సువాసన గల పువ్వు (3 అక్షరాలు - అ మ ల)</div>
-        <div>2. ఆకాశం / విశాలమైనది (3 అక్షరాలు - ర వి ళ → రవి అంటే సూర్యుడు)</div>
-      </div>
+      <div class="clues-box" id="cluesBox"></div>
 
       <div class="action-row">
         <button class="btn-primary" id="checkCwBtn">సమాధానం తనిఖీ చేయి</button>
@@ -447,6 +569,23 @@
       </div>
       <div class="cw-status" id="cwStatus"></div>
     </main>
+  </div>
+
+  <!-- Floating Aksharamitra Chatbot -->
+  <button class="chat-fab" id="chatFab">💬 అక్షరమిత్ర (Aksharamitra)</button>
+
+  <div class="chat-drawer" id="chatDrawer">
+    <div class="chat-header">
+      <span>🪔 అక్షరమిత్ర - పద సహాయకుడు</span>
+      <button class="chat-close" id="chatClose">✕</button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="msg-bot">నమస్కారం! నేను అక్షరమిత్ర. పద వినోదంలో ఏదైనా పదం లేదా అక్షరం గురించి సందేహం ఉంటే అడగండి (ఉదా: "క్లూ" లేదా "అర్థం").</div>
+    </div>
+    <div class="chat-input-row">
+      <input type="text" id="chatInput" placeholder="ఇక్కడ టైప్ చేయండి..." />
+      <button id="chatSend">పంపు</button>
+    </div>
   </div>
 
   <script>
@@ -463,7 +602,169 @@
     }
     updateScoreUI();
 
-    // --- Collapsible Bar Toggle Logic ---
+    // --- Crossword Categories Data ---
+    const puzzlesByCategory = {
+      general: {
+        label: "సాధారణం (General)",
+        cells: [
+          { ans: "అ", num: "1" }, { ans: "మ" }, { ans: "ర" }, { ans: "ం" },
+          { ans: "మ" }, { blocked: true }, { ans: "వి", num: "2" }, { blocked: true },
+          { ans: "ల" }, { ans: "తా", num: "3" }, { ans: "ళ" }, { ans: "ం" },
+          { blocked: true }, { ans: "ర" }, { ans: "ం" }, { ans: "గం" }
+        ],
+        across: [
+          "1. నాశనం లేనిది / శాశ్వతమైనది (4 అక్షరాలు)",
+          "3. ఇంటికి వేసేది / సంగీత లయ (3 అక్షరాలు)"
+        ],
+        down: [
+          "1. నిర్మలమైనది / సువాసన గల పువ్వు (3 అక్షరాలు)",
+          "2. సూర్యుడు & ఆకాశం కలిసే పదం (3 అక్షరాలు)"
+        ],
+        hintText: "మొదటి అడ్డం పదం 'అ' తో మొదలై 'ం' తో ముగుస్తుంది!"
+      },
+      nature: {
+        label: "ప్రకృతి (Nature)",
+        cells: [
+          { ans: "క", num: "1" }, { ans: "మ" }, { ans: "ల" }, { ans: "ం" },
+          { ans: "డ" }, { blocked: true }, { ans: "త", num: "2" }, { blocked: true },
+          { ans: "లి" }, { ans: "వ", num: "3" }, { ans: "న" }, { ans: "ం" },
+          { blocked: true }, { ans: "మ" }, { ans: "ల" }, { ans: "య" }
+        ],
+        across: [
+          "1. నీటిలో వికసించే జాతీయ పుష్పం (4 అక్షరాలు)",
+          "3. చెట్లు, పొదలు ఉండే అడవి (3 అక్షరాలు)"
+        ],
+        down: [
+          "1. సముద్రం (3 అక్షరాలు)",
+          "2. తీగ / లత (3 అక్షరాలు)"
+        ],
+        hintText: "1 అడ్డం సమాధానం మన జాతీయ పుష్పం 'కమలం'."
+      },
+      culture: {
+        label: "సంస్కృతి (Culture)",
+        cells: [
+          { ans: "సం", num: "1" }, { ans: "క్రాం" }, { ans: "తి" }, { blocked: true },
+          { ans: "గీ" }, { blocked: true }, { ans: "రు", num: "2" }, { ans: "చి" },
+          { ans: "తం" }, { ans: "పం", num: "3" }, { ans: "డు" }, { ans: "గ" },
+          { blocked: true }, { ans: "ద" }, { ans: "య" }, { blocked: true }
+        ],
+        across: [
+          "1. తెలుగు వారి పెద్ద పండుగ (3 అక్షరాలు)",
+          "3. ఉత్సవం / వేడుక (3 అక్షరాలు)"
+        ],
+        down: [
+          "1. పాట / నాదం (3 అక్షరాలు)",
+          "2. రుచి / మధురం (3 అక్షరాలు)"
+        ],
+        hintText: "జనవరిలో జరుపుకునే పంటల పండుగ 'సంక్రాంతి'."
+      },
+      literature: {
+        label: "సాహిత్యం (Literature)",
+        cells: [
+          { ans: "క", num: "1" }, { ans: "వి" }, { ans: "త" }, { blocked: true },
+          { ans: "థ" }, { blocked: true }, { ans: "రు", num: "2" }, { ans: "చి" },
+          { blocked: true }, { ans: "ప", num: "3" }, { ans: "ద్య" }, { ans: "ం" },
+          { blocked: true }, { ans: "ద" }, { ans: "య" }, { blocked: true }
+        ],
+        across: [
+          "1. కవి రాసే భావయుక్త రచన (3 అక్షరాలు)",
+          "3. ఛందస్సుతో కూడిన శ్లోకం (3 అక్షరాలు)"
+        ],
+        down: [
+          "1. గాథ / స్టోరీ (2 అక్షరాలు)",
+          "3. అక్షరాల సముదాయం (2 అక్షరాలు)"
+        ],
+        hintText: "1 అడ్డం 'కవిత', 3 అడ్డం 'పద్యం'."
+      }
+    };
+
+    let currentCategory = 'general';
+    const crosswordGrid = document.getElementById('crosswordGrid');
+    const cluesBox = document.getElementById('cluesBox');
+    const categoryBadge = document.getElementById('categoryBadge');
+    const cwStatus = document.getElementById('cwStatus');
+
+    function loadCategory(catKey) {
+      currentCategory = catKey;
+      const puzzle = puzzlesByCategory[catKey];
+      categoryBadge.textContent = puzzle.label;
+      cwStatus.textContent = '';
+      crosswordGrid.innerHTML = '';
+
+      puzzle.cells.forEach((cell) => {
+        if (cell.blocked) {
+          const div = document.createElement('div');
+          div.className = 'cell blocked';
+          crosswordGrid.appendChild(div);
+        } else {
+          const inp = document.createElement('input');
+          inp.className = 'cell';
+          inp.maxLength = 4;
+          inp.dataset.ans = cell.ans;
+          if (cell.num) inp.placeholder = cell.num;
+          crosswordGrid.appendChild(inp);
+        }
+      });
+
+      cluesBox.innerHTML = `
+        <h3>ఆధారాలు (Clues):</h3>
+        <div><strong>అడ్డం (Across):</strong></div>
+        ${puzzle.across.map(c => `<div>${c}</div>`).join('')}
+        <div style="margin-top: 6px;"><strong>నిలువు (Down):</strong></div>
+        ${puzzle.down.map(c => `<div>${c}</div>`).join('')}
+      `;
+    }
+
+    document.querySelectorAll('.cat-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        loadCategory(btn.dataset.cat);
+      });
+    });
+
+    loadCategory('general');
+
+    // --- Crossword Check & Clear ---
+    document.getElementById('checkCwBtn').addEventListener('click', () => {
+      const inputs = document.querySelectorAll('.crossword-grid input.cell');
+      let allCorrect = true;
+
+      inputs.forEach((inp) => {
+        const val = inp.value.trim();
+        const ans = inp.dataset.ans;
+        if (val === ans) {
+          inp.style.borderColor = 'var(--success)';
+          inp.style.background = '#f0fdf4';
+        } else {
+          inp.style.borderColor = 'var(--error)';
+          inp.style.background = '#fef2f2';
+          allCorrect = false;
+        }
+      });
+
+      if (allCorrect) {
+        cwScore += 50;
+        localStorage.setItem('tp_cw_score', cwScore);
+        updateScoreUI();
+        cwStatus.style.color = 'var(--success)';
+        cwStatus.textContent = '🌟 అద్భుతం! గడి పూర్తి చేశారు (+50 పద వినోదం పాయింట్లు)';
+      } else {
+        cwStatus.style.color = 'var(--error)';
+        cwStatus.textContent = 'కొన్ని అక్షరాలు సరిగ్గా లేవు. సందేహం ఉంటే అక్షరమిత్రను అడగండి!';
+      }
+    });
+
+    document.getElementById('clearCwBtn').addEventListener('click', () => {
+      document.querySelectorAll('.crossword-grid input.cell').forEach((inp) => {
+        inp.value = '';
+        inp.style.borderColor = '#cbd5e1';
+        inp.style.background = '#ffffff';
+      });
+      cwStatus.textContent = '';
+    });
+
+    // --- Collapsible Telugu Movies Quiz Logic ---
     const quizToggleBtn = document.getElementById('quizToggleBtn');
     const quizPanel = document.getElementById('quizPanel');
     const quizTogglePill = document.getElementById('quizTogglePill');
@@ -471,10 +772,9 @@
     quizToggleBtn.addEventListener('click', () => {
       const isOpen = quizPanel.classList.toggle('open');
       quizToggleBtn.setAttribute('aria-expanded', isOpen);
-      quizTogglePill.textContent = isOpen ? 'Close ▲' : 'Play ▼';
+      quizTogglePill.textContent = isOpen ? 'మూసివేయి ▲' : 'ఆడండి ▼';
     });
 
-    // --- Telugu Movies Quiz Data & Logic ---
     const movieQuestions = [
       {
         q: "‘బాహుబలి: ది బిగినింగ్’ సినిమాలో కట్టప్ప బాహుబలిని ఎందుకు చంపాడు అనే ప్రశ్నకు సమాధానం ఏ భాగంలో ఉంది?",
@@ -557,7 +857,7 @@
 
       nextQuizBtn.style.display = 'inline-block';
       nextQuizBtn.textContent =
-        currentQIndex === movieQuestions.length - 1 ? 'మళ్ళీ ఆడు (Restart) ↻' : 'తదుపరి ప్రశ్న →';
+        currentQIndex === movieQuestions.length - 1 ? 'మళ్ళీ ఆడు ↻' : 'తదుపరి ప్రశ్న →';
     }
 
     nextQuizBtn.addEventListener('click', () => {
@@ -567,48 +867,48 @@
 
     renderQuizQuestion();
 
-    // --- Crossword Check Logic ---
-    const checkCwBtn = document.getElementById('checkCwBtn');
-    const clearCwBtn = document.getElementById('clearCwBtn');
-    const cwStatus = document.getElementById('cwStatus');
+    // --- Aksharamitra Chatbot Logic ---
+    const chatFab = document.getElementById('chatFab');
+    const chatDrawer = document.getElementById('chatDrawer');
+    const chatClose = document.getElementById('chatClose');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const chatSend = document.getElementById('chatSend');
 
-    checkCwBtn.addEventListener('click', () => {
-      const inputs = document.querySelectorAll('.crossword-grid input.cell');
-      let allCorrect = true;
+    chatFab.addEventListener('click', () => chatDrawer.classList.toggle('open'));
+    chatClose.addEventListener('click', () => chatDrawer.classList.remove('open'));
 
-      inputs.forEach((inp) => {
-        const val = inp.value.trim();
-        const ans = inp.dataset.ans;
-        if (val === ans) {
-          inp.style.borderColor = 'var(--success)';
-          inp.style.background = '#f0fdf4';
+    function sendChatMessage() {
+      const text = chatInput.value.trim();
+      if (!text) return;
+
+      const userDiv = document.createElement('div');
+      userDiv.className = 'msg-user';
+      userDiv.textContent = text;
+      chatMessages.appendChild(userDiv);
+      chatInput.value = '';
+
+      setTimeout(() => {
+        const botDiv = document.createElement('div');
+        botDiv.className = 'msg-bot';
+        const lower = text.toLowerCase();
+
+        if (lower.includes('క్లూ') || lower.includes('clue') || lower.includes('hint')) {
+          botDiv.textContent = `💡 చిన్న సూచన: ${puzzlesByCategory[currentCategory].hintText}`;
+        } else if (lower.includes('స్కోర్') || lower.includes('score')) {
+          botDiv.textContent = `మీ పద వినోదం స్కోర్ ${cwScore}, మరియు సినిమా క్విజ్ స్కోర్ ${quizScore} గా ఉన్నాయి!`;
         } else {
-          inp.style.borderColor = 'var(--error)';
-          inp.style.background = '#fef2f2';
-          allCorrect = false;
+          botDiv.textContent = `ప్రస్తుతం మీరు "${puzzlesByCategory[currentCategory].label}" విభాగంలో ఆడుతున్నారు. చిన్న సహాయం కావాలంటే "క్లూ" అని టైప్ చేయండి!`;
         }
-      });
 
-      if (allCorrect) {
-        cwScore += 50;
-        localStorage.setItem('tp_cw_score', cwScore);
-        updateScoreUI();
-        cwStatus.style.color = 'var(--success)';
-        cwStatus.textContent = '🌟 అద్భుతం! గడి పూర్తి చేశారు (+50 పద వినోదం పాయింట్లు)';
-      } else {
-        cwStatus.style.color = 'var(--error)';
-        cwStatus.textContent = 'కొన్ని అక్షరాలు సరిగ్గా లేవు. మళ్ళీ ప్రయత్నించండి!';
-      }
-    });
+        chatMessages.appendChild(botDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }, 300);
+    }
 
-    clearCwBtn.addEventListener('click', () => {
-      const inputs = document.querySelectorAll('.crossword-grid input.cell');
-      inputs.forEach((inp) => {
-        inp.value = '';
-        inp.style.borderColor = '#cbd5e1';
-        inp.style.background = '#ffffff';
-      });
-      cwStatus.textContent = '';
+    chatSend.addEventListener('click', sendChatMessage);
+    chatInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') sendChatMessage();
     });
   </script>
 </body>
