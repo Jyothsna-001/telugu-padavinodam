@@ -398,7 +398,7 @@
       border-color: var(--parrot-green);
     }
 
-    /* Category Pills (Locked unless Paused) */
+    /* Category Pills */
     .category-section {
       margin-bottom: 16px;
       padding: 10px 12px;
@@ -478,13 +478,13 @@
 
     .crossword-grid {
       display: grid;
-      grid-template-columns: repeat(4, 62px);
+      grid-template-columns: repeat(4, 66px);
       gap: 8px;
     }
 
     .cell {
-      width: 62px;
-      height: 62px;
+      width: 66px;
+      height: 66px;
       text-align: center;
       font-size: 1.25rem;
       font-weight: 700;
@@ -545,9 +545,9 @@
     }
 
     .syllable-tile {
-      min-width: 46px;
-      height: 44px;
-      padding: 0 12px;
+      min-width: 50px;
+      height: 46px;
+      padding: 0 13px;
       background: #ffffff;
       border: 2px solid #f59e0b;
       border-radius: 10px;
@@ -569,9 +569,7 @@
       transform: translateY(-2px);
     }
 
-    .syllable-tile:active {
-      cursor: grabbing;
-    }
+    .syllable-tile:active { cursor: grabbing; }
 
     .clues-box {
       background: #f9fafb;
@@ -620,10 +618,7 @@
       cursor: pointer;
     }
 
-    .btn-hint:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+    .btn-hint:disabled { opacity: 0.5; cursor: not-allowed; }
 
     .btn-skip {
       background: #eff6ff;
@@ -741,7 +736,6 @@
       border-color: var(--primary-gold);
     }
 
-    /* Pictorial Kavi Parichayam */
     .kavi-frame {
       background: linear-gradient(135deg, #fffbeb, #fef3c7);
       border: 2px solid #f59e0b;
@@ -774,7 +768,6 @@
       font-size: 0.92rem;
     }
 
-    /* Mini-Game Unscramble Tiles */
     .scramble-tiles {
       display: flex;
       justify-content: center;
@@ -857,7 +850,7 @@
           </div>
         </div>
         <div class="parrot-speech" id="parrotSpeech">
-          నమస్కారం! మీకు 50 ప్రారంభ బోనస్ పాయింట్లు ఇవ్వబడ్డాయి. కింద ఉన్న అక్షరాలను గడులలోకి లాగి వదలండి (Drag & Drop) లేదా టైప్ చేయండి!
+          నమస్కారం! మీకు 50 ప్రారంభ బోనస్ పాయింట్లు ఇవ్వబడ్డాయి. కింద ఉన్న పూర్తి తెలుగు అక్షరాలను గడులలోకి లాగి వదలండి!
         </div>
         <div class="parrot-ask-row">
           <input type="text" id="parrotInput" placeholder="అక్షరమిత్రను అడగండి (ఉదా: సూచన, నియమాలు)..." />
@@ -876,7 +869,7 @@
         <button class="btn-pause" id="pauseResumeBtn">⏸ పాజ్ (Pause)</button>
       </div>
 
-      <!-- Category Selection Bar (Locked during active play; unlocks on Pause) -->
+      <!-- Category Selection Bar -->
       <div class="category-section">
         <div class="category-header">
           <span>విభాగం (Category):</span>
@@ -903,17 +896,17 @@
           <div class="crossword-grid" id="crosswordGrid"></div>
         </div>
 
-        <!-- Drag & Drop / Tap-to-Fill Syllable Tray -->
+        <!-- Drag & Drop / Tap-to-Fill Full Aksharalu Tray -->
         <div class="drag-tray-box">
           <div class="drag-tray-label">
-            🖐️ కింది అక్షరాలను గడులలోకి లాగి వదలండి (Drag & Drop) లేదా గడిని ఎంచుకుని అక్షరంపై నొక్కండి:
+            🖐️ కింది పూర్తి అక్షరాలను గడులలోకి లాగి వదలండి (Drag & Drop) లేదా గడిని ఎంచుకుని అక్షరంపై నొక్కండి:
           </div>
           <div class="drag-tiles" id="dragTilesContainer"></div>
         </div>
 
         <div class="clues-box" id="cluesBox"></div>
 
-        <!-- Integrated Controls: Check, Hint (with count & cost), Skip (locked until all 2 hints used), Clear -->
+        <!-- Integrated Controls -->
         <div class="action-row">
           <button class="btn-primary" id="checkCwBtn">✔ తనిఖీ (+50 పాయింట్లు)</button>
           <button class="btn-hint" id="hintCwBtn">💡 సూచన (2/2 లభ్యం • -20)</button>
@@ -927,7 +920,7 @@
     </main>
   </div>
 
-  <!-- 1. Opening Category Choice Modal (with 50 Bonus Points & Sprinkles) -->
+  <!-- 1. Opening Category Choice Modal -->
   <div class="modal-backdrop open" id="welcomeModal">
     <div class="modal-card">
       <div style="font-size: 2.2rem; margin-bottom: 6px;">🦜✨🌸</div>
@@ -1096,7 +1089,7 @@
 
     const gameGuideText =
       "నమస్కారం! నేను అక్షరమిత్ర. మీకు 50 ప్రారంభ బోనస్ పాయింట్లు ఇవ్వబడ్డాయి. " +
-      "కింద ఉన్న అక్షరాలను గడులలోకి లాగి వదలండి లేదా టైప్ చేయండి. " +
+      "కింద ఉన్న పూర్తి తెలుగు అక్షరాలను గడులలోకి లాగి వదలండి లేదా టైప్ చేయండి. " +
       "ప్రతి ప్రశ్నకు 2 సూచనలు ఉంటాయి, ఒక్కో సూచనకు 20 పాయింట్లు ఖర్చవుతాయి. " +
       "మొత్తం 2 సూచనలు వాడిన తర్వాతే 'దాటవేయి' బటన్ పనిచేస్తుంది. ప్రతి స్థాయి పూర్తి చేస్తే 50 పాయింట్లు వస్తాయి!";
 
@@ -1105,40 +1098,62 @@
     });
 
     // ==========================================
-    // 3. PUZZLE BANK WITH 2 HINTS PER QUESTION
+    // 3. REFINED PUZZLE BANK (FULL AKSHARALU ONLY - NO STANDALONE 'ం')
     // ==========================================
     const puzzleBank = {
       general: [
         {
           title: "సాధారణ పదాలు - గడి 1",
           cells: [
-            { ans: "అ", num: "1" }, { ans: "మ" }, { ans: "ర" }, { ans: "ం" },
-            { ans: "మ" }, { blocked: true }, { ans: "వి", num: "2" }, { blocked: true },
-            { ans: "ల" }, { ans: "తా", num: "3" }, { ans: "ళ" }, { ans: "ం" },
-            { blocked: true }, { ans: "ర" }, { ans: "ం" }, { ans: "గం" }
+            // Row 1: అ మ రం (3 letters: శాశ్వతమైనది)
+            { ans: "అ", num: "1" }, { ans: "మ" }, { ans: "రం", num: "2" }, { blocked: true },
+            // Row 2: మ [B] వి [B] -> 1 Down: అ మ ల (నిర్మలమైన), 2 Down: రం గం (వేదిక)
+            { ans: "మ" }, { blocked: true }, { ans: "గం" }, { blocked: true },
+            // Row 3: ల తా ళం [B] -> 3 Across: తా ళం (ఇంటికి వేసేది)
+            { ans: "ల" }, { ans: "తా", num: "3" }, { ans: "ళం" }, { blocked: true },
+            // Row 4: [B] ర వి [B] -> 4 Across: ర వి (సూర్యుడు)
+            { blocked: true }, { ans: "ర", num: "4" }, { ans: "వి" }, { blocked: true }
           ],
           distractors: ["క", "సు", "న"],
-          across: ["1. శాశ్వతమైనది / నాశనం లేనిది (4)", "3. ఇంటికి వేసేది / సంగీత లయ (3)"],
-          down: ["1. స్వచ్ఛమైన / సువాసన పువ్వు (3)", "2. సూర్యుడు & ఆకాశం (3)"],
+          across: [
+            "1. శాశ్వతమైనది / నాశనం లేనిది (3 అక్షరాలు)",
+            "3. ఇంటికి వేసేది / సంగీత లయ (2 అక్షరాలు)",
+            "4. సూర్యుడు / భానుడు (2 అక్షరాలు)"
+          ],
+          down: [
+            "1. నిర్మలమైనది / స్వచ్ఛమైనది (3 అక్షరాలు)",
+            "2. నాటక వేదిక / రంగస్థలం (2 అక్షరాలు)"
+          ],
           hints: [
-            "మొదటి సూచన: 1 అడ్డం పదం 'అ' తో మొదలై 'ం' తో ముగుస్తుంది — శాశ్వతమైనది అని అర్థం.",
-            "రెండవ సూచన: 3 అడ్డం పదం ఇంటికి వేసే 'తాళం', 1 అడ్డం పదం 'అమరం'."
+            "మొదటి సూచన: 1 అడ్డం పదం 'అ' తో మొదలై 'రం' తో ముగుస్తుంది — శాశ్వతమైనది అని అర్థం.",
+            "రెండవ సూచన: 3 అడ్డం పదం ఇంటికి వేసే 'తాళం', 4 అడ్డం పదం సూర్యుడికి మరో పేరు 'రవి'."
           ]
         },
         {
           title: "సాధారణ పదాలు - గడి 2",
           cells: [
-            { ans: "క", num: "1" }, { ans: "మ" }, { ans: "ల" }, { ans: "ం" },
-            { ans: "డ" }, { blocked: true }, { ans: "త", num: "2" }, { blocked: true },
-            { ans: "లి" }, { ans: "వ", num: "3" }, { ans: "న" }, { ans: "ం" },
-            { blocked: true }, { ans: "మ" }, { ans: "ల" }, { ans: "య" }
+            // Row 1: క మ లం (3 letters: జాతీయ పుష్పం)
+            { ans: "క", num: "1" }, { ans: "మ" }, { ans: "లం", num: "2" }, { blocked: true },
+            // Row 2: డ [B] త [B] -> 1 Down: క డ లి (సముద్రం), 2 Down: లం క (ద్వీపం)
+            { ans: "డ" }, { blocked: true }, { ans: "క" }, { blocked: true },
+            // Row 3: లి వ నం [B] -> 3 Across: వ నం (అడవి)
+            { ans: "లి" }, { ans: "వ", num: "3" }, { ans: "నం" }, { blocked: true },
+            // Row 4: [B] మ ల [B] -> 4 Across: మ ల (కొండ / పర్వతం)
+            { blocked: true }, { ans: "మ", num: "4" }, { ans: "ల" }, { blocked: true }
           ],
-          distractors: ["పు", "ర", "గ"],
-          across: ["1. మన జాతీయ పుష్పం (4)", "3. చెట్లు ఉండే అడవి (3)"],
-          down: ["1. సముద్రం (3)", "2. తీగ / లత (3)"],
+          distractors: ["పు", "ర", "గం"],
+          across: [
+            "1. మన జాతీయ పుష్పం (3 అక్షరాలు)",
+            "3. చెట్లు ఉండే అడవి / తోట (2 అక్షరాలు)",
+            "4. కొండ / పర్వతం (2 అక్షరాలు)"
+          ],
+          down: [
+            "1. సముద్రం / సాగరం (3 అక్షరాలు)",
+            "2. రావణుడి రాజ్యం / ద్వీపం (2 అక్షరాలు)"
+          ],
           hints: [
-            "మొదటి సూచన: 1 అడ్డం నీటిలో వికసించే మన జాతీయ పుష్పం.",
-            "రెండవ సూచన: 1 అడ్డం 'కమలం', 3 అడ్డం అడవికి మరో పేరు 'వనం'."
+            "మొదటి సూచన: 1 అడ్డం నీటిలో వికసించే మన జాతీయ పుష్పం 'కమలం'.",
+            "రెండవ సూచన: 3 అడ్డం అడవికి మరో పేరు 'వనం', 1 నిలువు సముద్రం 'కడలి'."
           ]
         }
       ],
@@ -1146,14 +1161,25 @@
         {
           title: "పద్యాలు (Poems) - గడి 1",
           cells: [
-            { ans: "వే", num: "1" }, { ans: "మ" }, { ans: "న" }, { blocked: true },
-            { ans: "దా" }, { blocked: true }, { ans: "య", num: "2" }, { ans: "తి" },
-            { ans: "నం" }, { ans: "ప", num: "3" }, { ans: "ద్య" }, { ans: "ం" },
-            { blocked: true }, { ans: "ద" }, { ans: "య" }, { blocked: true }
+            // Row 1: వే మ న (3 letters: శతక కవి)
+            { ans: "వే", num: "1" }, { ans: "మ" }, { ans: "న", num: "2" }, { blocked: true },
+            // Row 2: దం [B] య [B] -> 1 Down: వే దం (శాస్త్రం), 2 Down: న య నం (కన్ను)
+            { ans: "దం" }, { blocked: true }, { ans: "య" }, { blocked: true },
+            // Row 3: [B] ప ద్యం [B] -> 3 Across: ప ద్యం (ఛందస్సు కవిత)
+            { blocked: true }, { ans: "ప", num: "3" }, { ans: "ద్యం" }, { blocked: true },
+            // Row 4: [B] ద య [B] -> 4 Across: ద య (కరుణ)
+            { blocked: true }, { ans: "ద", num: "4" }, { ans: "య" }, { blocked: true }
           ],
           distractors: ["క", "వి", "సు"],
-          across: ["1. 'విశ్వదాభిరామ వినుర...' శతక కవి (3)", "3. ఛందస్సుతో కూడిన కవిత (3)"],
-          down: ["1. వేద జ్ఞానం / దానం (3)", "2. రాజు / ఋషి (2)"],
+          across: [
+            "1. 'విశ్వదాభిరామ వినుర...' శతక కవి (3 అక్షరాలు)",
+            "3. ఛందస్సుతో కూడిన కవిత (2 అక్షరాలు)",
+            "4. కరుణ / జాలి (2 అక్షరాలు)"
+          ],
+          down: [
+            "1. ప్రాచీన జ్ఞాన శాస్త్రం (2 అక్షరాలు)",
+            "2. కన్ను / నేత్రం (3 అక్షరాలు)"
+          ],
           hints: [
             "మొదటి సూచన: 'విశ్వదాభిరామ వినుర వేమ' అని రాసిన ప్రజాకవి పేరు 1 అడ్డం.",
             "రెండవ సూచన: 1 అడ్డం 'వేమన', మరియు 3 అడ్డం 'పద్యం'."
@@ -1162,17 +1188,27 @@
         {
           title: "పద్యాలు (Poems) - గడి 2",
           cells: [
-            { ans: "పో", num: "1" }, { ans: "త" }, { ans: "న" }, { blocked: true },
-            { ans: "గ" }, { blocked: true }, { ans: "న", num: "2" }, { ans: "న్న" },
-            { ans: "సు" }, { ans: "మ", num: "3" }, { ans: "తి" }, { blocked: true },
-            { blocked: true }, { ans: "న" }, { ans: "య" }, { blocked: true }
+            // Row 1: పో త న (3 letters: భాగవత కవి)
+            { ans: "పో", num: "1" }, { ans: "త" }, { ans: "న", num: "2" }, { blocked: true },
+            // Row 2: గ [B] న్న [B] -> 1 Down: పో గ డ (పూల దండ / కీర్తి), 2 Down: న న్న య (ఆదికవి)
+            { ans: "గ" }, { blocked: true }, { ans: "న్న" }, { blocked: true },
+            // Row 3: డ [B] య [B]
+            { ans: "డ" }, { blocked: true }, { ans: "య" }, { blocked: true },
+            // Row 4: [B] సు మ తి -> 3 Across: సు మ తి (శతకం)
+            { blocked: true }, { ans: "సు", num: "3" }, { ans: "మ" }, { ans: "తి" }
           ],
-          distractors: ["క", "ర", "ం"],
-          across: ["1. భాగవతం రచించిన సహజ కవి (3)", "3. మంచి బుద్ధి గల శతకం (3)"],
-          down: ["1. పొగడ్త / కీర్తి (3)", "2. ఆదికవి నన్నయ (2)"],
+          distractors: ["క", "రం", "ల"],
+          across: [
+            "1. భాగవతం రచించిన సహజ కవి (3 అక్షరాలు)",
+            "3. మంచి బుద్ధి గల ప్రసిద్ధ శతకం (3 అక్షరాలు)"
+          ],
+          down: [
+            "1. పూల మాల / కీర్తి (3 అక్షరాలు)",
+            "2. తెలుగు ఆదికవి (3 అక్షరాలు)"
+          ],
           hints: [
-            "మొదటి సూచన: శ్రీమదాంధ్ర భాగవతం రాసిన సహజ కవి బమ్మెర పోతన 1 అడ్డం.",
-            "రెండవ సూచన: 3 అడ్డం బద్దెన రచించిన 'సుమతి' శతకం."
+            "మొదటి సూచన: శ్రీమదాంధ్ర భాగవతం రాసిన సహజ కవి బమ్మెర 'పోతన' 1 అడ్డం.",
+            "రెండవ సూచన: 2 నిలువు ఆదికవి 'నన్నయ', 3 అడ్డం బద్దెన రాసిన 'సుమతి' శతకం."
           ]
         }
       ],
@@ -1180,33 +1216,53 @@
         {
           title: "సామెతలు (Proverbs) - గడి 1",
           cells: [
-            { ans: "ఆ", num: "1" }, { ans: "రో" }, { ans: "గ్య" }, { ans: "మే" },
-            { ans: "క" }, { blocked: true }, { ans: "మ", num: "2" }, { blocked: true },
-            { ans: "లి" }, { ans: "భా", num: "3" }, { ans: "గ్య" }, { ans: "ం" },
-            { blocked: true }, { ans: "ష" }, { ans: "ం" }, { blocked: true }
+            // Row 1: ఆ రో గ్య మే (4 letters: ఆరోగ్యమే మహాభాగ్యం)
+            { ans: "ఆ", num: "1" }, { ans: "రో" }, { ans: "గ్య", num: "2" }, { ans: "మే" },
+            // Row 2: క [B] భా [B] -> 1 Down: ఆ క లి (క్షుధ), 2 Down: గ్య భా గ్యం -> భా గ్యం (అదృష్టం)
+            { ans: "క" }, { blocked: true }, { ans: "భా", num: "3" }, { blocked: true },
+            // Row 3: లి [B] గ్యం [B]
+            { ans: "లి" }, { blocked: true }, { ans: "గ్యం" }, { blocked: true },
+            // Row 4: [B] ధ నం [B] -> 4 Across: ధ నం (సంపద)
+            { blocked: true }, { ans: "ధ", num: "4" }, { ans: "నం" }, { blocked: true }
           ],
-          distractors: ["ధ", "న", "సు"],
-          across: ["1. '_____ మహాభాగ్యం' సామెతలో మొదటి పదం (4)", "3. అదృష్టం / సంపద (3)"],
-          down: ["1. ఆకలి / కోరిక (3)", "2. మనసు / మతి (2)"],
+          distractors: ["సు", "మ", "కం"],
+          across: [
+            "1. '_____ మహాభాగ్యం' సామెతలో మొదటి పదం (4 అక్షరాలు)",
+            "4. సంపద / డబ్బు (2 అక్షరాలు)"
+          ],
+          down: [
+            "1. భోజనం చేయాలనే కోరిక (3 అక్షరాలు)",
+            "3. అదృష్టం / ఐశ్వర్యం (2 అక్షరాలు)"
+          ],
           hints: [
-            "మొదటి సూచన: మన ఆరోగ్యానికి సంబంధించిన ప్రసిద్ధ సామెత ఇది.",
-            "రెండవ సూచన: 1 అడ్డం 'ఆరోగ్యమే', 3 అడ్డం 'భాగ్యం'."
+            "మొదటి సూచన: మన ఆరోగ్యానికి సంబంధించిన ప్రసిద్ధ సామెత 'ఆరోగ్యమే మహాభాగ్యం'.",
+            "రెండవ సూచన: 1 అడ్డం 'ఆరోగ్యమే', 3 నిలువు 'భాగ్యం', 4 అడ్డం 'ధనం'."
           ]
         },
         {
           title: "సామెతలు (Proverbs) - గడి 2",
           cells: [
-            { ans: "చె", num: "1" }, { ans: "ట్టు" }, { ans: "పే" }, { ans: "రు" },
-            { ans: "లు" }, { blocked: true }, { ans: "కా", num: "2" }, { blocked: true },
-            { ans: "క" }, { ans: "ప", num: "3" }, { ans: "ండ్లు" }, { blocked: true },
-            { blocked: true }, { ans: "ల" }, { ans: "త" }, { blocked: true }
+            // Row 1: చె ట్టు పే రు (4 letters: చెట్టుపేరు చెప్పి కాయలు అమ్ముకోవడం)
+            { ans: "చె", num: "1" }, { ans: "ట్టు" }, { ans: "పే", num: "2" }, { ans: "రు" },
+            // Row 2: లు [B] పం [B] -> 1 Down: చె లు వ (అందం), 2 Down: పే పం డ్లు -> పం డ్లు (ఫలాలు)
+            { ans: "లు" }, { blocked: true }, { ans: "పం", num: "3" }, { blocked: true },
+            // Row 3: వ [B] డ్లు [B]
+            { ans: "వ" }, { blocked: true }, { ans: "డ్లు" }, { blocked: true },
+            // Row 4: [B] క థ [B] -> 4 Across: క థ (గాథ)
+            { blocked: true }, { ans: "క", num: "4" }, { ans: "థ" }, { blocked: true }
           ],
-          distractors: ["మ", "ర", "ం"],
-          across: ["1. '______ చెప్పి కాయలు అమ్ముకోవడం' (4)", "3. చెట్టుకు కాసే ఫలాలు (2)"],
-          down: ["1. చెట్టు కొమ్మలు (3)", "2. కాయ / ఫలం (2)"],
+          distractors: ["మ", "రం", "ల"],
+          across: [
+            "1. '______ చెప్పి కాయలు అమ్ముకోవడం' (4 అక్షరాలు)",
+            "4. గాథ / స్టోరీ (2 అక్షరాలు)"
+          ],
+          down: [
+            "1. అందం / సొగసు (3 అక్షరాలు)",
+            "3. చెట్టుకు కాసే ఫలాలు (2 అక్షరాలు)"
+          ],
           hints: [
-            "మొదటి సూచన: ఒకరి పేరు చెప్పి లాభం పొందడం అనే అర్థం వచ్చే సామెత.",
-            "రెండవ సూచన: 1 అడ్డం 'చెట్టుపేరు' (చె-ట్టు-పే-రు), 3 అడ్డం 'పండ్లు'."
+            "మొదటి సూచన: ఒకరి పేరు చెప్పి లాభం పొందడం అనే అర్థం వచ్చే సామెత 'చెట్టుపేరు...'.",
+            "రెండవ సూచన: 1 అడ్డం 'చెట్టుపేరు' (చె-ట్టు-పే-రు), 3 నిలువు 'పండ్లు' (పం-డ్లు)."
           ]
         }
       ]
@@ -1218,10 +1274,9 @@
     const HINT_COST = 20;
     const MAX_HINTS_PER_LEVEL = 2;
 
-    // Give 50 initial bonus points if first time opening the game
-    let storedScore = localStorage.getItem('tp_cw_score_v2');
+    let storedScore = localStorage.getItem('tp_cw_score_v3');
     let cwScore = storedScore !== null ? Number(storedScore) : 50;
-    localStorage.setItem('tp_cw_score_v2', cwScore);
+    localStorage.setItem('tp_cw_score_v3', cwScore);
 
     let quizScore = Number(localStorage.getItem('tp_quiz_score')) || 0;
     let currentLevel = 1;
@@ -1229,7 +1284,6 @@
     let catPuzzleIdx = { general: 0, padyalu: 0, samethalu: 0 };
     let isPaused = false;
 
-    // Per-question hint tracking
     let hintsRemaining = MAX_HINTS_PER_LEVEL;
     let selectedCellInput = null;
 
@@ -1258,7 +1312,6 @@
       hintCwBtn.disabled = hintsRemaining <= 0;
       parrotHintBtn.disabled = hintsRemaining <= 0;
 
-      // Activate Skip ONLY after all available hints (2/2) for this question are used
       if (hintsRemaining === 0) {
         skipCwBtn.disabled = false;
         skipCwBtn.textContent = '⏭ దాటవేయి (Skip)';
@@ -1282,7 +1335,6 @@
       const answerSyllables = puzzle.cells.filter(c => !c.blocked).map(c => c.ans);
       const combined = [...answerSyllables, ...(puzzle.distractors || [])];
 
-      // Shuffle syllables so player has to pick/drag the right ones
       for (let i = combined.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [combined[i], combined[j]] = [combined[j], combined[i]];
@@ -1295,16 +1347,15 @@
         tile.draggable = true;
         tile.id = `syl-tile-${index}`;
 
-        // Drag start
         tile.addEventListener('dragstart', (e) => {
           e.dataTransfer.setData('text/plain', syl);
         });
 
-        // Tap-to-fill fallback for touchscreens / quick clicks
         tile.addEventListener('click', () => {
           if (selectedCellInput) {
             selectedCellInput.value = syl;
-            selectedCellInput.dispatchEvent(new Event('input'));
+            selectedCellInput.style.borderColor = '#cbd5e1';
+            selectedCellInput.style.background = '#ffffff';
           } else {
             const firstEmpty = Array.from(document.querySelectorAll('.crossword-grid input.cell'))
               .find(inp => inp.value.trim() === '');
@@ -1342,18 +1393,16 @@
         } else {
           const inp = document.createElement('input');
           inp.className = 'cell';
-          inp.maxLength = 4;
+          inp.maxLength = 5;
           inp.dataset.ans = cell.ans;
           if (cell.num) inp.placeholder = cell.num;
 
-          // Track selected cell for tap-to-fill
           inp.addEventListener('focus', () => {
             document.querySelectorAll('.crossword-grid input.cell').forEach(c => c.classList.remove('selected-cell'));
             inp.classList.add('selected-cell');
             selectedCellInput = inp;
           });
 
-          // Enable Drag & Drop onto each cell
           inp.addEventListener('dragover', (e) => {
             e.preventDefault();
             inp.classList.add('drag-over');
@@ -1461,15 +1510,14 @@
       }
 
       const p = getCurrentPuzzle();
-      const hintIndex = MAX_HINTS_PER_LEVEL - hintsRemaining; // 0 for first hint, 1 for second hint
+      const hintIndex = MAX_HINTS_PER_LEVEL - hintsRemaining;
 
       cwScore -= HINT_COST;
       hintsRemaining -= 1;
-      localStorage.setItem('tp_cw_score_v2', cwScore);
+      localStorage.setItem('tp_cw_score_v3', cwScore);
       updateHeaderBadges();
       updateHintAndSkipButtons();
 
-      // Fill one empty/incorrect cell as visual help
       const emptyInputs = Array.from(document.querySelectorAll('.crossword-grid input.cell'))
         .filter(inp => inp.value.trim() !== inp.dataset.ans);
 
@@ -1512,7 +1560,7 @@
 
       if (allCorrect) {
         cwScore += 50;
-        localStorage.setItem('tp_cw_score_v2', cwScore);
+        localStorage.setItem('tp_cw_score_v3', cwScore);
         const passedLevel = currentLevel;
         currentLevel += 1;
         catPuzzleIdx[currentCategory] += 1;
@@ -1523,7 +1571,6 @@
 
         setTimeout(() => {
           renderCrossword();
-          // Parrot announces in voice upon entering the next level that the previous level was passed
           parrotSpeak(`అభినందనలు! మీరు స్థాయి ${passedLevel} విజయవంతంగా పూర్తి చేసి, ఇప్పుడు స్థాయి ${currentLevel} లోకి అడుగుపెట్టారు!`);
           triggerMilestoneIfAny(passedLevel);
         }, 1000);
@@ -1534,7 +1581,6 @@
       }
     });
 
-    // Skip Level (Only clickable after all 2 hints are used)
     skipCwBtn.addEventListener('click', () => {
       if (hintsRemaining > 0) return;
       const skippedLevel = currentLevel;
@@ -1546,7 +1592,6 @@
       triggerMilestoneIfAny(skippedLevel);
     });
 
-    // Clear Grid
     document.getElementById('clearCwBtn').addEventListener('click', () => {
       document.querySelectorAll('.crossword-grid input.cell').forEach((inp) => {
         inp.value = '';
@@ -1588,9 +1633,9 @@
 
     const miniGames = [
       { scrambled: ["లు", "గు", "తె"], answer: "తెలుగు", hint: "మన మాతృభాష (3 అక్షరాలు)" },
-      { scrambled: ["ర", "ం", "అ", "మ"], answer: "అమరం", hint: "శాశ్వతమైనది (4 అక్షరాలు)" },
+      { scrambled: ["రం", "అ", "మ"], answer: "అమరం", hint: "శాశ్వతమైనది (3 అక్షరాలు)" },
       { scrambled: ["వి", "త", "క"], answer: "కవిత", hint: "కవి రాసే రచన (3 అక్షరాలు)" },
-      { scrambled: ["ల", "ం", "క", "మ"], answer: "కమలం", hint: "జాతీయ పుష్పం (4 అక్షరాలు)" }
+      { scrambled: ["లం", "క", "మ"], answer: "కమలం", hint: "జాతీయ పుష్పం (3 అక్షరాలు)" }
     ];
     let miniGameIdx = 0;
 
@@ -1665,7 +1710,7 @@
 
       if (userVal === mg.answer) {
         cwScore += 25;
-        localStorage.setItem('tp_cw_score_v2', cwScore);
+        localStorage.setItem('tp_cw_score_v3', cwScore);
         updateHeaderBadges();
         miniGameIdx++;
         statusEl.style.color = 'var(--success)';
@@ -1685,7 +1730,6 @@
       document.getElementById('miniGameModal').classList.remove('open');
     });
 
-    // Parrot Chat Input
     function askParrot() {
       const inp = document.getElementById('parrotInput');
       const q = inp.value.trim();
