@@ -1098,7 +1098,7 @@
     });
 
     // ==========================================
-    // 3. REFINED PUZZLE BANK (FULL AKSHARALU ONLY - NO STANDALONE 'ం')
+    // 3. VERIFIED PUZZLE BANK (100% FULL AKSHARALU & CLEAN INTERSECTIONS)
     // ==========================================
     const puzzleBank = {
       general: [
@@ -1107,7 +1107,7 @@
           cells: [
             // Row 1: అ మ రం (3 letters: శాశ్వతమైనది)
             { ans: "అ", num: "1" }, { ans: "మ" }, { ans: "రం", num: "2" }, { blocked: true },
-            // Row 2: మ [B] వి [B] -> 1 Down: అ మ ల (నిర్మలమైన), 2 Down: రం గం (వేదిక)
+            // Row 2: మ [B] గం [B] -> 1 Down: అ మ ల (నిర్మలమైన), 2 Down: రం గం (వేదిక)
             { ans: "మ" }, { blocked: true }, { ans: "గం" }, { blocked: true },
             // Row 3: ల తా ళం [B] -> 3 Across: తా ళం (ఇంటికి వేసేది)
             { ans: "ల" }, { ans: "తా", num: "3" }, { ans: "ళం" }, { blocked: true },
@@ -1134,7 +1134,7 @@
           cells: [
             // Row 1: క మ లం (3 letters: జాతీయ పుష్పం)
             { ans: "క", num: "1" }, { ans: "మ" }, { ans: "లం", num: "2" }, { blocked: true },
-            // Row 2: డ [B] త [B] -> 1 Down: క డ లి (సముద్రం), 2 Down: లం క (ద్వీపం)
+            // Row 2: డ [B] క [B] -> 1 Down: క డ లి (సముద్రం), 2 Down: లం క (ద్వీపం)
             { ans: "డ" }, { blocked: true }, { ans: "క" }, { blocked: true },
             // Row 3: లి వ నం [B] -> 3 Across: వ నం (అడవి)
             { ans: "లి" }, { ans: "వ", num: "3" }, { ans: "నం" }, { blocked: true },
@@ -1163,17 +1163,17 @@
           cells: [
             // Row 1: వే మ న (3 letters: శతక కవి)
             { ans: "వే", num: "1" }, { ans: "మ" }, { ans: "న", num: "2" }, { blocked: true },
-            // Row 2: దం [B] య [B] -> 1 Down: వే దం (శాస్త్రం), 2 Down: న య నం (కన్ను)
+            // Row 2: దం [B] య [B] -> 1 Down: వే దం (శాస్త్రం)
             { ans: "దం" }, { blocked: true }, { ans: "య" }, { blocked: true },
-            // Row 3: [B] ప ద్యం [B] -> 3 Across: ప ద్యం (ఛందస్సు కవిత)
-            { blocked: true }, { ans: "ప", num: "3" }, { ans: "ద్యం" }, { blocked: true },
+            // Row 3: [B] ప నం [B] -> 2 Down: న య నం (కన్ను), 3 Across: ప నం (ప్రతిజ్ఞ / పందెం)
+            { blocked: true }, { ans: "ప", num: "3" }, { ans: "నం" }, { blocked: true },
             // Row 4: [B] ద య [B] -> 4 Across: ద య (కరుణ)
             { blocked: true }, { ans: "ద", num: "4" }, { ans: "య" }, { blocked: true }
           ],
           distractors: ["క", "వి", "సు"],
           across: [
             "1. 'విశ్వదాభిరామ వినుర...' శతక కవి (3 అక్షరాలు)",
-            "3. ఛందస్సుతో కూడిన కవిత (2 అక్షరాలు)",
+            "3. ప్రతిజ్ఞ / పందెం (2 అక్షరాలు)",
             "4. కరుణ / జాలి (2 అక్షరాలు)"
           ],
           down: [
@@ -1182,7 +1182,7 @@
           ],
           hints: [
             "మొదటి సూచన: 'విశ్వదాభిరామ వినుర వేమ' అని రాసిన ప్రజాకవి పేరు 1 అడ్డం.",
-            "రెండవ సూచన: 1 అడ్డం 'వేమన', మరియు 3 అడ్డం 'పద్యం'."
+            "రెండవ సూచన: 2 నిలువు కన్నుకు మరో పేరు 'నయనం' (న-య-నం), 3 అడ్డం 'పనం'."
           ]
         },
         {
@@ -1190,7 +1190,7 @@
           cells: [
             // Row 1: పో త న (3 letters: భాగవత కవి)
             { ans: "పో", num: "1" }, { ans: "త" }, { ans: "న", num: "2" }, { blocked: true },
-            // Row 2: గ [B] న్న [B] -> 1 Down: పో గ డ (పూల దండ / కీర్తి), 2 Down: న న్న య (ఆదికవి)
+            // Row 2: గ [B] న్న [B] -> 1 Down: పో గ డ (కీర్తి), 2 Down: న న్న య (ఆదికవి)
             { ans: "గ" }, { blocked: true }, { ans: "న్న" }, { blocked: true },
             // Row 3: డ [B] య [B]
             { ans: "డ" }, { blocked: true }, { ans: "య" }, { blocked: true },
@@ -1217,8 +1217,8 @@
           title: "సామెతలు (Proverbs) - గడి 1",
           cells: [
             // Row 1: ఆ రో గ్య మే (4 letters: ఆరోగ్యమే మహాభాగ్యం)
-            { ans: "ఆ", num: "1" }, { ans: "రో" }, { ans: "గ్య", num: "2" }, { ans: "మే" },
-            // Row 2: క [B] భా [B] -> 1 Down: ఆ క లి (క్షుధ), 2 Down: గ్య భా గ్యం -> భా గ్యం (అదృష్టం)
+            { ans: "ఆ", num: "1" }, { ans: "రో" }, { ans: "గ్య" }, { ans: "మే" },
+            // Row 2: క [B] భా [B] -> 1 Down: ఆ క లి (క్షుధ), 3 Down: భా గ్యం (అదృష్టం)
             { ans: "క" }, { blocked: true }, { ans: "భా", num: "3" }, { blocked: true },
             // Row 3: లి [B] గ్యం [B]
             { ans: "లి" }, { blocked: true }, { ans: "గ్యం" }, { blocked: true },
@@ -1243,8 +1243,8 @@
           title: "సామెతలు (Proverbs) - గడి 2",
           cells: [
             // Row 1: చె ట్టు పే రు (4 letters: చెట్టుపేరు చెప్పి కాయలు అమ్ముకోవడం)
-            { ans: "చె", num: "1" }, { ans: "ట్టు" }, { ans: "పే", num: "2" }, { ans: "రు" },
-            // Row 2: లు [B] పం [B] -> 1 Down: చె లు వ (అందం), 2 Down: పే పం డ్లు -> పం డ్లు (ఫలాలు)
+            { ans: "చె", num: "1" }, { ans: "ట్టు" }, { ans: "పే" }, { ans: "రు" },
+            // Row 2: లు [B] పం [B] -> 1 Down: చె లు వ (అందం), 3 Down: పం డ్లు (ఫలాలు)
             { ans: "లు" }, { blocked: true }, { ans: "పం", num: "3" }, { blocked: true },
             // Row 3: వ [B] డ్లు [B]
             { ans: "వ" }, { blocked: true }, { ans: "డ్లు" }, { blocked: true },
@@ -1274,9 +1274,9 @@
     const HINT_COST = 20;
     const MAX_HINTS_PER_LEVEL = 2;
 
-    let storedScore = localStorage.getItem('tp_cw_score_v3');
+    let storedScore = localStorage.getItem('tp_cw_score_v4');
     let cwScore = storedScore !== null ? Number(storedScore) : 50;
-    localStorage.setItem('tp_cw_score_v3', cwScore);
+    localStorage.setItem('tp_cw_score_v4', cwScore);
 
     let quizScore = Number(localStorage.getItem('tp_quiz_score')) || 0;
     let currentLevel = 1;
@@ -1514,7 +1514,7 @@
 
       cwScore -= HINT_COST;
       hintsRemaining -= 1;
-      localStorage.setItem('tp_cw_score_v3', cwScore);
+      localStorage.setItem('tp_cw_score_v4', cwScore);
       updateHeaderBadges();
       updateHintAndSkipButtons();
 
@@ -1560,7 +1560,7 @@
 
       if (allCorrect) {
         cwScore += 50;
-        localStorage.setItem('tp_cw_score_v3', cwScore);
+        localStorage.setItem('tp_cw_score_v4', cwScore);
         const passedLevel = currentLevel;
         currentLevel += 1;
         catPuzzleIdx[currentCategory] += 1;
@@ -1710,7 +1710,7 @@
 
       if (userVal === mg.answer) {
         cwScore += 25;
-        localStorage.setItem('tp_cw_score_v3', cwScore);
+        localStorage.setItem('tp_cw_score_v4', cwScore);
         updateHeaderBadges();
         miniGameIdx++;
         statusEl.style.color = 'var(--success)';
