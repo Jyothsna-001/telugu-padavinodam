@@ -31,13 +31,12 @@
       background-color: var(--bg-color);
       color: var(--text-dark);
       line-height: 1.6;
-      padding: 18px 14px 40px;
+      padding: 18px 14px 44px;
       display: flex;
       justify-content: center;
       overflow-x: hidden;
     }
 
-    /* Fullscreen Sprinkles & Confetti Canvas */
     #effectsCanvas {
       position: fixed;
       inset: 0;
@@ -49,7 +48,7 @@
 
     .app-container {
       width: 100%;
-      max-width: 700px;
+      max-width: 720px;
       display: flex;
       flex-direction: column;
       gap: 16px;
@@ -57,7 +56,7 @@
       z-index: 1;
     }
 
-    /* Header & Separate Score Badges */
+    /* Header & Dual Score Badges */
     header {
       text-align: center;
       background: var(--card-bg);
@@ -265,7 +264,6 @@
       align-items: center;
       justify-content: center;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-      transition: transform 0.2s ease;
     }
 
     .parrot-avatar.speaking {
@@ -277,10 +275,7 @@
       to { transform: scale(1.07) rotate(3deg); }
     }
 
-    .parrot-body {
-      flex: 1;
-      min-width: 0;
-    }
+    .parrot-body { flex: 1; min-width: 0; }
 
     .parrot-top {
       display: flex;
@@ -382,6 +377,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      flex-wrap: wrap;
     }
 
     .btn-pause {
@@ -418,6 +414,8 @@
       font-size: 0.8rem;
       color: var(--text-muted);
       margin-bottom: 8px;
+      flex-wrap: wrap;
+      gap: 4px;
     }
 
     .category-bar {
@@ -450,10 +448,8 @@
       cursor: not-allowed;
     }
 
-    /* Pause Overlay inside Game Area */
-    .game-play-area {
-      position: relative;
-    }
+    /* Pause Overlay */
+    .game-play-area { position: relative; }
 
     .pause-overlay {
       display: none;
@@ -473,10 +469,11 @@
 
     .pause-overlay.visible { display: flex; }
 
+    /* Crossword Grid */
     .grid-wrapper {
       display: flex;
       justify-content: center;
-      margin: 12px 0 18px;
+      margin: 12px 0 14px;
     }
 
     .crossword-grid {
@@ -496,12 +493,20 @@
       border-radius: 10px;
       background: #fff;
       color: var(--text-dark);
+      transition: all 0.15s ease;
     }
 
-    .cell:focus {
+    .cell:focus, .cell.selected-cell {
       outline: none;
       border-color: var(--primary-gold);
       background: #fffbeb;
+      box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.18);
+    }
+
+    .cell.drag-over {
+      border-color: var(--parrot-green);
+      background: var(--parrot-light);
+      transform: scale(1.05);
     }
 
     .cell.blocked {
@@ -513,6 +518,59 @@
       background: #fef3c7;
       border-color: var(--primary-gold);
       color: #92400e;
+    }
+
+    /* Drag & Drop Syllable Tray */
+    .drag-tray-box {
+      background: #fffbeb;
+      border: 1.5px dashed #f59e0b;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .drag-tray-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #92400e;
+      margin-bottom: 8px;
+    }
+
+    .drag-tiles {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .syllable-tile {
+      min-width: 46px;
+      height: 44px;
+      padding: 0 12px;
+      background: #ffffff;
+      border: 2px solid #f59e0b;
+      border-radius: 10px;
+      font-family: 'Noto Sans Telugu', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: grab;
+      user-select: none;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+      transition: transform 0.12s ease, background 0.12s ease;
+    }
+
+    .syllable-tile:hover {
+      background: #fef3c7;
+      transform: translateY(-2px);
+    }
+
+    .syllable-tile:active {
+      cursor: grabbing;
     }
 
     .clues-box {
@@ -530,7 +588,7 @@
       margin-bottom: 4px;
     }
 
-    /* Complete Action Toolbar: Check, Hint, Skip, Clear */
+    /* Complete Action Toolbar */
     .action-row {
       display: flex;
       gap: 8px;
@@ -554,24 +612,36 @@
       background: #fef3c7;
       color: #92400e;
       border: 1.5px solid #fcd34d;
-      padding: 10px 16px;
+      padding: 10px 14px;
       border-radius: 10px;
       font-family: inherit;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       cursor: pointer;
+    }
+
+    .btn-hint:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
 
     .btn-skip {
       background: #eff6ff;
       color: #1d4ed8;
       border: 1.5px solid #bfdbfe;
-      padding: 10px 16px;
+      padding: 10px 14px;
       border-radius: 10px;
       font-family: inherit;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       cursor: pointer;
+    }
+
+    .btn-skip:disabled {
+      background: #f3f4f6;
+      color: #9ca3af;
+      border-color: #e5e7eb;
+      cursor: not-allowed;
     }
 
     .btn-secondary {
@@ -594,7 +664,7 @@
       min-height: 24px;
     }
 
-    /* Modals: Welcome Category Picker, Pictorial Kavi Parichayam, Mini-Game, Level 10 Blast */
+    /* Modals */
     .modal-backdrop {
       display: none;
       position: fixed;
@@ -631,11 +701,23 @@
       margin-bottom: 8px;
     }
 
+    .bonus-pill {
+      display: inline-block;
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #86efac;
+      padding: 5px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
     .welcome-choices {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      margin-top: 16px;
+      margin-top: 14px;
     }
 
     .welcome-choice-btn {
@@ -659,7 +741,7 @@
       border-color: var(--primary-gold);
     }
 
-    /* Pictorial Kavi Parichayam Styling */
+    /* Pictorial Kavi Parichayam */
     .kavi-frame {
       background: linear-gradient(135deg, #fffbeb, #fef3c7);
       border: 2px solid #f59e0b;
@@ -721,7 +803,7 @@
       <h1>తెలుగు పద వినోదం</h1>
       <p>సరదాగా తెలుగు పదాలు, పద్యాలు, సామెతలు నేర్చుకుందాం!</p>
       <div class="score-bar">
-        <span class="badge badge-crossword">🏆 పద వినోదం స్కోర్: <strong id="cwScoreDisplay">0</strong></span>
+        <span class="badge badge-crossword">🏆 పద వినోదం పాయింట్లు: <strong id="cwScoreDisplay">50</strong></span>
         <span class="badge badge-level">⭐ స్థాయి (Level): <strong id="levelDisplay">1</strong></span>
         <span class="badge badge-quiz">🎬 సినిమా క్విజ్ స్కోర్: <strong id="quizScoreDisplay">0</strong></span>
       </div>
@@ -754,7 +836,6 @@
     <!-- Integrated Aksharamitra Parrot Assistant -->
     <section class="parrot-card" aria-label="Aksharamitra Parrot Guide">
       <div class="parrot-avatar" id="parrotAvatar" title="అక్షరమిత్ర చిలుక">
-        <!-- Custom SVG Parrot Mascot -->
         <svg width="46" height="46" viewBox="0 0 64 64" fill="none">
           <circle cx="32" cy="34" r="18" fill="#22c55e"/>
           <path d="M24 20C24 12 36 10 42 18C45 22 44 30 38 33L24 28V20Z" fill="#16a34a"/>
@@ -771,12 +852,12 @@
           <span class="parrot-name">🦜 అక్షరమిత్ర (Aksharamitra)</span>
           <div class="parrot-controls">
             <button class="btn-mini btn-guide" id="voiceGuideBtn">🔊 మార్గదర్శి (Guide)</button>
-            <button class="btn-mini btn-voice-hint" id="parrotHintBtn">💡 సూచన (Hint)</button>
+            <button class="btn-mini btn-voice-hint" id="parrotHintBtn">💡 సూచన (-20 పాయింట్లు)</button>
             <button class="btn-mini btn-mute" id="muteToggleBtn">🔈 వాయిస్ ఆన్</button>
           </div>
         </div>
         <div class="parrot-speech" id="parrotSpeech">
-          నమస్కారం! నేను మీ అక్షరమిత్ర చిలుకను. ఆట నియమాలు వినడానికి "మార్గదర్శి" నొక్కండి లేదా సందేహం ఉంటే అడగండి!
+          నమస్కారం! మీకు 50 ప్రారంభ బోనస్ పాయింట్లు ఇవ్వబడ్డాయి. కింద ఉన్న అక్షరాలను గడులలోకి లాగి వదలండి (Drag & Drop) లేదా టైప్ చేయండి!
         </div>
         <div class="parrot-ask-row">
           <input type="text" id="parrotInput" placeholder="అక్షరమిత్రను అడగండి (ఉదా: సూచన, నియమాలు)..." />
@@ -822,27 +903,38 @@
           <div class="crossword-grid" id="crosswordGrid"></div>
         </div>
 
+        <!-- Drag & Drop / Tap-to-Fill Syllable Tray -->
+        <div class="drag-tray-box">
+          <div class="drag-tray-label">
+            🖐️ కింది అక్షరాలను గడులలోకి లాగి వదలండి (Drag & Drop) లేదా గడిని ఎంచుకుని అక్షరంపై నొక్కండి:
+          </div>
+          <div class="drag-tiles" id="dragTilesContainer"></div>
+        </div>
+
         <div class="clues-box" id="cluesBox"></div>
 
-        <!-- Integrated Controls: Check, Hint, Skip, Clear -->
+        <!-- Integrated Controls: Check, Hint (with count & cost), Skip (locked until all 2 hints used), Clear -->
         <div class="action-row">
-          <button class="btn-primary" id="checkCwBtn">✔ తనిఖీ (Check)</button>
-          <button class="btn-hint" id="hintCwBtn">💡 సూచన (Hint)</button>
-          <button class="btn-skip" id="skipCwBtn">⏭ దాటవేయి (Skip)</button>
-          <button class="btn-secondary" id="clearCwBtn">↺ క్లియర్ (Clear)</button>
+          <button class="btn-primary" id="checkCwBtn">✔ తనిఖీ (+50 పాయింట్లు)</button>
+          <button class="btn-hint" id="hintCwBtn">💡 సూచన (2/2 లభ్యం • -20)</button>
+          <button class="btn-skip" id="skipCwBtn" disabled title="ముందుగా 2 సూచనలు వాడిన తర్వాతే దాటవేయగలరు">
+            🔒 దాటవేయి (2 సూచనల తర్వాత)
+          </button>
+          <button class="btn-secondary" id="clearCwBtn">↺ క్లియర్</button>
         </div>
         <div class="cw-status" id="cwStatus"></div>
       </div>
     </main>
   </div>
 
-  <!-- 1. Opening Category Choice Modal (with Sprinkles on Launch) -->
+  <!-- 1. Opening Category Choice Modal (with 50 Bonus Points & Sprinkles) -->
   <div class="modal-backdrop open" id="welcomeModal">
     <div class="modal-card">
       <div style="font-size: 2.2rem; margin-bottom: 6px;">🦜✨🌸</div>
+      <div class="bonus-pill">🎁 స్వాగత బహుమతి: 50 బోనస్ పాయింట్లు జమ అయ్యాయి!</div>
       <h2>తెలుగు పద వినోదానికి స్వాగతం!</h2>
-      <p style="font-size: 0.92rem; color: var(--text-muted);">
-        మీ అక్షరమిత్ర చిలుక మీకు తోడుగా ఉంటుంది. ముందుగా మీరు ఆడాలనుకుంటున్న విభాగాన్ని ఎంచుకోండి:
+      <p style="font-size: 0.9rem; color: var(--text-muted);">
+        మొదటి స్థాయిలో ఎక్కడైనా ఆగిపోతే ఈ 50 బోనస్ పాయింట్లతో సూచనలు (Hints) వాడుకోవచ్చు. ముందుగా మీ విభాగాన్ని ఎంచుకోండి:
       </p>
       <div class="welcome-choices">
         <button class="welcome-choice-btn" data-start-cat="general">
@@ -871,7 +963,7 @@
     </div>
   </div>
 
-  <!-- 3. Interactive Mini-Game Modal (After Level 6, then every 4 levels: 6, 10, 14...) -->
+  <!-- 3. Interactive Mini-Game Modal (After Level 6, then every 4 levels) -->
   <div class="modal-backdrop" id="miniGameModal">
     <div class="modal-card">
       <span class="badge badge-level" style="margin-bottom:8px;">🎮 మధ్యంతర వినోద ఆట</span>
@@ -959,9 +1051,8 @@
       }
     }
 
-    // Trigger gentle opening sprinkles on page load
     window.addEventListener('DOMContentLoaded', () => {
-      launchParticles(85, false);
+      launchParticles(90, false);
     });
 
     // ==========================================
@@ -1004,16 +1095,17 @@
     });
 
     const gameGuideText =
-      "నమస్కారం! నేను అక్షరమిత్ర. ఆట నియమాలు: ఆధారాలు చదివి గడులలో తెలుగు అక్షరాలు నింపండి. " +
-      "సహాయం కావాలంటే 'సూచన' నొక్కండి. కష్టంగా ఉంటే 'దాటవేయి' ఎంచుకోవచ్చు. " +
-      "మరో విభాగానికి వెళ్లాలంటే ముందుగా 'పాజ్' బటన్ నొక్కాలి. ప్రతి 5 స్థాయిలకు కవి పరిచయం, 10 స్థాయిలకు మహా వేడుక ఉంటాయి!";
+      "నమస్కారం! నేను అక్షరమిత్ర. మీకు 50 ప్రారంభ బోనస్ పాయింట్లు ఇవ్వబడ్డాయి. " +
+      "కింద ఉన్న అక్షరాలను గడులలోకి లాగి వదలండి లేదా టైప్ చేయండి. " +
+      "ప్రతి ప్రశ్నకు 2 సూచనలు ఉంటాయి, ఒక్కో సూచనకు 20 పాయింట్లు ఖర్చవుతాయి. " +
+      "మొత్తం 2 సూచనలు వాడిన తర్వాతే 'దాటవేయి' బటన్ పనిచేస్తుంది. ప్రతి స్థాయి పూర్తి చేస్తే 50 పాయింట్లు వస్తాయి!";
 
     document.getElementById('voiceGuideBtn').addEventListener('click', () => {
       parrotSpeak(gameGuideText);
     });
 
     // ==========================================
-    // 3. PUZZLE BANK (GENERAL, PADYALU, SAMETHALU)
+    // 3. PUZZLE BANK WITH 2 HINTS PER QUESTION
     // ==========================================
     const puzzleBank = {
       general: [
@@ -1025,9 +1117,13 @@
             { ans: "ల" }, { ans: "తా", num: "3" }, { ans: "ళ" }, { ans: "ం" },
             { blocked: true }, { ans: "ర" }, { ans: "ం" }, { ans: "గం" }
           ],
+          distractors: ["క", "సు", "న"],
           across: ["1. శాశ్వతమైనది / నాశనం లేనిది (4)", "3. ఇంటికి వేసేది / సంగీత లయ (3)"],
           down: ["1. స్వచ్ఛమైన / సువాసన పువ్వు (3)", "2. సూర్యుడు & ఆకాశం (3)"],
-          voiceHint: "మొదటి అడ్డం పదం 'అ' తో మొదలై 'ం' తో ముగుస్తుంది. శాశ్వతమైనది అని అర్థం."
+          hints: [
+            "మొదటి సూచన: 1 అడ్డం పదం 'అ' తో మొదలై 'ం' తో ముగుస్తుంది — శాశ్వతమైనది అని అర్థం.",
+            "రెండవ సూచన: 3 అడ్డం పదం ఇంటికి వేసే 'తాళం', 1 అడ్డం పదం 'అమరం'."
+          ]
         },
         {
           title: "సాధారణ పదాలు - గడి 2",
@@ -1037,9 +1133,13 @@
             { ans: "లి" }, { ans: "వ", num: "3" }, { ans: "న" }, { ans: "ం" },
             { blocked: true }, { ans: "మ" }, { ans: "ల" }, { ans: "య" }
           ],
+          distractors: ["పు", "ర", "గ"],
           across: ["1. మన జాతీయ పుష్పం (4)", "3. చెట్లు ఉండే అడవి (3)"],
           down: ["1. సముద్రం (3)", "2. తీగ / లత (3)"],
-          voiceHint: "మొదటి అడ్డం పదం నీటిలో వికసించే మన జాతీయ పుష్పం 'కమలం'."
+          hints: [
+            "మొదటి సూచన: 1 అడ్డం నీటిలో వికసించే మన జాతీయ పుష్పం.",
+            "రెండవ సూచన: 1 అడ్డం 'కమలం', 3 అడ్డం అడవికి మరో పేరు 'వనం'."
+          ]
         }
       ],
       padyalu: [
@@ -1051,9 +1151,13 @@
             { ans: "నం" }, { ans: "ప", num: "3" }, { ans: "ద్య" }, { ans: "ం" },
             { blocked: true }, { ans: "ద" }, { ans: "య" }, { blocked: true }
           ],
+          distractors: ["క", "వి", "సు"],
           across: ["1. 'విశ్వదాభిరామ వినుర...' శతక కవి (3)", "3. ఛందస్సుతో కూడిన కవిత (3)"],
           down: ["1. వేద జ్ఞానం / దానం (3)", "2. రాజు / ఋషి (2)"],
-          voiceHint: "విశ్వదాభిరామ వినుర వేమ అని పలికిన ప్రజాకవి 'వేమన' మొదటి అడ్డం పదం."
+          hints: [
+            "మొదటి సూచన: 'విశ్వదాభిరామ వినుర వేమ' అని రాసిన ప్రజాకవి పేరు 1 అడ్డం.",
+            "రెండవ సూచన: 1 అడ్డం 'వేమన', మరియు 3 అడ్డం 'పద్యం'."
+          ]
         },
         {
           title: "పద్యాలు (Poems) - గడి 2",
@@ -1063,9 +1167,13 @@
             { ans: "సు" }, { ans: "మ", num: "3" }, { ans: "తి" }, { blocked: true },
             { blocked: true }, { ans: "న" }, { ans: "య" }, { blocked: true }
           ],
+          distractors: ["క", "ర", "ం"],
           across: ["1. భాగవతం రచించిన సహజ కవి (3)", "3. మంచి బుద్ధి గల శతకం (3)"],
           down: ["1. పొగడ్త / కీర్తి (3)", "2. ఆదికవి నన్నయ (2)"],
-          voiceHint: "ఆంధ్ర మహాభాగవతం రాసిన సహజ కవి బమ్మెర 'పోతన' మొదటి పదం."
+          hints: [
+            "మొదటి సూచన: శ్రీమదాంధ్ర భాగవతం రాసిన సహజ కవి బమ్మెర పోతన 1 అడ్డం.",
+            "రెండవ సూచన: 3 అడ్డం బద్దెన రచించిన 'సుమతి' శతకం."
+          ]
         }
       ],
       samethalu: [
@@ -1077,9 +1185,13 @@
             { ans: "లి" }, { ans: "భా", num: "3" }, { ans: "గ్య" }, { ans: "ం" },
             { blocked: true }, { ans: "ష" }, { ans: "ం" }, { blocked: true }
           ],
+          distractors: ["ధ", "న", "సు"],
           across: ["1. '_____ మహాభాగ్యం' సామెతలో మొదటి పదం (4)", "3. అదృష్టం / సంపద (3)"],
           down: ["1. ఆకలి / కోరిక (3)", "2. మనసు / మతి (2)"],
-          voiceHint: "'ఆరోగ్యమే మహాభాగ్యం' అనే ప్రసిద్ధ సామెతలోని మొదటి పదం గమనించండి."
+          hints: [
+            "మొదటి సూచన: మన ఆరోగ్యానికి సంబంధించిన ప్రసిద్ధ సామెత ఇది.",
+            "రెండవ సూచన: 1 అడ్డం 'ఆరోగ్యమే', 3 అడ్డం 'భాగ్యం'."
+          ]
         },
         {
           title: "సామెతలు (Proverbs) - గడి 2",
@@ -1089,36 +1201,75 @@
             { ans: "క" }, { ans: "ప", num: "3" }, { ans: "ండ్లు" }, { blocked: true },
             { blocked: true }, { ans: "ల" }, { ans: "త" }, { blocked: true }
           ],
+          distractors: ["మ", "ర", "ం"],
           across: ["1. '______ చెప్పి కాయలు అమ్ముకోవడం' (4)", "3. చెట్టుకు కాసే ఫలాలు (2)"],
           down: ["1. చెట్టు కొమ్మలు (3)", "2. కాయ / ఫలం (2)"],
-          voiceHint: "'చెట్టు పేరు చెప్పి కాయలు అమ్ముకోవడం' అనే సామెత గుర్తుకు తెచ్చుకోండి."
+          hints: [
+            "మొదటి సూచన: ఒకరి పేరు చెప్పి లాభం పొందడం అనే అర్థం వచ్చే సామెత.",
+            "రెండవ సూచన: 1 అడ్డం 'చెట్టుపేరు' (చె-ట్టు-పే-రు), 3 అడ్డం 'పండ్లు'."
+          ]
         }
       ]
     };
 
     // ==========================================
-    // 4. GAME STATE, PAUSE/RESUME & MILESTONES
+    // 4. STATE: 50 INITIAL BONUS POINTS, HINTS (2/2), SKIP LOCK
     // ==========================================
-    let cwScore = Number(localStorage.getItem('tp_cw_score')) || 0;
+    const HINT_COST = 20;
+    const MAX_HINTS_PER_LEVEL = 2;
+
+    // Give 50 initial bonus points if first time opening the game
+    let storedScore = localStorage.getItem('tp_cw_score_v2');
+    let cwScore = storedScore !== null ? Number(storedScore) : 50;
+    localStorage.setItem('tp_cw_score_v2', cwScore);
+
     let quizScore = Number(localStorage.getItem('tp_quiz_score')) || 0;
     let currentLevel = 1;
     let currentCategory = 'general';
     let catPuzzleIdx = { general: 0, padyalu: 0, samethalu: 0 };
     let isPaused = false;
 
+    // Per-question hint tracking
+    let hintsRemaining = MAX_HINTS_PER_LEVEL;
+    let selectedCellInput = null;
+
     const cwScoreDisplay = document.getElementById('cwScoreDisplay');
     const quizScoreDisplay = document.getElementById('quizScoreDisplay');
     const levelDisplay = document.getElementById('levelDisplay');
     const crosswordGrid = document.getElementById('crosswordGrid');
+    const dragTilesContainer = document.getElementById('dragTilesContainer');
     const cluesBox = document.getElementById('cluesBox');
     const categoryBadge = document.getElementById('categoryBadge');
     const cwStatus = document.getElementById('cwStatus');
+    const hintCwBtn = document.getElementById('hintCwBtn');
+    const parrotHintBtn = document.getElementById('parrotHintBtn');
+    const skipCwBtn = document.getElementById('skipCwBtn');
 
     function updateHeaderBadges() {
       cwScoreDisplay.textContent = cwScore;
       quizScoreDisplay.textContent = quizScore;
       levelDisplay.textContent = currentLevel;
     }
+
+    function updateHintAndSkipButtons() {
+      hintCwBtn.textContent = `💡 సూచన (${hintsRemaining}/${MAX_HINTS_PER_LEVEL} లభ్యం • -${HINT_COST})`;
+      parrotHintBtn.textContent = `💡 సూచన (${hintsRemaining}/${MAX_HINTS_PER_LEVEL} • -${HINT_COST})`;
+
+      hintCwBtn.disabled = hintsRemaining <= 0;
+      parrotHintBtn.disabled = hintsRemaining <= 0;
+
+      // Activate Skip ONLY after all available hints (2/2) for this question are used
+      if (hintsRemaining === 0) {
+        skipCwBtn.disabled = false;
+        skipCwBtn.textContent = '⏭ దాటవేయి (Skip)';
+        skipCwBtn.title = 'ఇప్పుడు ఈ ప్రశ్నను దాటవేయవచ్చు';
+      } else {
+        skipCwBtn.disabled = true;
+        skipCwBtn.textContent = `🔒 దాటవేయి (${hintsRemaining} సూచనలు మిగిలాయి)`;
+        skipCwBtn.title = `ముందుగా మిగిలిన ${hintsRemaining} సూచనలు వాడిన తర్వాతే దాటవేయగలరు`;
+      }
+    }
+
     updateHeaderBadges();
 
     function getCurrentPuzzle() {
@@ -1126,8 +1277,54 @@
       return list[catPuzzleIdx[currentCategory] % list.length];
     }
 
+    function renderDragTray(puzzle) {
+      dragTilesContainer.innerHTML = '';
+      const answerSyllables = puzzle.cells.filter(c => !c.blocked).map(c => c.ans);
+      const combined = [...answerSyllables, ...(puzzle.distractors || [])];
+
+      // Shuffle syllables so player has to pick/drag the right ones
+      for (let i = combined.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [combined[i], combined[j]] = [combined[j], combined[i]];
+      }
+
+      combined.forEach((syl, index) => {
+        const tile = document.createElement('div');
+        tile.className = 'syllable-tile';
+        tile.textContent = syl;
+        tile.draggable = true;
+        tile.id = `syl-tile-${index}`;
+
+        // Drag start
+        tile.addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('text/plain', syl);
+        });
+
+        // Tap-to-fill fallback for touchscreens / quick clicks
+        tile.addEventListener('click', () => {
+          if (selectedCellInput) {
+            selectedCellInput.value = syl;
+            selectedCellInput.dispatchEvent(new Event('input'));
+          } else {
+            const firstEmpty = Array.from(document.querySelectorAll('.crossword-grid input.cell'))
+              .find(inp => inp.value.trim() === '');
+            if (firstEmpty) {
+              firstEmpty.value = syl;
+              firstEmpty.focus();
+            }
+          }
+        });
+
+        dragTilesContainer.appendChild(tile);
+      });
+    }
+
     function renderCrossword() {
       const p = getCurrentPuzzle();
+      hintsRemaining = MAX_HINTS_PER_LEVEL;
+      selectedCellInput = null;
+      updateHintAndSkipButtons();
+
       const catNames = {
         general: 'సాధారణ పదాలు (General Words)',
         padyalu: 'పద్యాలు (Poems)',
@@ -1148,9 +1345,40 @@
           inp.maxLength = 4;
           inp.dataset.ans = cell.ans;
           if (cell.num) inp.placeholder = cell.num;
+
+          // Track selected cell for tap-to-fill
+          inp.addEventListener('focus', () => {
+            document.querySelectorAll('.crossword-grid input.cell').forEach(c => c.classList.remove('selected-cell'));
+            inp.classList.add('selected-cell');
+            selectedCellInput = inp;
+          });
+
+          // Enable Drag & Drop onto each cell
+          inp.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            inp.classList.add('drag-over');
+          });
+
+          inp.addEventListener('dragleave', () => {
+            inp.classList.remove('drag-over');
+          });
+
+          inp.addEventListener('drop', (e) => {
+            e.preventDefault();
+            inp.classList.remove('drag-over');
+            const droppedSyl = e.dataTransfer.getData('text/plain');
+            if (droppedSyl) {
+              inp.value = droppedSyl;
+              inp.style.borderColor = '#cbd5e1';
+              inp.style.background = '#ffffff';
+            }
+          });
+
           crosswordGrid.appendChild(inp);
         }
       });
+
+      renderDragTray(p);
 
       cluesBox.innerHTML = `
         <h3>ఆధారాలు (Clues):</h3>
@@ -1161,7 +1389,7 @@
       `;
     }
 
-    // Welcome Modal Category Picker -> Starts Game + Voice Guide
+    // Welcome Modal Category Picker
     document.querySelectorAll('.welcome-choice-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
         currentCategory = btn.dataset.startCat;
@@ -1175,7 +1403,7 @@
       });
     });
 
-    // Pause / Resume Logic (Required to Switch Category)
+    // Pause / Resume Logic
     const pauseResumeBtn = document.getElementById('pauseResumeBtn');
     const pauseOverlay = document.getElementById('pauseOverlay');
     const catLockNote = document.getElementById('catLockNote');
@@ -1216,9 +1444,32 @@
       });
     });
 
-    // Hint Button (Reveals a cell + Parrot speaks clue)
-    function giveHint() {
+    // ==========================================
+    // 5. HINT SYSTEM (2 HINTS PER QUESTION, 20 PTS EACH, UNLOCKS SKIP)
+    // ==========================================
+    function useHint() {
+      if (hintsRemaining <= 0) {
+        parrotSpeak("ఈ ప్రశ్నకు ఉన్న 2 సూచనలు పూర్తయ్యాయి. ఇప్పుడు మీరు కావాలంటే 'దాటవేయి' బటన్ వాడుకోవచ్చు.");
+        return;
+      }
+
+      if (cwScore < HINT_COST) {
+        cwStatus.style.color = 'var(--error)';
+        cwStatus.textContent = `⚠️ సూచన తీసుకోవడానికి కనీసం ${HINT_COST} పాయింట్లు ఉండాలి!`;
+        parrotSpeak(`క్షమించండి మిత్రమా, సూచన కోసం ${HINT_COST} పాయింట్లు కావాలి.`);
+        return;
+      }
+
       const p = getCurrentPuzzle();
+      const hintIndex = MAX_HINTS_PER_LEVEL - hintsRemaining; // 0 for first hint, 1 for second hint
+
+      cwScore -= HINT_COST;
+      hintsRemaining -= 1;
+      localStorage.setItem('tp_cw_score_v2', cwScore);
+      updateHeaderBadges();
+      updateHintAndSkipButtons();
+
+      // Fill one empty/incorrect cell as visual help
       const emptyInputs = Array.from(document.querySelectorAll('.crossword-grid input.cell'))
         .filter(inp => inp.value.trim() !== inp.dataset.ans);
 
@@ -1227,13 +1478,23 @@
         target.value = target.dataset.ans;
         target.classList.add('hinted');
       }
-      parrotSpeak("సూచన: " + p.voiceHint);
+
+      const spokenClue = p.hints[hintIndex] || p.hints[0];
+      const extraNote = hintsRemaining === 0
+        ? " (ఈ ప్రశ్నకు 2 సూచనలు పూర్తయ్యాయి — ఇప్పుడు 'దాటవేయి' బటన్ తెరుచుకుంది)"
+        : ` (మరో ${hintsRemaining} సూచన మిగిలి ఉంది)`;
+
+      cwStatus.style.color = '#92400e';
+      cwStatus.textContent = `💡 -${HINT_COST} పాయింట్లు • ${spokenClue}${extraNote}`;
+      parrotSpeak(spokenClue);
     }
 
-    document.getElementById('hintCwBtn').addEventListener('click', giveHint);
-    document.getElementById('parrotHintBtn').addEventListener('click', giveHint);
+    hintCwBtn.addEventListener('click', useHint);
+    parrotHintBtn.addEventListener('click', useHint);
 
-    // Check Answer & Advance Level + Check Milestones
+    // ==========================================
+    // 6. CHECK ANSWER (+50 PTS) & VOICE ANNOUNCEMENT ON NEXT LEVEL
+    // ==========================================
     document.getElementById('checkCwBtn').addEventListener('click', () => {
       const inputs = document.querySelectorAll('.crossword-grid input.cell');
       let allCorrect = true;
@@ -1251,54 +1512,54 @@
 
       if (allCorrect) {
         cwScore += 50;
-        localStorage.setItem('tp_cw_score', cwScore);
-        const completedLevel = currentLevel;
+        localStorage.setItem('tp_cw_score_v2', cwScore);
+        const passedLevel = currentLevel;
         currentLevel += 1;
         catPuzzleIdx[currentCategory] += 1;
         updateHeaderBadges();
 
         cwStatus.style.color = 'var(--success)';
-        cwStatus.textContent = `🌟 అద్భుతం! స్థాయి ${completedLevel} పూర్తి చేశారు (+50 పాయింట్లు)`;
-        parrotSpeak(`శభాష్! మీరు స్థాయి ${completedLevel} పూర్తి చేశారు!`);
+        cwStatus.textContent = `🌟 అద్భుతం! స్థాయి ${passedLevel} పూర్తి చేశారు (+50 పాయింట్లు). స్థాయి ${currentLevel} లోకి వెళ్తున్నారు...`;
 
         setTimeout(() => {
-          triggerMilestoneIfAny(completedLevel);
           renderCrossword();
-        }, 1100);
+          // Parrot announces in voice upon entering the next level that the previous level was passed
+          parrotSpeak(`అభినందనలు! మీరు స్థాయి ${passedLevel} విజయవంతంగా పూర్తి చేసి, ఇప్పుడు స్థాయి ${currentLevel} లోకి అడుగుపెట్టారు!`);
+          triggerMilestoneIfAny(passedLevel);
+        }, 1000);
       } else {
         cwStatus.style.color = 'var(--error)';
-        cwStatus.textContent = 'కొన్ని అక్షరాలు సరిగ్గా లేవు. సందేహం ఉంటే సూచన నొక్కండి!';
+        cwStatus.textContent = 'కొన్ని అక్షరాలు సరిగ్గా లేవు. సందేహం ఉంటే సూచన (-20 పాయింట్లు) నొక్కండి!';
         parrotSpeak('కొన్ని అక్షరాలు సరిపోలేదు మిత్రమా, మళ్ళీ ప్రయత్నించండి!');
       }
     });
 
-    // Skip Level Option
-    document.getElementById('skipCwBtn').addEventListener('click', () => {
+    // Skip Level (Only clickable after all 2 hints are used)
+    skipCwBtn.addEventListener('click', () => {
+      if (hintsRemaining > 0) return;
       const skippedLevel = currentLevel;
       currentLevel += 1;
       catPuzzleIdx[currentCategory] += 1;
       updateHeaderBadges();
-      parrotSpeak(`స్థాయి ${skippedLevel} దాటవేశాము. తదుపరి గడిని ప్రయత్నించండి!`);
-      triggerMilestoneIfAny(skippedLevel);
       renderCrossword();
+      parrotSpeak(`స్థాయి ${skippedLevel} దాటవేశాము. ఇప్పుడు స్థాయి ${currentLevel} ప్రయత్నించండి!`);
+      triggerMilestoneIfAny(skippedLevel);
     });
 
     // Clear Grid
     document.getElementById('clearCwBtn').addEventListener('click', () => {
       document.querySelectorAll('.crossword-grid input.cell').forEach((inp) => {
         inp.value = '';
-        inp.classList.remove('hinted');
+        inp.classList.remove('hinted', 'selected-cell');
         inp.style.borderColor = '#cbd5e1';
         inp.style.background = '#ffffff';
       });
+      selectedCellInput = null;
       cwStatus.textContent = '';
     });
 
     // ==========================================
-    // 5. MILESTONE LOGIC:
-    // - Every 10 levels: Fullscreen Blast & Congrats
-    // - After 5 levels (5, 15, 25...): Pictorial Kavi Parichayam
-    // - After 6 levels, every 4 levels (6, 10, 14, 18...): Unique Mini-Game
+    // 7. MILESTONES: KAVI PARICHAYAM (5), MINI-GAME (6, +4), BLAST (10)
     // ==========================================
     const kaviList = [
       {
@@ -1334,7 +1595,6 @@
     let miniGameIdx = 0;
 
     function triggerMilestoneIfAny(completedLevel) {
-      // 1. Every 10 levels -> Grand Blast
       if (completedLevel % 10 === 0) {
         launchParticles(180, true);
         document.getElementById('blastTitle').textContent = `🎊 అద్భుతం! ${completedLevel} స్థాయిలు పూర్తి చేశారు!`;
@@ -1342,7 +1602,6 @@
         parrotSpeak(`అభినందనలు! మీరు ${completedLevel} స్థాయిలు పూర్తి చేసి అద్భుత విజయం సాధించారు!`);
       }
 
-      // 2. After 5 levels (multiples of 5 not 10, or level 5) -> Pictorial Kavi Parichayam
       if (completedLevel % 5 === 0 && completedLevel % 10 !== 0) {
         const kavi = kaviList[kaviIdx % kaviList.length];
         kaviIdx++;
@@ -1365,7 +1624,6 @@
         parrotSpeak(`5 స్థాయిల ప్రత్యేక బహుమతి! కవి పరిచయం: ${kavi.name}.`);
       }
 
-      // 3. After 6 levels, then every 4 levels (6, 10, 14, 18...) -> Interactive Mini-Game
       if (completedLevel >= 6 && (completedLevel - 6) % 4 === 0) {
         openMiniGame();
       }
@@ -1407,7 +1665,7 @@
 
       if (userVal === mg.answer) {
         cwScore += 25;
-        localStorage.setItem('tp_cw_score', cwScore);
+        localStorage.setItem('tp_cw_score_v2', cwScore);
         updateHeaderBadges();
         miniGameIdx++;
         statusEl.style.color = 'var(--success)';
@@ -1436,11 +1694,11 @@
       const lower = q.toLowerCase();
 
       if (lower.includes('సూచన') || lower.includes('hint') || lower.includes('clue')) {
-        giveHint();
+        useHint();
       } else if (lower.includes('నియమ') || lower.includes('guide') || lower.includes('help')) {
         parrotSpeak(gameGuideText);
       } else {
-        parrotSpeak(`మీరు ప్రస్తుతం "${getCurrentPuzzle().title}" ఆడుతున్నారు. సూచన కావాలంటే 'సూచన' బటన్ నొక్కండి!`);
+        parrotSpeak(`మీరు ప్రస్తుతం స్థాయి ${currentLevel} ఆడుతున్నారు. ఇంకా ${hintsRemaining} సూచనలు అందుబాటులో ఉన్నాయి.`);
       }
     }
 
@@ -1450,7 +1708,7 @@
     });
 
     // ==========================================
-    // 6. COLLAPSIBLE TELUGU MOVIES QUIZ (SEPARATE SCORE)
+    // 8. COLLAPSIBLE TELUGU MOVIES QUIZ (SEPARATE SCORE)
     // ==========================================
     const quizToggleBtn = document.getElementById('quizToggleBtn');
     const quizPanel = document.getElementById('quizPanel');
