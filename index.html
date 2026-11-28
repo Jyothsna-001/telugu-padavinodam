@@ -14,6 +14,7 @@
       --primary-gold-light: #fef3c7;
       --warm-sand: #fffbeb;
       --teal-accent: #0f766e;
+      --teal-dark: #115e59;
       --teal-light: #f0fdfa;
       --parrot-green: #16a34a;
       --parrot-light: #dcfce7;
@@ -31,7 +32,7 @@
       background-color: var(--bg-color);
       color: var(--text-dark);
       line-height: 1.6;
-      padding: 18px 14px 44px;
+      padding: 16px 12px 76px;
       display: flex;
       justify-content: center;
       overflow-x: hidden;
@@ -51,7 +52,7 @@
       max-width: 720px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
       position: relative;
       z-index: 1;
     }
@@ -60,20 +61,20 @@
     header {
       text-align: center;
       background: var(--card-bg);
-      padding: 18px;
+      padding: 16px;
       border-radius: 16px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
       border: 1px solid var(--border-color);
     }
 
     header h1 {
-      font-size: 1.75rem;
+      font-size: 1.65rem;
       color: var(--primary-gold);
       margin-bottom: 2px;
     }
 
     header p {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: var(--text-muted);
       margin-bottom: 12px;
     }
@@ -81,18 +82,18 @@
     .score-bar {
       display: flex;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
     .badge {
-      padding: 6px 14px;
+      padding: 5px 12px;
       border-radius: 999px;
-      font-size: 0.86rem;
+      font-size: 0.82rem;
       font-weight: 600;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
 
     .badge-crossword {
@@ -113,69 +114,145 @@
       border: 1px solid #99f6e4;
     }
 
-    /* Native Collapsible Telugu Movies Quiz Card */
+    /* Mobile & Desktop Clear Dual-Mode Switcher */
+    .mode-switcher {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      background: #ffffff;
+      padding: 6px;
+      border-radius: 14px;
+      border: 1.5px solid #e5e7eb;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+    }
+
+    .mode-tab {
+      border: none;
+      border-radius: 10px;
+      padding: 10px 8px;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      transition: all 0.18s ease;
+      background: transparent;
+      color: var(--text-dark);
+    }
+
+    .mode-tab-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .mode-tab-sub {
+      font-size: 0.72rem;
+      font-weight: 600;
+      opacity: 0.85;
+    }
+
+    .mode-tab.active-cw {
+      background: var(--primary-gold);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(217, 119, 6, 0.28);
+    }
+
+    .mode-tab.quiz-highlight {
+      background: var(--teal-light);
+      color: var(--teal-dark);
+      border: 1.5px dashed #5eead4;
+    }
+
+    .mode-tab.active-quiz {
+      background: var(--teal-accent);
+      color: #ffffff;
+      border: 1.5px solid var(--teal-accent);
+      box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28);
+    }
+
+    /* Distinct Telugu Movies Quiz Card */
     .quiz-accordion {
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-      border: 1px solid #fcd34d;
-      border-left: 5px solid var(--teal-accent);
+      box-shadow: 0 6px 16px rgba(15, 118, 110, 0.1);
+      border: 2px solid #5eead4;
       background: var(--card-bg);
+      scroll-margin-top: 12px;
     }
 
     .quiz-toggle-bar {
       width: 100%;
-      background: var(--warm-sand);
-      color: var(--text-dark);
+      background: linear-gradient(135deg, #0f766e, #115e59);
+      color: #ffffff;
       border: none;
-      padding: 13px 18px;
+      padding: 13px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 10px;
       cursor: pointer;
       font-family: inherit;
       text-align: left;
     }
 
-    .quiz-toggle-bar:hover { background: #fef3c7; }
+    .quiz-toggle-bar:hover { filter: brightness(1.05); }
 
     .quiz-bar-left {
       display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .quiz-bar-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 6px;
       flex-wrap: wrap;
     }
 
-    .quiz-bar-title { font-size: 0.98rem; font-weight: 700; }
-
     .quiz-bar-sub {
       font-size: 0.76rem;
-      background: var(--teal-light);
-      color: var(--teal-accent);
-      border: 1px solid #99f6e4;
-      padding: 2px 10px;
-      border-radius: 999px;
-      font-weight: 600;
+      color: #ccfbf1;
+      font-weight: 500;
     }
 
     .quiz-toggle-pill {
-      background: var(--teal-accent);
-      color: #ffffff;
-      font-weight: 600;
+      background: #fbbf24;
+      color: #1f2937;
+      font-weight: 700;
       font-size: 0.82rem;
-      padding: 6px 14px;
+      padding: 7px 14px;
       border-radius: 999px;
       white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.18);
     }
 
     .quiz-panel {
       display: none;
-      padding: 18px;
+      padding: 16px;
       background: #ffffff;
-      border-top: 1px solid var(--border-color);
+      border-top: 1px solid #99f6e4;
     }
 
     .quiz-panel.open { display: block; }
+
+    .quiz-info-banner {
+      background: #f0fdfa;
+      border: 1px solid #99f6e4;
+      color: #115e59;
+      font-size: 0.8rem;
+      padding: 8px 12px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
 
     .quiz-controls-row {
       display: flex;
@@ -195,7 +272,7 @@
     }
 
     .qfilter-btn {
-      padding: 4px 10px;
+      padding: 5px 10px;
       border-radius: 999px;
       border: 1px solid #cbd5e1;
       background: #f9fafb;
@@ -235,7 +312,7 @@
     .diff-hard { background: #fee2e2; color: #991b1b; }
 
     .quiz-question {
-      font-size: 1.05rem;
+      font-size: 1.03rem;
       font-weight: 600;
       margin-bottom: 14px;
       line-height: 1.7;
@@ -257,7 +334,7 @@
       border-radius: 10px;
       background: #ffffff;
       font-family: inherit;
-      font-size: 0.95rem;
+      font-size: 0.94rem;
       cursor: pointer;
       text-align: left;
     }
@@ -276,6 +353,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 10px;
+      flex-wrap: wrap;
     }
 
     .btn-next-quiz {
@@ -295,16 +373,16 @@
       background: linear-gradient(135deg, #f0fdf4, #fffbeb);
       border: 1.5px solid #86efac;
       border-radius: 16px;
-      padding: 14px 16px;
+      padding: 14px 15px;
       display: flex;
-      align-items: center;
-      gap: 14px;
+      align-items: flex-start;
+      gap: 12px;
       box-shadow: 0 4px 12px rgba(22, 163, 74, 0.08);
     }
 
     .parrot-avatar {
-      width: 62px;
-      height: 62px;
+      width: 56px;
+      height: 56px;
       flex-shrink: 0;
       background: #ffffff;
       border-radius: 50%;
@@ -332,13 +410,13 @@
       align-items: center;
       gap: 8px;
       flex-wrap: wrap;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .parrot-name {
       font-weight: 700;
       color: #166534;
-      font-size: 0.96rem;
+      font-size: 0.95rem;
     }
 
     .parrot-controls {
@@ -348,9 +426,9 @@
     }
 
     .btn-mini {
-      padding: 5px 11px;
+      padding: 5px 10px;
       border-radius: 999px;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 600;
       font-family: inherit;
       cursor: pointer;
@@ -365,13 +443,13 @@
     .btn-mute { background: #ffffff; color: var(--text-muted); border-color: #d1d5db; }
 
     .parrot-speech {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: var(--text-dark);
       background: #ffffff;
-      padding: 8px 12px;
+      padding: 9px 12px;
       border-radius: 10px;
       border: 1px solid #e5e7eb;
-      line-height: 1.55;
+      line-height: 1.6;
     }
 
     .parrot-ask-row {
@@ -404,11 +482,12 @@
     /* Main Crossword Card */
     .crossword-card {
       background: var(--card-bg);
-      padding: 20px;
+      padding: 18px;
       border-radius: 16px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
       border: 1px solid var(--border-color);
       position: relative;
+      scroll-margin-top: 12px;
     }
 
     .card-top-bar {
@@ -421,7 +500,7 @@
     }
 
     .section-title {
-      font-size: 1.12rem;
+      font-size: 1.1rem;
       font-weight: 700;
       display: flex;
       align-items: center;
@@ -480,7 +559,7 @@
       background: #ffffff;
       color: var(--text-dark);
       font-family: inherit;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.15s ease;
@@ -504,7 +583,7 @@
       display: none;
       position: absolute;
       inset: 0;
-      background: rgba(255, 255, 255, 0.94);
+      background: rgba(255, 255, 255, 0.96);
       backdrop-filter: blur(4px);
       z-index: 10;
       border-radius: 12px;
@@ -514,9 +593,22 @@
       text-align: center;
       padding: 20px;
       border: 2px dashed #fdba74;
+      gap: 10px;
     }
 
     .pause-overlay.visible { display: flex; }
+
+    .btn-pause-quiz {
+      background: var(--teal-accent);
+      color: #ffffff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+    }
 
     /* Crossword Grid */
     .grid-wrapper {
@@ -527,15 +619,15 @@
 
     .crossword-grid {
       display: grid;
-      grid-template-columns: repeat(4, 66px);
+      grid-template-columns: repeat(4, 64px);
       gap: 8px;
     }
 
     .cell {
-      width: 66px;
-      height: 66px;
+      width: 64px;
+      height: 64px;
       text-align: center;
-      font-size: 1.25rem;
+      font-size: 1.22rem;
       font-weight: 700;
       font-family: 'Noto Sans Telugu', sans-serif;
       border: 2px solid #cbd5e1;
@@ -594,14 +686,14 @@
     }
 
     .syllable-tile {
-      min-width: 50px;
-      height: 46px;
-      padding: 0 13px;
+      min-width: 48px;
+      height: 44px;
+      padding: 0 12px;
       background: #ffffff;
       border: 2px solid #f59e0b;
       border-radius: 10px;
       font-family: 'Noto Sans Telugu', sans-serif;
-      font-size: 1.15rem;
+      font-size: 1.12rem;
       font-weight: 700;
       color: var(--text-dark);
       display: inline-flex;
@@ -625,7 +717,7 @@
       padding: 14px 16px;
       border-radius: 12px;
       margin-bottom: 16px;
-      font-size: 0.94rem;
+      font-size: 0.92rem;
       line-height: 1.8;
     }
 
@@ -704,8 +796,46 @@
       text-align: center;
       margin-top: 12px;
       font-weight: 600;
-      font-size: 0.94rem;
+      font-size: 0.92rem;
       min-height: 24px;
+    }
+
+    /* Sticky Floating Quick-Switch Bar for Mobile Users */
+    .mobile-floating-bar {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1500;
+      background: #115e59;
+      color: #ffffff;
+      border: 2px solid #5eead4;
+      border-radius: 999px;
+      padding: 7px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+      max-width: 94vw;
+    }
+
+    .mobile-floating-bar span {
+      font-size: 0.78rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .mobile-floating-btn {
+      background: #fbbf24;
+      color: #1f2937;
+      border: none;
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
     }
 
     /* Modals */
@@ -741,7 +871,7 @@
 
     .modal-card h2 {
       color: var(--primary-gold-dark);
-      font-size: 1.35rem;
+      font-size: 1.32rem;
       margin-bottom: 8px;
     }
 
@@ -752,7 +882,7 @@
       border: 1px solid #86efac;
       padding: 5px 14px;
       border-radius: 999px;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 700;
       margin-bottom: 10px;
     }
@@ -765,12 +895,12 @@
     }
 
     .welcome-choice-btn {
-      padding: 14px 16px;
+      padding: 13px 16px;
       border-radius: 12px;
       border: 2px solid #fde68a;
       background: var(--warm-sand);
       font-family: inherit;
-      font-size: 1rem;
+      font-size: 0.96rem;
       font-weight: 700;
       color: var(--text-dark);
       cursor: pointer;
@@ -783,6 +913,26 @@
       background: var(--primary-gold);
       color: #ffffff;
       border-color: var(--primary-gold);
+    }
+
+    .welcome-quiz-btn {
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 2px solid #5eead4;
+      background: var(--teal-light);
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--teal-dark);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .welcome-quiz-btn:hover {
+      background: var(--teal-accent);
+      color: #ffffff;
     }
 
     .kavi-frame {
@@ -845,23 +995,72 @@
       <h1>తెలుగు పద వినోదం</h1>
       <p>సరదాగా తెలుగు పదాలు, పద్యాలు, సామెతలు నేర్చుకుందాం!</p>
       <div class="score-bar">
-        <span class="badge badge-crossword">🏆 పద వినోదం పాయింట్లు: <strong id="cwScoreDisplay">50</strong></span>
-        <span class="badge badge-level">⭐ స్థాయి (Level): <strong id="levelDisplay">1</strong></span>
-        <span class="badge badge-quiz">🎬 సినిమా క్విజ్ స్కోర్: <strong id="quizScoreDisplay">0</strong></span>
+        <span class="badge badge-crossword">🏆 పద వినోదం: <strong id="cwScoreDisplay">50</strong></span>
+        <span class="badge badge-level">⭐ స్థాయి: <strong id="levelDisplay">1</strong></span>
+        <span class="badge badge-quiz">🎬 సినిమా క్విజ్: <strong id="quizScoreDisplay">0</strong></span>
       </div>
     </header>
 
-    <!-- Native Collapsible Telugu Movies Quiz Card -->
-    <section class="quiz-accordion" aria-label="Telugu Movies Quiz">
+    <!-- Clear Two-Mode Switcher for Mobile & Desktop -->
+    <nav class="mode-switcher" aria-label="Game Mode Switcher">
+      <button class="mode-tab active-cw" id="tabMainGame">
+        <span class="mode-tab-title">🧩 పద వినోదం</span>
+        <span class="mode-tab-sub">ప్రధాన ఆట • ప్రత్యేక స్కోర్</span>
+      </button>
+      <button class="mode-tab quiz-highlight" id="tabCinemaQuiz">
+        <span class="mode-tab-title">🎬 సినిమా క్విజ్ (100)</span>
+        <span class="mode-tab-sub">ఆట విడుపుగా • వేరే స్కోర్</span>
+      </button>
+    </nav>
+
+    <!-- Integrated Aksharamitra Parrot Assistant -->
+    <section class="parrot-card" aria-label="Aksharamitra Parrot Guide">
+      <div class="parrot-avatar" id="parrotAvatar" title="అక్షరమిత్ర చిలుక">
+        <svg width="42" height="42" viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="34" r="18" fill="#22c55e"/>
+          <path d="M24 20C24 12 36 10 42 18C45 22 44 30 38 33L24 28V20Z" fill="#16a34a"/>
+          <path d="M41 21C47 21 50 25 47 29C44 31 40 29 39 26Z" fill="#f59e0b"/>
+          <path d="M40 26C44 27 45 30 42 31C39 31 38 28 40 26Z" fill="#dc2626"/>
+          <circle cx="35" cy="21" r="3.2" fill="#ffffff"/>
+          <circle cx="36" cy="21" r="1.6" fill="#111827"/>
+          <path d="M18 34C14 40 16 48 24 49C22 43 23 38 27 35Z" fill="#15803d"/>
+          <path d="M28 50L25 57M35 50L37 57" stroke="#d97706" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="parrot-body">
+        <div class="parrot-top">
+          <span class="parrot-name">🦜 అక్షరమిత్ర (Aksharamitra)</span>
+          <div class="parrot-controls">
+            <button class="btn-mini btn-guide" id="voiceGuideBtn">🔊 మార్గదర్శి (Guide)</button>
+            <button class="btn-mini btn-voice-hint" id="parrotHintBtn">💡 సూచన (-20)</button>
+            <button class="btn-mini btn-mute" id="muteToggleBtn">🔈 ఆన్</button>
+          </div>
+        </div>
+        <div class="parrot-speech" id="parrotSpeech">
+          నమస్కారం! మీకు 50 బోనస్ పాయింట్లు ఇవ్వబడ్డాయి. కింద ఉన్న అక్షరాలను గడులలోకి లాగి వదలండి. ఆట విడుపుగా మధ్యలో కావాలంటే 'తెలుగు సినిమా క్విజ్' కూడా ఆడుకోవచ్చు — మన అసలు ఆటను పాజ్ చేసి అది ఆడవచ్చు, రెండింటి స్కోర్ పాయింట్లు వేర్వేరుగా ఉంటాయి!
+        </div>
+        <div class="parrot-ask-row">
+          <input type="text" id="parrotInput" placeholder="అక్షరమిత్రను అడగండి (ఉదా: సూచన, సినిమా క్విజ్)..." />
+          <button id="parrotAskBtn">అడుగు</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Distinct Collapsible Telugu Movies Quiz Card -->
+    <section class="quiz-accordion" id="quizSectionCard" aria-label="Telugu Movies Quiz">
       <button class="quiz-toggle-bar" id="quizToggleBtn" aria-expanded="false">
         <div class="quiz-bar-left">
-          <span class="quiz-bar-title">🎬 తెలుగు సినిమా క్విజ్ (100 ప్రశ్నలు)</span>
-          <span class="quiz-bar-sub">సులభం • మధ్యస్థం • కఠినం</span>
+          <span class="quiz-bar-title">🎬 తెలుగు సినిమా క్విజ్ • 100 ప్రశ్నలు</span>
+          <span class="quiz-bar-sub">ఆట విడుపు విభాగం • సులభం • మధ్యస్థం • కఠినం • ప్రత్యేక స్కోర్</span>
         </div>
-        <span class="quiz-toggle-pill" id="quizTogglePill">ఆడండి ▼</span>
+        <span class="quiz-toggle-pill" id="quizTogglePill">క్విజ్ తెరువు ▼</span>
       </button>
 
       <div class="quiz-panel" id="quizPanel">
+        <div class="quiz-info-banner">
+          ℹ️ ఈ సినిమా క్విజ్ పూర్తిగా ప్రత్యేకం! దీనివల్ల మీ పద వినోదం స్థాయికి లేదా పాయింట్లకు ఎలాంటి మార్పు ఉండదు — రెండింటి స్కోర్లు వేర్వేరుగా లెక్కించబడతాయి.
+        </div>
+
         <div class="quiz-controls-row">
           <div class="quiz-filter-group" id="quizFilterGroup">
             <button class="qfilter-btn active" data-diff="all">అన్నీ (100)</button>
@@ -885,45 +1084,12 @@
       </div>
     </section>
 
-    <!-- Integrated Aksharamitra Parrot Assistant -->
-    <section class="parrot-card" aria-label="Aksharamitra Parrot Guide">
-      <div class="parrot-avatar" id="parrotAvatar" title="అక్షరమిత్ర చిలుక">
-        <svg width="46" height="46" viewBox="0 0 64 64" fill="none">
-          <circle cx="32" cy="34" r="18" fill="#22c55e"/>
-          <path d="M24 20C24 12 36 10 42 18C45 22 44 30 38 33L24 28V20Z" fill="#16a34a"/>
-          <path d="M41 21C47 21 50 25 47 29C44 31 40 29 39 26Z" fill="#f59e0b"/>
-          <path d="M40 26C44 27 45 30 42 31C39 31 38 28 40 26Z" fill="#dc2626"/>
-          <circle cx="35" cy="21" r="3.2" fill="#ffffff"/>
-          <circle cx="36" cy="21" r="1.6" fill="#111827"/>
-          <path d="M18 34C14 40 16 48 24 49C22 43 23 38 27 35Z" fill="#15803d"/>
-          <path d="M28 50L25 57M35 50L37 57" stroke="#d97706" stroke-width="2.5" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <div class="parrot-body">
-        <div class="parrot-top">
-          <span class="parrot-name">🦜 అక్షరమిత్ర (Aksharamitra)</span>
-          <div class="parrot-controls">
-            <button class="btn-mini btn-guide" id="voiceGuideBtn">🔊 మార్గదర్శి (Guide)</button>
-            <button class="btn-mini btn-voice-hint" id="parrotHintBtn">💡 సూచన (-20 పాయింట్లు)</button>
-            <button class="btn-mini btn-mute" id="muteToggleBtn">🔈 వాయిస్ ఆన్</button>
-          </div>
-        </div>
-        <div class="parrot-speech" id="parrotSpeech">
-          నమస్కారం! మీకు 50 ప్రారంభ బోనస్ పాయింట్లు ఇవ్వబడ్డాయి. కింద ఉన్న పూర్తి తెలుగు అక్షరాలను గడులలోకి లాగి వదలండి!
-        </div>
-        <div class="parrot-ask-row">
-          <input type="text" id="parrotInput" placeholder="అక్షరమిత్రను అడగండి (ఉదా: సూచన, నియమాలు)..." />
-          <button id="parrotAskBtn">అడుగు</button>
-        </div>
-      </div>
-    </section>
-
     <!-- Main Telugu Crossword Card -->
-    <main class="crossword-card">
+    <main class="crossword-card" id="mainCrosswordCard">
       <div class="card-top-bar">
         <div class="section-title">
           <span>🧩 పద వినోదం</span>
-          <span id="categoryBadge" style="font-size: 0.85rem; color: var(--primary-gold);">సాధారణ పదాలు</span>
+          <span id="categoryBadge" style="font-size: 0.84rem; color: var(--primary-gold);">సాధారణ పదాలు</span>
         </div>
         <button class="btn-pause" id="pauseResumeBtn">⏸ పాజ్ (Pause)</button>
       </div>
@@ -944,11 +1110,14 @@
       <!-- Playable Area with Pause Curtain -->
       <div class="game-play-area">
         <div class="pause-overlay" id="pauseOverlay">
-          <h3 style="color:#c2410c;margin-bottom:6px;">⏸ ఆట తాత్కాలికంగా నిలిపివేయబడింది (Paused)</h3>
-          <p style="font-size:0.9rem;color:#4b5563;margin-bottom:14px;">
-            మీరు ఇప్పుడు పైన ఉన్న విభాగాన్ని (Category) మార్చుకోవచ్చు లేదా తిరిగి ఆటను కొనసాగించవచ్చు.
+          <h3 style="color:#c2410c;">⏸ ఆట తాత్కాలికంగా నిలిపివేయబడింది (Paused)</h3>
+          <p style="font-size:0.88rem;color:#4b5563;max-width:340px;">
+            మీరు ఇప్పుడు విభాగం మార్చుకోవచ్చు లేదా ఆట విడుపుగా ప్రత్యేక స్కోర్‌తో సినిమా క్విజ్ ఆడుకోవచ్చు!
           </p>
-          <button class="btn-primary" id="overlayResumeBtn">▶ ఆట కొనసాగించు (Resume)</button>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+            <button class="btn-primary" id="overlayResumeBtn">▶ ఆట కొనసాగించు</button>
+            <button class="btn-pause-quiz" id="pauseOpenQuizBtn">🎬 సినిమా క్విజ్ ఆడు</button>
+          </div>
         </div>
 
         <div class="grid-wrapper">
@@ -979,14 +1148,20 @@
     </main>
   </div>
 
+  <!-- Sticky Floating Mobile Pill so users always see the separate Cinema Quiz -->
+  <div class="mobile-floating-bar" id="mobileFloatingBar">
+    <span>🎬 ఆట విడుపు కావాలా? (వేరే స్కోర్)</span>
+    <button class="mobile-floating-btn" id="floatingQuizBtn">సినిమా క్విజ్ ఆడు →</button>
+  </div>
+
   <!-- 1. Opening Category Choice Modal -->
   <div class="modal-backdrop open" id="welcomeModal">
     <div class="modal-card">
       <div style="font-size: 2.2rem; margin-bottom: 6px;">🦜✨🌸</div>
       <div class="bonus-pill">🎁 స్వాగత బహుమతి: 50 బోనస్ పాయింట్లు జమ అయ్యాయి!</div>
       <h2>తెలుగు పద వినోదానికి స్వాగతం!</h2>
-      <p style="font-size: 0.9rem; color: var(--text-muted);">
-        మొదటి స్థాయిలో ఎక్కడైనా ఆగిపోతే ఈ 50 బోనస్ పాయింట్లతో సూచనలు (Hints) వాడుకోవచ్చు. ముందుగా మీ విభాగాన్ని ఎంచుకోండి:
+      <p style="font-size: 0.88rem; color: var(--text-muted);">
+        ముందుగా మీ పద వినోదం విభాగాన్ని ఎంచుకోండి (ఆట మధ్యలో విరామం కావాలంటే ప్రత్యేక స్కోర్‌తో సినిమా క్విజ్ కూడా ఆడుకోవచ్చు):
       </p>
       <div class="welcome-choices">
         <button class="welcome-choice-btn" data-start-cat="general">
@@ -1000,6 +1175,10 @@
         <button class="welcome-choice-btn" data-start-cat="samethalu">
           <span>🪔 సామెతలు (Proverbs)</span>
           <span>ప్రారంభించు →</span>
+        </button>
+        <button class="welcome-quiz-btn" id="welcomeOpenQuizBtn">
+          <span>🎬 నేరుగా తెలుగు సినిమా క్విజ్ ఆడండి (వేరే స్కోర్)</span>
+          <span>వెళ్ళండి →</span>
         </button>
       </div>
     </div>
@@ -1139,7 +1318,7 @@
 
     muteToggleBtn.addEventListener('click', () => {
       voiceEnabled = !voiceEnabled;
-      muteToggleBtn.textContent = voiceEnabled ? '🔈 వాయిస్ ఆన్' : '🔇 వాయిస్ ఆఫ్';
+      muteToggleBtn.textContent = voiceEnabled ? '🔈 ఆన్' : '🔇 ఆఫ్';
       if (!voiceEnabled && 'speechSynthesis' in window) {
         window.speechSynthesis.cancel();
         parrotAvatar.classList.remove('speaking');
@@ -1149,8 +1328,9 @@
     const gameGuideText =
       "నమస్కారం! నేను అక్షరమిత్ర. మీకు 50 ప్రారంభ బోనస్ పాయింట్లు ఇవ్వబడ్డాయి. " +
       "కింద ఉన్న పూర్తి తెలుగు అక్షరాలను గడులలోకి లాగి వదలండి లేదా టైప్ చేయండి. " +
-      "ప్రతి ప్రశ్నకు 2 సూచనలు ఉంటాయి, ఒక్కో సూచనకు 20 పాయింట్లు ఖర్చవుతాయి. " +
-      "మొత్తం 2 సూచనలు వాడిన తర్వాతే 'దాటవేయి' బటన్ పనిచేస్తుంది. ప్రతి స్థాయి పూర్తి చేస్తే 50 పాయింట్లు వస్తాయి!";
+      "ప్రతి ప్రశ్నకు 2 సూచనలు ఉంటాయి, ఒక్కో సూచనకు 20 పాయింట్లు ఖర్చవుతాయి; 2 సూచనలు వాడిన తర్వాతే 'దాటవేయి' బటన్ పనిచేస్తుంది. " +
+      "అలాగే, ఆట విడుపుగా మధ్యలో కావాలంటే 'తెలుగు సినిమా క్విజ్' కూడా ఆడుకోవచ్చు! " +
+      "దీనివల్ల మన అసలు ఆటకు ఎలాంటి ప్రభావం ఉండదు — ప్రధాన ఆటను పాజ్ చేసి క్విజ్ ఆడుకోవచ్చు, రెండింటి స్కోర్ పాయింట్లు వేర్వేరుగా ఉంటాయి!";
 
     document.getElementById('voiceGuideBtn').addEventListener('click', () => {
       parrotSpeak(gameGuideText);
@@ -1473,6 +1653,55 @@
       `;
     }
 
+    // Mode Switching & Smooth Mobile Navigation
+    const quizToggleBtn = document.getElementById('quizToggleBtn');
+    const quizPanel = document.getElementById('quizPanel');
+    const quizTogglePill = document.getElementById('quizTogglePill');
+    const quizSectionCard = document.getElementById('quizSectionCard');
+    const mainCrosswordCard = document.getElementById('mainCrosswordCard');
+    const tabMainGame = document.getElementById('tabMainGame');
+    const tabCinemaQuiz = document.getElementById('tabCinemaQuiz');
+    const mobileFloatingBar = document.getElementById('mobileFloatingBar');
+
+    function setQuizOpenState(open, shouldScroll = false) {
+      quizPanel.classList.toggle('open', open);
+      quizToggleBtn.setAttribute('aria-expanded', open);
+      quizTogglePill.textContent = open ? 'మూసివేయి ▲' : 'క్విజ్ తెరువు ▼';
+
+      if (open) {
+        tabCinemaQuiz.classList.add('active-quiz');
+        tabCinemaQuiz.classList.remove('quiz-highlight');
+        tabMainGame.classList.remove('active-cw');
+        mobileFloatingBar.style.display = 'none';
+        if (shouldScroll) {
+          quizSectionCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      } else {
+        tabCinemaQuiz.classList.remove('active-quiz');
+        tabCinemaQuiz.classList.add('quiz-highlight');
+        tabMainGame.classList.add('active-cw');
+        mobileFloatingBar.style.display = 'flex';
+      }
+    }
+
+    quizToggleBtn.addEventListener('click', () => {
+      const nextState = !quizPanel.classList.contains('open');
+      setQuizOpenState(nextState, false);
+    });
+
+    tabCinemaQuiz.addEventListener('click', () => {
+      setQuizOpenState(true, true);
+    });
+
+    tabMainGame.addEventListener('click', () => {
+      setQuizOpenState(false, false);
+      mainCrosswordCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    document.getElementById('floatingQuizBtn').addEventListener('click', () => {
+      setQuizOpenState(true, true);
+    });
+
     // Welcome Modal Category Picker
     document.querySelectorAll('.welcome-choice-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
@@ -1485,6 +1714,13 @@
         renderCrossword();
         parrotSpeak(gameGuideText);
       });
+    });
+
+    document.getElementById('welcomeOpenQuizBtn').addEventListener('click', () => {
+      document.getElementById('welcomeModal').classList.remove('open');
+      renderCrossword();
+      setQuizOpenState(true, true);
+      parrotSpeak("స్వాగతం! ఇది ప్రత్యేక తెలుగు సినిమా క్విజ్ — మీ ప్రధాన ఆట స్కోర్‌కు ఎలాంటి మార్పు ఉండదు!");
     });
 
     // Pause / Resume Logic
@@ -1512,6 +1748,10 @@
 
     pauseResumeBtn.addEventListener('click', () => setPausedState(!isPaused));
     document.getElementById('overlayResumeBtn').addEventListener('click', () => setPausedState(false));
+    document.getElementById('pauseOpenQuizBtn').addEventListener('click', () => {
+      setQuizOpenState(true, true);
+      parrotSpeak("మీ ప్రధాన ఆట పాజ్‌లో ఉంది. ఇప్పుడు నిశ్చింతగా సినిమా క్విజ్ ఆడుకోండి!");
+    });
 
     document.querySelectorAll('.cat-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
@@ -1774,10 +2014,13 @@
 
       if (lower.includes('సూచన') || lower.includes('hint') || lower.includes('clue')) {
         useHint();
+      } else if (lower.includes('సినిమా') || lower.includes('movie') || lower.includes('quiz') || lower.includes('క్విజ్')) {
+        setQuizOpenState(true, true);
+        parrotSpeak("ఇదిగో తెలుగు సినిమా క్విజ్! దీనివల్ల మన అసలు పద వినోదం ఆటకు ఎలాంటి ప్రభావం ఉండదు, రెండింటి స్కోర్లు వేర్వేరుగా ఉంటాయి!");
       } else if (lower.includes('నియమ') || lower.includes('guide') || lower.includes('help')) {
         parrotSpeak(gameGuideText);
       } else {
-        parrotSpeak(`మీరు ప్రస్తుతం స్థాయి ${currentLevel} ఆడుతున్నారు. ఇంకా ${hintsRemaining} సూచనలు అందుబాటులో ఉన్నాయి.`);
+        parrotSpeak(`మీరు ప్రస్తుతం స్థాయి ${currentLevel} ఆడుతున్నారు. ఇంకా ${hintsRemaining} సూచనలు ఉన్నాయి — లేదా విరామం కావాలంటే సినిమా క్విజ్ ఆడుకోవచ్చు!`);
       }
     }
 
@@ -1789,17 +2032,6 @@
     // ==========================================
     // 8. TELUGU MOVIES QUIZ — 100 QUESTIONS ACROSS 3 DIFFICULTIES
     // ==========================================
-    const quizToggleBtn = document.getElementById('quizToggleBtn');
-    const quizPanel = document.getElementById('quizPanel');
-    const quizTogglePill = document.getElementById('quizTogglePill');
-
-    quizToggleBtn.addEventListener('click', () => {
-      const isOpen = quizPanel.classList.toggle('open');
-      quizToggleBtn.setAttribute('aria-expanded', isOpen);
-      quizTogglePill.textContent = isOpen ? 'మూసివేయి ▲' : 'ఆడండి ▼';
-    });
-
-    // diff: 'easy' (+10 pts), 'medium' (+15 pts), 'hard' (+20 pts)
     const movieQuestions = [
       // --- EASY (1–35) ---
       { diff: "easy", q: "‘బాహుబలి: ది బిగినింగ్’ సినిమాలో కట్టప్ప బాహుబలిని ఎందుకు చంపాడు అనే ప్రశ్నకు సమాధానం ఏ భాగంలో ఉంది?", options: ["బాహుబలి 2", "ఆర్.ఆర్.ఆర్", "మగధీర", "ఈగ"], answer: 0 },
@@ -1849,19 +2081,19 @@
       { diff: "medium", q: "‘మల్లేశం’ చిత్రం ఎవరి జీవిత కథ ఆధారంగా రూపొందింది?", options: ["చింతకింది మల్లేశం", "కాళోజీ నారాయణరావు", "దాశరథి", "గద్దర్"], answer: 0 },
       { diff: "medium", q: "‘కేరాఫ్ కంచరపాలెం’ చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["వెంకటేష్ మహా", "వివేక్ ఆత్రేయ", "స్వరూప్ ఆర్.ఎస్.జె", "సాయి రాజేష్"], answer: 0 },
       { diff: "medium", q: "‘మత్తు వదలరా’ చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["రితేష్ రాణా", "శైలేష్ కొలను", "వశిష్ఠ", "చందు మొండేటి"], answer: 0 },
-      { diff: "medium", q: "‘సింధూరపువ్వు’ లేదా ‘అంతఃపురం’ చిత్రానికి దర్శకుడు ఎవరు?", options: ["కృష్ణవంశీ", "రామ్ గోపాల్ వర్మ", "తేజ", "యVS. (యVS - తప్పు) — గుణశేఖర్"], answer: 0 },
+      { diff: "medium", q: "‘అంతఃపురం’ చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["కృష్ణవంశీ", "రామ్ గోపాల్ వర్మ", "తేజ", "గుణశేఖర్"], answer: 0 },
       { diff: "medium", q: "‘గుణశేఖర్’ దర్శకత్వం వహించిన పౌరాణిక/చారిత్రక చిత్రం ఏది?", options: ["రుద్రమదేవి", "అనుభవం", "నిన్నే పెళ్లాడతా", "మృగరాజు"], answer: 0 },
       { diff: "medium", q: "‘శివ’ (1989) సినిమా ద్వారా తెలుగు సినిమా ట్రెండ్ మార్చిన దర్శకుడు ఎవరు?", options: ["రామ్ గోపాల్ వర్మ", "మణిరత్నం", "వంశీ", "భారతీరాజా"], answer: 0 },
-      { diff: "medium", q: "‘అభినందన’ లేదా ‘స్వాతి ముత్యం’ చిత్రానికి దర్శకుడు ఎవరు?", options: ["కె. విశ్వనాథ్", "జంధ్యాల", "వంశీ", "సింగీతం శ్రీనివాసరావు"], answer: 0 },
+      { diff: "medium", q: "‘స్వాతి ముత్యం’ చిత్రానికి దర్శకుడు ఎవరు?", options: ["కె. విశ్వనాథ్", "జంధ్యాల", "వంశీ", "సింగీతం శ్రీనివాసరావు"], answer: 0 },
       { diff: "medium", q: "‘ఆహా నా పెళ్ళంట’ కామెడీ క్లాసిక్ దర్శకుడు ఎవరు?", options: ["జంధ్యాల", "రవిరాజా పినిశెట్టి", "ఎస్.వి. కృష్ణారెడ్డి", "కోదండరామిరెడ్డి"], answer: 0 },
       { diff: "medium", q: "‘లేడీస్ టైలర్’ చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["వంశీ", "బాపు", "జంధ్యాల", "ముత్యాల సుబ్బయ్య"], answer: 0 },
       { diff: "medium", q: "‘మాయాబజార్’ లో శశిరేఖ పాత్ర పోషించిన నటి ఎవరు?", options: ["సావిత్రి", "కృష్ణకుమారి", "సూర్యకాంతం", "అంజలీదేవి"], answer: 0 },
-      { diff: "medium", q: "‘మాయాబజార్’ లో చింతామణి/సూర్యకాంతం పాత్రకు ప్రత్యేక గుర్తింపు తెచ్చిన నటి ఎవరు?", options: ["సూర్యకాంతం", "ఛాయాదేవి", "పుష్పవల్లి", "వాణిశ్రీ"], answer: 0 },
-      { diff: "medium", q: "‘దశாவతారం’ కాదు — ‘భైరవ ద్వీపం’ లో పద్మావతి పాత్ర పోషించిన నటి ఎవరు?", options: ["రోజా", "రమ్యకృష్ణ", "మీనా", "సౌందర్య"], answer: 0 },
+      { diff: "medium", q: "‘మాయాబజార్’ లో సూర్యకాంతం పాత్రకు ప్రత్యేక గుర్తింపు తెచ్చిన నటి ఎవరు?", options: ["సూర్యకాంతం", "ఛాయాదేవి", "పుష్పవల్లి", "వాణిశ్రీ"], answer: 0 },
+      { diff: "medium", q: "‘భైరవ ద్వీపం’ లో పద్మావతి పాత్ర పోషించిన నటి ఎవరు?", options: ["రోజా", "రమ్యకృష్ణ", "మీనా", "సౌందర్య"], answer: 0 },
       { diff: "medium", q: "‘అమ్మోరు’ చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["కోడి రామకృష్ణ", "రాఘవేంద్రరావు", "బి. గోపాల్", "ఎ. కరుణాకరన్"], answer: 0 },
       { diff: "medium", q: "‘అన్నమయ్య’ చిత్రంలో అన్నమాచార్య పాత్ర పోషించిన నటుడు ఎవరు?", options: ["నాగార్జున", "చిరంజీవి", "బాలకృష్ణ", "జగపతి బాబు"], answer: 0 },
       { diff: "medium", q: "‘శ్రీరామదాసు’ చిత్రానికి సంగీతం అందించినవారు ఎవరు?", options: ["ఎం.ఎం. కీరవాణి", "ఇళయరాజా", "మణిశర్మ", "విద్యాసాగర్"], answer: 0 },
-      { diff: "medium", q: "‘నాయక్’ కాదు — ‘ఛత్రపతి’ చిత్రానికి దర్శకుడు ఎవరు?", options: ["ఎస్.ఎస్. రాజమౌళి", "వి.వి. వినాయక్", "సురేందర్ రెడ్డి", "బోయపాటి శ్రీను"], answer: 0 },
+      { diff: "medium", q: "‘ఛత్రపతి’ చిత్రానికి దర్శకుడు ఎవరు?", options: ["ఎస్.ఎస్. రాజమౌళి", "వి.వి. వినాయక్", "సురేందర్ రెడ్డి", "బోయపాటి శ్రీను"], answer: 0 },
       { diff: "medium", q: "‘ఆర్య’ (2004) చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["సుకుమార్", "దేవి శ్రీ ప్రసాద్", "దిల్ రాజు", "భాస్కర్"], answer: 0 },
       { diff: "medium", q: "‘బొమ్మరిల్లు’ చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["భాస్కర్", "కరుణాకరన్", "శేఖర్ కమ్ముల", "త్రివిక్రమ్"], answer: 0 },
       { diff: "medium", q: "‘నువ్వే కావాలి’ చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["కె. విజయభాస్కర్", "రాజేంద్ర ప్రసాద్", "శ్రీను వైట్ల", "హరీష్ శంకర్"], answer: 0 },
@@ -1880,22 +2112,22 @@
       { diff: "hard", q: "‘పాతాళ భైరవి’ (1951) చిత్రానికి సంగీతం అందించినవారు ఎవరు?", options: ["ఘంటసాల", "పెండ్యాల", "ఎస్. రాజేశ్వరరావు", "మాస్టర్ వేణు"], answer: 0 },
       { diff: "hard", q: "‘దేవదాసు’ (1953) తెలుగు క్లాసిక్‌కు దర్శకుడు ఎవరు?", options: ["వేదాంతం రాఘవయ్య", "బి.ఎన్. రెడ్డి", "సి. పుల్లయ్య", "జి. రామినీడు"], answer: 0 },
       { diff: "hard", q: "‘గుండమ్మ కథ’ (1962) చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["కమలాకర కామేశ్వరరావు", "కె.వి. రెడ్డి", "పి. పుల్లయ్య", "అక్కినేని"], answer: 0 },
-      { diff: "hard", q: "‘నர்த்தనశాల’ (1963) లో బృహన్నల పాత్రలో నటించిన మహానటుడు ఎవరు?", options: ["ఎన్.టి. రామారావు", "ఎస్.వి. రంగారావు", "కాంతారావు", "జగ్గయ్య"], answer: 0 },
+      { diff: "hard", q: "‘నర్తనశాల’ (1963) లో బృహన్నల పాత్రలో నటించిన మహానటుడు ఎవరు?", options: ["ఎన్.టి. రామారావు", "ఎస్.వి. రంగారావు", "కాంతారావు", "జగ్గయ్య"], answer: 0 },
       { diff: "hard", q: "‘సీతాకల్యాణం’ (1976) చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["బాపు", "దాసరి నారాయణరావు", "కె. రాఘవేంద్రరావు", "వి. మధుసూదనరావు"], answer: 0 },
-      { diff: "hard", q: "‘శంకరాభరణం’ లో ‘దొరకనిది ఏదీ’ లేదా ‘ఓంకార నాదాను’ పాటలకు గాయకుడు ఎవరు?", options: ["ఎస్.పి. బాలసుబ్రహ్మణ్యం", "ఘంటసాల", "పి.బి. శ్రీనివాస్", "మంగళంపల్లి బాలమురళీకృష్ణ"], answer: 0 },
+      { diff: "hard", q: "‘శంకరాభరణం’ లో ‘ఓంకార నాదాను’ పాటకు గాయకుడు ఎవరు?", options: ["ఎస్.పి. బాలసుబ్రహ్మణ్యం", "ఘంటసాల", "పి.బి. శ్రీనివాస్", "మంగళంపల్లి బాలమురళీకృష్ణ"], answer: 0 },
       { diff: "hard", q: "‘సిరివెన్నెల’ (1986) చిత్రంలో వేణువు వాయించే కథానాయకుడిగా నటించినవారు ఎవరు?", options: ["సర్వదమన్ డి. బెనర్జీ", "చిరంజీవి", "చంద్రమోహన్", "నరేష్"], answer: 0 },
       { diff: "hard", q: "‘రుద్రవీణ’ చిత్రంలో భిక్షాపతి పాత్ర పోషించిన నటుడు ఎవరు?", options: ["చిరంజీవి", "బాలకృష్ణ", "నాగార్జున", "వెంకటేష్"], answer: 0 },
       { diff: "hard", q: "‘ఆదిత్య 369’ టైమ్ మెషిన్ పేరు ఏమిటి?", options: ["టైమ్ మెషిన్ (ఆదిత్య 369)", "కాలాగ్ని", "సూర్యరథం", "కాలచక్రం"], answer: 0 },
       { diff: "hard", q: "‘భైరవ ద్వీపం’ లో ఏ రాజు ఆజ్ఞ మేరకు కథానాయకుడు ప్రయాణం చేస్తాడు?", options: ["శ్రీకృష్ణదేవరాయలు", "ప్రతాపరుద్రుడు", "విక్రమాదిత్యుడు", "హర్షవర్ధనుడు"], answer: 0 },
       { diff: "hard", q: "‘నిన్నే పెళ్లాడతా’ చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["కృష్ణవంశీ", "రామ్ గోపాల్ వర్మ", "వి.వి. వినాయక్", "పూరి జగన్నాథ్"], answer: 0 },
       { diff: "hard", q: "‘ఆది’ చిత్రంలో విలన్ కుటుంబం నేపథ్యం ఏ జిల్లాకు సంబంధించింది?", options: ["రాయలసీమ (కడప/కర్నూలు నేపథ్యం)", "శ్రీకాకుళం", "తూర్పు గోదావరి", "నిజామాబాద్"], answer: 0 },
-      { diff: "hard", q: "‘చత్రపతి’ లో శివాజీ తల్లి పేరు ఏమిటి?", options: ["రాజ్యలక్ష్మి", "పార్వతి", "సుమిత్ర", "యశోద"], answer: 0 },
+      { diff: "hard", q: "‘ఛత్రపతి’ లో శివాజీ తల్లి పేరు ఏమిటి?", options: ["రాజ్యలక్ష్మి", "పార్వతి", "సుమిత్ర", "యశోద"], answer: 0 },
       { diff: "hard", q: "‘విక్రమార్కుడు’ (2006) చిత్రానికి కథ అందించిన రచయిత ఎవరు?", options: ["కె.వి. విజయేంద్ర ప్రసాద్", "సత్యానంద్", "పరుచూరి బ్రదర్స్", "చిన్ని కృష్ణ"], answer: 0 },
       { diff: "hard", q: "‘వేదం’ చిత్రంలో ఎన్ని ప్రధాన కథాంశాలు/పాత్రలు సమాంతరంగా సాగుతాయి?", options: ["5 ప్రధాన పాత్రలు/కథలు", "2 పాత్రలు", "3 పాత్రలు", "7 పాత్రలు"], answer: 0 },
       { diff: "hard", q: "‘అంతరిక్షం 9000 KMPH’ ఏ నేపథ్యంలో తెరకెక్కిన తెలుగు చిత్రం?", options: ["అంతరిక్షం / స్పేస్ స్టేషన్", "సముద్ర గర్భం", "ఎడారి రేసింగ్", "రైల్వే దోపిడీ"], answer: 0 },
-      { diff: "hard", q: "‘మహానటి’ లో సావిత్రి చిన్ననాటి పాత్రలో నటించిన బాలనటి ఎవరు?", options: ["బేబీ మోక్ష / గౌరి ప్రియ (బాలనటి పాత్ర)", "బేబీ షామిలి", "బేబీ అనికా", "బేబీ మీనా"], answer: 0 },
+      { diff: "hard", q: "‘మహానటి’ లో సావిత్రి చిన్ననాటి పాత్రలో నటించిన బాలనటి ఎవరు?", options: ["సాయి తేజస్విని (బాలనటి పాత్ర)", "బేబీ షామిలి", "బేబీ అనికా", "బేబీ మీనా"], answer: 0 },
       { diff: "hard", q: "‘రంగస్థలం’ లో సౌండ్ ఇంజనీర్ పాత్ర పోషించిన నటుడు ఎవరు?", options: ["ఆది పినిశెట్టి", "జగపతి బాబు", "ప్రకాష్ రాజ్", "నరేష్"], answer: 0 },
-      { diff: "hard", q: "‘జెర్సీ’ (2019) లో అర్జున్ కుమారుడి పాత్ర పేరు ఏమిటి?", options: ["నాని / నన్ను (నన్ను)", "విహాన్", "ఆryan", "రోహన్"], answer: 1 },
+      { diff: "hard", q: "‘జెర్సీ’ (2019) లో అర్జున్ కుమారుడి పాత్ర పేరు ఏమిటి?", options: ["సిద్ధార్థ్", "నన్ను (Nani)", "విహాన్", "రోహన్"], answer: 1 },
       { diff: "hard", q: "‘అల వైకుంఠపురములో’ లో వాల్మీకి పాత్ర పోషించిన నటుడు ఎవరు?", options: ["మురళీ శర్మ", "సచిన్ ఖేడ్కర్", "రావు రమేష్", "సముద్రఖని"], answer: 0 },
       { diff: "hard", q: "‘సీతారామం’ లో లెఫ్టినెంట్ రామ్ పాత్ర పోషించిన నటుడు ఎవరు?", options: ["దుల్కర్ సల్మాన్", "శర్వానంద్", "విశ్వక్ సేన్", "సిద్ధు జొన్నలగడ్డ"], answer: 0 },
       { diff: "hard", q: "‘మంగళవారం’ చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["అజయ్ భూపతి", "శైలేష్ కొలను", "వెంకటేష్ మహా", "ప్రవీణ్ సత్తారు"], answer: 0 },
