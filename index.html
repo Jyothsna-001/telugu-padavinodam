@@ -177,13 +177,62 @@
 
     .quiz-panel.open { display: block; }
 
+    .quiz-controls-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed #e5e7eb;
+    }
+
+    .quiz-filter-group {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .qfilter-btn {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #cbd5e1;
+      background: #f9fafb;
+      color: var(--text-dark);
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .qfilter-btn.active {
+      background: var(--teal-accent);
+      color: #ffffff;
+      border-color: var(--teal-accent);
+    }
+
     .quiz-meta {
       display: flex;
       justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
       font-size: 0.84rem;
       color: var(--text-muted);
       margin-bottom: 10px;
     }
+
+    .diff-tag {
+      padding: 2px 9px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+
+    .diff-easy { background: #dcfce7; color: #166534; }
+    .diff-medium { background: #fef3c7; color: #92400e; }
+    .diff-hard { background: #fee2e2; color: #991b1b; }
 
     .quiz-question {
       font-size: 1.05rem;
@@ -806,16 +855,26 @@
     <section class="quiz-accordion" aria-label="Telugu Movies Quiz">
       <button class="quiz-toggle-bar" id="quizToggleBtn" aria-expanded="false">
         <div class="quiz-bar-left">
-          <span class="quiz-bar-title">🎬 తెలుగు సినిమా క్విజ్ (Movies Quiz)</span>
-          <span class="quiz-bar-sub">ప్రత్యేక స్కోర్</span>
+          <span class="quiz-bar-title">🎬 తెలుగు సినిమా క్విజ్ (100 ప్రశ్నలు)</span>
+          <span class="quiz-bar-sub">సులభం • మధ్యస్థం • కఠినం</span>
         </div>
         <span class="quiz-toggle-pill" id="quizTogglePill">ఆడండి ▼</span>
       </button>
 
       <div class="quiz-panel" id="quizPanel">
+        <div class="quiz-controls-row">
+          <div class="quiz-filter-group" id="quizFilterGroup">
+            <button class="qfilter-btn active" data-diff="all">అన్నీ (100)</button>
+            <button class="qfilter-btn" data-diff="easy">సులభం (+10)</button>
+            <button class="qfilter-btn" data-diff="medium">మధ్యస్థం (+15)</button>
+            <button class="qfilter-btn" data-diff="hard">కఠినం (+20)</button>
+          </div>
+          <button class="qfilter-btn" id="shuffleQuizBtn" title="ప్రశ్నలను కలపండి">🔀 షఫుల్</button>
+        </div>
+
         <div class="quiz-meta">
-          <span id="quizProgress">ప్రశ్న 1 / 5</span>
-          <span>సరైన సమాధానానికి +10 పాయింట్లు</span>
+          <span id="quizProgress">ప్రశ్న 1 / 100</span>
+          <span id="quizDiffBadge" class="diff-tag diff-easy">సులభం • +10 పాయింట్లు</span>
         </div>
         <div class="quiz-question" id="quizQuestion">Loading...</div>
         <div class="quiz-options" id="quizOptions"></div>
@@ -1098,20 +1157,16 @@
     });
 
     // ==========================================
-    // 3. VERIFIED PUZZLE BANK (100% FULL AKSHARALU & CLEAN INTERSECTIONS)
+    // 3. VERIFIED PUZZLE BANK
     // ==========================================
     const puzzleBank = {
       general: [
         {
           title: "సాధారణ పదాలు - గడి 1",
           cells: [
-            // Row 1: అ మ రం (3 letters: శాశ్వతమైనది)
             { ans: "అ", num: "1" }, { ans: "మ" }, { ans: "రం", num: "2" }, { blocked: true },
-            // Row 2: మ [B] గం [B] -> 1 Down: అ మ ల (నిర్మలమైన), 2 Down: రం గం (వేదిక)
             { ans: "మ" }, { blocked: true }, { ans: "గం" }, { blocked: true },
-            // Row 3: ల తా ళం [B] -> 3 Across: తా ళం (ఇంటికి వేసేది)
             { ans: "ల" }, { ans: "తా", num: "3" }, { ans: "ళం" }, { blocked: true },
-            // Row 4: [B] ర వి [B] -> 4 Across: ర వి (సూర్యుడు)
             { blocked: true }, { ans: "ర", num: "4" }, { ans: "వి" }, { blocked: true }
           ],
           distractors: ["క", "సు", "న"],
@@ -1132,13 +1187,9 @@
         {
           title: "సాధారణ పదాలు - గడి 2",
           cells: [
-            // Row 1: క మ లం (3 letters: జాతీయ పుష్పం)
             { ans: "క", num: "1" }, { ans: "మ" }, { ans: "లం", num: "2" }, { blocked: true },
-            // Row 2: డ [B] క [B] -> 1 Down: క డ లి (సముద్రం), 2 Down: లం క (ద్వీపం)
             { ans: "డ" }, { blocked: true }, { ans: "క" }, { blocked: true },
-            // Row 3: లి వ నం [B] -> 3 Across: వ నం (అడవి)
             { ans: "లి" }, { ans: "వ", num: "3" }, { ans: "నం" }, { blocked: true },
-            // Row 4: [B] మ ల [B] -> 4 Across: మ ల (కొండ / పర్వతం)
             { blocked: true }, { ans: "మ", num: "4" }, { ans: "ల" }, { blocked: true }
           ],
           distractors: ["పు", "ర", "గం"],
@@ -1161,13 +1212,9 @@
         {
           title: "పద్యాలు (Poems) - గడి 1",
           cells: [
-            // Row 1: వే మ న (3 letters: శతక కవి)
             { ans: "వే", num: "1" }, { ans: "మ" }, { ans: "న", num: "2" }, { blocked: true },
-            // Row 2: దం [B] య [B] -> 1 Down: వే దం (శాస్త్రం)
             { ans: "దం" }, { blocked: true }, { ans: "య" }, { blocked: true },
-            // Row 3: [B] ప నం [B] -> 2 Down: న య నం (కన్ను), 3 Across: ప నం (ప్రతిజ్ఞ / పందెం)
             { blocked: true }, { ans: "ప", num: "3" }, { ans: "నం" }, { blocked: true },
-            // Row 4: [B] ద య [B] -> 4 Across: ద య (కరుణ)
             { blocked: true }, { ans: "ద", num: "4" }, { ans: "య" }, { blocked: true }
           ],
           distractors: ["క", "వి", "సు"],
@@ -1188,13 +1235,9 @@
         {
           title: "పద్యాలు (Poems) - గడి 2",
           cells: [
-            // Row 1: పో త న (3 letters: భాగవత కవి)
             { ans: "పో", num: "1" }, { ans: "త" }, { ans: "న", num: "2" }, { blocked: true },
-            // Row 2: గ [B] న్న [B] -> 1 Down: పో గ డ (కీర్తి), 2 Down: న న్న య (ఆదికవి)
             { ans: "గ" }, { blocked: true }, { ans: "న్న" }, { blocked: true },
-            // Row 3: డ [B] య [B]
             { ans: "డ" }, { blocked: true }, { ans: "య" }, { blocked: true },
-            // Row 4: [B] సు మ తి -> 3 Across: సు మ తి (శతకం)
             { blocked: true }, { ans: "సు", num: "3" }, { ans: "మ" }, { ans: "తి" }
           ],
           distractors: ["క", "రం", "ల"],
@@ -1216,13 +1259,9 @@
         {
           title: "సామెతలు (Proverbs) - గడి 1",
           cells: [
-            // Row 1: ఆ రో గ్య మే (4 letters: ఆరోగ్యమే మహాభాగ్యం)
             { ans: "ఆ", num: "1" }, { ans: "రో" }, { ans: "గ్య" }, { ans: "మే" },
-            // Row 2: క [B] భా [B] -> 1 Down: ఆ క లి (క్షుధ), 3 Down: భా గ్యం (అదృష్టం)
             { ans: "క" }, { blocked: true }, { ans: "భా", num: "3" }, { blocked: true },
-            // Row 3: లి [B] గ్యం [B]
             { ans: "లి" }, { blocked: true }, { ans: "గ్యం" }, { blocked: true },
-            // Row 4: [B] ధ నం [B] -> 4 Across: ధ నం (సంపద)
             { blocked: true }, { ans: "ధ", num: "4" }, { ans: "నం" }, { blocked: true }
           ],
           distractors: ["సు", "మ", "కం"],
@@ -1242,13 +1281,9 @@
         {
           title: "సామెతలు (Proverbs) - గడి 2",
           cells: [
-            // Row 1: చె ట్టు పే రు (4 letters: చెట్టుపేరు చెప్పి కాయలు అమ్ముకోవడం)
             { ans: "చె", num: "1" }, { ans: "ట్టు" }, { ans: "పే" }, { ans: "రు" },
-            // Row 2: లు [B] పం [B] -> 1 Down: చె లు వ (అందం), 3 Down: పం డ్లు (ఫలాలు)
             { ans: "లు" }, { blocked: true }, { ans: "పం", num: "3" }, { blocked: true },
-            // Row 3: వ [B] డ్లు [B]
             { ans: "వ" }, { blocked: true }, { ans: "డ్లు" }, { blocked: true },
-            // Row 4: [B] క థ [B] -> 4 Across: క థ (గాథ)
             { blocked: true }, { ans: "క", num: "4" }, { ans: "థ" }, { blocked: true }
           ],
           distractors: ["మ", "రం", "ల"],
@@ -1752,7 +1787,7 @@
     });
 
     // ==========================================
-    // 8. COLLAPSIBLE TELUGU MOVIES QUIZ (SEPARATE SCORE)
+    // 8. TELUGU MOVIES QUIZ — 100 QUESTIONS ACROSS 3 DIFFICULTIES
     // ==========================================
     const quizToggleBtn = document.getElementById('quizToggleBtn');
     const quizPanel = document.getElementById('quizPanel');
@@ -1764,44 +1799,166 @@
       quizTogglePill.textContent = isOpen ? 'మూసివేయి ▲' : 'ఆడండి ▼';
     });
 
+    // diff: 'easy' (+10 pts), 'medium' (+15 pts), 'hard' (+20 pts)
     const movieQuestions = [
-      {
-        q: "‘బాహుబలి: ది బిగినింగ్’ సినిమాలో కట్టప్ప బాహుబలిని ఎందుకు చంపాడు అనే ప్రశ్నకు సమాధానం ఏ భాగంలో ఉంది?",
-        options: ["బాహుబలి 2", "ఆర్.ఆర్.ఆర్", "మగధీర", "ఈగ"],
-        answer: 0
-      },
-      {
-        q: "‘అల వైకుంఠపురములో’ సినిమాకు సంగీతం అందించిన దర్శకుడు ఎవరు?",
-        options: ["దేవి శ్రీ ప్రసాద్", "ఎస్.ఎస్. తమన్", "ఎం.ఎం. కీరవాణి", "మణిశర్మ"],
-        answer: 1
-      },
-      {
-        q: "‘మాయాబజార్’ సినిమాలో ఘటోత్కచుడి పాత్రలో నటించిన మహానటుడు ఎవరు?",
-        options: ["ఎన్.టి. రామారావు", "అక్కినేని నాగేశ్వరరావు", "ఎస్.వి. రంగారావు", "రేలంగి"],
-        answer: 2
-      },
-      {
-        q: "‘నాటు నాటు’ పాటకు ఆస్కార్ అవార్డు గెలుచుకున్న తెలుగు చిత్రం ఏది?",
-        options: ["పుష్ప", "RRR (ఆర్.ఆర్.ఆర్)", "కల్కి 2898 AD", "సలార్"],
-        answer: 1
-      },
-      {
-        q: "‘పోకిరి’ సినిమాలో మహేష్ బాబు పాత్ర పేరు ఏమిటి?",
-        options: ["పండు", "సీను", "బన్నీ", "చందు"],
-        answer: 0
-      }
+      // --- EASY (1–35) ---
+      { diff: "easy", q: "‘బాహుబలి: ది బిగినింగ్’ సినిమాలో కట్టప్ప బాహుబలిని ఎందుకు చంపాడు అనే ప్రశ్నకు సమాధానం ఏ భాగంలో ఉంది?", options: ["బాహుబలి 2", "ఆర్.ఆర్.ఆర్", "మగధీర", "ఈగ"], answer: 0 },
+      { diff: "easy", q: "‘అల వైకుంఠపురములో’ సినిమాకు సంగీతం అందించిన దర్శకుడు ఎవరు?", options: ["దేవి శ్రీ ప్రసాద్", "ఎస్.ఎస్. తమన్", "ఎం.ఎం. కీరవాణి", "మణిశర్మ"], answer: 1 },
+      { diff: "easy", q: "‘మాయాబజార్’ సినిమాలో ఘటోత్కచుడి పాత్రలో నటించిన మహానటుడు ఎవరు?", options: ["ఎన్.టి. రామారావు", "అక్కినేని నాగేశ్వరరావు", "ఎస్.వి. రంగారావు", "రేలంగి"], answer: 2 },
+      { diff: "easy", q: "‘నాటు నాటు’ పాటకు ఆస్కార్ అవార్డు గెలుచుకున్న తెలుగు చిత్రం ఏది?", options: ["పుష్ప", "RRR (ఆర్.ఆర్.ఆర్)", "కల్కి 2898 AD", "సలార్"], answer: 1 },
+      { diff: "easy", q: "‘పోకిరి’ సినిమాలో మహేష్ బాబు పాత్ర పేరు ఏమిటి?", options: ["పండు", "సీను", "బన్నీ", "చందు"], answer: 0 },
+      { diff: "easy", q: "‘మగధీర’ చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["త్రివిక్రమ్", "ఎస్.ఎస్. రాజమౌళి", "సుకుమార్", "కొరటాల శివ"], answer: 1 },
+      { diff: "easy", q: "‘అర్జున్ రెడ్డి’ చిత్రంలో ప్రధాన పాత్ర పోషించిన నటుడు ఎవరు?", options: ["నితిన్", "విజయ్ దేవరకొండ", "నాని", "శర్వానంద్"], answer: 1 },
+      { diff: "easy", q: "‘సీతారామం’ చిత్రంలో హీరోయిన్ పాత్ర పేరు ఏమిటి?", options: ["సీత / నూర్జహాన్", "రుక్మిణి", "భానుమతి", "అరుంధతి"], answer: 0 },
+      { diff: "easy", q: "‘పుష్ప: ది రైజ్’ లో పుష్పరాజ్ పలికే ప్రసిద్ధ డైలాగ్ ఏది?", options: ["తగ్గేదే లే", "నేను సిద్ధం", "సూపర్", "చూద్దాం"], answer: 0 },
+      { diff: "easy", q: "‘శంకరాభరణం’ చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["కె. విశ్వనాథ్", "దాసరి నారాయణరావు", "బాపు", "జంధ్యాల"], answer: 0 },
+      { diff: "easy", q: "‘ఈగ’ సినిమాలో విలన్ పాత్ర పోషించిన నటుడు ఎవరు?", options: ["ప్రకాష్ రాజ్", "సుదీప్", "జగపతి బాబు", "సంపత్"], answer: 1 },
+      { diff: "easy", q: "‘రంగస్థలం’ చిత్రంలో చిట్టిబాబు పాత్ర పోషించిన నటుడు ఎవరు?", options: ["రామ్ చరణ్", "అల్లు అర్జున్", "జూనియర్ ఎన్టీఆర్", "ప్రభాస్"], answer: 0 },
+      { diff: "easy", q: "‘జెర్సీ’ తెలుగు సినిమాలో క్రికెటర్ పాత్రలో నటించినవారు ఎవరు?", options: ["వరుణ్ తేజ్", "నాని", "నిఖిల్", "అఖిల్"], answer: 1 },
+      { diff: "easy", q: "‘మహానటి’ చిత్రం ఎవరి జీవిత కథ ఆధారంగా తెరకెక్కింది?", options: ["సావిత్రి", "భానుమతి", "జమున", "శారద"], answer: 0 },
+      { diff: "easy", q: "‘బాహుబలి’ సిరీస్‌లో మహిష్మతి రాజమాత ఎవరు?", options: ["దేవసేన", "శివగామి", "అవంతిక", "మాలతి"], answer: 1 },
+      { diff: "easy", q: "‘అతడు’ చిత్రానికి దర్శకుడు ఎవరు?", options: ["పూరి జగన్నాథ్", "త్రివిక్రమ్ శ్రీనివాస్", "కృష్ణవంశీ", "శేఖర్ కమ్ముల"], answer: 0 },
+      { diff: "easy", q: "‘హ్యాపీ డేస్’ చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["శేఖర్ కమ్ముల", "తరుణ్ భాస్కర్", "వివేక్ ఆత్రేయ", "నాగ్ అశ్విన్"], answer: 0 },
+      { diff: "easy", q: "‘మిర్చి’ చిత్రంలో ప్రభాస్ పాత్ర పేరు ఏమిటి?", options: ["జై", "రిషి", "దేవ", "విక్రమ్"], answer: 0 },
+      { diff: "easy", q: "‘ఎవడే సుబ్రహ్మణ్యం’ చిత్రానికి దర్శకుడు ఎవరు?", options: ["నాగ్ అశ్విన్", "సందీప్ రెడ్డి వంగా", "శివ నిర్వాణ", "హను రాఘవపూడి"], answer: 0 },
+      { diff: "easy", q: "‘గీత గోవిందం’ లో హీరోయిన్ పాత్ర పేరు ఏమిటి?", options: ["గీత", "మధు", "దివ్య", "ఆరాధ్య"], answer: 0 },
+      { diff: "easy", q: "‘సరిలేరు నీకెవ్వరు’ చిత్రంలో మహేష్ బాబు ఏ వృత్తిలో కనిపిస్తారు?", options: ["ఆర్మీ మేజర్", "డాక్టర్", "టీచర్", "ఇంజనీర్"], answer: 0 },
+      { diff: "easy", q: "‘నువ్వు నాకు నచ్చావ్’ సినిమాలో హాస్య పాత్రలో అలరించిన నటుడు ఎవరు?", options: ["సునీల్", "బ్రహ్మానందం", "అలీ", "వేణు మాధవ్"], answer: 0 },
+      { diff: "easy", q: "‘దృశ్యం’ తెలుగు రీమేక్‌లో ప్రధాన పాత్ర పోషించిన నటుడు ఎవరు?", options: ["వెంకటేష్", "చిరంజీవి", "బాలకృష్ణ", "నాగార్జున"], answer: 0 },
+      { diff: "easy", q: "‘మనం’ సినిమాలో అక్కినేని కుటుంబంలోని ఏ ముగ్గురు తరాలు నటించారు?", options: ["ఏఎన్ఆర్, నాగార్జున, నాగ చైతన్య", "ఏఎన్ఆర్, సుమంత్, సుశాంత్", "నాగార్జున, చైతన్య, అఖిల్", "ఏఎన్ఆర్, నాగార్జున, అఖిల్"], answer: 0 },
+      { diff: "easy", q: "‘కేజీఎఫ్’ (KGF) సినిమాలో హీరో పాత్ర పేరు ఏమిటి?", options: ["రాకీ", "విరాట్", "కార్తీక్", "సూర్య"], answer: 0 },
+      { diff: "easy", q: "‘భల్లాలదేవ’ పాత్రలో నటించిన నటుడు ఎవరు?", options: ["రానా దగ్గుబాటి", "సత్యరాజ్", "నాజర్", "సుబ్బరాజు"], answer: 0 },
+      { diff: "easy", q: "‘ఆర్.ఆర్.ఆర్’ లో అల్లూరి సీతారామరాజు పాత్ర పోషించినవారు ఎవరు?", options: ["రామ్ చరణ్", "జూనియర్ ఎన్టీఆర్", "ప్రభాస్", "రామ్ పోతినేని"], answer: 0 },
+      { diff: "easy", q: "‘ఆర్.ఆర్.ఆర్’ లో కొమురం భీమ్ పాత్ర పోషించినవారు ఎవరు?", options: ["జూనియర్ ఎన్టీఆర్", "రామ్ చరణ్", "గోపిచంద్", "విశాల్"], answer: 0 },
+      { diff: "easy", q: "‘పెళ్లి చూపులు’ చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["తరుణ్ భాస్కర్", "రాహుల్ రవీంద్రన్", "అథర్వ", "ప్రవీణ్ సత్తారు"], answer: 0 },
+      { diff: "easy", q: "‘సై’ సినిమా ఏ క్రీడ నేపథ్యంలో సాగుతుంది?", options: ["రగ్బీ", "క్రికెట్", "కబడ్డీ", "ఫుట్‌బాల్"], answer: 0 },
+      { diff: "easy", q: "‘అరుంధతి’ చిత్రంలో అనుష్క శెట్టి ద్విపాత్రాభినయం చేసిన పాత్రలలో ఒకటి ఏది?", options: ["అరుంధతి", "రుద్రమ", "దేవసేన", "పద్మావతి"], answer: 0 },
+      { diff: "easy", q: "‘మ్యూజికల్ మాస్ట్రో’ అని ప్రసిద్ధి చెందిన తెలుగు సంగీత దర్శకుడు ఎవరు?", options: ["ఇళయరాజా", "చక్రి", "ఆర్.పి. పట్నాయక్", "కీరవాణి"], answer: 0 },
+      { diff: "easy", q: "‘ఖైదీ నంబర్ 150’ చిత్రంలో హీరో ఎవరు?", options: ["చిరంజీవి", "పవన్ కళ్యాణ్", "రామ్ చరణ్", "సాయి ధరమ్ తేజ్"], answer: 0 },
+      { diff: "easy", q: "‘జల్సా’ చిత్రానికి దర్శకుడు ఎవరు?", options: ["త్రివిక్రమ్ శ్రీనివాస్", "పూరి జగన్నాథ్", "వి.వి. వినాయక్", "కరుణాకరన్"], answer: 0 },
+      { diff: "easy", q: "‘కల్కి 2898 AD’ లో భైరవ పాత్ర పోషించిన నటుడు ఎవరు?", options: ["ప్రభాస్", "అమితాబ్ బచ్చన్", "కమల్ హాసన్", "దుల్కర్ సల్మాన్"], answer: 0 },
+
+      // --- MEDIUM (36–70) ---
+      { diff: "medium", q: "‘మాయాబజార్’ సినిమాకు దర్శకత్వం వహించినవారు ఎవరు?", options: ["కె.వి. రెడ్డి", "ఎల్.వి. ప్రసాద్", "బి.ఎన్. రెడ్డి", "ఆదుర్తి సుబ్బారావు"], answer: 0 },
+      { diff: "medium", q: "‘సాగర సంగమం’ చిత్రంలో కమల్ హాసన్ పాత్ర పేరు ఏమిటి?", options: ["బాలు", "శేఖర్", "రవి", "ఆనంద్"], answer: 0 },
+      { diff: "medium", q: "‘స్వర్ణకమలం’ చిత్రంలో వెంకటేష్ పాత్ర ఏ కళకు సంబంధించినది?", options: ["కూచిపూడి నృత్యం", "వీణ వాద్యం", "చిత్రలేఖనం", "హరికథ"], answer: 0 },
+      { diff: "medium", q: "‘ఆనందో బ్రహ్మ’ హారర్ కామెడీ చిత్రానికి దర్శకుడు ఎవరు?", options: ["మహి వి. రాఘవ్", "మారుతి", "అనిల్ రావిపూడి", "వెంకీ కుడుముల"], answer: 0 },
+      { diff: "medium", q: "‘ఏ మాయ చేశావే’ చిత్రానికి సంగీతం అందించినవారు ఎవరు?", options: ["ఏ.ఆర్. రెహమాన్", "హారిస్ జయరాజ్", "యువన్ శంకర్ రాజా", "మిక్కీ జె. మేయర్"], answer: 0 },
+      { diff: "medium", q: "‘ప్రస్థానం’ చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["దేవా కట్టా", "క్రిష్ జాగర్లమూడి", "సంకల్ప్ రెడ్డి", "ప్రశాంత్ వర్మ"], answer: 0 },
+      { diff: "medium", q: "‘గౌతమీపుత్ర శాతకర్ణి’ లో శాతకర్ణి పాత్ర పోషించిన నటుడు ఎవరు?", options: ["నందమూరి బాలకృష్ణ", "కృష్ణంరాజు", "నాగార్జున", "శ్రీకాంత్"], answer: 0 },
+      { diff: "medium", q: "‘మల్లేశం’ చిత్రం ఎవరి జీవిత కథ ఆధారంగా రూపొందింది?", options: ["చింతకింది మల్లేశం", "కాళోజీ నారాయణరావు", "దాశరథి", "గద్దర్"], answer: 0 },
+      { diff: "medium", q: "‘కేరాఫ్ కంచరపాలెం’ చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["వెంకటేష్ మహా", "వివేక్ ఆత్రేయ", "స్వరూప్ ఆర్.ఎస్.జె", "సాయి రాజేష్"], answer: 0 },
+      { diff: "medium", q: "‘మత్తు వదలరా’ చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["రితేష్ రాణా", "శైలేష్ కొలను", "వశిష్ఠ", "చందు మొండేటి"], answer: 0 },
+      { diff: "medium", q: "‘సింధూరపువ్వు’ లేదా ‘అంతఃపురం’ చిత్రానికి దర్శకుడు ఎవరు?", options: ["కృష్ణవంశీ", "రామ్ గోపాల్ వర్మ", "తేజ", "యVS. (యVS - తప్పు) — గుణశేఖర్"], answer: 0 },
+      { diff: "medium", q: "‘గుణశేఖర్’ దర్శకత్వం వహించిన పౌరాణిక/చారిత్రక చిత్రం ఏది?", options: ["రుద్రమదేవి", "అనుభవం", "నిన్నే పెళ్లాడతా", "మృగరాజు"], answer: 0 },
+      { diff: "medium", q: "‘శివ’ (1989) సినిమా ద్వారా తెలుగు సినిమా ట్రెండ్ మార్చిన దర్శకుడు ఎవరు?", options: ["రామ్ గోపాల్ వర్మ", "మణిరత్నం", "వంశీ", "భారతీరాజా"], answer: 0 },
+      { diff: "medium", q: "‘అభినందన’ లేదా ‘స్వాతి ముత్యం’ చిత్రానికి దర్శకుడు ఎవరు?", options: ["కె. విశ్వనాథ్", "జంధ్యాల", "వంశీ", "సింగీతం శ్రీనివాసరావు"], answer: 0 },
+      { diff: "medium", q: "‘ఆహా నా పెళ్ళంట’ కామెడీ క్లాసిక్ దర్శకుడు ఎవరు?", options: ["జంధ్యాల", "రవిరాజా పినిశెట్టి", "ఎస్.వి. కృష్ణారెడ్డి", "కోదండరామిరెడ్డి"], answer: 0 },
+      { diff: "medium", q: "‘లేడీస్ టైలర్’ చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["వంశీ", "బాపు", "జంధ్యాల", "ముత్యాల సుబ్బయ్య"], answer: 0 },
+      { diff: "medium", q: "‘మాయాబజార్’ లో శశిరేఖ పాత్ర పోషించిన నటి ఎవరు?", options: ["సావిత్రి", "కృష్ణకుమారి", "సూర్యకాంతం", "అంజలీదేవి"], answer: 0 },
+      { diff: "medium", q: "‘మాయాబజార్’ లో చింతామణి/సూర్యకాంతం పాత్రకు ప్రత్యేక గుర్తింపు తెచ్చిన నటి ఎవరు?", options: ["సూర్యకాంతం", "ఛాయాదేవి", "పుష్పవల్లి", "వాణిశ్రీ"], answer: 0 },
+      { diff: "medium", q: "‘దశாவతారం’ కాదు — ‘భైరవ ద్వీపం’ లో పద్మావతి పాత్ర పోషించిన నటి ఎవరు?", options: ["రోజా", "రమ్యకృష్ణ", "మీనా", "సౌందర్య"], answer: 0 },
+      { diff: "medium", q: "‘అమ్మోరు’ చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["కోడి రామకృష్ణ", "రాఘవేంద్రరావు", "బి. గోపాల్", "ఎ. కరుణాకరన్"], answer: 0 },
+      { diff: "medium", q: "‘అన్నమయ్య’ చిత్రంలో అన్నమాచార్య పాత్ర పోషించిన నటుడు ఎవరు?", options: ["నాగార్జున", "చిరంజీవి", "బాలకృష్ణ", "జగపతి బాబు"], answer: 0 },
+      { diff: "medium", q: "‘శ్రీరామదాసు’ చిత్రానికి సంగీతం అందించినవారు ఎవరు?", options: ["ఎం.ఎం. కీరవాణి", "ఇళయరాజా", "మణిశర్మ", "విద్యాసాగర్"], answer: 0 },
+      { diff: "medium", q: "‘నాయక్’ కాదు — ‘ఛత్రపతి’ చిత్రానికి దర్శకుడు ఎవరు?", options: ["ఎస్.ఎస్. రాజమౌళి", "వి.వి. వినాయక్", "సురేందర్ రెడ్డి", "బోయపాటి శ్రీను"], answer: 0 },
+      { diff: "medium", q: "‘ఆర్య’ (2004) చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["సుకుమార్", "దేవి శ్రీ ప్రసాద్", "దిల్ రాజు", "భాస్కర్"], answer: 0 },
+      { diff: "medium", q: "‘బొమ్మరిల్లు’ చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["భాస్కర్", "కరుణాకరన్", "శేఖర్ కమ్ముల", "త్రివిక్రమ్"], answer: 0 },
+      { diff: "medium", q: "‘నువ్వే కావాలి’ చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["కె. విజయభాస్కర్", "రాజేంద్ర ప్రసాద్", "శ్రీను వైట్ల", "హరీష్ శంకర్"], answer: 0 },
+      { diff: "medium", q: "‘ఆనందం’ (2001) చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["శ్రీను వైట్ల", "వై.వి.ఎస్. చౌదరి", "ఎ.ఎస్. రవికుమార్", "ప్రభాస్ శీను"], answer: 0 },
+      { diff: "medium", q: "‘మన్మథుడు’ చిత్రంలో నాగార్జున పాత్ర పేరు ఏమిటి?", options: ["అభిరామ్", "రామ్", "కృష్ణ", "వివేక్"], answer: 0 },
+      { diff: "medium", q: "‘మళ్ళీ రావా’ చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["గౌతమ్ తిన్ననూరి", "శివ నిర్వాణ", "నందిని రెడ్డి", "అజయ్ భూపతి"], answer: 0 },
+      { diff: "medium", q: "‘పిల్ల జమీందార్’ చిత్రంలో హీరో ఎవరు?", options: ["నాని", "సిద్ధార్థ్", "నవీన్ పోలిశెట్టి", "విశ్వక్ సేన్"], answer: 0 },
+      { diff: "medium", q: "‘జాతి రత్నాలు’ చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["అనుదీప్ కె.వి", "రాహుల్ సంకృత్యాన్", "ప్రవీణ్ కండ్రేగుల", "వెంకీ అట్లూరి"], answer: 0 },
+      { diff: "medium", q: "‘హనుమాన్’ (2024) చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["ప్రశాంత్ వర్మ", "సుజీత్", "కార్తీక్ వర్మ", "శైలేష్ కొలను"], answer: 0 },
+      { diff: "medium", q: "‘సలార్: పార్ట్ 1 – సీజ్‌ఫైర్’ దర్శకుడు ఎవరు?", options: ["ప్రశాంత్ నీల్", "కొరటాల శివ", "హరీష్ శంకర్", "బోయపాటి శ్రీను"], answer: 0 },
+      { diff: "medium", q: "‘లక్కీ భాస్కర్’ చిత్రంలో ప్రధాన పాత్ర పోషించిన నటుడు ఎవరు?", options: ["దుల్కర్ సల్మాన్", "మాధవన్", "ధనుష్", "కార్తీ"], answer: 0 },
+      { diff: "medium", q: "‘దసరా’ చిత్రం ఏ నేపథ్యంలో రూపొందింది?", options: ["సింగరేణి బొగ్గు గనుల గ్రామం", "తీర ప్రాంత మత్స్యకారులు", "కొండ ప్రాంత గిరిజనులు", "నగర ఐటీ కారిడార్"], answer: 0 },
+
+      // --- HARD (71–100) ---
+      { diff: "hard", q: "‘మల్లీశ్వరి’ (1951) చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["బి.ఎన్. రెడ్డి", "కె.వి. రెడ్డి", "ఆదుర్తి సుబ్బారావు", "ఘంటసాల"], answer: 0 },
+      { diff: "hard", q: "‘పాతాళ భైరవి’ (1951) చిత్రానికి సంగీతం అందించినవారు ఎవరు?", options: ["ఘంటసాల", "పెండ్యాల", "ఎస్. రాజేశ్వరరావు", "మాస్టర్ వేణు"], answer: 0 },
+      { diff: "hard", q: "‘దేవదాసు’ (1953) తెలుగు క్లాసిక్‌కు దర్శకుడు ఎవరు?", options: ["వేదాంతం రాఘవయ్య", "బి.ఎన్. రెడ్డి", "సి. పుల్లయ్య", "జి. రామినీడు"], answer: 0 },
+      { diff: "hard", q: "‘గుండమ్మ కథ’ (1962) చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["కమలాకర కామేశ్వరరావు", "కె.వి. రెడ్డి", "పి. పుల్లయ్య", "అక్కినేని"], answer: 0 },
+      { diff: "hard", q: "‘నர்த்தనశాల’ (1963) లో బృహన్నల పాత్రలో నటించిన మహానటుడు ఎవరు?", options: ["ఎన్.టి. రామారావు", "ఎస్.వి. రంగారావు", "కాంతారావు", "జగ్గయ్య"], answer: 0 },
+      { diff: "hard", q: "‘సీతాకల్యాణం’ (1976) చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["బాపు", "దాసరి నారాయణరావు", "కె. రాఘవేంద్రరావు", "వి. మధుసూదనరావు"], answer: 0 },
+      { diff: "hard", q: "‘శంకరాభరణం’ లో ‘దొరకనిది ఏదీ’ లేదా ‘ఓంకార నాదాను’ పాటలకు గాయకుడు ఎవరు?", options: ["ఎస్.పి. బాలసుబ్రహ్మణ్యం", "ఘంటసాల", "పి.బి. శ్రీనివాస్", "మంగళంపల్లి బాలమురళీకృష్ణ"], answer: 0 },
+      { diff: "hard", q: "‘సిరివెన్నెల’ (1986) చిత్రంలో వేణువు వాయించే కథానాయకుడిగా నటించినవారు ఎవరు?", options: ["సర్వదమన్ డి. బెనర్జీ", "చిరంజీవి", "చంద్రమోహన్", "నరేష్"], answer: 0 },
+      { diff: "hard", q: "‘రుద్రవీణ’ చిత్రంలో భిక్షాపతి పాత్ర పోషించిన నటుడు ఎవరు?", options: ["చిరంజీవి", "బాలకృష్ణ", "నాగార్జున", "వెంకటేష్"], answer: 0 },
+      { diff: "hard", q: "‘ఆదిత్య 369’ టైమ్ మెషిన్ పేరు ఏమిటి?", options: ["టైమ్ మెషిన్ (ఆదిత్య 369)", "కాలాగ్ని", "సూర్యరథం", "కాలచక్రం"], answer: 0 },
+      { diff: "hard", q: "‘భైరవ ద్వీపం’ లో ఏ రాజు ఆజ్ఞ మేరకు కథానాయకుడు ప్రయాణం చేస్తాడు?", options: ["శ్రీకృష్ణదేవరాయలు", "ప్రతాపరుద్రుడు", "విక్రమాదిత్యుడు", "హర్షవర్ధనుడు"], answer: 0 },
+      { diff: "hard", q: "‘నిన్నే పెళ్లాడతా’ చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["కృష్ణవంశీ", "రామ్ గోపాల్ వర్మ", "వి.వి. వినాయక్", "పూరి జగన్నాథ్"], answer: 0 },
+      { diff: "hard", q: "‘ఆది’ చిత్రంలో విలన్ కుటుంబం నేపథ్యం ఏ జిల్లాకు సంబంధించింది?", options: ["రాయలసీమ (కడప/కర్నూలు నేపథ్యం)", "శ్రీకాకుళం", "తూర్పు గోదావరి", "నిజామాబాద్"], answer: 0 },
+      { diff: "hard", q: "‘చత్రపతి’ లో శివాజీ తల్లి పేరు ఏమిటి?", options: ["రాజ్యలక్ష్మి", "పార్వతి", "సుమిత్ర", "యశోద"], answer: 0 },
+      { diff: "hard", q: "‘విక్రమార్కుడు’ (2006) చిత్రానికి కథ అందించిన రచయిత ఎవరు?", options: ["కె.వి. విజయేంద్ర ప్రసాద్", "సత్యానంద్", "పరుచూరి బ్రదర్స్", "చిన్ని కృష్ణ"], answer: 0 },
+      { diff: "hard", q: "‘వేదం’ చిత్రంలో ఎన్ని ప్రధాన కథాంశాలు/పాత్రలు సమాంతరంగా సాగుతాయి?", options: ["5 ప్రధాన పాత్రలు/కథలు", "2 పాత్రలు", "3 పాత్రలు", "7 పాత్రలు"], answer: 0 },
+      { diff: "hard", q: "‘అంతరిక్షం 9000 KMPH’ ఏ నేపథ్యంలో తెరకెక్కిన తెలుగు చిత్రం?", options: ["అంతరిక్షం / స్పేస్ స్టేషన్", "సముద్ర గర్భం", "ఎడారి రేసింగ్", "రైల్వే దోపిడీ"], answer: 0 },
+      { diff: "hard", q: "‘మహానటి’ లో సావిత్రి చిన్ననాటి పాత్రలో నటించిన బాలనటి ఎవరు?", options: ["బేబీ మోక్ష / గౌరి ప్రియ (బాలనటి పాత్ర)", "బేబీ షామిలి", "బేబీ అనికా", "బేబీ మీనా"], answer: 0 },
+      { diff: "hard", q: "‘రంగస్థలం’ లో సౌండ్ ఇంజనీర్ పాత్ర పోషించిన నటుడు ఎవరు?", options: ["ఆది పినిశెట్టి", "జగపతి బాబు", "ప్రకాష్ రాజ్", "నరేష్"], answer: 0 },
+      { diff: "hard", q: "‘జెర్సీ’ (2019) లో అర్జున్ కుమారుడి పాత్ర పేరు ఏమిటి?", options: ["నాని / నన్ను (నన్ను)", "విహాన్", "ఆryan", "రోహన్"], answer: 1 },
+      { diff: "hard", q: "‘అల వైకుంఠపురములో’ లో వాల్మీకి పాత్ర పోషించిన నటుడు ఎవరు?", options: ["మురళీ శర్మ", "సచిన్ ఖేడ్కర్", "రావు రమేష్", "సముద్రఖని"], answer: 0 },
+      { diff: "hard", q: "‘సీతారామం’ లో లెఫ్టినెంట్ రామ్ పాత్ర పోషించిన నటుడు ఎవరు?", options: ["దుల్కర్ సల్మాన్", "శర్వానంద్", "విశ్వక్ సేన్", "సిద్ధు జొన్నలగడ్డ"], answer: 0 },
+      { diff: "hard", q: "‘మంగళవారం’ చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["అజయ్ భూపతి", "శైలేష్ కొలను", "వెంకటేష్ మహా", "ప్రవీణ్ సత్తారు"], answer: 0 },
+      { diff: "hard", q: "‘టిల్లు స్క్వేర్’ చిత్రంలో లిల్లీ పాత్ర పోషించిన నటి ఎవరు?", options: ["అనుపమ పరమేశ్వరన్", "నేహా శెట్టి", "శ్రీలీల", "సంయుక్త"], answer: 0 },
+      { diff: "hard", q: "‘కమిటీ కుర్రోళ్ళు’ చిత్రానికి దర్శకత్వం వహించినవారు ఎవరు?", options: ["యదు వంశీ", "విజయ్ కనకమేడల", "హను రాఘవపూడి", "చందు మొండేటి"], answer: 0 },
+      { diff: "hard", q: "‘మత్తు వదలరా 2’ చిత్రంలో కామెడీ/థ్రిల్లర్ ద్వయంగా కనిపించే నటులు ఎవరు?", options: ["శ్రీ సింహా కోడూరి & సత్య", "అల్లరి నరేష్ & సునీల్", "వెన్నెల కిషోర్ & ప్రియదర్శి", "రాహుల్ రామకృష్ణ & కిరీటి"], answer: 0 },
+      { diff: "hard", q: "‘సర్కార్ వారి పాట’ చిత్రానికి సంగీతం అందించినవారు ఎవరు?", options: ["ఎస్.ఎస్. తమన్", "దేవి శ్రీ ప్రసాద్", "అనిరుధ్", "జి.వి. ప్రకాష్"], answer: 0 },
+      { diff: "hard", q: "‘విరాట పర్వం’ చారిత్రక నేపథ్యం ఏ ఉద్యమానికి సంబంధించినది?", options: ["తెలంగాణ రైతాంగ / విప్లవ ఉద్యమ నేపథ్యం", "స్వాతంత్ర్యానికి ముందు ఉప్పు సత్యాగ్రహం", "ఆంధ్ర రాష్ట్ర ఉద్యమం", "విశాలాంధ్ర ఉద్యమం"], answer: 0 },
+      { diff: "hard", q: "‘శ్యామ్ సింఘ రాయ్’ చిత్రంలో ప్రధాన పాత్ర పోషించిన నటుడు ఎవరు?", options: ["నాని", "రవి తేజ", "గోపిచంద్", "రామ్ పోతినేని"], answer: 0 },
+      { diff: "hard", q: "‘అఖండ’ చిత్రానికి సంగీతం అందించినవారు ఎవరు?", options: ["ఎస్.ఎస్. తమన్", "మణిశర్మ", "చక్రి", "కీరవాణి"], answer: 0 }
     ];
 
+    const diffPoints = { easy: 10, medium: 15, hard: 20 };
+    const diffLabels = {
+      easy: { text: "సులభం • +10 పాయింట్లు", cls: "diff-easy" },
+      medium: { text: "మధ్యస్థం • +15 పాయింట్లు", cls: "diff-medium" },
+      hard: { text: "కఠినం • +20 పాయింట్లు", cls: "diff-hard" }
+    };
+
+    let activeQuizFilter = 'all';
+    let activeQuizPool = [...movieQuestions];
     let currentQIndex = 0;
     let answeredCurrent = false;
+
+    function applyQuizFilter(diff) {
+      activeQuizFilter = diff;
+      document.querySelectorAll('.qfilter-btn[data-diff]').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.diff === diff);
+      });
+      activeQuizPool = diff === 'all'
+        ? [...movieQuestions]
+        : movieQuestions.filter(q => q.diff === diff);
+      currentQIndex = 0;
+      renderQuizQuestion();
+    }
+
+    document.querySelectorAll('.qfilter-btn[data-diff]').forEach(btn => {
+      btn.addEventListener('click', () => applyQuizFilter(btn.dataset.diff));
+    });
+
+    document.getElementById('shuffleQuizBtn').addEventListener('click', () => {
+      for (let i = activeQuizPool.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [activeQuizPool[i], activeQuizPool[j]] = [activeQuizPool[j], activeQuizPool[i]];
+      }
+      currentQIndex = 0;
+      renderQuizQuestion();
+    });
 
     function renderQuizQuestion() {
       answeredCurrent = false;
       document.getElementById('quizFeedback').textContent = '';
       document.getElementById('nextQuizBtn').style.display = 'none';
 
-      const item = movieQuestions[currentQIndex];
-      document.getElementById('quizProgress').textContent = `ప్రశ్న ${currentQIndex + 1} / ${movieQuestions.length}`;
+      const item = activeQuizPool[currentQIndex];
+      const pts = diffPoints[item.diff] || 10;
+      const metaDiff = diffLabels[item.diff] || diffLabels.easy;
+
+      document.getElementById('quizProgress').textContent = `ప్రశ్న ${currentQIndex + 1} / ${activeQuizPool.length}`;
+      const diffBadge = document.getElementById('quizDiffBadge');
+      diffBadge.textContent = metaDiff.text;
+      diffBadge.className = `diff-tag ${metaDiff.cls}`;
+
       document.getElementById('quizQuestion').textContent = item.q;
       const optsDiv = document.getElementById('quizOptions');
       optsDiv.innerHTML = '';
@@ -1820,11 +1977,11 @@
           });
           const fb = document.getElementById('quizFeedback');
           if (idx === item.answer) {
-            quizScore += 10;
+            quizScore += pts;
             localStorage.setItem('tp_quiz_score', quizScore);
             updateHeaderBadges();
             fb.style.color = 'var(--success)';
-            fb.textContent = '🎉 సరైన సమాధానం! +10 పాయింట్లు';
+            fb.textContent = `🎉 సరైన సమాధానం! +${pts} పాయింట్లు`;
           } else {
             btn.classList.add('wrong');
             fb.style.color = 'var(--error)';
@@ -1832,14 +1989,14 @@
           }
           const nextBtn = document.getElementById('nextQuizBtn');
           nextBtn.style.display = 'inline-block';
-          nextBtn.textContent = currentQIndex === movieQuestions.length - 1 ? 'మళ్ళీ ఆడు ↻' : 'తదుపరి ప్రశ్న →';
+          nextBtn.textContent = currentQIndex === activeQuizPool.length - 1 ? 'మళ్ళీ ఆడు ↻' : 'తదుపరి ప్రశ్న →';
         });
         optsDiv.appendChild(btn);
       });
     }
 
     document.getElementById('nextQuizBtn').addEventListener('click', () => {
-      currentQIndex = (currentQIndex + 1) % movieQuestions.length;
+      currentQIndex = (currentQIndex + 1) % activeQuizPool.length;
       renderQuizQuestion();
     });
 
